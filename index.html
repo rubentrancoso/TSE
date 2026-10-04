@@ -65,7 +65,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
 <header><div><div class="live">DADOS DO TSE</div><h1>Apuração presidencial · 2026</h1><div class="sub" id="status">Carregando…</div>
 <div class="pulsebar"><span class="pulse-dot" id="pulseDot"></span><span id="pulseText">Aguardando leitura…</span><span class="pulse-extra" id="changeText"></span></div></div>
 <div class="toolbar"><select id="xmode"><option value="time">Eixo: horário</option><option value="pst">Eixo: % seções</option></select>
-<select id="ymode"><option value="pct">Y: % votos válidos</option><option value="votes">Y: votos</option></select>
+<select id="ymode"><option value="pct">Y: % votos válidos</option><option value="top2">2 líderes (zoom)</option><option value="votes">Y: votos</option></select>
 <button onclick="refreshNow()">Atualizar agora</button><button onclick="backfill()">Recuperar início</button><button onclick="location.href='/api/export.csv'">CSV</button></div></header>
 <div class="grid">
 <div class="card"><div class="k">Seções apuradas</div><div class="v" id="pst">—</div><div class="sub" id="sec">—</div></div>
@@ -122,16 +122,30 @@ function draw(){
  const pad={l:58,r:18,t:24,b:42},iw=w-pad.l-pad.r,ih=h-pad.t-pad.b;if(!H.length)return;
  const xm=document.querySelector("#xmode").value,ym=document.querySelector("#ymode").value;
  const xs=H.map((x,i)=>xm==="pst"?+x.pst:i); let xmin=Math.min(...xs),xmax=Math.max(...xs);if(xmax===xmin)xmax=xmin+1;
- let nums=[...selected]; let ys=[]; H.forEach(x=>nums.forEach(n=>{const c=x.cand?.[n];if(c)ys.push(ym==="pct"?+c.pct:+c.votos)}));
- let ymin=ym==="pct"?Math.max(0,Math.min(...ys)-2):0,ymax=Math.max(...ys,1);if(ym==="pct")ymax=Math.min(100,Math.max(...ys)+2);
+ let nums=[...selected];
+ if(ym==="top2"){
+   const latest=H[H.length-1];
+   nums=Object.values(latest.cand||{}).sort((a,b)=>(+b.votos||0)-(+a.votos||0)).slice(0,2).map(c=>c.numero);
+ }
+ let ys=[]; H.forEach(x=>nums.forEach(n=>{const c=x.cand?.[n];if(c)ys.push((ym==="pct"||ym==="top2")?+c.pct:+c.votos)}));
+ let ymin=0,ymax=Math.max(...ys,1);
+ if(ym==="pct"){
+   ymin=Math.max(0,Math.min(...ys)-2);
+   ymax=Math.min(100,Math.max(...ys)+2);
+ } else if(ym==="top2"){
+   const lo=Math.min(...ys), hi=Math.max(...ys), span=Math.max(hi-lo,1);
+   const pad=Math.max(0.5,span*0.12);
+   ymin=Math.max(0,Math.floor((lo-pad)*2)/2);
+   ymax=Math.min(100,Math.ceil((hi+pad)*2)/2);
+ }
  const X=x=>pad.l+(x-xmin)/(xmax-xmin)*iw,Y=y=>pad.t+(1-(y-ymin)/(ymax-ymin))*ih;
  g.strokeStyle="#e3e7ef";g.fillStyle="#667085";g.font="11px system-ui";g.textAlign="right";
- for(let j=0;j<=5;j++){let y=ymin+(ymax-ymin)*j/5,py=Y(y);g.beginPath();g.moveTo(pad.l,py);g.lineTo(w-pad.r,py);g.stroke();g.fillText(ym==="pct"?y.toFixed(1)+"%":compact(y),pad.l-8,py+4)}
+ for(let j=0;j<=5;j++){let y=ymin+(ymax-ymin)*j/5,py=Y(y);g.beginPath();g.moveTo(pad.l,py);g.lineTo(w-pad.r,py);g.stroke();g.fillText((ym==="pct"||ym==="top2")?y.toFixed(1)+"%":compact(y),pad.l-8,py+4)}
  g.textAlign="center";for(let j=0;j<=5;j++){let x=xmin+(xmax-xmin)*j/5,px=X(x);let lab=xm==="pst"?x.toFixed(1)+"%":labelTime(Math.round(x));g.fillText(lab,px,h-15)}
- nums.forEach((n,k)=>{g.strokeStyle=colors[k%colors.length];g.lineWidth=2.2;g.beginPath();let started=false;H.forEach((x,i)=>{const c=x.cand?.[n];if(!c)return;let xx=X(xs[i]),yy=Y(ym==="pct"?+c.pct:+c.votos);started?g.lineTo(xx,yy):(g.moveTo(xx,yy),started=true)});g.stroke();
-   g.fillStyle=colors[k%colors.length];H.forEach((x,i)=>{const c=x.cand?.[n];if(!c)return;let xx=X(xs[i]),yy=Y(ym==="pct"?+c.pct:+c.votos);g.beginPath();g.arc(xx,yy,2.5,0,Math.PI*2);g.fill()});
+ nums.forEach((n,k)=>{g.strokeStyle=colors[k%colors.length];g.lineWidth=2.2;g.beginPath();let started=false;H.forEach((x,i)=>{const c=x.cand?.[n];if(!c)return;let xx=X(xs[i]),yy=Y((ym==="pct"||ym==="top2")?+c.pct:+c.votos);started?g.lineTo(xx,yy):(g.moveTo(xx,yy),started=true)});g.stroke();
+   g.fillStyle=colors[k%colors.length];H.forEach((x,i)=>{const c=x.cand?.[n];if(!c)return;let xx=X(xs[i]),yy=Y((ym==="pct"||ym==="top2")?+c.pct:+c.votos);g.beginPath();g.arc(xx,yy,2.5,0,Math.PI*2);g.fill()});
  });
- document.querySelector("#chartNote").textContent=(xm==="pst"?"Eixo X = percentual de seções totalizadas.":"Eixo X = ordem cronológica dos snapshots; rótulos usam o horário de totalização.")+" Fonte de cada ponto preservada no histórico.";
+ document.querySelector("#chartNote").textContent=(ym==="top2"?"Modo 2 líderes: eixo Y ampliado apenas no intervalo real dos dois candidatos com mais votos. ":"")+(xm==="pst"?"Eixo X = percentual de seções totalizadas.":"Eixo X = ordem cronológica dos snapshots; rótulos usam o horário de totalização.")+" Fonte de cada ponto preservada no histórico.";
 }
 function compact(n){return Intl.NumberFormat("pt-BR",{notation:"compact",maximumFractionDigits:1}).format(n)}
 function labelTime(i){let x=H[Math.max(0,Math.min(H.length-1,i))];return x?.ht?.slice(0,5)||""}

@@ -1,0 +1,75 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TSE Live 2026</title><style>
+:root{font-family:Inter,system-ui,Arial,sans-serif;color:#172033;background:#f5f7fb}body{margin:0}.wrap{max-width:1280px;margin:auto;padding:20px}
+header{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:16px}.live{font-size:12px;font-weight:800;color:#087f5b}.live:before{content:"●";margin-right:6px}
+h1{margin:3px 0;font-size:27px}.sub{color:#687386;font-size:13px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}button,select{border:1px solid #d8deea;background:white;border-radius:9px;padding:8px 11px;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0}.card,.panel{background:white;border:1px solid #e1e5ee;border-radius:12px;box-shadow:0 1px 2px #00000008}
+.card{padding:13px}.k{font-size:11px;text-transform:uppercase;color:#78849a}.v{font-size:22px;font-weight:800;margin-top:5px}.panel{padding:15px;margin-top:12px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}#chart{width:100%;height:420px;display:block}.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px}
+.legend label{display:flex;align-items:center;gap:5px}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;border-bottom:1px solid #edf0f5;text-align:right}th:first-child,td:first-child{text-align:left}
+.warn{color:#b42318;font-weight:700}.ok{color:#087f5b;font-weight:700}@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}header{display:block}.toolbar{margin-top:10px}#chart{height:320px}}
+</style></head><body><div class="wrap">
+<header><div><div class="live">DADOS DO TSE</div><h1>Apuração presidencial · 2026</h1><div class="sub" id="status">Carregando…</div></div>
+<div class="toolbar"><select id="xmode"><option value="time">Eixo: horário</option><option value="pst">Eixo: % seções</option></select>
+<select id="ymode"><option value="pct">Y: % votos válidos</option><option value="votes">Y: votos</option></select>
+<button onclick="refreshNow()">Atualizar agora</button><button onclick="backfill()">Recuperar início</button><button onclick="location.href='/api/export.csv'">CSV</button></div></header>
+<div class="grid">
+<div class="card"><div class="k">Seções apuradas</div><div class="v" id="pst">—</div><div class="sub" id="sec">—</div></div>
+<div class="card"><div class="k">Votos válidos</div><div class="v" id="vv">—</div></div>
+<div class="card"><div class="k">Comparecimento</div><div class="v" id="comp">—</div></div>
+<div class="card"><div class="k">Brancos + nulos</div><div class="v" id="bn">—</div></div>
+<div class="card"><div class="k">Pontos históricos</div><div class="v" id="pts">—</div><div class="sub" id="sources">—</div></div>
+</div>
+<div class="panel"><div class="row"><div><b>Evolução dos candidatos</b><div class="sub">Snapshots observados do EA20; o trecho recuperado antes da coleta local é marcado como captura pública.</div></div><div class="legend" id="legend"></div></div>
+<canvas id="chart"></canvas><div class="sub" id="chartNote"></div></div>
+<div class="panel"><div class="row"><b>Último resultado</b><span id="updated" class="sub"></span></div><table><thead><tr><th>Candidato</th><th>Partido</th><th>Votos</th><th>% válidos</th></tr></thead><tbody id="candTable"></tbody></table></div>
+<div class="panel"><div class="row"><b>Consistência da série</b><span id="check" class="ok">—</span></div><div class="sub">Checagem mecânica: seções e votos válidos não deveriam recuar entre snapshots sucessivos. Backfill externo e leitura ao vivo permanecem identificados separadamente.</div></div>
+</div><script>
+let H=[], names={}; const colors=["#2457f5","#e53935","#00a86b","#f59e0b","#7c3aed","#0891b2","#db2777","#64748b","#16a34a","#ea580c","#4f46e5","#9333ea"];
+const fmt=n=>new Intl.NumberFormat("pt-BR").format(n||0); const pct=n=>(+n||0).toFixed(2).replace(".",",")+"%";
+async function load(){
+ const r=await fetch("/api/history",{cache:"no-store"}); H=(await r.json()).history||[];
+ if(!H.length)return;
+ const L=H[H.length-1]; Object.values(L.cand||{}).forEach(c=>{if(c.nome&&!/^\d+$/.test(c.nome))names[c.numero]=c});
+ document.querySelector("#pst").textContent=pct(L.pst); document.querySelector("#sec").textContent=fmt(L.st)+" de "+fmt(L.ts||0)+" seções";
+ document.querySelector("#vv").textContent=fmt(L.vv); document.querySelector("#comp").textContent=fmt(L.c); document.querySelector("#bn").textContent=fmt((L.vb||0)+(L.vn||0));
+ document.querySelector("#pts").textContent=fmt(H.length);
+ const counts={};H.forEach(x=>counts[x.source]=(counts[x.source]||0)+1);document.querySelector("#sources").textContent=Object.entries(counts).map(([k,v])=>k+": "+v).join(" · ");
+ document.querySelector("#updated").textContent=(L.dt||"")+" "+(L.ht||"");
+ document.querySelector("#status").textContent="Última totalização: "+(L.dt||"")+" "+(L.ht||"")+" · atualização automática a cada ~10 s";
+ const cands=Object.values(L.cand||{}).sort((a,b)=>b.votos-a.votos);
+ document.querySelector("#candTable").innerHTML=cands.map(c=>"<tr><td><b>"+esc(names[c.numero]?.nome||c.nome||c.numero)+"</b></td><td>"+esc(names[c.numero]?.partido||c.partido||"")+"</td><td>"+fmt(c.votos)+"</td><td>"+pct(c.pct)+"</td></tr>").join("");
+ buildLegend(cands); consistency(); draw();
+}
+function esc(s){return String(s??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]))}
+let selected=new Set();
+function buildLegend(cands){
+ if(!selected.size)cands.slice(0,4).forEach(c=>selected.add(c.numero));
+ document.querySelector("#legend").innerHTML=cands.map((c,i)=>'<label><input type="checkbox" data-n="'+c.numero+'" '+(selected.has(c.numero)?"checked":"")+'> <span class="dot" style="background:'+colors[i%colors.length]+'"></span>'+esc(names[c.numero]?.nome||c.nome||c.numero)+'</label>').join("");
+ document.querySelectorAll("#legend input").forEach(x=>x.onchange=()=>{x.checked?selected.add(x.dataset.n):selected.delete(x.dataset.n);draw()});
+}
+function consistency(){
+ let bad=[]; for(let i=1;i<H.length;i++){if(H[i].st<H[i-1].st)bad.push("seções "+i); if(H[i].vv<H[i-1].vv)bad.push("válidos "+i)}
+ const e=document.querySelector("#check");e.textContent=bad.length?bad.length+" recuos detectados":"Sem recuos detectados";e.className=bad.length?"warn":"ok";
+}
+function draw(){
+ const cv=document.querySelector("#chart"),dpr=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;cv.width=w*dpr;cv.height=h*dpr;const g=cv.getContext("2d");g.scale(dpr,dpr);g.clearRect(0,0,w,h);
+ const pad={l:58,r:18,t:24,b:42},iw=w-pad.l-pad.r,ih=h-pad.t-pad.b;if(!H.length)return;
+ const xm=document.querySelector("#xmode").value,ym=document.querySelector("#ymode").value;
+ const xs=H.map((x,i)=>xm==="pst"?+x.pst:i); let xmin=Math.min(...xs),xmax=Math.max(...xs);if(xmax===xmin)xmax=xmin+1;
+ let nums=[...selected]; let ys=[]; H.forEach(x=>nums.forEach(n=>{const c=x.cand?.[n];if(c)ys.push(ym==="pct"?+c.pct:+c.votos)}));
+ let ymin=ym==="pct"?Math.max(0,Math.min(...ys)-2):0,ymax=Math.max(...ys,1);if(ym==="pct")ymax=Math.min(100,Math.max(...ys)+2);
+ const X=x=>pad.l+(x-xmin)/(xmax-xmin)*iw,Y=y=>pad.t+(1-(y-ymin)/(ymax-ymin))*ih;
+ g.strokeStyle="#e3e7ef";g.fillStyle="#667085";g.font="11px system-ui";g.textAlign="right";
+ for(let j=0;j<=5;j++){let y=ymin+(ymax-ymin)*j/5,py=Y(y);g.beginPath();g.moveTo(pad.l,py);g.lineTo(w-pad.r,py);g.stroke();g.fillText(ym==="pct"?y.toFixed(1)+"%":compact(y),pad.l-8,py+4)}
+ g.textAlign="center";for(let j=0;j<=5;j++){let x=xmin+(xmax-xmin)*j/5,px=X(x);let lab=xm==="pst"?x.toFixed(1)+"%":labelTime(Math.round(x));g.fillText(lab,px,h-15)}
+ nums.forEach((n,k)=>{g.strokeStyle=colors[k%colors.length];g.lineWidth=2.2;g.beginPath();let started=false;H.forEach((x,i)=>{const c=x.cand?.[n];if(!c)return;let xx=X(xs[i]),yy=Y(ym==="pct"?+c.pct:+c.votos);started?g.lineTo(xx,yy):(g.moveTo(xx,yy),started=true)});g.stroke()});
+ document.querySelector("#chartNote").textContent=(xm==="pst"?"Eixo X = percentual de seções totalizadas.":"Eixo X = ordem cronológica dos snapshots; rótulos usam o horário de totalização.")+" Fonte de cada ponto preservada no histórico.";
+}
+function compact(n){return Intl.NumberFormat("pt-BR",{notation:"compact",maximumFractionDigits:1}).format(n)}
+function labelTime(i){let x=H[Math.max(0,Math.min(H.length-1,i))];return x?.ht?.slice(0,5)||""}
+async function refreshNow(){await fetch("/api/refresh",{method:"POST"});await load()}
+async function backfill(){let r=await fetch("/api/backfill/community",{method:"POST"});let j=await r.json();alert("Pontos importados: "+(j.imported||0));await load()}
+document.querySelector("#xmode").onchange=draw;document.querySelector("#ymode").onchange=draw;addEventListener("resize",draw);load();setInterval(load,10000);
+</script></body></html>

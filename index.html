@@ -1,7 +1,7 @@
 <!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>TSE Live 2026</title><style>
 :root{font-family:Inter,system-ui,Arial,sans-serif;color:#172033;background:#111827;--frame-y:16px;--stage-w:520px}*{box-sizing:border-box}html,body{height:100%;background:#111827}body{margin:0;display:flex;justify-content:center;align-items:flex-start;overflow-x:hidden}.app-shell{container-type:inline-size;width:min(var(--stage-w),calc(100vw - 12px));height:calc(100vh - 12px);margin:6px auto;background:#111827;border-radius:12px;overflow:hidden;min-width:0;padding:var(--frame-y) 0;box-shadow:0 0 0 1px #ffffff12;display:flex;flex-direction:column}.wrap{flex:1;min-height:0;width:100%;overflow:auto;background:#f5f7fb;max-width:none;margin:0;padding:12px}
-.countdown-strip{position:relative;z-index:20;flex:0 0 auto;background:#101828;color:white;padding:7px 10px 8px;box-shadow:0 1px 6px #0002;border-radius:9px 9px 0 0}.countdown-row{max-width:1280px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;font-weight:800}.countdown-right{display:flex;align-items:center;gap:8px}.width-control{display:flex;align-items:center;gap:7px;margin-top:5px;color:#d0d5dd;font-size:10px;font-weight:700}.width-control input{flex:1;min-width:0}.width-value{min-width:46px;text-align:right;font-variant-numeric:tabular-nums}.countdown-track{height:4px;background:#344054;border-radius:999px;overflow:hidden;margin-top:5px}.countdown-fill{height:100%;width:100%;background:#12b76a;transform-origin:left center;transition:width .12s linear}.countdown-now{font-variant-numeric:tabular-nums;color:#fff;font-weight:800}.brasilia-label{color:#d0d5dd;font-size:11px;font-weight:800;letter-spacing:.02em}.refresh-btn{padding:6px 9px;min-width:34px;font-size:16px;line-height:1;font-weight:800}
+.countdown-strip{position:relative;z-index:20;flex:0 0 auto;background:#101828;color:white;padding:7px 10px 8px;box-shadow:0 1px 6px #0002;border-radius:9px 9px 0 0}.countdown-row{max-width:1280px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;font-weight:800}.countdown-right{display:flex;align-items:center;gap:8px}.sound-btn{border:1px solid #475467;background:#1d2939;color:white;border-radius:7px;padding:2px 6px;min-width:30px;font-size:13px;line-height:1.2;cursor:pointer}.width-control{display:flex;align-items:center;gap:7px;margin-top:5px;color:#d0d5dd;font-size:10px;font-weight:700}.width-control input{flex:1;min-width:0}.width-value{min-width:46px;text-align:right;font-variant-numeric:tabular-nums}.countdown-track{height:4px;background:#344054;border-radius:999px;overflow:hidden;margin-top:5px}.countdown-fill{height:100%;width:100%;background:#12b76a;transform-origin:left center;transition:width .12s linear}.countdown-now{font-variant-numeric:tabular-nums;color:#fff;font-weight:800}.brasilia-label{color:#d0d5dd;font-size:11px;font-weight:800;letter-spacing:.02em}.refresh-btn{padding:6px 9px;min-width:34px;font-size:16px;line-height:1;font-weight:800}
 header{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:16px}.live{font-size:12px;font-weight:800;color:#087f5b}.live:before{content:"●";margin-right:6px}
 h1{margin:3px 0;font-size:27px}.dev-live{display:inline-flex;align-items:center;gap:5px;margin:1px 0 3px;color:#b42318;font-size:11px;font-weight:800}.dev-live:before{content:"●";font-size:9px}.sub{color:#687386;font-size:13px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}
 .pulsebar{display:flex;align-items:center;gap:10px;margin-top:9px;font-size:13px;font-weight:800;color:#344054;flex-wrap:wrap}
@@ -61,7 +61,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
  .selected-candidates{grid-template-columns:repeat(2,minmax(0,1fr))}
  #chart{height:228px}
 }
-</style></head><body><div class="app-shell"><div class="countdown-strip"><div class="countdown-row"><span class="brasilia-label">Brasília</span><span class="countdown-right"><span class="countdown-now" id="clockNow">--:--:--</span></span></div><div class="width-control"><span id="stageModeLabel">Largura</span><input id="stageWidth" type="range" min="360" max="1400" step="10" value="520"><span class="width-value" id="stageWidthValue">520 px</span></div><div class="countdown-track"><div class="countdown-fill" id="countdownFill"></div></div></div><div class="wrap">
+</style></head><body><div class="app-shell"><div class="countdown-strip"><div class="countdown-row"><span class="brasilia-label">Brasília</span><span class="countdown-right"><span class="countdown-now" id="clockNow">--:--:--</span><button class="sound-btn" id="soundToggle" type="button" aria-label="Ativar ou desativar aviso sonoro">🔈</button></span></div><div class="width-control"><span id="stageModeLabel">Largura</span><input id="stageWidth" type="range" min="360" max="1400" step="10" value="520"><span class="width-value" id="stageWidthValue">520 px</span></div><div class="countdown-track"><div class="countdown-fill" id="countdownFill"></div></div></div><div class="wrap">
 <header><div><div class="live">DADOS DO TSE</div><h1>Apuração presidencial · 2026</h1><div class="dev-live">Programa sendo desenvolvido ao vivo</div><div class="sub" id="status">Carregando…</div>
 <div class="pulsebar"><span class="pulse-dot" id="pulseDot"></span><span id="pulseText">Aguardando leitura…</span><span class="pulse-extra" id="changeText"></span></div></div>
 <div class="toolbar"><select id="xmode"><option value="time">Eixo: horário</option><option value="pst">Eixo: % seções</option></select>
@@ -284,6 +284,38 @@ function resizeLayout(){syncStageMode();draw()}
 const POLL_SECONDS=10;
 let lastPulseStamp="";
 let lastPollSeenAt=performance.now();
+let soundEnabled=localStorage.getItem("tse-sound")!=="off",audioCtx=null;
+function updateSoundButton(){
+ const b=document.querySelector("#soundToggle"),ready=audioCtx?.state==="running";
+ b.textContent=!soundEnabled?"🔇":ready?"🔊":"🔈";
+ b.title=!soundEnabled?"Som desligado":ready?"Som ligado":"Clique na página para liberar o som";
+}
+async function unlockSound(){
+ if(!soundEnabled)return;
+ try{
+  if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==="suspended")await audioCtx.resume();
+ }catch(e){}
+ updateSoundButton();
+}
+async function toggleSound(){
+ if(soundEnabled&&audioCtx?.state!=="running"){await unlockSound();return}
+ soundEnabled=!soundEnabled;
+ localStorage.setItem("tse-sound",soundEnabled?"on":"off");
+ if(soundEnabled)await unlockSound();else updateSoundButton();
+}
+function beepNewData(){
+ if(!soundEnabled||audioCtx?.state!=="running")return;
+ const base=audioCtx.currentTime;
+ [[0,880],[.13,1180]].forEach(([delay,freq])=>{
+  const start=base+delay,osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
+  osc.type="sine";osc.frequency.setValueAtTime(freq,start);
+  gain.gain.setValueAtTime(.0001,start);
+  gain.gain.exponentialRampToValueAtTime(.13,start+.012);
+  gain.gain.exponentialRampToValueAtTime(.0001,start+.095);
+  osc.connect(gain);gain.connect(audioCtx.destination);osc.start(start);osc.stop(start+.1);
+ });
+}
 async function pulseStatus(){
  try{
   const r=await fetch("/api/status",{cache:"no-store"}), s=await r.json();
@@ -294,6 +326,7 @@ async function pulseStatus(){
    ch.textContent=s.last_changed?"Última mudança: "+s.last_changed.slice(11,19):"";
    dot.classList.toggle("ok",!!s.ok);
    if(s.last_success!==lastPulseStamp){
+    if(lastPulseStamp&&s.last_was_new)beepNewData();
     lastPulseStamp=s.last_success;
     lastPollSeenAt=performance.now();
     dot.classList.remove("flash");void dot.offsetWidth;dot.classList.add("flash");
@@ -311,6 +344,10 @@ function updateCountdown(){
 }
 async function refreshNow(){lastPollSeenAt=performance.now()-POLL_SECONDS*1000;updateCountdown();await fetch("/api/refresh",{method:"POST"});await Promise.all([load(),pulseStatus()])}
 async function backfill(){let r=await fetch("/api/backfill/community",{method:"POST"});let j=await r.json();alert("Pontos importados: "+(j.imported||0));await load()}
+document.querySelector("#soundToggle").addEventListener("click",toggleSound);
+document.addEventListener("pointerdown",e=>{if(e.target?.id!=="soundToggle")unlockSound()});
+document.addEventListener("keydown",unlockSound);
+updateSoundButton();
 document.querySelector("#chart").addEventListener("pointermove",moveChartCursor);
 document.querySelector("#chart").addEventListener("pointerleave",()=>{chartHoverIndex=null;draw()});
 document.querySelector("#xmode").onchange=draw;document.querySelector("#ymode").onchange=draw;addEventListener("resize",resizeLayout);initStageWidth();load();pulseStatus();updateCountdown();setInterval(load,10000);setInterval(pulseStatus,500);setInterval(updateCountdown,100);

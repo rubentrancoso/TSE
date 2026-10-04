@@ -68,7 +68,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
 <header><div><div class="live">DADOS DO TSE</div><h1>Apuração presidencial · 2026</h1><div class="sub" id="status">Carregando…</div>
 <div class="pulsebar"><span class="pulse-dot" id="pulseDot"></span><span id="pulseText">Aguardando leitura…</span><span class="pulse-extra" id="changeText"></span></div></div>
 <div class="toolbar"><select id="xmode"><option value="time">Eixo: horário</option><option value="pst">Eixo: % seções</option></select>
-<select id="ymode"><option value="pct">Y: % votos válidos</option><option value="top2">2 líderes (zoom)</option><option value="votes">Y: votos</option></select>
+<select id="ymode"><option value="top2" selected>2 líderes (zoom)</option><option value="pct">Y: % votos válidos</option><option value="votes">Y: votos</option></select>
 <button onclick="refreshNow()">Atualizar agora</button><button onclick="backfill()">Recuperar início</button><button onclick="location.href='/api/export.csv'">CSV</button></div></header>
 <div class="grid">
 <div class="card"><div class="k">Seções apuradas</div><div class="v" id="pst">—</div><div class="sub" id="sec">—</div></div>
@@ -128,18 +128,24 @@ function draw(){
  let nums=[...selected];
  let viewH=H;
 
- if(ym==="top2"){
-   const latest=H[H.length-1];
-   nums=Object.values(latest.cand||{})
-     .sort((a,b)=>(+b.votos||0)-(+a.votos||0))
-     .slice(0,2)
-     .map(c=>c.numero);
+ const latest=H[H.length-1];
+ const top2nums=Object.values(latest.cand||{})
+   .sort((a,b)=>(+b.votos||0)-(+a.votos||0))
+   .slice(0,2)
+   .map(c=>c.numero);
 
+ // O TSE pode ter snapshots iniciais com candidatos ainda em 0%.
+ // Eles não representam a curva eleitoral e criam o "rabo" vertical no gráfico.
+ if(ym==="top2" || ym==="pct"){
    const startIdx=H.findIndex(x=>{
-     const vals=nums.map(n=>+(x.cand?.[n]?.pct||0));
+     const vals=top2nums.map(n=>+(x.cand?.[n]?.pct||0));
      return (+x.pst||0)>=1 && vals.length===2 && vals[0]>20 && vals[1]>20;
    });
    if(startIdx>=0)viewH=H.slice(startIdx);
+ }
+
+ if(ym==="top2"){
+   nums=top2nums;
  }
 
  const xs=viewH.map((x,i)=>xm==="pst"?+x.pst:i);

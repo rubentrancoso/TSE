@@ -6,7 +6,13 @@ header{display:flex;justify-content:space-between;gap:16px;align-items:flex-star
 h1{margin:3px 0;font-size:27px}.dev-live{display:inline-flex;align-items:center;gap:5px;margin:1px 0 3px;color:#b42318;font-size:11px;font-weight:800}.dev-live:before{content:"●";font-size:9px}.sub{color:#687386;font-size:13px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}
 .pulsebar{display:flex;align-items:center;gap:10px;margin-top:9px;font-size:13px;font-weight:800;color:#344054;flex-wrap:wrap}
 .pulse-dot{width:12px;height:12px;border-radius:50%;background:#98a2b3}.pulse-dot.ok{background:#12b76a}.pulse-dot.flash{animation:pulse .7s ease-out}
-.pulse-extra{font-weight:500;color:#667085}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(18,183,106,.65)}100%{box-shadow:0 0 0 13px rgba(18,183,106,0)}}button,select{border:1px solid #d8deea;background:white;border-radius:9px;padding:8px 11px;cursor:pointer}
+.pulse-extra{font-weight:500;color:#667085}
+.decision-banner{margin:0 0 12px;padding:11px 14px;background:#fff;border:1px solid #e1e5ee;border-radius:12px;box-shadow:0 1px 2px #00000008}
+.decision-head{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px}.decision-title{font-weight:900;color:#344054}.decision-value{font-weight:900;color:#475467;white-space:nowrap}
+.decision-track{height:7px;margin:8px 0 6px;background:#eaecf0;border-radius:999px;overflow:hidden}.decision-fill{height:100%;width:0;background:#f79009;border-radius:999px;transition:width .35s ease}
+.decision-text{font-size:11px;color:#667085;line-height:1.3}.decision-banner.near{border-color:#fdb02266;background:#fffcf5}.decision-banner.near .decision-title,.decision-banner.near .decision-value{color:#b54708}
+.decision-banner.locked{border-color:#12b76a66;background:#f6fef9}.decision-banner.locked .decision-title,.decision-banner.locked .decision-value{color:#067647}.decision-banner.locked .decision-fill{background:#12b76a}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(18,183,106,.65)}100%{box-shadow:0 0 0 13px rgba(18,183,106,0)}}button,select{border:1px solid #d8deea;background:white;border-radius:9px;padding:8px 11px;cursor:pointer}
 .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0}.card,.panel{background:white;border:1px solid #e1e5ee;border-radius:12px;box-shadow:0 1px 2px #00000008}
 .card{padding:13px}.k{font-size:11px;text-transform:uppercase;color:#78849a}.v{font-size:22px;font-weight:800;margin-top:5px}.magnitude{margin-top:2px;color:#687386;font-size:11px;font-weight:700}.panel{padding:15px;margin-top:12px}
 .row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}#chart{width:100%;height:420px;display:block;cursor:crosshair;touch-action:none}.candidate-filter{position:relative;margin-left:auto}.candidate-filter summary{list-style:none;border:1px solid #d8deea;background:white;border-radius:9px;padding:7px 10px;cursor:pointer;font-size:12px;font-weight:700;white-space:nowrap}.candidate-filter summary::-webkit-details-marker{display:none}.candidate-filter summary:after{content:" ▾"}.candidate-filter[open] summary:after{content:" ▴"}.legend{position:absolute;right:0;top:calc(100% + 6px);z-index:40;display:grid;grid-template-columns:repeat(2,minmax(150px,1fr));gap:7px 12px;width:max-content;max-width:min(520px,calc(100vw - 40px));max-height:260px;overflow:auto;padding:12px;background:white;border:1px solid #d8deea;border-radius:10px;box-shadow:0 12px 30px #1018282e;font-size:12px}
@@ -36,6 +42,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
  .card .sub,.card .magnitude{font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  .grid .card:nth-child(4),.grid .card:nth-child(5){grid-column:span 1}
  .panel{padding:7px;margin-top:5px;border-radius:9px}
+ .decision-banner{margin:0 0 5px;padding:7px 9px;border-radius:9px}.decision-head{font-size:10px;gap:5px}.decision-track{height:5px;margin:5px 0 4px}.decision-text{font-size:8px;line-height:1.2}
  .panel>.row{gap:4px}
  .panel>.row b{font-size:12px}
  .panel>.row .sub{font-size:8px;line-height:1.1}
@@ -74,6 +81,11 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
 <div class="card"><div class="k">Brancos + nulos</div><div class="v" id="bn">—</div><div class="magnitude" id="bnUnit">—</div></div>
 <div class="card"><div class="k">Pontos históricos</div><div class="v" id="pts">—</div><div class="sub" id="sources">—</div></div>
 </div>
+<div class="decision-banner" id="decisionBanner">
+  <div class="decision-head"><span class="decision-title" id="decisionTitle">Calculando situação da disputa…</span><span class="decision-value" id="decisionValue">—</span></div>
+  <div class="decision-track" role="progressbar" aria-label="Proximidade estimada da definição" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="decision-fill" id="decisionFill"></div></div>
+  <div class="decision-text" id="decisionText">Aguardando totais do TSE.</div>
+</div>
 <div class="panel chart-panel"><div class="row"><div><b>Evolução dos candidatos</b><div class="sub">Snapshots observados do EA20; o trecho recuperado antes da coleta local é marcado como captura pública.</div></div><details class="candidate-filter"><summary id="candidateFilterLabel">Candidatos</summary><div class="legend" id="legend"></div></details></div>
 <div class="selected-candidates" id="selectedCandidates"></div><canvas id="chart"></canvas><div class="sub" id="chartNote"></div></div>
 <div class="panel detail-panel"><div class="row"><b>Último resultado</b><span id="updated" class="sub"></span></div><table><thead><tr><th>Candidato</th><th>Partido</th><th>Votos</th><th>% válidos</th></tr></thead><tbody id="candTable"></tbody></table></div>
@@ -95,6 +107,7 @@ async function load(){
  const L=H[H.length-1]; Object.values(L.cand||{}).forEach(c=>{if(c.nome&&!/^\d+$/.test(c.nome))names[c.numero]=c});
  document.querySelector("#pst").textContent=pct(L.pst); document.querySelector("#sec").textContent=fmt(L.st)+" de "+fmt(L.ts||0)+" seções";
  showMetric("#vv",L.vv); showMetric("#comp",L.c); showMetric("#bn",(L.vb||0)+(L.vn||0));
+ updateDecision(L);
  document.querySelector("#pts").textContent=fmt(H.length);
  const counts={};H.forEach(x=>counts[x.source]=(counts[x.source]||0)+1);document.querySelector("#sources").textContent=Object.entries(counts).map(([k,v])=>k+": "+v).join(" · ");
  document.querySelector("#updated").textContent=(L.dt||"")+" "+(L.ht||"");
@@ -124,6 +137,41 @@ function renderSelected(cands){
      (foto?'<img src="'+esc(foto)+'" alt="'+esc(nm)+'" onerror="this.style.display=\'none\'">':'')+
      '<div><div class="name">'+esc(nm)+'</div><div class="meta">'+esc(part)+' · '+pct(c.pct||0)+' · '+fmt(c.votos||0)+' votos</div></div></div>';
  }).join("");
+}
+function humanMetric(n){const m=metric(Math.max(0,n));return m.value+" "+m.unit}
+function updateDecision(L){
+ const box=document.querySelector("#decisionBanner"),title=document.querySelector("#decisionTitle"),value=document.querySelector("#decisionValue"),fill=document.querySelector("#decisionFill"),text=document.querySelector("#decisionText");
+ const leaders=Object.values(L.cand||{}).sort((a,b)=>(+b.votos||0)-(+a.votos||0)).slice(0,2);
+ if(leaders.length<2){title.textContent="Dados insuficientes para avaliar a disputa";value.textContent="—";fill.style.width="0%";return}
+ const leader=leaders[0],second=leaders[1],advantage=Math.max(0,(+leader.votos||0)-(+second.votos||0));
+ const leaderName=names[leader.numero]?.nome||leader.nome||leader.numero;
+ const processedElectorate=(+L.c||0)+(+L.a||0),totalElectorate=+L.te||0;
+ const hasElectorate=totalElectorate>0&&processedElectorate>0;
+ const remainingElectorate=hasElectorate?Math.max(0,totalElectorate-processedElectorate):0;
+ const validRate=processedElectorate>0?(+L.vv||0)/processedElectorate:0;
+ const estimatedValidRemaining=hasElectorate?remainingElectorate*validRate:Math.max(0,(+L.vv||0)*(100/Math.max(+L.pst||0,.01)-1));
+ const estimatedCoverage=estimatedValidRemaining>0?advantage/estimatedValidRemaining:(advantage>0?1:0);
+ const mathematicallyLocked=hasElectorate&&(remainingElectorate===0||advantage>remainingElectorate);
+ const shownCoverage=mathematicallyLocked?100:Math.min(99,Math.max(0,estimatedCoverage*100));
+ let state="open",headline="Disputa ainda aberta";
+ if(mathematicallyLocked){state="locked";headline="Liderança matematicamente irreversível"}
+ else if(estimatedCoverage>=.8){state="near";headline="Muito próxima da definição"}
+ else if(estimatedCoverage>=.5){state="near";headline="Aproximando-se da definição"}
+ box.className="decision-banner "+state;
+ title.textContent=headline;
+ value.textContent=shownCoverage.toFixed(2).replace(".",",")+"%";
+ fill.style.width=shownCoverage+"%";
+ const progress=box.querySelector('[role="progressbar"]');if(progress)progress.setAttribute("aria-valuenow",String(Math.round(shownCoverage)));
+ let roundText="situação de 1º ou 2º turno ainda aberta";
+ if(hasElectorate){
+   const currentValid=+L.vv||0,leaderVotes=+leader.votos||0;
+   const firstRoundGuaranteed=leaderVotes*2>currentValid+remainingElectorate;
+   const runoffGuaranteed=(leaderVotes+remainingElectorate)*2<=currentValid+remainingElectorate;
+   if(firstRoundGuaranteed)roundText="vitória no 1º turno matematicamente garantida";
+   else if(runoffGuaranteed)roundText="2º turno matematicamente garantido";
+ }
+ const boundText=hasElectorate?" Limite conservador: "+humanMetric(remainingElectorate)+" eleitores ainda não totalizados.":"";
+ text.textContent="Vantagem de "+leaderName+": "+humanMetric(advantage)+" · válidos restantes estimados: "+humanMetric(estimatedValidRemaining)+" · "+roundText+"."+boundText+" A estimativa considera o padrão atual de comparecimento, brancos e nulos.";
 }
 function consistency(){
  let bad=[]; for(let i=1;i<H.length;i++){if(H[i].st<H[i-1].st)bad.push("seções "+i); if(H[i].vv<H[i-1].vv)bad.push("válidos "+i)}

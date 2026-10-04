@@ -37,6 +37,8 @@ def parse_tse(d):
                         "numero":num,
                         "nome":c.get("nmu") or c.get("nm") or num,
                         "partido":partido,
+                        "sqcand":str(c.get("sqcand","")),
+                        "foto":("https://resultados.tse.jus.br/oficial/ele2026/6257/fotos/br/"+str(c.get("sqcand",""))+".jpeg") if c.get("sqcand") else "",
                         "votos":n(c.get("vap")),
                         "pct":p(c.get("pvapn") or c.get("pvap"))
                     }

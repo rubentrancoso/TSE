@@ -32,7 +32,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
  .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:8px 0}
  .card{padding:7px;border-radius:8px;min-width:0}
  .card .k{font-size:8px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
- .card .v{font-size:16px;line-height:1.05;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .card .v{font-size:clamp(12px,3.4cqw,16px);line-height:1.05;margin-top:4px;white-space:nowrap;overflow:visible;text-overflow:clip;letter-spacing:-.25px;font-variant-numeric:tabular-nums}
  .card .sub{font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  .grid .card:nth-child(4),.grid .card:nth-child(5){grid-column:span 1}
  .panel{padding:7px;margin-top:5px;border-radius:9px}

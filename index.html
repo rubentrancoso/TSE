@@ -1,6 +1,6 @@
 <!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>TSE Live 2026</title><style>
-:root{font-family:Inter,system-ui,Arial,sans-serif;color:#172033;background:#111827;--frame-y:16px;--stage-w:520px}*{box-sizing:border-box}html,body{height:100%;background:#111827}body{margin:0;display:flex;justify-content:center;align-items:flex-start;overflow-x:hidden}.app-shell{container-type:inline-size;width:min(var(--stage-w),calc(100vw - 12px));height:calc(100vh - 12px);margin:6px auto;background:#111827;border-radius:12px;overflow:hidden;min-width:0;padding:var(--frame-y) 0;box-shadow:0 0 0 1px #ffffff12;display:flex;flex-direction:column}.wrap{flex:1;min-height:0;width:100%;overflow:hidden;background:#f5f7fb;max-width:none;margin:0;padding:12px}
+:root{font-family:Inter,system-ui,Arial,sans-serif;color:#172033;background:#111827;--frame-y:16px;--stage-w:520px}*{box-sizing:border-box}html,body{height:100%;background:#111827}body{margin:0;display:flex;justify-content:center;align-items:flex-start;overflow-x:hidden}.app-shell{container-type:inline-size;width:min(var(--stage-w),calc(100vw - 12px));height:calc(100vh - 12px);margin:6px auto;background:#111827;border-radius:12px;overflow:hidden;min-width:0;padding:var(--frame-y) 0;box-shadow:0 0 0 1px #ffffff12;display:flex;flex-direction:column}.wrap{flex:1;min-height:0;width:100%;overflow:auto;background:#f5f7fb;max-width:none;margin:0;padding:12px}
 .countdown-strip{position:relative;z-index:20;flex:0 0 auto;background:#101828;color:white;padding:7px 10px 8px;box-shadow:0 1px 6px #0002;border-radius:9px 9px 0 0}.countdown-row{max-width:1280px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;font-weight:800}.countdown-right{display:flex;align-items:center;gap:8px}.width-control{display:flex;align-items:center;gap:7px;margin-top:5px;color:#d0d5dd;font-size:10px;font-weight:700}.width-control input{flex:1;min-width:0}.width-value{min-width:46px;text-align:right;font-variant-numeric:tabular-nums}.countdown-track{height:4px;background:#344054;border-radius:999px;overflow:hidden;margin-top:5px}.countdown-fill{height:100%;width:100%;background:#12b76a;transform-origin:left center;transition:width .12s linear}.countdown-now{font-variant-numeric:tabular-nums;color:#fff;font-weight:800}.brasilia-label{color:#d0d5dd;font-size:11px;font-weight:800;letter-spacing:.02em}.refresh-btn{padding:6px 9px;min-width:34px;font-size:16px;line-height:1;font-weight:800}
 header{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:16px}.live{font-size:12px;font-weight:800;color:#087f5b}.live:before{content:"●";margin-right:6px}
 h1{margin:3px 0;font-size:27px}.dev-live{display:inline-flex;align-items:center;gap:5px;margin:1px 0 3px;color:#b42318;font-size:11px;font-weight:800}.dev-live:before{content:"●";font-size:9px}.sub{color:#687386;font-size:13px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}
@@ -13,7 +13,7 @@ h1{margin:3px 0;font-size:27px}.dev-live{display:inline-flex;align-items:center;
 .legend label{display:flex;align-items:center;gap:5px;white-space:nowrap}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
 .selected-candidates{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0 4px}.candidate-card{display:flex;align-items:center;gap:10px;border:1px solid #e1e5ee;border-radius:12px;padding:8px 12px;background:#fafbfe;min-width:185px}.candidate-card img{width:54px;height:54px;border-radius:50%;object-fit:cover;background:#eef1f6}.candidate-card .name{font-weight:800}.candidate-card .meta{font-size:12px;color:#687386}
 table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;border-bottom:1px solid #edf0f5;text-align:right}th:first-child,td:first-child{text-align:left}
-.warn{color:#b42318;font-weight:700}.ok{color:#087f5b;font-weight:700}@container(max-width:800px){.wrap{max-width:none;padding:12px}header{display:block;margin-bottom:10px}h1{font-size:23px}.toolbar{margin-top:10px;gap:6px}.toolbar button,.toolbar select{font-size:12px;padding:7px 9px}.grid{grid-template-columns:repeat(2,1fr);gap:7px;margin:10px 0}.card{padding:9px}.card .v{font-size:18px}.card .k{font-size:10px}.panel{padding:10px;margin-top:8px}.selected-candidates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:9px}.candidate-card{min-width:0;padding:7px}.candidate-card img{width:44px;height:44px}.candidate-card .name{font-size:13px}.candidate-card .meta{font-size:10px}.legend{font-size:10px;gap:7px}#chart{height:330px}.countdown-row{max-width:560px}.pulsebar{font-size:11px;gap:7px}.sub{font-size:11px}}
+.warn{color:#b42318;font-weight:700}.ok{color:#087f5b;font-weight:700}@container(max-width:800px){.wrap{max-width:none;padding:12px;overflow:hidden}header{display:block;margin-bottom:10px}h1{font-size:23px}.toolbar{margin-top:10px;gap:6px}.toolbar button,.toolbar select{font-size:12px;padding:7px 9px}.grid{grid-template-columns:repeat(2,1fr);gap:7px;margin:10px 0}.card{padding:9px}.card .v{font-size:18px}.card .k{font-size:10px}.panel{padding:10px;margin-top:8px}.selected-candidates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:9px}.candidate-card{min-width:0;padding:7px}.candidate-card img{width:44px;height:44px}.candidate-card .name{font-size:13px}.candidate-card .meta{font-size:10px}.legend{font-size:10px;gap:7px}#chart{height:330px}.countdown-row{max-width:560px}.pulsebar{font-size:11px;gap:7px}.sub{font-size:11px}}
 @container(max-width:620px){
 
  .countdown-strip{padding:5px 10px 6px}
@@ -61,7 +61,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
  .selected-candidates{grid-template-columns:repeat(2,minmax(0,1fr))}
  #chart{height:228px}
 }
-</style></head><body><div class="app-shell"><div class="countdown-strip"><div class="countdown-row"><span class="brasilia-label">Brasília</span><span class="countdown-right"><span class="countdown-now" id="clockNow">--:--:--</span></span></div><div class="width-control"><span>Largura</span><input id="stageWidth" type="range" min="360" max="1080" step="10" value="520"><span class="width-value" id="stageWidthValue">520 px</span></div><div class="countdown-track"><div class="countdown-fill" id="countdownFill"></div></div></div><div class="wrap">
+</style></head><body><div class="app-shell"><div class="countdown-strip"><div class="countdown-row"><span class="brasilia-label">Brasília</span><span class="countdown-right"><span class="countdown-now" id="clockNow">--:--:--</span></span></div><div class="width-control"><span id="stageModeLabel">Largura</span><input id="stageWidth" type="range" min="360" max="1400" step="10" value="520"><span class="width-value" id="stageWidthValue">520 px</span></div><div class="countdown-track"><div class="countdown-fill" id="countdownFill"></div></div></div><div class="wrap">
 <header><div><div class="live">DADOS DO TSE</div><h1>Apuração presidencial · 2026</h1><div class="dev-live">Programa sendo desenvolvido ao vivo</div><div class="sub" id="status">Carregando…</div>
 <div class="pulsebar"><span class="pulse-dot" id="pulseDot"></span><span id="pulseText">Aguardando leitura…</span><span class="pulse-extra" id="changeText"></span></div></div>
 <div class="toolbar"><select id="xmode"><option value="time">Eixo: horário</option><option value="pst">Eixo: % seções</option></select>
@@ -251,19 +251,36 @@ function moveChartCursor(e){
 function labelTimeFrom(arr,i){let x=arr[Math.max(0,Math.min(arr.length-1,i))];return x?.ht?.slice(0,5)||""}
 function compact(n){return Intl.NumberFormat("pt-BR",{notation:"compact",maximumFractionDigits:1}).format(n)}
 function labelTime(i){let x=H[Math.max(0,Math.min(H.length-1,i))];return x?.ht?.slice(0,5)||""}
-function applyStageWidth(){
+let activeStageMode="";
+function getStageMode(){return innerWidth>=900&&innerWidth/innerHeight>=1.15?"desktop":"vertical"}
+function applyStageWidth(save=true){
  const width=document.querySelector("#stageWidth").value;
  document.documentElement.style.setProperty("--stage-w",width+"px");
  document.querySelector("#stageWidthValue").textContent=width+" px";
- localStorage.setItem("tse-stage-w",width);
+ if(save)localStorage.setItem(activeStageMode==="desktop"?"tse-stage-w-desktop":"tse-stage-w",width);
  setTimeout(draw,0);
 }
+function syncStageMode(force=false){
+ const mode=getStageMode(),changed=mode!==activeStageMode;
+ const input=document.querySelector("#stageWidth"),limit=Math.max(360,Math.min(1400,innerWidth-12));
+ input.max=limit;
+ if(!force&&!changed){
+  if(+input.value>limit){input.value=limit;applyStageWidth(false)}
+  return;
+ }
+ activeStageMode=mode;
+ const key=mode==="desktop"?"tse-stage-w-desktop":"tse-stage-w";
+ const saved=localStorage.getItem(key);
+ const fallback=mode==="desktop"?Math.min(1180,limit):Math.min(520,limit);
+ input.value=Math.min(limit,Math.max(360,+(saved??fallback)));
+ document.querySelector("#stageModeLabel").textContent=mode==="desktop"?"Desktop":"Largura";
+ applyStageWidth(false);
+}
 function initStageWidth(){
- const saved=localStorage.getItem("tse-stage-w");
- if(saved!==null)document.querySelector("#stageWidth").value=saved;
- applyStageWidth();
+ syncStageMode(true);
  document.querySelector("#stageWidth").addEventListener("input",applyStageWidth);
 }
+function resizeLayout(){syncStageMode();draw()}
 const POLL_SECONDS=10;
 let lastPulseStamp="";
 let lastPollSeenAt=performance.now();
@@ -296,5 +313,5 @@ async function refreshNow(){lastPollSeenAt=performance.now()-POLL_SECONDS*1000;u
 async function backfill(){let r=await fetch("/api/backfill/community",{method:"POST"});let j=await r.json();alert("Pontos importados: "+(j.imported||0));await load()}
 document.querySelector("#chart").addEventListener("pointermove",moveChartCursor);
 document.querySelector("#chart").addEventListener("pointerleave",()=>{chartHoverIndex=null;draw()});
-document.querySelector("#xmode").onchange=draw;document.querySelector("#ymode").onchange=draw;addEventListener("resize",draw);initStageWidth();load();pulseStatus();updateCountdown();setInterval(load,10000);setInterval(pulseStatus,500);setInterval(updateCountdown,100);
+document.querySelector("#xmode").onchange=draw;document.querySelector("#ymode").onchange=draw;addEventListener("resize",resizeLayout);initStageWidth();load();pulseStatus();updateCountdown();setInterval(load,10000);setInterval(pulseStatus,500);setInterval(updateCountdown,100);
 </script></body></html>

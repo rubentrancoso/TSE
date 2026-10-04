@@ -9,7 +9,7 @@ h1{margin:3px 0;font-size:27px}.dev-live{display:inline-flex;align-items:center;
 .pulse-extra{font-weight:500;color:#667085}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(18,183,106,.65)}100%{box-shadow:0 0 0 13px rgba(18,183,106,0)}}button,select{border:1px solid #d8deea;background:white;border-radius:9px;padding:8px 11px;cursor:pointer}
 .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0}.card,.panel{background:white;border:1px solid #e1e5ee;border-radius:12px;box-shadow:0 1px 2px #00000008}
 .card{padding:13px}.k{font-size:11px;text-transform:uppercase;color:#78849a}.v{font-size:22px;font-weight:800;margin-top:5px}.magnitude{margin-top:2px;color:#687386;font-size:11px;font-weight:700}.panel{padding:15px;margin-top:12px}
-.row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}#chart{width:100%;height:420px;display:block}.candidate-filter{position:relative;margin-left:auto}.candidate-filter summary{list-style:none;border:1px solid #d8deea;background:white;border-radius:9px;padding:7px 10px;cursor:pointer;font-size:12px;font-weight:700;white-space:nowrap}.candidate-filter summary::-webkit-details-marker{display:none}.candidate-filter summary:after{content:" ▾"}.candidate-filter[open] summary:after{content:" ▴"}.legend{position:absolute;right:0;top:calc(100% + 6px);z-index:40;display:grid;grid-template-columns:repeat(2,minmax(150px,1fr));gap:7px 12px;width:max-content;max-width:min(520px,calc(100vw - 40px));max-height:260px;overflow:auto;padding:12px;background:white;border:1px solid #d8deea;border-radius:10px;box-shadow:0 12px 30px #1018282e;font-size:12px}
+.row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}#chart{width:100%;height:420px;display:block;cursor:crosshair;touch-action:none}.candidate-filter{position:relative;margin-left:auto}.candidate-filter summary{list-style:none;border:1px solid #d8deea;background:white;border-radius:9px;padding:7px 10px;cursor:pointer;font-size:12px;font-weight:700;white-space:nowrap}.candidate-filter summary::-webkit-details-marker{display:none}.candidate-filter summary:after{content:" ▾"}.candidate-filter[open] summary:after{content:" ▴"}.legend{position:absolute;right:0;top:calc(100% + 6px);z-index:40;display:grid;grid-template-columns:repeat(2,minmax(150px,1fr));gap:7px 12px;width:max-content;max-width:min(520px,calc(100vw - 40px));max-height:260px;overflow:auto;padding:12px;background:white;border:1px solid #d8deea;border-radius:10px;box-shadow:0 12px 30px #1018282e;font-size:12px}
 .legend label{display:flex;align-items:center;gap:5px;white-space:nowrap}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
 .selected-candidates{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0 4px}.candidate-card{display:flex;align-items:center;gap:10px;border:1px solid #e1e5ee;border-radius:12px;padding:8px 12px;background:#fafbfe;min-width:185px}.candidate-card img{width:54px;height:54px;border-radius:50%;object-fit:cover;background:#eef1f6}.candidate-card .name{font-weight:800}.candidate-card .meta{font-size:12px;color:#687386}
 table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;border-bottom:1px solid #edf0f5;text-align:right}th:first-child,td:first-child{text-align:left}
@@ -79,7 +79,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
 <div class="panel detail-panel"><div class="row"><b>Último resultado</b><span id="updated" class="sub"></span></div><table><thead><tr><th>Candidato</th><th>Partido</th><th>Votos</th><th>% válidos</th></tr></thead><tbody id="candTable"></tbody></table></div>
 <div class="panel detail-panel"><div class="row"><b>Consistência da série</b><span id="check" class="ok">—</span></div><div class="sub">Checagem mecânica: seções e votos válidos não deveriam recuar entre snapshots sucessivos. Backfill externo e leitura ao vivo permanecem identificados separadamente.</div></div>
 </div></div><script>
-let H=[], names={}; const colors=["#2457f5","#e53935","#00a86b","#f59e0b","#7c3aed","#0891b2","#db2777","#64748b","#16a34a","#ea580c","#4f46e5","#9333ea"];
+let H=[], names={},chartState=null,chartHoverIndex=null; const colors=["#2457f5","#e53935","#00a86b","#f59e0b","#7c3aed","#0891b2","#db2777","#64748b","#16a34a","#ea580c","#4f46e5","#9333ea"];
 const fmt=n=>new Intl.NumberFormat("pt-BR").format(n||0); const pct=n=>(+n||0).toFixed(2).replace(".",",")+"%";
 function metric(n){
  const value=+n||0,abs=Math.abs(value);
@@ -179,6 +179,7 @@ function draw(){
  }
 
  const X=x=>pad.l+(x-xmin)/(xmax-xmin)*iw,Y=y=>pad.t+(1-(y-ymin)/(ymax-ymin))*ih;
+ chartState={viewH,xs,X,Y,nums,ym,xm,w,h,pad};
  g.strokeStyle="#e3e7ef";g.fillStyle="#667085";g.font="11px system-ui";g.textAlign="right";
  for(let j=0;j<=5;j++){
    let y=ymin+(ymax-ymin)*j/5,py=Y(y);
@@ -212,10 +213,40 @@ function draw(){
    });
  });
 
+ drawChartCursor(g);
+
  document.querySelector("#chartNote").textContent=
    (ym==="top2"?"Modo 2 líderes: pontos iniciais irrelevantes foram ignorados e o eixo Y mostra só a faixa real da disputa. ":"")+
    (xm==="pst"?"Eixo X = percentual de seções totalizadas.":"Eixo X = evolução cronológica da apuração.")+
    " Fonte de cada ponto preservada no histórico.";
+}
+function drawChartCursor(g){
+ const s=chartState;if(chartHoverIndex===null||!s?.viewH.length)return;
+ const i=Math.max(0,Math.min(s.viewH.length-1,chartHoverIndex));
+ const row=s.viewH[i],px=s.X(s.xs[i]);
+ const entries=s.nums.map((n,k)=>({n,k,c:row.cand?.[n]})).filter(x=>x.c);
+ g.save();
+ g.strokeStyle="#344054";g.lineWidth=1;g.setLineDash([4,4]);
+ g.beginPath();g.moveTo(px,s.pad.t);g.lineTo(px,s.h-s.pad.b);g.stroke();g.setLineDash([]);
+ entries.forEach(({k,c})=>{const py=s.Y((s.ym==="pct"||s.ym==="top2")?+c.pct:+c.votos);g.fillStyle=colors[k%colors.length];g.strokeStyle="white";g.lineWidth=2;g.beginPath();g.arc(px,py,4.5,0,Math.PI*2);g.fill();g.stroke()});
+ const title=s.xm==="pst"?pct(row.pst)+" das seções":((row.ht||"").slice(0,8)||"Ponto "+(i+1));
+ const lines=entries.map(({n,k,c})=>({color:colors[k%colors.length],text:(names[n]?.nome||c.nome||n)+": "+((s.ym==="pct"||s.ym==="top2")?pct(c.pct):fmt(c.votos))}));
+ g.font="700 11px system-ui";
+ const textWidth=Math.max(g.measureText(title).width,...lines.map(x=>g.measureText(x.text).width));
+ const bw=Math.min(s.w-s.pad.l-s.pad.r,Math.max(155,textWidth+30)),bh=28+lines.length*18;
+ let bx=px+10;if(bx+bw>s.w-s.pad.r)bx=px-bw-10;bx=Math.max(s.pad.l,Math.min(bx,s.w-s.pad.r-bw));
+ const by=s.pad.t+7;
+ g.fillStyle="rgba(16,24,40,.94)";g.beginPath();g.roundRect(bx,by,bw,bh,8);g.fill();
+ g.fillStyle="white";g.textAlign="left";g.textBaseline="middle";g.fillText(title,bx+10,by+14);
+ lines.forEach((line,j)=>{const y=by+33+j*18;g.fillStyle=line.color;g.beginPath();g.arc(bx+10,y,3.5,0,Math.PI*2);g.fill();g.fillStyle="white";g.fillText(line.text,bx+20,y)});
+ g.restore();
+}
+function moveChartCursor(e){
+ if(!chartState?.viewH.length)return;
+ const rect=e.currentTarget.getBoundingClientRect(),mx=e.clientX-rect.left;
+ let best=0,dist=Infinity;
+ chartState.xs.forEach((x,i)=>{const d=Math.abs(chartState.X(x)-mx);if(d<dist){dist=d;best=i}});
+ chartHoverIndex=best;draw();
 }
 function labelTimeFrom(arr,i){let x=arr[Math.max(0,Math.min(arr.length-1,i))];return x?.ht?.slice(0,5)||""}
 function compact(n){return Intl.NumberFormat("pt-BR",{notation:"compact",maximumFractionDigits:1}).format(n)}
@@ -262,5 +293,7 @@ function updateCountdown(){
 }
 async function refreshNow(){lastPollSeenAt=performance.now()-POLL_SECONDS*1000;updateCountdown();await fetch("/api/refresh",{method:"POST"});await Promise.all([load(),pulseStatus()])}
 async function backfill(){let r=await fetch("/api/backfill/community",{method:"POST"});let j=await r.json();alert("Pontos importados: "+(j.imported||0));await load()}
+document.querySelector("#chart").addEventListener("pointermove",moveChartCursor);
+document.querySelector("#chart").addEventListener("pointerleave",()=>{chartHoverIndex=null;draw()});
 document.querySelector("#xmode").onchange=draw;document.querySelector("#ymode").onchange=draw;addEventListener("resize",draw);initStageWidth();load();pulseStatus();updateCountdown();setInterval(load,10000);setInterval(pulseStatus,500);setInterval(updateCountdown,100);
 </script></body></html>

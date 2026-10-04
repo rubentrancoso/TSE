@@ -214,7 +214,7 @@ function draw(){
  if(ymax===ymin){ymax=ymin+1}
 
  const X=x=>pad.l+(x-xmin)/(xmax-xmin)*iw,Y=y=>pad.t+(1-(y-ymin)/(ymax-ymin))*ih;
- chartState={viewH,xs,X,Y,series,ym,xm,w,h,pad};
+ chartState={viewH,xs,X,Y,series,top2nums,ym,xm,w,h,pad};
  g.strokeStyle="#e3e7ef";g.fillStyle="#667085";g.font="11px system-ui";g.textAlign="right";
  for(let j=0;j<=5;j++){
    const y=ymin+(ymax-ymin)*j/5,py=Y(y);
@@ -269,6 +269,11 @@ function drawChartCursor(g){
  entries.forEach(({line,value})=>{const py=s.Y(value);g.fillStyle=line.color;g.strokeStyle="white";g.lineWidth=2;g.beginPath();g.arc(px,py,4.5,0,Math.PI*2);g.fill();g.stroke()});
  const title=s.xm==="pst"?pct(row.pst)+" das seções":((row.ht||"").slice(0,8)||"Ponto "+(i+1));
  const lines=entries.map(({line,value})=>({color:line.color,text:line.label+": "+line.format(value)}));
+ const first=row.cand?.[s.top2nums?.[0]],second=row.cand?.[s.top2nums?.[1]];
+ if(first&&second){
+   const pp=Math.abs((+first.pct||0)-(+second.pct||0));
+   lines.push({color:"#f59e0b",text:"Diferença percentual: "+pp.toFixed(2).replace(".",",")+" p.p."});
+ }
  g.font="700 11px system-ui";
  const textWidth=Math.max(g.measureText(title).width,...lines.map(x=>g.measureText(x.text).width));
  const bw=Math.min(s.w-s.pad.l-s.pad.r,Math.max(155,textWidth+30)),bh=28+lines.length*18;

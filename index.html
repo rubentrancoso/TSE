@@ -138,6 +138,24 @@ function renderSelected(cands){
      '<div><div class="name">'+esc(nm)+'</div><div class="meta">'+esc(part)+' · '+pct(c.pct||0)+' · '+fmt(c.votos||0)+' votos</div></div></div>';
  }).join("");
 }
+function getRoundStatus(L){
+ const leaders=Object.values(L.cand||{}).sort((a,b)=>(+b.votos||0)-(+a.votos||0));
+ if(!leaders.length)return {key:"open",label:"Turno ainda em aberto"};
+ const processed=(+L.c||0)+(+L.a||0),total=+L.te||0;
+ if(total<=0||processed<=0)return {key:"open",label:"Turno ainda em aberto"};
+ const remaining=Math.max(0,total-processed),valid=+L.vv||0,leaderVotes=+leaders[0].votos||0;
+ if(leaderVotes*2>valid+remaining)return {key:"first",label:"1º turno garantido"};
+ if((leaderVotes+remaining)*2<=valid+remaining)return {key:"runoff",label:"2º turno garantido"};
+ return {key:"open",label:"Turno ainda em aberto"};
+}
+function drawRoundBadge(g,status,w,pad){
+ const bg=status.key==="first"?"#067647":status.key==="runoff"?"#b54708":"#475467";
+ g.save();g.font="800 11px system-ui";
+ const bw=g.measureText(status.label).width+20,bh=24,bx=w-pad.r-bw,by=pad.t+7;
+ g.fillStyle=bg;g.beginPath();g.roundRect(bx,by,bw,bh,12);g.fill();
+ g.fillStyle="white";g.textAlign="center";g.textBaseline="middle";g.fillText(status.label,bx+bw/2,by+bh/2);
+ g.restore();
+}
 function humanMetric(n){const m=metric(Math.max(0,n));return m.value+" "+m.unit}
 function updateDecision(L){
  const box=document.querySelector("#decisionBanner"),title=document.querySelector("#decisionTitle"),value=document.querySelector("#decisionValue"),fill=document.querySelector("#decisionFill"),text=document.querySelector("#decisionText");
@@ -162,14 +180,8 @@ function updateDecision(L){
  value.textContent=shownCoverage.toFixed(2).replace(".",",")+"%";
  fill.style.width=shownCoverage+"%";
  const progress=box.querySelector('[role="progressbar"]');if(progress)progress.setAttribute("aria-valuenow",String(Math.round(shownCoverage)));
- let roundText="situação de 1º ou 2º turno ainda aberta";
- if(hasElectorate){
-   const currentValid=+L.vv||0,leaderVotes=+leader.votos||0;
-   const firstRoundGuaranteed=leaderVotes*2>currentValid+remainingElectorate;
-   const runoffGuaranteed=(leaderVotes+remainingElectorate)*2<=currentValid+remainingElectorate;
-   if(firstRoundGuaranteed)roundText="vitória no 1º turno matematicamente garantida";
-   else if(runoffGuaranteed)roundText="2º turno matematicamente garantido";
- }
+ const roundStatus=getRoundStatus(L);
+ let roundText=roundStatus.key==="first"?"vitória no 1º turno matematicamente garantida":roundStatus.key==="runoff"?"2º turno matematicamente garantido":"situação de 1º ou 2º turno ainda aberta";
  const boundText=hasElectorate?" Limite conservador: "+humanMetric(remainingElectorate)+" eleitores ainda não totalizados.":"";
  text.textContent="Vantagem de "+leaderName+": "+humanMetric(advantage)+" · válidos restantes estimados: "+humanMetric(estimatedValidRemaining)+" · "+roundText+"."+boundText+" A estimativa considera o padrão atual de comparecimento, brancos e nulos.";
 }
@@ -244,12 +256,13 @@ function draw(){
  let ymin=0,ymax=Math.max(...ys,1);
  if(ym==="pct"){
    ymin=Math.max(0,Math.min(...ys)-2);
-   ymax=Math.min(100,Math.max(...ys)+2);
+   ymax=Math.min(100,Math.max(50.6,Math.max(...ys)+2));
  }else if(ym==="top2"){
    const lo=Math.min(...ys),hi=Math.max(...ys),span=Math.max(hi-lo,1);
    const extra=Math.max(.4,span*.08);
    ymin=Math.max(0,Math.floor((lo-extra)*10)/10);
    ymax=Math.min(100,Math.ceil((hi+extra)*10)/10);
+   ymax=Math.max(ymax,50.6);
  }else if(ym==="difference"){
    const lo=Math.min(...ys),hi=Math.max(...ys),span=Math.max(hi-lo,Math.abs(hi)*.05,1);
    const extra=span*.10;
@@ -271,6 +284,11 @@ function draw(){
  }
  if(gapMode&&ymin<0&&ymax>0){
    const zeroY=Y(0);g.save();g.strokeStyle="#98a2b3";g.lineWidth=1.5;g.beginPath();g.moveTo(pad.l,zeroY);g.lineTo(w-pad.r,zeroY);g.stroke();g.restore();
+ }
+ if((ym==="pct"||ym==="top2")&&ymin<=50&&ymax>=50){
+   const y50=Y(50);g.save();g.strokeStyle="#f79009";g.lineWidth=1.5;g.setLineDash([6,4]);g.beginPath();g.moveTo(pad.l,y50);g.lineTo(w-pad.r,y50);g.stroke();g.setLineDash([]);
+   const label="> 50% · vence no 1º turno";g.font="800 10px system-ui";const tw=g.measureText(label).width;
+   g.fillStyle="rgba(255,255,255,.92)";g.fillRect(w-pad.r-tw-10,y50-15,tw+10,14);g.fillStyle="#b54708";g.textAlign="right";g.fillText(label,w-pad.r-5,y50-5);g.restore();
  }
  g.textAlign="center";
  for(let j=0;j<=5;j++){
@@ -296,6 +314,7 @@ function draw(){
    });
  });
 
+ drawRoundBadge(g,getRoundStatus(latest),w,pad);
  drawChartCursor(g);
 
  let modeNote="";

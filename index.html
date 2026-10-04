@@ -19,7 +19,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
  .countdown-strip{padding:5px 10px 6px}
  .countdown-row{font-size:11px}
  .countdown-track{height:3px;margin-top:4px}
- .wrap{max-width:none;padding:7px 9px 9px}
+ .wrap{max-width:none;padding:7px 9px 9px;display:flex;flex-direction:column}
  header{margin-bottom:5px}
  .live{font-size:9px}
  h1{font-size:19px;line-height:1.05;margin:2px 0}
@@ -44,13 +44,14 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
  .legend label{gap:2px}
  .legend input{width:11px;height:11px;margin:0}
  .dot{width:6px;height:6px}
- .selected-candidates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;margin:5px 0 2px}
- .candidate-card{min-width:0;padding:4px 5px;border-radius:8px;gap:5px}
- .candidate-card img{width:30px;height:30px}
- .candidate-card .name{font-size:10px;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
- .candidate-card .meta{font-size:8px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
- .chart-panel{padding-bottom:10px}
- #chart{height:238px}
+ .selected-candidates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:7px 0 4px;flex:0 0 auto}
+ .candidate-card{min-width:0;padding:clamp(6px,1.5cqw,9px);border-radius:9px;gap:clamp(7px,1.8cqw,10px)}
+ .candidate-card img{width:clamp(38px,9cqw,48px);height:clamp(38px,9cqw,48px)}
+ .candidate-card .name{font-size:clamp(11px,2.8cqw,14px);line-height:1.08;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .candidate-card .meta{font-size:clamp(8.5px,2.1cqw,11px);line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .chart-panel{padding-bottom:10px;display:flex;flex:1 1 auto;min-height:0;flex-direction:column}
+ .chart-panel>.row{flex:0 0 auto}
+ #chart{height:auto;min-height:200px;flex:1 1 auto}
  #chartNote{display:none}
  .detail-panel{display:none}
 }

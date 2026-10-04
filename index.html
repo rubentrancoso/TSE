@@ -14,7 +14,48 @@ h1{margin:3px 0;font-size:27px}.sub{color:#687386;font-size:13px}.toolbar{displa
 .selected-candidates{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0 4px}.candidate-card{display:flex;align-items:center;gap:10px;border:1px solid #e1e5ee;border-radius:12px;padding:8px 12px;background:#fafbfe;min-width:185px}.candidate-card img{width:54px;height:54px;border-radius:50%;object-fit:cover;background:#eef1f6}.candidate-card .name{font-weight:800}.candidate-card .meta{font-size:12px;color:#687386}
 table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;border-bottom:1px solid #edf0f5;text-align:right}th:first-child,td:first-child{text-align:left}
 .warn{color:#b42318;font-weight:700}.ok{color:#087f5b;font-weight:700}@media(max-width:800px){.wrap{max-width:560px;padding:12px}header{display:block;margin-bottom:10px}h1{font-size:23px}.toolbar{margin-top:10px;gap:6px}.toolbar button,.toolbar select{font-size:12px;padding:7px 9px}.grid{grid-template-columns:repeat(2,1fr);gap:7px;margin:10px 0}.card{padding:9px}.card .v{font-size:18px}.card .k{font-size:10px}.panel{padding:10px;margin-top:8px}.selected-candidates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:9px}.candidate-card{min-width:0;padding:7px}.candidate-card img{width:44px;height:44px}.candidate-card .name{font-size:13px}.candidate-card .meta{font-size:10px}.legend{font-size:10px;gap:7px}#chart{height:330px}.countdown-row{max-width:560px}.pulsebar{font-size:11px;gap:7px}.sub{font-size:11px}}
-@media(max-width:430px){.selected-candidates{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}#chart{height:300px}}
+@media(max-width:620px){
+ body{background:#f5f7fb;overflow-x:hidden}
+ .countdown-strip{padding:5px 10px 6px}
+ .countdown-row{font-size:11px}
+ .countdown-track{height:3px;margin-top:4px}
+ .wrap{max-width:none;padding:7px 9px 9px}
+ header{margin-bottom:5px}
+ .live{font-size:9px}
+ h1{font-size:19px;line-height:1.05;margin:2px 0}
+ #status{font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .pulsebar{margin-top:4px;font-size:9px;gap:5px;white-space:nowrap}
+ .pulse-dot{width:9px;height:9px}
+ .toolbar{margin-top:5px;display:grid;grid-template-columns:1fr 1fr auto;gap:4px}
+ .toolbar select,.toolbar button{min-width:0;padding:4px 6px;font-size:10px;border-radius:7px}
+ .toolbar button:nth-of-type(2),.toolbar button:nth-of-type(3){display:none}
+ .grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;margin:6px 0}
+ .card{padding:5px 5px;border-radius:8px;min-width:0}
+ .card .k{font-size:7px;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .card .v{font-size:13px;line-height:1.05;margin-top:3px;white-space:nowrap}
+ .card .sub{font-size:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .panel{padding:7px;margin-top:5px;border-radius:9px}
+ .panel>.row{gap:4px}
+ .panel>.row b{font-size:12px}
+ .panel>.row .sub{font-size:8px;line-height:1.1}
+ .legend{font-size:8px;gap:4px 6px;max-height:27px;overflow:hidden}
+ .legend label{gap:2px}
+ .legend input{width:11px;height:11px;margin:0}
+ .dot{width:6px;height:6px}
+ .selected-candidates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;margin:5px 0 2px}
+ .candidate-card{min-width:0;padding:4px 5px;border-radius:8px;gap:5px}
+ .candidate-card img{width:30px;height:30px}
+ .candidate-card .name{font-size:10px;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .candidate-card .meta{font-size:8px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #chart{height:215px}
+ #chartNote{display:none}
+ .detail-panel{display:none}
+}
+@media(max-width:430px){
+ .grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+ .selected-candidates{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #chart{height:205px}
+}
 </style></head><body><div class="countdown-strip"><div class="countdown-row"><span id="countdownText">Próxima consulta ao TSE em 10,0 s</span><span class="countdown-now" id="clockNow">--:--:--</span></div><div class="countdown-track"><div class="countdown-fill" id="countdownFill"></div></div></div><div class="wrap">
 <header><div><div class="live">DADOS DO TSE</div><h1>Apuração presidencial · 2026</h1><div class="sub" id="status">Carregando…</div>
 <div class="pulsebar"><span class="pulse-dot" id="pulseDot"></span><span id="pulseText">Aguardando leitura…</span><span class="pulse-extra" id="changeText"></span></div></div>
@@ -30,8 +71,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
 </div>
 <div class="panel"><div class="row"><div><b>Evolução dos candidatos</b><div class="sub">Snapshots observados do EA20; o trecho recuperado antes da coleta local é marcado como captura pública.</div></div><div class="legend" id="legend"></div></div>
 <div class="selected-candidates" id="selectedCandidates"></div><canvas id="chart"></canvas><div class="sub" id="chartNote"></div></div>
-<div class="panel"><div class="row"><b>Último resultado</b><span id="updated" class="sub"></span></div><table><thead><tr><th>Candidato</th><th>Partido</th><th>Votos</th><th>% válidos</th></tr></thead><tbody id="candTable"></tbody></table></div>
-<div class="panel"><div class="row"><b>Consistência da série</b><span id="check" class="ok">—</span></div><div class="sub">Checagem mecânica: seções e votos válidos não deveriam recuar entre snapshots sucessivos. Backfill externo e leitura ao vivo permanecem identificados separadamente.</div></div>
+<div class="panel detail-panel"><div class="row"><b>Último resultado</b><span id="updated" class="sub"></span></div><table><thead><tr><th>Candidato</th><th>Partido</th><th>Votos</th><th>% válidos</th></tr></thead><tbody id="candTable"></tbody></table></div>
+<div class="panel detail-panel"><div class="row"><b>Consistência da série</b><span id="check" class="ok">—</span></div><div class="sub">Checagem mecânica: seções e votos válidos não deveriam recuar entre snapshots sucessivos. Backfill externo e leitura ao vivo permanecem identificados separadamente.</div></div>
 </div><script>
 let H=[], names={}; const colors=["#2457f5","#e53935","#00a86b","#f59e0b","#7c3aed","#0891b2","#db2777","#64748b","#16a34a","#ea580c","#4f46e5","#9333ea"];
 const fmt=n=>new Intl.NumberFormat("pt-BR").format(n||0); const pct=n=>(+n||0).toFixed(2).replace(".",",")+"%";

@@ -65,7 +65,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
 <header><div><div class="live">DADOS DO TSE</div><h1>Apuração presidencial · 2026</h1><div class="dev-live">Programa sendo desenvolvido ao vivo</div><div class="sub" id="status">Carregando…</div>
 <div class="pulsebar"><span class="pulse-dot" id="pulseDot"></span><span id="pulseText">Aguardando leitura…</span><span class="pulse-extra" id="changeText"></span></div></div>
 <div class="toolbar"><select id="xmode"><option value="time">Eixo: horário</option><option value="pst">Eixo: % seções</option></select>
-<select id="ymode"><option value="top2" selected>2 líderes (zoom)</option><option value="pct">Y: % votos válidos</option><option value="votes">Y: votos</option></select>
+<select id="ymode"><option value="top2" selected>2 líderes (zoom)</option><option value="pct">Y: % votos válidos</option><option value="votes">Y: votos</option><option value="difference">Y: diferença acumulada</option><option value="batch">Y: saldo por lote</option></select>
 <button class="refresh-btn" onclick="refreshNow()" title="Atualizar agora" aria-label="Atualizar agora">↻</button><button onclick="backfill()">Recuperar início</button><button onclick="location.href='/api/export.csv'">CSV</button><button onclick="location.href='/api/export.json'">Backup JSON</button></div></header>
 <div class="grid">
 <div class="card"><div class="k">Seções apuradas</div><div class="v" id="pst">—</div><div class="sub" id="sec">—</div></div>
@@ -131,8 +131,9 @@ function consistency(){
 }
 function draw(){
  const cv=document.querySelector("#chart"),dpr=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;cv.width=w*dpr;cv.height=h*dpr;const g=cv.getContext("2d");g.scale(dpr,dpr);g.clearRect(0,0,w,h);
- const pad={l:58,r:18,t:24,b:42},iw=w-pad.l-pad.r,ih=h-pad.t-pad.b;if(!H.length)return;
+ const pad={l:66,r:18,t:24,b:42},iw=w-pad.l-pad.r,ih=h-pad.t-pad.b;if(!H.length)return;
  const xm=document.querySelector("#xmode").value,ym=document.querySelector("#ymode").value;
+ const gapMode=ym==="difference"||ym==="batch";
 
  let nums=[...selected];
  let viewH=H;
@@ -142,10 +143,10 @@ function draw(){
    .sort((a,b)=>(+b.votos||0)-(+a.votos||0))
    .slice(0,2)
    .map(c=>c.numero);
+ if(top2nums.length<2)return;
 
- // O TSE pode ter snapshots iniciais com candidatos ainda em 0%.
- // Eles não representam a curva eleitoral e criam o "rabo" vertical no gráfico.
- if(ym==="top2" || ym==="pct"){
+ // Descarta snapshots iniciais ainda sem percentuais representativos.
+ if(ym==="top2" || ym==="pct" || gapMode){
    const startIdx=H.findIndex(x=>{
      const vals=top2nums.map(n=>+(x.cand?.[n]?.pct||0));
      return (+x.pst||0)>=1 && vals.length===2 && vals[0]>20 && vals[1]>20;
@@ -153,84 +154,121 @@ function draw(){
    if(startIdx>=0)viewH=H.slice(startIdx);
  }
 
- if(ym==="top2"){
-   nums=top2nums;
- }
+ if(ym==="top2" || gapMode)nums=top2nums;
 
  const xs=viewH.map((x,i)=>xm==="pst"?+x.pst:i);
  let xmin=Math.min(...xs),xmax=Math.max(...xs);if(xmax===xmin)xmax=xmin+1;
 
- let ys=[];
- viewH.forEach(x=>nums.forEach(n=>{
-   const c=x.cand?.[n];
-   if(c)ys.push((ym==="pct"||ym==="top2")?+c.pct:+c.votos);
- }));
+ let series=[];
+ if(gapMode){
+   const leader=top2nums[0],second=top2nums[1];
+   const leaderName=names[leader]?.nome||latest.cand?.[leader]?.nome||leader;
+   const secondName=names[second]?.nome||latest.cand?.[second]?.nome||second;
+   const gaps=viewH.map(x=>{
+     const a=x.cand?.[leader],b=x.cand?.[second];
+     return a&&b?(+a.votos||0)-(+b.votos||0):null;
+   });
+   const values=ym==="batch"
+     ?gaps.map((v,i)=>i>0&&Number.isFinite(v)&&Number.isFinite(gaps[i-1])?v-gaps[i-1]:null)
+     :gaps;
+   series=[{
+     n:"__gap__",color:"#7c3aed",values,
+     label:ym==="batch"?"Saldo do lote ("+leaderName+" − "+secondName+")":"Vantagem ("+leaderName+" − "+secondName+")",
+     format:v=>(v>0?"+":"")+fmt(v)+" votos"
+   }];
+ }else{
+   series=nums.map((n,k)=>{
+     const label=names[n]?.nome||latest.cand?.[n]?.nome||n;
+     return {
+       n,color:colors[k%colors.length],label,
+       values:viewH.map(x=>{
+         const cand=x.cand?.[n];if(!cand)return null;
+         return (ym==="pct"||ym==="top2")?+cand.pct:+cand.votos;
+       }),
+       format:v=>(ym==="pct"||ym==="top2")?pct(v):fmt(v)+" votos"
+     };
+   });
+ }
+
+ const ys=series.flatMap(s=>s.values.filter(Number.isFinite));
  if(!ys.length)return;
 
  let ymin=0,ymax=Math.max(...ys,1);
  if(ym==="pct"){
    ymin=Math.max(0,Math.min(...ys)-2);
    ymax=Math.min(100,Math.max(...ys)+2);
- } else if(ym==="top2"){
-   const lo=Math.min(...ys), hi=Math.max(...ys), span=Math.max(hi-lo,1);
-   const extra=Math.max(0.4,span*0.08);
+ }else if(ym==="top2"){
+   const lo=Math.min(...ys),hi=Math.max(...ys),span=Math.max(hi-lo,1);
+   const extra=Math.max(.4,span*.08);
    ymin=Math.max(0,Math.floor((lo-extra)*10)/10);
    ymax=Math.min(100,Math.ceil((hi+extra)*10)/10);
+ }else if(ym==="difference"){
+   const lo=Math.min(...ys),hi=Math.max(...ys),span=Math.max(hi-lo,Math.abs(hi)*.05,1);
+   const extra=span*.10;
+   ymin=Math.min(0,lo)-extra;
+   ymax=Math.max(0,hi)+extra;
+ }else if(ym==="batch"){
+   const maxAbs=Math.max(...ys.map(Math.abs),1)*1.10;
+   ymin=-maxAbs;ymax=maxAbs;
  }
+ if(ymax===ymin){ymax=ymin+1}
 
  const X=x=>pad.l+(x-xmin)/(xmax-xmin)*iw,Y=y=>pad.t+(1-(y-ymin)/(ymax-ymin))*ih;
- chartState={viewH,xs,X,Y,nums,ym,xm,w,h,pad};
+ chartState={viewH,xs,X,Y,series,ym,xm,w,h,pad};
  g.strokeStyle="#e3e7ef";g.fillStyle="#667085";g.font="11px system-ui";g.textAlign="right";
  for(let j=0;j<=5;j++){
-   let y=ymin+(ymax-ymin)*j/5,py=Y(y);
+   const y=ymin+(ymax-ymin)*j/5,py=Y(y);
    g.beginPath();g.moveTo(pad.l,py);g.lineTo(w-pad.r,py);g.stroke();
    g.fillText((ym==="pct"||ym==="top2")?y.toFixed(1)+"%":compact(y),pad.l-8,py+4);
  }
+ if(gapMode&&ymin<0&&ymax>0){
+   const zeroY=Y(0);g.save();g.strokeStyle="#98a2b3";g.lineWidth=1.5;g.beginPath();g.moveTo(pad.l,zeroY);g.lineTo(w-pad.r,zeroY);g.stroke();g.restore();
+ }
  g.textAlign="center";
  for(let j=0;j<=5;j++){
-   let x=xmin+(xmax-xmin)*j/5,px=X(x);
-   let lab=xm==="pst"?x.toFixed(1)+"%":labelTimeFrom(viewH,Math.round(x));
+   const x=xmin+(xmax-xmin)*j/5,px=X(x);
+   const lab=xm==="pst"?x.toFixed(1)+"%":labelTimeFrom(viewH,Math.round(x));
    g.fillText(lab,px,h-15);
  }
 
- nums.forEach((n,k)=>{
-   g.strokeStyle=colors[k%colors.length];
-   g.lineWidth=2.4;
-   g.beginPath();
+ series.forEach(s=>{
+   g.strokeStyle=s.color;g.lineWidth=2.4;g.beginPath();
    let started=false;
-   viewH.forEach((x,i)=>{
-     const c=x.cand?.[n];if(!c)return;
-     const xx=X(xs[i]),yy=Y((ym==="pct"||ym==="top2")?+c.pct:+c.votos);
+   s.values.forEach((value,i)=>{
+     if(!Number.isFinite(value))return;
+     const xx=X(xs[i]),yy=Y(value);
      started?g.lineTo(xx,yy):(g.moveTo(xx,yy),started=true);
    });
    g.stroke();
-
-   g.fillStyle=colors[k%colors.length];
-   viewH.forEach((x,i)=>{
-     const c=x.cand?.[n];if(!c)return;
-     const xx=X(xs[i]),yy=Y((ym==="pct"||ym==="top2")?+c.pct:+c.votos);
+   g.fillStyle=s.color;
+   s.values.forEach((value,i)=>{
+     if(!Number.isFinite(value))return;
+     const xx=X(xs[i]),yy=Y(value);
      g.beginPath();g.arc(xx,yy,2.5,0,Math.PI*2);g.fill();
    });
  });
 
  drawChartCursor(g);
 
+ let modeNote="";
+ if(ym==="top2")modeNote="Modo 2 líderes: o eixo Y mostra somente a faixa real da disputa. ";
+ if(ym==="difference")modeNote="Diferença acumulada: vantagem do líder atual sobre o segundo colocado; a linha zero representa empate. ";
+ if(ym==="batch")modeNote="Saldo por lote: mudança da vantagem desde o snapshot anterior; positivo favorece o líder atual e negativo favorece o segundo. ";
  document.querySelector("#chartNote").textContent=
-   (ym==="top2"?"Modo 2 líderes: pontos iniciais irrelevantes foram ignorados e o eixo Y mostra só a faixa real da disputa. ":"")+
-   (xm==="pst"?"Eixo X = percentual de seções totalizadas.":"Eixo X = evolução cronológica da apuração.")+
+   modeNote+(xm==="pst"?"Eixo X = percentual de seções totalizadas.":"Eixo X = evolução cronológica da apuração.")+
    " Fonte de cada ponto preservada no histórico.";
 }
 function drawChartCursor(g){
  const s=chartState;if(chartHoverIndex===null||!s?.viewH.length)return;
  const i=Math.max(0,Math.min(s.viewH.length-1,chartHoverIndex));
  const row=s.viewH[i],px=s.X(s.xs[i]);
- const entries=s.nums.map((n,k)=>({n,k,c:row.cand?.[n]})).filter(x=>x.c);
+ const entries=s.series.map(line=>({line,value:line.values[i]})).filter(x=>Number.isFinite(x.value));
  g.save();
  g.strokeStyle="#344054";g.lineWidth=1;g.setLineDash([4,4]);
  g.beginPath();g.moveTo(px,s.pad.t);g.lineTo(px,s.h-s.pad.b);g.stroke();g.setLineDash([]);
- entries.forEach(({k,c})=>{const py=s.Y((s.ym==="pct"||s.ym==="top2")?+c.pct:+c.votos);g.fillStyle=colors[k%colors.length];g.strokeStyle="white";g.lineWidth=2;g.beginPath();g.arc(px,py,4.5,0,Math.PI*2);g.fill();g.stroke()});
+ entries.forEach(({line,value})=>{const py=s.Y(value);g.fillStyle=line.color;g.strokeStyle="white";g.lineWidth=2;g.beginPath();g.arc(px,py,4.5,0,Math.PI*2);g.fill();g.stroke()});
  const title=s.xm==="pst"?pct(row.pst)+" das seções":((row.ht||"").slice(0,8)||"Ponto "+(i+1));
- const lines=entries.map(({n,k,c})=>({color:colors[k%colors.length],text:(names[n]?.nome||c.nome||n)+": "+((s.ym==="pct"||s.ym==="top2")?pct(c.pct):fmt(c.votos))}));
+ const lines=entries.map(({line,value})=>({color:line.color,text:line.label+": "+line.format(value)}));
  g.font="700 11px system-ui";
  const textWidth=Math.max(g.measureText(title).width,...lines.map(x=>g.measureText(x.text).width));
  const bw=Math.min(s.w-s.pad.l-s.pad.r,Math.max(155,textWidth+30)),bh=28+lines.length*18;

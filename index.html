@@ -7,6 +7,7 @@ h1{margin:3px 0;font-size:27px}.sub{color:#687386;font-size:13px}.toolbar{displa
 .card{padding:13px}.k{font-size:11px;text-transform:uppercase;color:#78849a}.v{font-size:22px;font-weight:800;margin-top:5px}.panel{padding:15px;margin-top:12px}
 .row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}#chart{width:100%;height:420px;display:block}.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px}
 .legend label{display:flex;align-items:center;gap:5px}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.selected-candidates{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0 4px}.candidate-card{display:flex;align-items:center;gap:10px;border:1px solid #e1e5ee;border-radius:12px;padding:8px 12px;background:#fafbfe;min-width:185px}.candidate-card img{width:54px;height:54px;border-radius:50%;object-fit:cover;background:#eef1f6}.candidate-card .name{font-weight:800}.candidate-card .meta{font-size:12px;color:#687386}
 table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;border-bottom:1px solid #edf0f5;text-align:right}th:first-child,td:first-child{text-align:left}
 .warn{color:#b42318;font-weight:700}.ok{color:#087f5b;font-weight:700}@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}header{display:block}.toolbar{margin-top:10px}#chart{height:320px}}
 </style></head><body><div class="wrap">
@@ -22,7 +23,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
 <div class="card"><div class="k">Pontos históricos</div><div class="v" id="pts">—</div><div class="sub" id="sources">—</div></div>
 </div>
 <div class="panel"><div class="row"><div><b>Evolução dos candidatos</b><div class="sub">Snapshots observados do EA20; o trecho recuperado antes da coleta local é marcado como captura pública.</div></div><div class="legend" id="legend"></div></div>
-<canvas id="chart"></canvas><div class="sub" id="chartNote"></div></div>
+<div class="selected-candidates" id="selectedCandidates"></div><canvas id="chart"></canvas><div class="sub" id="chartNote"></div></div>
 <div class="panel"><div class="row"><b>Último resultado</b><span id="updated" class="sub"></span></div><table><thead><tr><th>Candidato</th><th>Partido</th><th>Votos</th><th>% válidos</th></tr></thead><tbody id="candTable"></tbody></table></div>
 <div class="panel"><div class="row"><b>Consistência da série</b><span id="check" class="ok">—</span></div><div class="sub">Checagem mecânica: seções e votos válidos não deveriam recuar entre snapshots sucessivos. Backfill externo e leitura ao vivo permanecem identificados separadamente.</div></div>
 </div><script>
@@ -47,7 +48,18 @@ let selected=new Set();
 function buildLegend(cands){
  if(!selected.size)cands.slice(0,4).forEach(c=>selected.add(c.numero));
  document.querySelector("#legend").innerHTML=cands.map((c,i)=>'<label><input type="checkbox" data-n="'+c.numero+'" '+(selected.has(c.numero)?"checked":"")+'> <span class="dot" style="background:'+colors[i%colors.length]+'"></span>'+esc(names[c.numero]?.nome||c.nome||c.numero)+'</label>').join("");
- document.querySelectorAll("#legend input").forEach(x=>x.onchange=()=>{x.checked?selected.add(x.dataset.n):selected.delete(x.dataset.n);draw()});
+ document.querySelectorAll("#legend input").forEach(x=>x.onchange=()=>{x.checked?selected.add(x.dataset.n):selected.delete(x.dataset.n);renderSelected(cands);draw()});
+ renderSelected(cands);
+}
+function renderSelected(cands){
+ const byNum=Object.fromEntries(cands.map(c=>[c.numero,c]));
+ document.querySelector("#selectedCandidates").innerHTML=[...selected].map(n=>{
+   const c=byNum[n]||names[n]||{}; const nm=names[n]?.nome||c.nome||n; const part=names[n]?.partido||c.partido||"";
+   const foto=c.foto||names[n]?.foto||"";
+   return '<div class="candidate-card">'+
+     (foto?'<img src="'+esc(foto)+'" alt="'+esc(nm)+'" onerror="this.style.display=\'none\'">':'')+
+     '<div><div class="name">'+esc(nm)+'</div><div class="meta">'+esc(part)+' · '+pct(c.pct||0)+' · '+fmt(c.votos||0)+' votos</div></div></div>';
+ }).join("");
 }
 function consistency(){
  let bad=[]; for(let i=1;i<H.length;i++){if(H[i].st<H[i-1].st)bad.push("seções "+i); if(H[i].vv<H[i-1].vv)bad.push("válidos "+i)}

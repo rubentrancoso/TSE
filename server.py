@@ -185,6 +185,11 @@ class Handler(SimpleHTTPRequestHandler):
             b=sio.getvalue().encode("utf-8-sig")
             self.send_response(200); self.send_header("Content-Type","text/csv; charset=utf-8"); self.send_header("Content-Disposition",'attachment; filename="tse_history.csv"')
             self.send_header("Content-Length",str(len(b))); self.end_headers(); self.wfile.write(b); return
+        if path=="/api/export.json":
+            payload={"format":"tse-history-v1","exported_at":time.strftime("%Y-%m-%dT%H:%M:%S"),"history":store.history()}
+            b=json.dumps(payload,ensure_ascii=False,indent=2).encode("utf-8")
+            self.send_response(200); self.send_header("Content-Type","application/json; charset=utf-8"); self.send_header("Content-Disposition",'attachment; filename="tse_history_backup.json"')
+            self.send_header("Content-Length",str(len(b))); self.end_headers(); self.wfile.write(b); return
         return super().do_GET()
     def do_POST(self):
         path=urlparse(self.path).path

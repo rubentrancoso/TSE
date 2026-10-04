@@ -1,30 +1,25 @@
 <!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>TSE Live 2026</title><style>
-:root{font-family:Inter,system-ui,Arial,sans-serif;color:#172033;background:#111827;--frame-x:28px;--frame-y:16px;--stage-w:520px}*{box-sizing:border-box}html,body{min-height:100%;background:#111827}body{margin:0;display:flex;justify-content:center;align-items:flex-start}.app-shell{width:min(var(--stage-w),calc(100vw - 12px),calc((100vh - 12px)*9/16));aspect-ratio:9/16;margin:6px auto;background:#111827;border-radius:12px;overflow:hidden;min-width:0;padding:var(--frame-y) var(--frame-x);box-shadow:0 0 0 1px #ffffff12}.wrap{height:calc(100% - 43px);overflow:hidden;background:#f5f7fb;max-width:none;margin:0;padding:12px}
-.countdown-strip{position:relative;z-index:20;background:#101828;color:white;padding:7px 10px 8px;box-shadow:0 1px 6px #0002;border-radius:9px 9px 0 0}.countdown-row{max-width:1280px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;font-weight:800}.countdown-right{display:flex;align-items:center;gap:8px}.frame-btn{border:1px solid #475467;background:#1d2939;color:white;border-radius:7px;padding:3px 7px;font-size:10px;font-weight:700}.frame-controls{display:none;background:#fff;border-bottom:1px solid #dfe3ea;padding:7px 12px;color:#344054}.frame-controls.open{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end}.frame-control label{display:flex;justify-content:space-between;gap:8px;font-size:10px;font-weight:700;margin-bottom:3px}.frame-control input{width:100%}.frame-reset{height:28px;padding:4px 8px;font-size:10px}.countdown-track{height:4px;background:#344054;border-radius:999px;overflow:hidden;margin-top:7px}.countdown-fill{height:100%;width:100%;background:#12b76a;transform-origin:left center;transition:width .12s linear}.countdown-now{font-variant-numeric:tabular-nums;color:#d0d5dd}
+:root{font-family:Inter,system-ui,Arial,sans-serif;color:#172033;background:#111827;--frame-y:16px;--stage-w:520px}*{box-sizing:border-box}html,body{height:100%;background:#111827}body{margin:0;display:flex;justify-content:center;align-items:flex-start;overflow-x:hidden}.app-shell{container-type:inline-size;width:min(var(--stage-w),calc(100vw - 12px));height:calc(100vh - 12px);margin:6px auto;background:#111827;border-radius:12px;overflow:hidden;min-width:0;padding:var(--frame-y) 0;box-shadow:0 0 0 1px #ffffff12;display:flex;flex-direction:column}.wrap{flex:1;min-height:0;width:100%;overflow:hidden;background:#f5f7fb;max-width:none;margin:0;padding:12px}
+.countdown-strip{position:relative;z-index:20;flex:0 0 auto;background:#101828;color:white;padding:7px 10px 8px;box-shadow:0 1px 6px #0002;border-radius:9px 9px 0 0}.countdown-row{max-width:1280px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;font-weight:800}.countdown-right{display:flex;align-items:center;gap:8px}.width-control{display:flex;align-items:center;gap:7px;margin-top:5px;color:#d0d5dd;font-size:10px;font-weight:700}.width-control input{flex:1;min-width:0}.width-value{min-width:46px;text-align:right;font-variant-numeric:tabular-nums}.countdown-track{height:4px;background:#344054;border-radius:999px;overflow:hidden;margin-top:5px}.countdown-fill{height:100%;width:100%;background:#12b76a;transform-origin:left center;transition:width .12s linear}.countdown-now{font-variant-numeric:tabular-nums;color:#d0d5dd}
 header{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:16px}.live{font-size:12px;font-weight:800;color:#087f5b}.live:before{content:"●";margin-right:6px}
-h1{margin:3px 0;font-size:27px}.sub{color:#687386;font-size:13px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+h1{margin:3px 0;font-size:27px}.dev-live{display:inline-flex;align-items:center;gap:5px;margin:1px 0 3px;color:#b42318;font-size:11px;font-weight:800}.dev-live:before{content:"●";font-size:9px}.sub{color:#687386;font-size:13px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}
 .pulsebar{display:flex;align-items:center;gap:10px;margin-top:9px;font-size:13px;font-weight:800;color:#344054;flex-wrap:wrap}
 .pulse-dot{width:12px;height:12px;border-radius:50%;background:#98a2b3}.pulse-dot.ok{background:#12b76a}.pulse-dot.flash{animation:pulse .7s ease-out}
 .pulse-extra{font-weight:500;color:#667085}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(18,183,106,.65)}100%{box-shadow:0 0 0 13px rgba(18,183,106,0)}}button,select{border:1px solid #d8deea;background:white;border-radius:9px;padding:8px 11px;cursor:pointer}
 .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0}.card,.panel{background:white;border:1px solid #e1e5ee;border-radius:12px;box-shadow:0 1px 2px #00000008}
 .card{padding:13px}.k{font-size:11px;text-transform:uppercase;color:#78849a}.v{font-size:22px;font-weight:800;margin-top:5px}.panel{padding:15px;margin-top:12px}
-.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}#chart{width:100%;height:420px;display:block}.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px}
-.legend label{display:flex;align-items:center;gap:5px}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}#chart{width:100%;height:420px;display:block}.candidate-filter{position:relative;margin-left:auto}.candidate-filter summary{list-style:none;border:1px solid #d8deea;background:white;border-radius:9px;padding:7px 10px;cursor:pointer;font-size:12px;font-weight:700;white-space:nowrap}.candidate-filter summary::-webkit-details-marker{display:none}.candidate-filter summary:after{content:" ▾"}.candidate-filter[open] summary:after{content:" ▴"}.legend{position:absolute;right:0;top:calc(100% + 6px);z-index:40;display:grid;grid-template-columns:repeat(2,minmax(150px,1fr));gap:7px 12px;width:max-content;max-width:min(520px,calc(100vw - 40px));max-height:260px;overflow:auto;padding:12px;background:white;border:1px solid #d8deea;border-radius:10px;box-shadow:0 12px 30px #1018282e;font-size:12px}
+.legend label{display:flex;align-items:center;gap:5px;white-space:nowrap}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
 .selected-candidates{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0 4px}.candidate-card{display:flex;align-items:center;gap:10px;border:1px solid #e1e5ee;border-radius:12px;padding:8px 12px;background:#fafbfe;min-width:185px}.candidate-card img{width:54px;height:54px;border-radius:50%;object-fit:cover;background:#eef1f6}.candidate-card .name{font-weight:800}.candidate-card .meta{font-size:12px;color:#687386}
 table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;border-bottom:1px solid #edf0f5;text-align:right}th:first-child,td:first-child{text-align:left}
-.warn{color:#b42318;font-weight:700}.ok{color:#087f5b;font-weight:700}@media(max-width:800px){.wrap{max-width:560px;padding:12px}header{display:block;margin-bottom:10px}h1{font-size:23px}.toolbar{margin-top:10px;gap:6px}.toolbar button,.toolbar select{font-size:12px;padding:7px 9px}.grid{grid-template-columns:repeat(2,1fr);gap:7px;margin:10px 0}.card{padding:9px}.card .v{font-size:18px}.card .k{font-size:10px}.panel{padding:10px;margin-top:8px}.selected-candidates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:9px}.candidate-card{min-width:0;padding:7px}.candidate-card img{width:44px;height:44px}.candidate-card .name{font-size:13px}.candidate-card .meta{font-size:10px}.legend{font-size:10px;gap:7px}#chart{height:330px}.countdown-row{max-width:560px}.pulsebar{font-size:11px;gap:7px}.sub{font-size:11px}}
-@media(max-width:620px){
- body{overflow-x:hidden}
- .app-shell{border-radius:9px}
- .frame-controls.open{grid-template-columns:1fr 1fr auto;gap:6px;padding:5px 8px}
- .frame-control label{font-size:8px}
- .frame-btn,.frame-reset{font-size:8px}
+.warn{color:#b42318;font-weight:700}.ok{color:#087f5b;font-weight:700}@container(max-width:800px){.wrap{max-width:none;padding:12px}header{display:block;margin-bottom:10px}h1{font-size:23px}.toolbar{margin-top:10px;gap:6px}.toolbar button,.toolbar select{font-size:12px;padding:7px 9px}.grid{grid-template-columns:repeat(2,1fr);gap:7px;margin:10px 0}.card{padding:9px}.card .v{font-size:18px}.card .k{font-size:10px}.panel{padding:10px;margin-top:8px}.selected-candidates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:9px}.candidate-card{min-width:0;padding:7px}.candidate-card img{width:44px;height:44px}.candidate-card .name{font-size:13px}.candidate-card .meta{font-size:10px}.legend{font-size:10px;gap:7px}#chart{height:330px}.countdown-row{max-width:560px}.pulsebar{font-size:11px;gap:7px}.sub{font-size:11px}}
+@container(max-width:620px){
 
  .countdown-strip{padding:5px 10px 6px}
  .countdown-row{font-size:11px}
  .countdown-track{height:3px;margin-top:4px}
- .wrap{max-width:none;height:calc(100% - 36px);padding:7px 9px 9px}
+ .wrap{max-width:none;padding:7px 9px 9px}
  header{margin-bottom:5px}
  .live{font-size:9px}
  h1{font-size:19px;line-height:1.05;margin:2px 0}
@@ -33,18 +28,19 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
  .pulse-dot{width:9px;height:9px}
  .toolbar{margin-top:5px;display:grid;grid-template-columns:1fr 1fr auto;gap:4px}
  .toolbar select,.toolbar button{min-width:0;padding:4px 6px;font-size:10px;border-radius:7px}
- .toolbar button:nth-of-type(2),.toolbar button:nth-of-type(3){display:none}
+ .toolbar button:nth-of-type(n+2){display:none}
  .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:8px 0}
  .card{padding:7px;border-radius:8px;min-width:0}
  .card .k{font-size:8px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
- .card .v{font-size:16px;line-height:1.05;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .card .v{font-size:clamp(12px,3.4cqw,16px);line-height:1.05;margin-top:4px;white-space:nowrap;overflow:visible;text-overflow:clip;letter-spacing:-.25px;font-variant-numeric:tabular-nums}
  .card .sub{font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  .grid .card:nth-child(4),.grid .card:nth-child(5){grid-column:span 1}
  .panel{padding:7px;margin-top:5px;border-radius:9px}
  .panel>.row{gap:4px}
  .panel>.row b{font-size:12px}
  .panel>.row .sub{font-size:8px;line-height:1.1}
- .legend{font-size:8px;gap:4px 6px;max-height:27px;overflow:hidden}
+ .candidate-filter summary{padding:4px 7px;font-size:9px}
+ .legend{grid-template-columns:1fr;right:0;font-size:9px;gap:5px;max-width:calc(100cqw - 32px);max-height:220px;padding:8px;overflow:auto}
  .legend label{gap:2px}
  .legend input{width:11px;height:11px;margin:0}
  .dot{width:6px;height:6px}
@@ -58,18 +54,18 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
  #chartNote{display:none}
  .detail-panel{display:none}
 }
-@media(max-width:430px){
+@container(max-width:430px){
  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
  .grid .card:nth-child(5){grid-column:1 / -1}
  .selected-candidates{grid-template-columns:repeat(2,minmax(0,1fr))}
  #chart{height:228px}
 }
-</style></head><body><div class="app-shell"><div class="countdown-strip"><div class="countdown-row"><span id="countdownText">Próxima consulta ao TSE em 10,0 s</span><span class="countdown-right"><span class="countdown-now" id="clockNow">--:--:--</span><button class="frame-btn" id="frameSettingsBtn" type="button">Quadro</button></span></div><div class="countdown-track"><div class="countdown-fill" id="countdownFill"></div></div></div><div class="frame-controls" id="frameControls"><div class="frame-control"><label><span>Margem lateral</span><span id="frameXValue">28 px</span></label><input id="frameX" type="range" min="0" max="80" value="28"></div><div class="frame-control"><label><span>Margem vertical</span><span id="frameYValue">16 px</span></label><input id="frameY" type="range" min="0" max="80" value="16"></div><button class="frame-reset" id="frameReset" type="button">Reset</button></div><div class="wrap">
-<header><div><div class="live">DADOS DO TSE</div><h1>Apuração presidencial · 2026</h1><div class="sub" id="status">Carregando…</div>
+</style></head><body><div class="app-shell"><div class="countdown-strip"><div class="countdown-row"><span id="countdownText">Próxima consulta ao TSE em 10,0 s</span><span class="countdown-right"><span class="countdown-now" id="clockNow">--:--:--</span></span></div><div class="width-control"><span>Largura</span><input id="stageWidth" type="range" min="360" max="1080" step="10" value="520"><span class="width-value" id="stageWidthValue">520 px</span></div><div class="countdown-track"><div class="countdown-fill" id="countdownFill"></div></div></div><div class="wrap">
+<header><div><div class="live">DADOS DO TSE</div><h1>Apuração presidencial · 2026</h1><div class="dev-live">Programa sendo desenvolvido ao vivo</div><div class="sub" id="status">Carregando…</div>
 <div class="pulsebar"><span class="pulse-dot" id="pulseDot"></span><span id="pulseText">Aguardando leitura…</span><span class="pulse-extra" id="changeText"></span></div></div>
 <div class="toolbar"><select id="xmode"><option value="time">Eixo: horário</option><option value="pst">Eixo: % seções</option></select>
 <select id="ymode"><option value="top2" selected>2 líderes (zoom)</option><option value="pct">Y: % votos válidos</option><option value="votes">Y: votos</option></select>
-<button onclick="refreshNow()">Atualizar agora</button><button onclick="backfill()">Recuperar início</button><button onclick="location.href='/api/export.csv'">CSV</button></div></header>
+<button onclick="refreshNow()">Atualizar agora</button><button onclick="backfill()">Recuperar início</button><button onclick="location.href='/api/export.csv'">CSV</button><button onclick="location.href='/api/export.json'">Backup JSON</button></div></header>
 <div class="grid">
 <div class="card"><div class="k">Seções apuradas</div><div class="v" id="pst">—</div><div class="sub" id="sec">—</div></div>
 <div class="card"><div class="k">Votos válidos</div><div class="v" id="vv">—</div></div>
@@ -77,7 +73,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
 <div class="card"><div class="k">Brancos + nulos</div><div class="v" id="bn">—</div></div>
 <div class="card"><div class="k">Pontos históricos</div><div class="v" id="pts">—</div><div class="sub" id="sources">—</div></div>
 </div>
-<div class="panel chart-panel"><div class="row"><div><b>Evolução dos candidatos</b><div class="sub">Snapshots observados do EA20; o trecho recuperado antes da coleta local é marcado como captura pública.</div></div><div class="legend" id="legend"></div></div>
+<div class="panel chart-panel"><div class="row"><div><b>Evolução dos candidatos</b><div class="sub">Snapshots observados do EA20; o trecho recuperado antes da coleta local é marcado como captura pública.</div></div><details class="candidate-filter"><summary id="candidateFilterLabel">Candidatos</summary><div class="legend" id="legend"></div></details></div>
 <div class="selected-candidates" id="selectedCandidates"></div><canvas id="chart"></canvas><div class="sub" id="chartNote"></div></div>
 <div class="panel detail-panel"><div class="row"><b>Último resultado</b><span id="updated" class="sub"></span></div><table><thead><tr><th>Candidato</th><th>Partido</th><th>Votos</th><th>% válidos</th></tr></thead><tbody id="candTable"></tbody></table></div>
 <div class="panel detail-panel"><div class="row"><b>Consistência da série</b><span id="check" class="ok">—</span></div><div class="sub">Checagem mecânica: seções e votos válidos não deveriam recuar entre snapshots sucessivos. Backfill externo e leitura ao vivo permanecem identificados separadamente.</div></div>
@@ -101,10 +97,14 @@ async function load(){
 function esc(s){return String(s??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]))}
 let selected=new Set();
 function buildLegend(cands){
- if(!selected.size)cands.slice(0,4).forEach(c=>selected.add(c.numero));
+ if(!selected.size)cands.slice(0,2).forEach(c=>selected.add(c.numero));
  document.querySelector("#legend").innerHTML=cands.map((c,i)=>'<label><input type="checkbox" data-n="'+c.numero+'" '+(selected.has(c.numero)?"checked":"")+'> <span class="dot" style="background:'+colors[i%colors.length]+'"></span>'+esc(names[c.numero]?.nome||c.nome||c.numero)+'</label>').join("");
- document.querySelectorAll("#legend input").forEach(x=>x.onchange=()=>{x.checked?selected.add(x.dataset.n):selected.delete(x.dataset.n);renderSelected(cands);draw()});
+ updateCandidateFilterLabel();
+ document.querySelectorAll("#legend input").forEach(x=>x.onchange=()=>{x.checked?selected.add(x.dataset.n):selected.delete(x.dataset.n);updateCandidateFilterLabel();renderSelected(cands);draw()});
  renderSelected(cands);
+}
+function updateCandidateFilterLabel(){
+ document.querySelector("#candidateFilterLabel").textContent="Candidatos ("+selected.size+")";
 }
 function renderSelected(cands){
  const byNum=Object.fromEntries(cands.map(c=>[c.numero,c]));
@@ -211,28 +211,18 @@ function draw(){
 function labelTimeFrom(arr,i){let x=arr[Math.max(0,Math.min(arr.length-1,i))];return x?.ht?.slice(0,5)||""}
 function compact(n){return Intl.NumberFormat("pt-BR",{notation:"compact",maximumFractionDigits:1}).format(n)}
 function labelTime(i){let x=H[Math.max(0,Math.min(H.length-1,i))];return x?.ht?.slice(0,5)||""}
-function applyFrame(){
- const x=document.querySelector("#frameX").value;
- const y=document.querySelector("#frameY").value;
- document.documentElement.style.setProperty("--frame-x",x+"px");
- document.documentElement.style.setProperty("--frame-y",y+"px");
- document.querySelector("#frameXValue").textContent=x+" px";
- document.querySelector("#frameYValue").textContent=y+" px";
- localStorage.setItem("tse-frame-x",x);
- localStorage.setItem("tse-frame-y",y);
+function applyStageWidth(){
+ const width=document.querySelector("#stageWidth").value;
+ document.documentElement.style.setProperty("--stage-w",width+"px");
+ document.querySelector("#stageWidthValue").textContent=width+" px";
+ localStorage.setItem("tse-stage-w",width);
  setTimeout(draw,0);
 }
-function initFrameControls(){
- const sx=localStorage.getItem("tse-frame-x"), sy=localStorage.getItem("tse-frame-y");
- if(sx!==null)document.querySelector("#frameX").value=sx;
- if(sy!==null)document.querySelector("#frameY").value=sy;
- applyFrame();
- document.querySelector("#frameX").addEventListener("input",applyFrame);
- document.querySelector("#frameY").addEventListener("input",applyFrame);
- document.querySelector("#frameSettingsBtn").addEventListener("click",()=>document.querySelector("#frameControls").classList.toggle("open"));
- document.querySelector("#frameReset").addEventListener("click",()=>{
-  document.querySelector("#frameX").value=28;document.querySelector("#frameY").value=16;applyFrame();
- });
+function initStageWidth(){
+ const saved=localStorage.getItem("tse-stage-w");
+ if(saved!==null)document.querySelector("#stageWidth").value=saved;
+ applyStageWidth();
+ document.querySelector("#stageWidth").addEventListener("input",applyStageWidth);
 }
 const POLL_SECONDS=10;
 let lastPulseStamp="";
@@ -263,5 +253,5 @@ function updateCountdown(){
 }
 async function refreshNow(){lastPollSeenAt=performance.now()-POLL_SECONDS*1000;updateCountdown();await fetch("/api/refresh",{method:"POST"});await Promise.all([load(),pulseStatus()])}
 async function backfill(){let r=await fetch("/api/backfill/community",{method:"POST"});let j=await r.json();alert("Pontos importados: "+(j.imported||0));await load()}
-document.querySelector("#xmode").onchange=draw;document.querySelector("#ymode").onchange=draw;addEventListener("resize",draw);initFrameControls();load();pulseStatus();updateCountdown();setInterval(load,10000);setInterval(pulseStatus,500);setInterval(updateCountdown,100);
+document.querySelector("#xmode").onchange=draw;document.querySelector("#ymode").onchange=draw;addEventListener("resize",draw);initStageWidth();load();pulseStatus();updateCountdown();setInterval(load,10000);setInterval(pulseStatus,500);setInterval(updateCountdown,100);
 </script></body></html>

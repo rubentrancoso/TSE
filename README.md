@@ -15,6 +15,7 @@ Requer apenas Python 3. Não há `pip install`.
 - consulta o EA20 nacional do TSE a cada 10 s;
 - grava cada estado novo em SQLite;
 - preserva o histórico entre reinicializações;
+- permite baixar um backup JSON completo para simulações futuras;
 - plota a evolução por horário ou por % de seções;
 - alterna entre % dos votos válidos e votos acumulados;
 - mostra seções, válidos, comparecimento, brancos e nulos;
@@ -31,6 +32,10 @@ Backfill auxiliar:
 `https://raw.githubusercontent.com/pedreirorr/painel-eleicao-2026/dados/historico-6257.json`
 
 O backfill é uma captura externa de respostas públicas do TSE; por isso o painel mantém `source=public-capture` separado de `source=tse-live`.
+
+## Preservação dos dados
+
+O histórico local fica em `data/tse_history.sqlite3` e não é apagado quando o programa ou o navegador são fechados. Para manter uma segunda cópia portátil, use o botão **Backup JSON**; o arquivo baixado contém todos os pontos normalizados necessários para reconstruir a evolução do gráfico.
 
 ## Opções
 

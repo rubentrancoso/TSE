@@ -8,7 +8,7 @@ h1{margin:3px 0;font-size:27px}.dev-live{display:inline-flex;align-items:center;
 .pulse-dot{width:12px;height:12px;border-radius:50%;background:#98a2b3}.pulse-dot.ok{background:#12b76a}.pulse-dot.flash{animation:pulse .7s ease-out}
 .pulse-extra{font-weight:500;color:#667085}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(18,183,106,.65)}100%{box-shadow:0 0 0 13px rgba(18,183,106,0)}}button,select{border:1px solid #d8deea;background:white;border-radius:9px;padding:8px 11px;cursor:pointer}
 .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0}.card,.panel{background:white;border:1px solid #e1e5ee;border-radius:12px;box-shadow:0 1px 2px #00000008}
-.card{padding:13px}.k{font-size:11px;text-transform:uppercase;color:#78849a}.v{font-size:22px;font-weight:800;margin-top:5px}.panel{padding:15px;margin-top:12px}
+.card{padding:13px}.k{font-size:11px;text-transform:uppercase;color:#78849a}.v{font-size:22px;font-weight:800;margin-top:5px}.magnitude{margin-top:2px;color:#687386;font-size:11px;font-weight:700}.panel{padding:15px;margin-top:12px}
 .row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}#chart{width:100%;height:420px;display:block}.candidate-filter{position:relative;margin-left:auto}.candidate-filter summary{list-style:none;border:1px solid #d8deea;background:white;border-radius:9px;padding:7px 10px;cursor:pointer;font-size:12px;font-weight:700;white-space:nowrap}.candidate-filter summary::-webkit-details-marker{display:none}.candidate-filter summary:after{content:" ▾"}.candidate-filter[open] summary:after{content:" ▴"}.legend{position:absolute;right:0;top:calc(100% + 6px);z-index:40;display:grid;grid-template-columns:repeat(2,minmax(150px,1fr));gap:7px 12px;width:max-content;max-width:min(520px,calc(100vw - 40px));max-height:260px;overflow:auto;padding:12px;background:white;border:1px solid #d8deea;border-radius:10px;box-shadow:0 12px 30px #1018282e;font-size:12px}
 .legend label{display:flex;align-items:center;gap:5px;white-space:nowrap}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
 .selected-candidates{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0 4px}.candidate-card{display:flex;align-items:center;gap:10px;border:1px solid #e1e5ee;border-radius:12px;padding:8px 12px;background:#fafbfe;min-width:185px}.candidate-card img{width:54px;height:54px;border-radius:50%;object-fit:cover;background:#eef1f6}.candidate-card .name{font-weight:800}.candidate-card .meta{font-size:12px;color:#687386}
@@ -33,7 +33,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
  .card{padding:7px;border-radius:8px;min-width:0}
  .card .k{font-size:8px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  .card .v{font-size:clamp(12px,3.4cqw,16px);line-height:1.05;margin-top:4px;white-space:nowrap;overflow:visible;text-overflow:clip;letter-spacing:-.25px;font-variant-numeric:tabular-nums}
- .card .sub{font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .card .sub,.card .magnitude{font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  .grid .card:nth-child(4),.grid .card:nth-child(5){grid-column:span 1}
  .panel{padding:7px;margin-top:5px;border-radius:9px}
  .panel>.row{gap:4px}
@@ -68,9 +68,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
 <button onclick="refreshNow()">Atualizar agora</button><button onclick="backfill()">Recuperar início</button><button onclick="location.href='/api/export.csv'">CSV</button><button onclick="location.href='/api/export.json'">Backup JSON</button></div></header>
 <div class="grid">
 <div class="card"><div class="k">Seções apuradas</div><div class="v" id="pst">—</div><div class="sub" id="sec">—</div></div>
-<div class="card"><div class="k">Votos válidos</div><div class="v" id="vv">—</div></div>
-<div class="card"><div class="k">Comparecimento</div><div class="v" id="comp">—</div></div>
-<div class="card"><div class="k">Brancos + nulos</div><div class="v" id="bn">—</div></div>
+<div class="card"><div class="k">Votos válidos</div><div class="v" id="vv">—</div><div class="magnitude" id="vvUnit">—</div></div>
+<div class="card"><div class="k">Comparecimento</div><div class="v" id="comp">—</div><div class="magnitude" id="compUnit">—</div></div>
+<div class="card"><div class="k">Brancos + nulos</div><div class="v" id="bn">—</div><div class="magnitude" id="bnUnit">—</div></div>
 <div class="card"><div class="k">Pontos históricos</div><div class="v" id="pts">—</div><div class="sub" id="sources">—</div></div>
 </div>
 <div class="panel chart-panel"><div class="row"><div><b>Evolução dos candidatos</b><div class="sub">Snapshots observados do EA20; o trecho recuperado antes da coleta local é marcado como captura pública.</div></div><details class="candidate-filter"><summary id="candidateFilterLabel">Candidatos</summary><div class="legend" id="legend"></div></details></div>
@@ -80,12 +80,20 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
 </div></div><script>
 let H=[], names={}; const colors=["#2457f5","#e53935","#00a86b","#f59e0b","#7c3aed","#0891b2","#db2777","#64748b","#16a34a","#ea580c","#4f46e5","#9333ea"];
 const fmt=n=>new Intl.NumberFormat("pt-BR").format(n||0); const pct=n=>(+n||0).toFixed(2).replace(".",",")+"%";
+function metric(n){
+ const value=+n||0,abs=Math.abs(value);
+ if(abs>=1e9)return {value:(value/1e9).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}),unit:"bilhões"};
+ if(abs>=1e6)return {value:(value/1e6).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}),unit:"milhões"};
+ if(abs>=1e3)return {value:(value/1e3).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}),unit:"milhares"};
+ return {value:value.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}),unit:"unidades"};
+}
+function showMetric(id,n){const m=metric(n);document.querySelector(id).textContent=m.value;document.querySelector(id+"Unit").textContent=m.unit}
 async function load(){
  const r=await fetch("/api/history",{cache:"no-store"}); H=(await r.json()).history||[];
  if(!H.length)return;
  const L=H[H.length-1]; Object.values(L.cand||{}).forEach(c=>{if(c.nome&&!/^\d+$/.test(c.nome))names[c.numero]=c});
  document.querySelector("#pst").textContent=pct(L.pst); document.querySelector("#sec").textContent=fmt(L.st)+" de "+fmt(L.ts||0)+" seções";
- document.querySelector("#vv").textContent=fmt(L.vv); document.querySelector("#comp").textContent=fmt(L.c); document.querySelector("#bn").textContent=fmt((L.vb||0)+(L.vn||0));
+ showMetric("#vv",L.vv); showMetric("#comp",L.c); showMetric("#bn",(L.vb||0)+(L.vn||0));
  document.querySelector("#pts").textContent=fmt(H.length);
  const counts={};H.forEach(x=>counts[x.source]=(counts[x.source]||0)+1);document.querySelector("#sources").textContent=Object.entries(counts).map(([k,v])=>k+": "+v).join(" · ");
  document.querySelector("#updated").textContent=(L.dt||"")+" "+(L.ht||"");

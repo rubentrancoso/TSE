@@ -34,11 +34,12 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
  .toolbar{margin-top:5px;display:grid;grid-template-columns:1fr 1fr auto;gap:4px}
  .toolbar select,.toolbar button{min-width:0;padding:4px 6px;font-size:10px;border-radius:7px}
  .toolbar button:nth-of-type(2),.toolbar button:nth-of-type(3){display:none}
- .grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;margin:6px 0}
- .card{padding:5px 5px;border-radius:8px;min-width:0}
- .card .k{font-size:7px;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
- .card .v{font-size:13px;line-height:1.05;margin-top:3px;white-space:nowrap}
- .card .sub{font-size:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:8px 0}
+ .card{padding:7px;border-radius:8px;min-width:0}
+ .card .k{font-size:8px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .card .v{font-size:16px;line-height:1.05;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .card .sub{font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .grid .card:nth-child(4),.grid .card:nth-child(5){grid-column:span 1}
  .panel{padding:7px;margin-top:5px;border-radius:9px}
  .panel>.row{gap:4px}
  .panel>.row b{font-size:12px}
@@ -52,14 +53,16 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
  .candidate-card img{width:30px;height:30px}
  .candidate-card .name{font-size:10px;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  .candidate-card .meta{font-size:8px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
- #chart{height:215px}
+ .chart-panel{padding-bottom:10px}
+ #chart{height:238px}
  #chartNote{display:none}
  .detail-panel{display:none}
 }
 @media(max-width:430px){
- .grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .grid .card:nth-child(5){grid-column:1 / -1}
  .selected-candidates{grid-template-columns:repeat(2,minmax(0,1fr))}
- #chart{height:205px}
+ #chart{height:228px}
 }
 </style></head><body><div class="app-shell"><div class="countdown-strip"><div class="countdown-row"><span id="countdownText">Próxima consulta ao TSE em 10,0 s</span><span class="countdown-right"><span class="countdown-now" id="clockNow">--:--:--</span><button class="frame-btn" id="frameSettingsBtn" type="button">Quadro</button></span></div><div class="countdown-track"><div class="countdown-fill" id="countdownFill"></div></div></div><div class="frame-controls" id="frameControls"><div class="frame-control"><label><span>Margem lateral</span><span id="frameXValue">28 px</span></label><input id="frameX" type="range" min="0" max="80" value="28"></div><div class="frame-control"><label><span>Margem vertical</span><span id="frameYValue">16 px</span></label><input id="frameY" type="range" min="0" max="80" value="16"></div><button class="frame-reset" id="frameReset" type="button">Reset</button></div><div class="wrap">
 <header><div><div class="live">DADOS DO TSE</div><h1>Apuração presidencial · 2026</h1><div class="sub" id="status">Carregando…</div>
@@ -74,7 +77,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
 <div class="card"><div class="k">Brancos + nulos</div><div class="v" id="bn">—</div></div>
 <div class="card"><div class="k">Pontos históricos</div><div class="v" id="pts">—</div><div class="sub" id="sources">—</div></div>
 </div>
-<div class="panel"><div class="row"><div><b>Evolução dos candidatos</b><div class="sub">Snapshots observados do EA20; o trecho recuperado antes da coleta local é marcado como captura pública.</div></div><div class="legend" id="legend"></div></div>
+<div class="panel chart-panel"><div class="row"><div><b>Evolução dos candidatos</b><div class="sub">Snapshots observados do EA20; o trecho recuperado antes da coleta local é marcado como captura pública.</div></div><div class="legend" id="legend"></div></div>
 <div class="selected-candidates" id="selectedCandidates"></div><canvas id="chart"></canvas><div class="sub" id="chartNote"></div></div>
 <div class="panel detail-panel"><div class="row"><b>Último resultado</b><span id="updated" class="sub"></span></div><table><thead><tr><th>Candidato</th><th>Partido</th><th>Votos</th><th>% válidos</th></tr></thead><tbody id="candTable"></tbody></table></div>
 <div class="panel detail-panel"><div class="row"><b>Consistência da série</b><span id="check" class="ok">—</span></div><div class="sub">Checagem mecânica: seções e votos válidos não deveriam recuar entre snapshots sucessivos. Backfill externo e leitura ao vivo permanecem identificados separadamente.</div></div>
@@ -121,32 +124,85 @@ function draw(){
  const cv=document.querySelector("#chart"),dpr=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;cv.width=w*dpr;cv.height=h*dpr;const g=cv.getContext("2d");g.scale(dpr,dpr);g.clearRect(0,0,w,h);
  const pad={l:58,r:18,t:24,b:42},iw=w-pad.l-pad.r,ih=h-pad.t-pad.b;if(!H.length)return;
  const xm=document.querySelector("#xmode").value,ym=document.querySelector("#ymode").value;
- const xs=H.map((x,i)=>xm==="pst"?+x.pst:i); let xmin=Math.min(...xs),xmax=Math.max(...xs);if(xmax===xmin)xmax=xmin+1;
+
  let nums=[...selected];
+ let viewH=H;
+
  if(ym==="top2"){
    const latest=H[H.length-1];
-   nums=Object.values(latest.cand||{}).sort((a,b)=>(+b.votos||0)-(+a.votos||0)).slice(0,2).map(c=>c.numero);
+   nums=Object.values(latest.cand||{})
+     .sort((a,b)=>(+b.votos||0)-(+a.votos||0))
+     .slice(0,2)
+     .map(c=>c.numero);
+
+   const startIdx=H.findIndex(x=>{
+     const vals=nums.map(n=>+(x.cand?.[n]?.pct||0));
+     return (+x.pst||0)>=1 && vals.length===2 && vals[0]>20 && vals[1]>20;
+   });
+   if(startIdx>=0)viewH=H.slice(startIdx);
  }
- let ys=[]; H.forEach(x=>nums.forEach(n=>{const c=x.cand?.[n];if(c)ys.push((ym==="pct"||ym==="top2")?+c.pct:+c.votos)}));
+
+ const xs=viewH.map((x,i)=>xm==="pst"?+x.pst:i);
+ let xmin=Math.min(...xs),xmax=Math.max(...xs);if(xmax===xmin)xmax=xmin+1;
+
+ let ys=[];
+ viewH.forEach(x=>nums.forEach(n=>{
+   const c=x.cand?.[n];
+   if(c)ys.push((ym==="pct"||ym==="top2")?+c.pct:+c.votos);
+ }));
+ if(!ys.length)return;
+
  let ymin=0,ymax=Math.max(...ys,1);
  if(ym==="pct"){
    ymin=Math.max(0,Math.min(...ys)-2);
    ymax=Math.min(100,Math.max(...ys)+2);
  } else if(ym==="top2"){
    const lo=Math.min(...ys), hi=Math.max(...ys), span=Math.max(hi-lo,1);
-   const pad=Math.max(0.5,span*0.12);
-   ymin=Math.max(0,Math.floor((lo-pad)*2)/2);
-   ymax=Math.min(100,Math.ceil((hi+pad)*2)/2);
+   const extra=Math.max(0.4,span*0.08);
+   ymin=Math.max(0,Math.floor((lo-extra)*10)/10);
+   ymax=Math.min(100,Math.ceil((hi+extra)*10)/10);
  }
+
  const X=x=>pad.l+(x-xmin)/(xmax-xmin)*iw,Y=y=>pad.t+(1-(y-ymin)/(ymax-ymin))*ih;
  g.strokeStyle="#e3e7ef";g.fillStyle="#667085";g.font="11px system-ui";g.textAlign="right";
- for(let j=0;j<=5;j++){let y=ymin+(ymax-ymin)*j/5,py=Y(y);g.beginPath();g.moveTo(pad.l,py);g.lineTo(w-pad.r,py);g.stroke();g.fillText((ym==="pct"||ym==="top2")?y.toFixed(1)+"%":compact(y),pad.l-8,py+4)}
- g.textAlign="center";for(let j=0;j<=5;j++){let x=xmin+(xmax-xmin)*j/5,px=X(x);let lab=xm==="pst"?x.toFixed(1)+"%":labelTime(Math.round(x));g.fillText(lab,px,h-15)}
- nums.forEach((n,k)=>{g.strokeStyle=colors[k%colors.length];g.lineWidth=2.2;g.beginPath();let started=false;H.forEach((x,i)=>{const c=x.cand?.[n];if(!c)return;let xx=X(xs[i]),yy=Y((ym==="pct"||ym==="top2")?+c.pct:+c.votos);started?g.lineTo(xx,yy):(g.moveTo(xx,yy),started=true)});g.stroke();
-   g.fillStyle=colors[k%colors.length];H.forEach((x,i)=>{const c=x.cand?.[n];if(!c)return;let xx=X(xs[i]),yy=Y((ym==="pct"||ym==="top2")?+c.pct:+c.votos);g.beginPath();g.arc(xx,yy,2.5,0,Math.PI*2);g.fill()});
+ for(let j=0;j<=5;j++){
+   let y=ymin+(ymax-ymin)*j/5,py=Y(y);
+   g.beginPath();g.moveTo(pad.l,py);g.lineTo(w-pad.r,py);g.stroke();
+   g.fillText((ym==="pct"||ym==="top2")?y.toFixed(1)+"%":compact(y),pad.l-8,py+4);
+ }
+ g.textAlign="center";
+ for(let j=0;j<=5;j++){
+   let x=xmin+(xmax-xmin)*j/5,px=X(x);
+   let lab=xm==="pst"?x.toFixed(1)+"%":labelTimeFrom(viewH,Math.round(x));
+   g.fillText(lab,px,h-15);
+ }
+
+ nums.forEach((n,k)=>{
+   g.strokeStyle=colors[k%colors.length];
+   g.lineWidth=2.4;
+   g.beginPath();
+   let started=false;
+   viewH.forEach((x,i)=>{
+     const c=x.cand?.[n];if(!c)return;
+     const xx=X(xs[i]),yy=Y((ym==="pct"||ym==="top2")?+c.pct:+c.votos);
+     started?g.lineTo(xx,yy):(g.moveTo(xx,yy),started=true);
+   });
+   g.stroke();
+
+   g.fillStyle=colors[k%colors.length];
+   viewH.forEach((x,i)=>{
+     const c=x.cand?.[n];if(!c)return;
+     const xx=X(xs[i]),yy=Y((ym==="pct"||ym==="top2")?+c.pct:+c.votos);
+     g.beginPath();g.arc(xx,yy,2.5,0,Math.PI*2);g.fill();
+   });
  });
- document.querySelector("#chartNote").textContent=(ym==="top2"?"Modo 2 líderes: eixo Y ampliado apenas no intervalo real dos dois candidatos com mais votos. ":"")+(xm==="pst"?"Eixo X = percentual de seções totalizadas.":"Eixo X = ordem cronológica dos snapshots; rótulos usam o horário de totalização.")+" Fonte de cada ponto preservada no histórico.";
+
+ document.querySelector("#chartNote").textContent=
+   (ym==="top2"?"Modo 2 líderes: pontos iniciais irrelevantes foram ignorados e o eixo Y mostra só a faixa real da disputa. ":"")+
+   (xm==="pst"?"Eixo X = percentual de seções totalizadas.":"Eixo X = evolução cronológica da apuração.")+
+   " Fonte de cada ponto preservada no histórico.";
 }
+function labelTimeFrom(arr,i){let x=arr[Math.max(0,Math.min(arr.length-1,i))];return x?.ht?.slice(0,5)||""}
 function compact(n){return Intl.NumberFormat("pt-BR",{notation:"compact",maximumFractionDigits:1}).format(n)}
 function labelTime(i){let x=H[Math.max(0,Math.min(H.length-1,i))];return x?.ht?.slice(0,5)||""}
 function applyFrame(){

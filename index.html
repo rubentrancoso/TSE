@@ -1,6 +1,7 @@
 <!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>TSE Live 2026</title><style>
 :root{font-family:Inter,system-ui,Arial,sans-serif;color:#172033;background:#f5f7fb}body{margin:0}.wrap{max-width:1280px;margin:auto;padding:20px}
+.countdown-strip{position:sticky;top:0;z-index:20;background:#101828;color:white;padding:8px 14px 10px;box-shadow:0 1px 6px #0002}.countdown-row{max-width:1280px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;font-weight:800}.countdown-track{height:4px;background:#344054;border-radius:999px;overflow:hidden;margin-top:7px}.countdown-fill{height:100%;width:100%;background:#12b76a;transform-origin:left center;transition:width .12s linear}.countdown-now{font-variant-numeric:tabular-nums;color:#d0d5dd}
 header{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:16px}.live{font-size:12px;font-weight:800;color:#087f5b}.live:before{content:"●";margin-right:6px}
 h1{margin:3px 0;font-size:27px}.sub{color:#687386;font-size:13px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}
 .pulsebar{display:flex;align-items:center;gap:10px;margin-top:9px;font-size:13px;font-weight:800;color:#344054;flex-wrap:wrap}
@@ -12,8 +13,9 @@ h1{margin:3px 0;font-size:27px}.sub{color:#687386;font-size:13px}.toolbar{displa
 .legend label{display:flex;align-items:center;gap:5px}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
 .selected-candidates{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0 4px}.candidate-card{display:flex;align-items:center;gap:10px;border:1px solid #e1e5ee;border-radius:12px;padding:8px 12px;background:#fafbfe;min-width:185px}.candidate-card img{width:54px;height:54px;border-radius:50%;object-fit:cover;background:#eef1f6}.candidate-card .name{font-weight:800}.candidate-card .meta{font-size:12px;color:#687386}
 table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;border-bottom:1px solid #edf0f5;text-align:right}th:first-child,td:first-child{text-align:left}
-.warn{color:#b42318;font-weight:700}.ok{color:#087f5b;font-weight:700}@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}header{display:block}.toolbar{margin-top:10px}#chart{height:320px}}
-</style></head><body><div class="wrap">
+.warn{color:#b42318;font-weight:700}.ok{color:#087f5b;font-weight:700}@media(max-width:800px){.wrap{max-width:560px;padding:12px}header{display:block;margin-bottom:10px}h1{font-size:23px}.toolbar{margin-top:10px;gap:6px}.toolbar button,.toolbar select{font-size:12px;padding:7px 9px}.grid{grid-template-columns:repeat(2,1fr);gap:7px;margin:10px 0}.card{padding:9px}.card .v{font-size:18px}.card .k{font-size:10px}.panel{padding:10px;margin-top:8px}.selected-candidates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:9px}.candidate-card{min-width:0;padding:7px}.candidate-card img{width:44px;height:44px}.candidate-card .name{font-size:13px}.candidate-card .meta{font-size:10px}.legend{font-size:10px;gap:7px}#chart{height:330px}.countdown-row{max-width:560px}.pulsebar{font-size:11px;gap:7px}.sub{font-size:11px}}
+@media(max-width:430px){.selected-candidates{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}#chart{height:300px}}
+</style></head><body><div class="countdown-strip"><div class="countdown-row"><span id="countdownText">Próxima consulta ao TSE em 10,0 s</span><span class="countdown-now" id="clockNow">--:--:--</span></div><div class="countdown-track"><div class="countdown-fill" id="countdownFill"></div></div></div><div class="wrap">
 <header><div><div class="live">DADOS DO TSE</div><h1>Apuração presidencial · 2026</h1><div class="sub" id="status">Carregando…</div>
 <div class="pulsebar"><span class="pulse-dot" id="pulseDot"></span><span id="pulseText">Aguardando leitura…</span><span class="pulse-extra" id="changeText"></span></div></div>
 <div class="toolbar"><select id="xmode"><option value="time">Eixo: horário</option><option value="pst">Eixo: % seções</option></select>
@@ -87,7 +89,9 @@ function draw(){
 }
 function compact(n){return Intl.NumberFormat("pt-BR",{notation:"compact",maximumFractionDigits:1}).format(n)}
 function labelTime(i){let x=H[Math.max(0,Math.min(H.length-1,i))];return x?.ht?.slice(0,5)||""}
+const POLL_SECONDS=10;
 let lastPulseStamp="";
+let lastPollSeenAt=performance.now();
 async function pulseStatus(){
  try{
   const r=await fetch("/api/status",{cache:"no-store"}), s=await r.json();
@@ -98,12 +102,21 @@ async function pulseStatus(){
    ch.textContent=s.last_changed?"Última mudança: "+s.last_changed.slice(11,19):"";
    dot.classList.toggle("ok",!!s.ok);
    if(s.last_success!==lastPulseStamp){
-    lastPulseStamp=s.last_success;dot.classList.remove("flash");void dot.offsetWidth;dot.classList.add("flash");
+    lastPulseStamp=s.last_success;
+    lastPollSeenAt=performance.now();
+    dot.classList.remove("flash");void dot.offsetWidth;dot.classList.add("flash");
    }
   } else if(s.error){txt.textContent="Falha na consulta ao TSE";ch.textContent=s.error}
  }catch(e){}
 }
-async function refreshNow(){await fetch("/api/refresh",{method:"POST"});await Promise.all([load(),pulseStatus()])}
+function updateCountdown(){
+ const elapsed=(performance.now()-lastPollSeenAt)/1000;
+ const remain=Math.max(0,POLL_SECONDS-elapsed);
+ document.querySelector("#countdownText").textContent=remain>0.05?"Próxima consulta ao TSE em "+remain.toFixed(1).replace(".",",")+" s":"Consultando TSE…";
+ document.querySelector("#countdownFill").style.width=(Math.max(0,Math.min(1,remain/POLL_SECONDS))*100)+"%";
+ document.querySelector("#clockNow").textContent=new Date().toLocaleTimeString("pt-BR",{hour12:false});
+}
+async function refreshNow(){lastPollSeenAt=performance.now()-POLL_SECONDS*1000;updateCountdown();await fetch("/api/refresh",{method:"POST"});await Promise.all([load(),pulseStatus()])}
 async function backfill(){let r=await fetch("/api/backfill/community",{method:"POST"});let j=await r.json();alert("Pontos importados: "+(j.imported||0));await load()}
-document.querySelector("#xmode").onchange=draw;document.querySelector("#ymode").onchange=draw;addEventListener("resize",draw);load();pulseStatus();setInterval(load,10000);setInterval(pulseStatus,1000);
+document.querySelector("#xmode").onchange=draw;document.querySelector("#ymode").onchange=draw;addEventListener("resize",draw);load();pulseStatus();updateCountdown();setInterval(load,10000);setInterval(pulseStatus,500);setInterval(updateCountdown,100);
 </script></body></html>

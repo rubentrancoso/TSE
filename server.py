@@ -60,6 +60,9 @@ class Store:
         self.lock=threading.Lock()
         self.last_error=None
         self.last_poll=None
+        self.last_success=None
+        self.last_changed=None
+        self.last_was_new=False
         self.init()
     def conn(self):
         c=sqlite3.connect(DB_PATH)
@@ -115,7 +118,12 @@ def collect_once():
     store.last_poll=time.strftime("%Y-%m-%dT%H:%M:%S")
     try:
         x=parse_tse(fetch_json(TSE_URL))
-        store.add(x,"tse-live")
+        changed=store.add(x,"tse-live")
+        now=time.strftime("%Y-%m-%dT%H:%M:%S")
+        store.last_success=now
+        store.last_was_new=changed
+        if changed:
+            store.last_changed=now
         store.last_error=None
         return x
     except Exception as e:
@@ -162,7 +170,10 @@ class Handler(SimpleHTTPRequestHandler):
             return self.send_json({"history":store.history()})
         if path=="/api/status":
             h=store.history()
-            return self.send_json({"ok":not bool(store.last_error),"error":store.last_error,"last_poll":store.last_poll,"points":len(h),"latest":h[-1] if h else None})
+            return self.send_json({"ok":not bool(store.last_error),"error":store.last_error,
+                "last_poll":store.last_poll,"last_success":store.last_success,
+                "last_changed":store.last_changed,"last_was_new":store.last_was_new,
+                "points":len(h),"latest":h[-1] if h else None})
         if path=="/api/raw/latest":
             return self.send_json(store.latest_raw() or {})
         if path=="/api/export.csv":

@@ -162,6 +162,7 @@ def main():
 
     snapshot_rows = []
     muni_rows = []
+    uf_candidate_rows = []
     accounting_errors = []
     candidate_diffs = {}
 
@@ -214,9 +215,12 @@ def main():
         if not city_paths:
             muni_rows.append({
                 "snapshot": latest.name, "uf": uf.upper(), "municipalities": 0,
-                "uf_valid_votes": state["vv"], "sum_municipal_valid_votes": "",
-                "diff_valid_votes": "", "max_candidate_abs_diff": "",
-                "status": "sem_cobertura_municipal",
+                "uf_sections": state["st"], "sum_municipal_sections": "", "diff_sections": "",
+                "uf_valid_votes": state["vv"], "sum_municipal_valid_votes": "", "diff_valid_votes": "",
+                "uf_blank_votes": state["vb"], "sum_municipal_blank_votes": "", "diff_blank_votes": "",
+                "uf_null_votes": state["vn"], "sum_municipal_null_votes": "", "diff_null_votes": "",
+                "uf_turnout": state["comparecimento"], "sum_municipal_turnout": "", "diff_turnout": "",
+                "max_candidate_abs_diff": "", "status": "sem_cobertura_municipal",
             })
             continue
         cities = [parse_result(pth) for pth in city_paths]
@@ -224,16 +228,39 @@ def main():
             accounting_check("MUNICIPIO", f"{uf.upper()}:{path.stem}", x, accounting_errors)
         city_sum = add_results(cities)
         diff = candidate_diff(state["cand"], city_sum["cand"])
+        status = "ok" if state["vv"] == city_sum["vv"] and all(v == 0 for v in diff.values()) else "divergencia"
         muni_rows.append({
             "snapshot": latest.name,
             "uf": uf.upper(),
             "municipalities": len(cities),
+            "uf_sections": state["st"],
+            "sum_municipal_sections": city_sum["st"],
+            "diff_sections": state["st"] - city_sum["st"],
             "uf_valid_votes": state["vv"],
             "sum_municipal_valid_votes": city_sum["vv"],
             "diff_valid_votes": state["vv"] - city_sum["vv"],
+            "uf_blank_votes": state["vb"],
+            "sum_municipal_blank_votes": city_sum["vb"],
+            "diff_blank_votes": state["vb"] - city_sum["vb"],
+            "uf_null_votes": state["vn"],
+            "sum_municipal_null_votes": city_sum["vn"],
+            "diff_null_votes": state["vn"] - city_sum["vn"],
+            "uf_turnout": state["comparecimento"],
+            "sum_municipal_turnout": city_sum["comparecimento"],
+            "diff_turnout": state["comparecimento"] - city_sum["comparecimento"],
             "max_candidate_abs_diff": max((abs(v) for v in diff.values()), default=0),
-            "status": "ok" if state["vv"] == city_sum["vv"] and all(v == 0 for v in diff.values()) else "divergencia",
+            "status": status,
         })
+        for num in sorted(set(state["cand"]) | set(city_sum["cand"]), key=lambda x: int(x) if x.isdigit() else x):
+            uf_candidate_rows.append({
+                "snapshot": latest.name,
+                "uf": uf.upper(),
+                "candidate": num,
+                "uf_votes": state["cand"].get(num, 0),
+                "sum_municipal_votes": city_sum["cand"].get(num, 0),
+                "difference": state["cand"].get(num, 0) - city_sum["cand"].get(num, 0),
+                "uf_status": status,
+            })
 
     snapshot_fields = [
         "snapshot","dt","ht","pst_br","states_found","br_sections","sum_uf_sections",
@@ -241,13 +268,21 @@ def main():
         "max_candidate_abs_diff","capture_start_utc","capture_end_utc","capture_spread_seconds"
     ]
     muni_fields = [
-        "snapshot","uf","municipalities","uf_valid_votes","sum_municipal_valid_votes",
-        "diff_valid_votes","max_candidate_abs_diff","status"
+        "snapshot","uf","municipalities","uf_sections","sum_municipal_sections","diff_sections",
+        "uf_valid_votes","sum_municipal_valid_votes","diff_valid_votes",
+        "uf_blank_votes","sum_municipal_blank_votes","diff_blank_votes",
+        "uf_null_votes","sum_municipal_null_votes","diff_null_votes",
+        "uf_turnout","sum_municipal_turnout","diff_turnout",
+        "max_candidate_abs_diff","status"
+    ]
+    uf_candidate_fields = [
+        "snapshot","uf","candidate","uf_votes","sum_municipal_votes","difference","uf_status"
     ]
     error_fields = ["scope","key","path","test","expected","observed","difference"]
 
     write_csv(OUT / "snapshots.csv", snapshot_rows, snapshot_fields)
     write_csv(OUT / "municipality_reconciliation.csv", muni_rows, muni_fields)
+    write_csv(OUT / "uf_candidate_reconciliation.csv", uf_candidate_rows, uf_candidate_fields)
     write_csv(OUT / "accounting_errors.csv", accounting_errors, error_fields)
 
     summary = {
@@ -256,6 +291,10 @@ def main():
         "latest_snapshot": latest.name,
         "latest_br_vs_uf": snapshot_rows[-1] if snapshot_rows else None,
         "uf_municipality_divergences": [x for x in muni_rows if x["status"] == "divergencia"],
+        "uf_candidate_differences": [
+            x for x in uf_candidate_rows
+            if x["uf_status"] == "divergencia" and x["difference"] != 0
+        ],
         "accounting_error_count": len(accounting_errors),
         "candidate_differences_by_snapshot": candidate_diffs,
         "limitations": [
@@ -281,6 +320,7 @@ def main():
     print(f"- relatório: {OUT / 'phase1_summary.json'}")
     print(f"- CSV snapshots: {OUT / 'snapshots.csv'}")
     print(f"- CSV UF x municípios: {OUT / 'municipality_reconciliation.csv'}")
+    print(f"- CSV diferenças por candidato: {OUT / 'uf_candidate_reconciliation.csv'}")
     print(f"- CSV fechamento: {OUT / 'accounting_errors.csv'}")
 
 

@@ -1943,3 +1943,155 @@ Nos estados-chave:
 Essa é apenas inspeção preliminar; a conclusão ficará condicionada à execução reproduzível da Fase 3K.
 
 **Próxima ação:** executar a Fase 3K, versionar os três artefatos e então encerrar esta sublinha temporal/geográfica ou identificar UFs residuais específicas para aprofundamento.
+
+
+---
+
+## 2026-10-05 — E0043 — Resultado da Fase 3K: controle histórico reduz fortemente o caráter anômalo do voto tardio
+
+**Evento:** análise dos resultados versionados da Fase 3K.
+
+**Commit dos resultados:** \`bc78365\`
+
+### Cobertura
+
+- zonas comparáveis com 2022: **6.070**
+- UFs: **27**
+
+### Resultado agregado ponderado
+
+Quartis definidos dentro de cada UF:
+
+2026:
+- gradiente late−early da margem Lula−direita: **+1,10 pp**
+
+2022:
+- gradiente late−early: **+1,46 pp**
+
+Delta-do-gradiente:
+- **−0,36 pp**
+
+Isto significa que, no agregado ponderado por votos, o viés pró-Lula das zonas que terminam mais tarde **não ficou mais forte em 2026**; ficou ligeiramente mais fraco que no mesmo ordenamento geográfico observado em 2022.
+
+### Resultado por UF
+
+Spearman entre horário de conclusão e mudança de margem 2026−2022:
+- mediana: **+0,109**
+- positivo em **20 UFs**
+- negativo em **7 UFs**
+
+Delta-do-gradiente por UF:
+- mediana: **+1,33 pp**
+- positivo em **16 UFs**
+- negativo em **11 UFs**
+
+Portanto existe heterogeneidade: muitas UFs mostram mudança relativa mais favorável a Lula nas zonas tardias, porém isso não domina o agregado ponderado nacional.
+
+### Estados centrais para a recuperação posterior de Lula
+
+Delta-do-gradiente 2026−2022:
+- AM: **−6,23 pp**
+- BA: **−1,64 pp**
+- CE: **−4,47 pp**
+- PE: **−5,75 pp**
+- PA: **−3,18 pp**
+- MG: **−0,66 pp**
+- MA: **−0,11 pp**
+- SP: **+2,81 pp**
+
+Nos principais estados que explicaram o saldo tardio pró-Lula na Fase 3I, quase todos apresentam gradiente tardio **igual ou menor que o histórico de 2022**. SP é a exceção de maior porte entre esses estados.
+
+### UFs com maior aumento residual do gradiente tardio
+
+Entre os maiores deltas positivos:
+- RR: **+11,48 pp** (14 zonas comparáveis)
+- AP: **+7,19 pp** (17 zonas)
+- TO: **+4,76 pp**
+- RS: **+4,59 pp**
+- AL: **+4,27 pp**
+- RN: **+3,59 pp**
+- AC: **+3,43 pp**
+- PB: **+3,13 pp**
+- MT: **+3,13 pp**
+- SP: **+2,81 pp**
+
+RR e AP têm número pequeno de zonas e serão tratados com cautela.
+
+### Conclusão limitada
+
+A sublinha "Lula cresce porque resultados tardios são anormalmente pró-Lula em 2026" perde força quando se usa 2022 como controle geográfico.
+
+O fato básico permanece:
+- zonas tardias tendem, em vários estados, a ser mais Lula;
+- isso já acontecia em 2022;
+- no agregado ponderado, o gradiente era inclusive maior em 2022.
+
+Não se conclui que toda a dinâmica temporal esteja explicada. Permanecem:
+- a interrupção/defasagem de publicação nacional já documentada;
+- os catch-ups com movimento top-2 extremo contra janelas comparáveis;
+- UFs residuais específicas, sobretudo SP, que podem ser revisitadas.
+
+A linha geográfica temporal ampla fica, por ora, **explicada em grande parte por ordenação estrutural pré-existente**.
+
+---
+
+## 2026-10-05 — E0044 — Implementação da Fase 4A: Governador direita/CD x Presidente
+
+**Evento:** início da investigação de coerência entre cargos solicitada anteriormente.
+
+**Commit:** \`96d8050228d14d339cc0d95f2b539fe41e8cb2d8\`
+
+### Hipótese de trabalho
+
+Quem vota em candidatura a Governador classificada como direita ou centro-direita tende a votar também à direita para Presidente.
+
+### Classificação usada nesta primeira triagem
+
+Cenário A:
+- classificação externa do produto \`ArvorCo/PNAD governadores.json\`;
+- campos incluídos: \`direita\` e \`centro-direita\`;
+- a classificação fica registrada explicitamente no relatório e poderá ser substituída por cenários alternativos.
+
+### Limites matemáticos por candidatura
+
+Para:
+- \`N\` = comparecimento presidencial na UF;
+- \`G\` = votos da candidatura a Governador;
+- \`L\` = votos em Lula;
+- \`F\` = votos em Flávio Bolsonaro;
+
+calcular:
+
+1. sobreposição mínima Governador×Lula:
+   \[
+   \max(0, G + L - N)
+   \]
+
+2. sobreposição máxima Governador×Lula:
+   \[
+   \min(G, L)
+   \]
+
+3. mínimo de eleitores da candidatura a Governador que não podem estar no conjunto de votos de Flávio:
+   \[
+   \max(0, G - F)
+   \]
+
+O terceiro número é específico a Flávio e **não** equivale ainda a "não votou em nenhum presidenciável de direita".
+
+### Cobertura desta fase
+
+A fonte usada traz, em \`ufs[].candidatos\`, a candidatura eleita ou o par do 2º turno. Portanto a Fase 4A é uma **triagem das principais candidaturas**, não ainda o bloco completo de todas as candidaturas de direita em cada UF.
+
+AL e AM podem estar marcados como provisórios no produto externo e serão explicitamente sinalizados.
+
+### Próxima ação
+
+Executar a Fase 4A e versionar:
+- \`phase4a_governor_president_bounds.csv\`
+- \`phase4a_summary.json\`
+
+Depois:
+- identificar UFs onde a sobreposição Governador-direita × Lula é matematicamente inevitável;
+- aprofundar essas UFs em município/zona/seção;
+- em seguida construir a versão específica para Senado, respeitando dois votos por eleitor.

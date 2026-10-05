@@ -74,3 +74,16 @@ python server.py --port 8765 --interval 10
 python server.py --no-backfill
 python server.py --no-browser
 ```
+
+
+## Reprodutibilidade da investigação
+
+A cadeia de proveniência e replay está documentada em docs/REPRODUCIBILITY.md.
+
+Comandos principais:
+
+    python replay_investigation.py --list
+    python replay_investigation.py --check
+    python replay_investigation.py --all --dry-run
+
+As dependências por fase estão em provenance/PHASES.json e as fontes, com classificação primária/captura/derivado e gaps de substituição, em provenance/SOURCES.json.

@@ -1,0 +1,49 @@
+{
+  "format": "tse-forensics-phase4i-local-tail-coverage-v1",
+  "target": {
+    "cutoff_brt": "2026-10-04 20:04:39",
+    "phase4g_remaining_valid_votes": 18809656,
+    "phase4g_remaining_lula_votes": 10173784,
+    "phase4g_remaining_flavio_votes": 7400257
+  },
+  "local_coverage": {
+    "local_runs": 8,
+    "exact_snapshot_at_or_before_target_available": false,
+    "selected_start_relation": "earliest_after_target",
+    "selected_start_run": "20261005T002055Z",
+    "selected_start_generated_brt": "2026-10-04 21:19:37",
+    "final_run": "20261005T104314Z",
+    "final_generated_brt": "2026-10-05 02:58:39",
+    "gap_target_to_selected_start_minutes": 74.96666666666667,
+    "target_pool_covered_by_local_tail_fraction": 0.05311686720905475,
+    "target_pool_covered_by_local_tail_pct": 5.311686720905475
+  },
+  "national_local_tail": {
+    "d_sections": 4164,
+    "d_valid_votes": 999110,
+    "d_lula": 671275,
+    "d_flavio": 283497,
+    "lula_share_pct": 67.18729669405771,
+    "flavio_share_pct": 28.37495370880083,
+    "lula_minus_flavio_margin_pp": 38.812342985256876
+  },
+  "uf_reconciliation": {
+    "ufs_common": 28,
+    "sum_d_sections": 4090,
+    "sum_d_valid_votes": 982674,
+    "sum_d_lula": 658893,
+    "sum_d_flavio": 280098,
+    "br_minus_sum_ufs_valid_votes": 16436,
+    "br_minus_sum_ufs_lula": 12382,
+    "br_minus_sum_ufs_flavio": 3399,
+    "note": "Snapshots locais não são atômicos: arquivos BR e UF foram capturados ao longo de uma janela de minutos. Pequena diferença não implica discrepância eleitoral."
+  },
+  "uncovered_target_segment": {
+    "valid_votes": 17810546,
+    "lula_votes_if_using_national_identity_only": 9502509,
+    "flavio_votes_if_using_national_identity_only": 7116760,
+    "warning": "Esses votos são uma diferença nacional aritmética. Sem versões geográficas preservadas no corte, não podem ser atribuídos de forma determinística a UFs/municípios/zonas."
+  },
+  "complete_post_2004_geographic_reconstruction_possible_from_local_snapshots": false,
+  "next_required_evidence": "Histórico de versões por UF/município/zona cobrindo 20:04:39 (por exemplo, banco bruto do coletor contemporâneo ou fonte temporal equivalente)."
+}

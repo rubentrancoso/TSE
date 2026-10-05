@@ -1,0 +1,69 @@
+{
+  "format": "tse-forensics-phase3f-matched-window-v1",
+  "source": {
+    "url": "https://raw.githubusercontent.com/ArvorCo/PNAD/beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415/analysis/apuracao_2026/dados/linha_do_tempo.json",
+    "path": "data\\forensics\\external\\ArvorCo-PNAD\\beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415\\linha_do_tempo.json",
+    "sha256": "3e29b16d2827f88e407096d6fa494a3d1b862f8156633f1a7f905e799f70af73",
+    "bytes": 178854,
+    "reused": true
+  },
+  "matching_rule": {
+    "low_fraction_of_target_votes": 0.8,
+    "high_fraction_of_target_votes": 1.2,
+    "max_internal_gap_minutes": 15.0,
+    "catchups_excluded_from_reference_windows": true,
+    "windows_overlap": true
+  },
+  "targets": [
+    {
+      "target": "catchup_1",
+      "start_brt": "2026-10-04 19:14:08",
+      "end_brt": "2026-10-04 19:14:08",
+      "n_batches": 1,
+      "d_sections": 87608,
+      "d_valid_votes": 21016324,
+      "minor_rms_pp": 0.07923013573484688,
+      "minor_max_abs_pp": 0.13152931937349566,
+      "top2_rms_pp": 2.224138056508534,
+      "top2_to_minor_rms_ratio": 28.071869824278448,
+      "flavio_change_pp": -2.2277644877689653,
+      "lula_change_pp": 2.2205057027295823,
+      "cury_change_pp": 0.04021836695304204,
+      "renan_change_pp": 0.07511297519916749,
+      "caiado_change_pp": -0.13152931937349566,
+      "others_change_pp": 0.02345676226067306,
+      "reference_windows": 36,
+      "minor_rms_percentile_matched": 30.555555555555557,
+      "top2_rms_percentile_matched": 100.0,
+      "ratio_percentile_matched": 91.66666666666667
+    },
+    {
+      "target": "catchup_2",
+      "start_brt": "2026-10-04 20:04:39",
+      "end_brt": "2026-10-04 20:04:39",
+      "n_batches": 1,
+      "d_sections": 100614,
+      "d_valid_votes": 24728306,
+      "minor_rms_pp": 0.16009061922385792,
+      "minor_max_abs_pp": 0.2872017814068504,
+      "top2_rms_pp": 4.808957527759076,
+      "top2_to_minor_rms_ratio": 30.038971371799207,
+      "flavio_change_pp": -4.54598931849614,
+      "lula_change_pp": 5.058273037678013,
+      "cury_change_pp": -0.09314774071610854,
+      "renan_change_pp": -0.10237688041110982,
+      "caiado_change_pp": -0.2872017814068504,
+      "others_change_pp": -0.02955731664780714,
+      "reference_windows": 35,
+      "minor_rms_percentile_matched": 100.0,
+      "top2_rms_percentile_matched": 100.0,
+      "ratio_percentile_matched": 91.42857142857143
+    }
+  ],
+  "interpretation": [
+    "Percentis são benchmarks descritivos; janelas sobrepostas não são amostras independentes.",
+    "Percentil 100 de minor_rms significa que o movimento percentual dos candidatos menores no catch-up foi maior que em todas as janelas comparáveis, não que eles ficaram congelados.",
+    "Percentil alto da razão top2/menores indica concentração relativa da mudança nos dois primeiros, mas não identifica causa.",
+    "O controle ainda não condiciona por composição geográfica exata das seções; essa continua sendo a limitação principal."
+  ]
+}

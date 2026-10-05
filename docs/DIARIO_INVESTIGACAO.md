@@ -3431,3 +3431,45 @@ pós-retomada.
 ### Próxima ação
 
 Executar a Fase 4J e versionar seus dois artefatos antes de definir a Fase 4K.
+
+---
+
+## 2026-10-05 — E0069 — Arquitetura formal de proveniência e replay primário
+
+**Evento:** transformação da reprodutibilidade em requisito explícito da investigação.
+
+Foram adicionados:
+
+- provenance/SOURCES.json
+- provenance/PHASES.json
+- replay_investigation.py
+- docs/REPRODUCIBILITY.md
+
+### Regra
+
+Reprodutibilidade matemática e replay com fonte primária passam a ser estados distintos.
+
+Uma fase pode ser perfeitamente reproduzível a partir de uma captura externa fixada por commit/hash e ainda permanecer marcada como PRIMARY-GAP.
+
+### Política de substituição
+
+Quando uma fonte primária histórica equivalente for obtida:
+
+1. preservar o bruto e seu SHA-256;
+2. manter a captura externa original;
+3. normalizar ambas para o mesmo contrato de dados;
+4. rerodar a fase afetada e todas as dependentes;
+5. produzir diff quantitativo antigo × primário;
+6. revisar conclusões somente depois desse confronto.
+
+### Arquitetura-alvo
+
+RAW imutável → CANONICAL → ANALYSIS → REPORT.
+
+O trabalho futuro de recuperação das fontes primárias deve alimentar a camada RAW/CANONICAL, sem alterar a matemática dos testes.
+
+### Prioridade primária
+
+A maior lacuna atual é o histórico oficial de versões EA20 durante a noite da apuração, especialmente nacional/UF e depois município/zona no entorno de 20:04.
+
+As capturas ArvorCo e Vitor permanecem como controles independentes, mesmo depois de eventual substituição por fonte primária.

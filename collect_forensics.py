@@ -261,19 +261,24 @@ def collect_portal(output, download_files):
 
 
 def main():
+    run_everything = len(sys.argv) == 1
     parser = argparse.ArgumentParser(description="Coleta dados públicos oficiais do TSE com hashes e manifestos.")
-    parser.add_argument("command", choices=("snapshot", "portal", "all"))
+    parser.add_argument("command", nargs="?", default="all", choices=("snapshot", "portal", "all"))
     parser.add_argument("--output", default="data/forensics", help="diretório de saída")
     parser.add_argument("--workers", type=int, default=8, help="downloads simultâneos dos JSONs municipais")
     parser.add_argument("--download-portal-files", action="store_true", help="baixa também ZIP/CSV do portal; pode ocupar muitos GB")
     args = parser.parse_args()
     output = Path(args.output).resolve()
     output.mkdir(parents=True, exist_ok=True)
+    download_portal_files = args.download_portal_files or run_everything
+    if run_everything:
+        print("Modo completo: snapshot nacional/UF/municípios + todos os arquivos do portal.", flush=True)
+        print("O download oficial pode ocupar muitos GB e será retomado se for interrompido.\n", flush=True)
     summaries = []
     if args.command in ("snapshot", "all"):
         summaries.append(collect_live(output, args.workers))
     if args.command in ("portal", "all"):
-        summaries.append(collect_portal(output, args.download_portal_files))
+        summaries.append(collect_portal(output, download_portal_files))
     print(json.dumps(summaries, ensure_ascii=False, indent=2))
     return 1 if any(item.get("files_error", 0) or item.get("records_error", 0) for item in summaries) else 0
 

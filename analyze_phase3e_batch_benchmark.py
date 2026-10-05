@@ -110,17 +110,35 @@ def percentile_le(values, x):
     return 100.0 * sum(1 for v in values if v <= x) / len(values)
 
 
+def as_int(value):
+    if value is None or value == "":
+        return None
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def compute_metrics(row):
-    d_vv = int(row["d_vv"])
-    vv = int(row["vv"])
+    d_vv = as_int(row.get("d_vv"))
+    vv = as_int(row.get("vv"))
+    d_st = as_int(row.get("d_st"))
+
+    # A primeira versão histórica e algumas linhas auxiliares não têm delta
+    # calculável. Elas não são "lotes" e devem ser ignoradas, não convertidas.
+    if d_vv is None or vv is None or d_st is None:
+        return None
+
     prev_vv = vv - d_vv
     if d_vv <= 0 or prev_vv <= 0:
         return None
 
     pp = {}
     for g in ALL:
-        end = int(row[g])
-        delta = int(row[f"d_{g}"])
+        end = as_int(row.get(g))
+        delta = as_int(row.get(f"d_{g}"))
+        if end is None or delta is None:
+            return None
         start = end - delta
         prior_share = 100.0 * start / prev_vv
         batch_share = 100.0 * delta / d_vv
@@ -132,7 +150,7 @@ def compute_metrics(row):
 
     return {
         "generated_brt": row["gerado_brt"],
-        "d_sections": int(row["d_st"]),
+        "d_sections": d_st,
         "d_valid_votes": d_vv,
         "minutes_since_previous": row["minutos_desde_anterior"],
         "minor_rms_pp": minor_rms,
@@ -154,12 +172,17 @@ def main():
 
     versions = table_rows(data["nacional"]["versoes"])
     batches = []
+    skipped_regressive = 0
+    skipped_without_delta = 0
     for row in versions:
         if row.get("marcada_regressiva"):
+            skipped_regressive += 1
             continue
         m = compute_metrics(row)
         if m:
             batches.append(m)
+        else:
+            skipped_without_delta += 1
 
     if not batches:
         raise RuntimeError("Nenhum lote válido encontrado.")
@@ -216,6 +239,9 @@ def main():
         "format": "tse-forensics-phase3e-batch-benchmark-v1",
         "source": source,
         "reference_population": {
+            "historical_rows_total": len(versions),
+            "skipped_regressive_rows": skipped_regressive,
+            "skipped_rows_without_complete_delta": skipped_without_delta,
             "genuine_non_regressive_batches": len(batches),
             "large_batches_threshold_valid_votes": LARGE_THRESHOLD,
             "large_batches": len(large),
@@ -248,6 +274,9 @@ def main():
     )
 
     print("\nFASE 3E — benchmark empírico dos lotes nacionais")
+    print(f"- linhas históricas: {len(versions)}")
+    print(f"- regressivas ignoradas: {skipped_regressive}")
+    print(f"- sem delta completo ignoradas: {skipped_without_delta}")
     print(f"- lotes genuínos analisados: {len(batches)}")
     print(f"- lotes >= {LARGE_THRESHOLD:,} válidos: {len(large)}")
     for t in targets:

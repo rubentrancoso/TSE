@@ -1474,3 +1474,100 @@ Ele contém os quatro snapshots necessários:
 **Commit da correção:** `71654ebd7e237e23e2f77158420a93cc5717d2b6`
 
 **Próxima ação:** atualizar o branch local e executar novamente a Fase 3G.
+
+
+---
+
+## 2026-10-05 — E0035 — Resultado da Fase 3G: travamentos por UF não se concentram nas UFs pró-Lula
+
+**Evento:** análise dos resultados versionados da Fase 3G.
+
+**Commit dos resultados:** `1bc302c0b3507ce103e886c29355f0133ba7a727`
+
+**Cobertura:** 27 UFs.
+
+### Resultado principal
+
+Classificação no snapshot de ~19:06:
+- UFs com Lula na frente: **11**
+- UFs com Flávio na frente: **16**
+
+Na janela W2 (19:14:08–19:32:47), mediana de minutos de travamento detectado por UF:
+- Lula-led: **9,85 min**
+- Flávio-led: **10,32 min**
+
+Correlação de Spearman entre margem Lula−Flávio e atraso W2:
+- **−0,478**
+
+Ou seja: quanto maior a margem de Lula, menor tendeu a ser o atraso detectado por esta métrica.
+
+Correlação entre atraso W2 e swing Lula−Flávio entre 19:06→19:32:
+- **−0,041**
+
+Isso é praticamente ausência de associação monotônica.
+
+Correlação entre atraso W2 e swing 19:32→20:47:
+- **−0,278**
+
+Também não aponta para maior atraso associado a swing posterior favorável a Lula.
+
+### UFs com maiores atrasos W2 detectados
+
+Entre os maiores valores aparecem:
+- AM: **16,20 min** — Flávio liderava
+- AC: **13,40 min** — Flávio liderava
+- SP: **12,25 min** — Flávio liderava
+- PR: **11,05 min** — Flávio liderava
+- RS: **10,97 min** — Flávio liderava
+
+### Conclusão limitada
+
+A forma forte da hipótese:
+
+> “os estados onde Lula/PT tinha vantagem foram justamente os que atrasaram mais tecnicamente”
+
+**não é sustentada** por esta definição de atraso baseada nos eventos `travamentos.ufs`.
+
+Isso não encerra a hipótese mais ampla de **apuração tardia por composição geográfica**, porque um estado pode estar muito menos avançado na contagem sem apresentar mais eventos de congelamento técnico.
+
+**Próxima pergunta:** UFs Lula-led estavam proporcionalmente menos apuradas nos snapshots contemporâneos?
+
+---
+
+## 2026-10-05 — E0036 — Implementação da Fase 3H: apuração tardia por composição geográfica
+
+**Evento:** criação do `analyze_phase3h_late_counting.py`.
+
+**Commit:** `37b401af695efb7d8776b0908ca7c0a3ae1cd046`
+
+**Objetivo:** testar uma formulação diferente da hipótese externa:
+
+> mesmo sem maior número/duração de freezes técnicos, UFs onde Lula liderava estavam menos avançadas na apuração e, portanto, tinham proporcionalmente mais resultado para entrar depois?
+
+**Métricas:**
+- percentual apurado por UF em 18:32, 19:06, 19:32 e 20:47;
+- percentual ainda não apurado;
+- comparação Lula-led × Flávio-led;
+- correlação de Spearman entre margem Lula−Flávio e percentual apurado;
+- progresso entre snapshots;
+- swing Lula−Flávio posterior;
+- proxy de escala: eleitorado total × fração ainda não apurada.
+
+**Cuidado:** esse proxy não representa votos faltantes; ele serve apenas para comparar escala potencial entre grupos.
+
+**Inspeção exploratória antes da automação:**
+- mediana de apuração às 19:06:
+  - Lula-led: **65,95%**
+  - Flávio-led: **91,50%**
+- mediana às 19:32:
+  - Lula-led: **83,20%**
+  - Flávio-led: **97,74%**
+- Spearman margem Lula × percentual apurado às 19:06: aproximadamente **−0,629**
+- Spearman margem Lula × percentual apurado às 19:32: aproximadamente **−0,626**
+
+Isso sugere que a hipótese de “apuração mais tardia” pode aparecer na **proporção ainda não contada**, embora não apareça como maior frequência de travamentos técnicos.
+
+**Próxima ação:** executar a Fase 3H, versionar os artefatos e então separar claramente:
+1. atraso técnico;
+2. apuração estruturalmente mais tardia;
+3. swing político do resultado.

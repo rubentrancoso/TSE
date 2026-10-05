@@ -104,9 +104,19 @@ class Store:
             out.append({
                 "source":r["source"],"dt":r["dt"],"ht":r["ht"],"pst":r["pst"],"st":r["st"],"ts":r["ts"],
                 "vv":r["vv"],"tv":r["tv"],"vb":r["vb"],"vn":r["vn"],"c":r["comparecimento"],
-                "te":r["eleitorado"],"a":r["abstencao"],"cand":json.loads(r["candidates_json"])
+                "te":r["eleitorado"],"a":r["abstencao"],"captured_at":r["captured_at"],
+                "cand":json.loads(r["candidates_json"])
             })
         return out
+    def raw_archive(self):
+        with self.conn() as c:
+            rows=c.execute("""select id,source,dt,ht,st,vv,captured_at,raw_json
+              from snapshots where raw_json is not null order by id""").fetchall()
+        return [{
+            "id":r["id"],"source":r["source"],"dt":r["dt"],"ht":r["ht"],
+            "st":r["st"],"vv":r["vv"],"captured_at":r["captured_at"],
+            "raw":json.loads(r["raw_json"])
+        } for r in rows]
     def latest_raw(self):
         with self.conn() as c:
             r=c.execute("select raw_json from snapshots where raw_json is not null order by id desc limit 1").fetchone()
@@ -178,15 +188,16 @@ class Handler(SimpleHTTPRequestHandler):
             return self.send_json(store.latest_raw() or {})
         if path=="/api/export.csv":
             h=store.history(); nums=sorted({n for x in h for n in x["cand"]})
-            sio=io.StringIO(); w=csv.writer(sio); w.writerow(["source","dt","ht","pst","st","ts","vv","tv","comparecimento"]+[f"{n}_votos" for n in nums]+[f"{n}_pct" for n in nums])
+            sio=io.StringIO(); w=csv.writer(sio); w.writerow(["source","captured_at_utc","dt","ht","pst","st","ts","vv","tv","comparecimento"]+[f"{n}_votos" for n in nums]+[f"{n}_pct" for n in nums])
             for x in h:
-                w.writerow([x["source"],x["dt"],x["ht"],x["pst"],x["st"],x["ts"],x["vv"],x["tv"],x["c"]]+
+                w.writerow([x["source"],x["captured_at"],x["dt"],x["ht"],x["pst"],x["st"],x["ts"],x["vv"],x["tv"],x["c"]]+
                            [x["cand"].get(n,{}).get("votos",0) for n in nums]+[x["cand"].get(n,{}).get("pct",0) for n in nums])
             b=sio.getvalue().encode("utf-8-sig")
             self.send_response(200); self.send_header("Content-Type","text/csv; charset=utf-8"); self.send_header("Content-Disposition",'attachment; filename="tse_history.csv"')
             self.send_header("Content-Length",str(len(b))); self.end_headers(); self.wfile.write(b); return
         if path=="/api/export.json":
-            payload={"format":"tse-history-v1","exported_at":time.strftime("%Y-%m-%dT%H:%M:%S"),"history":store.history()}
+            payload={"format":"tse-history-v2-full","exported_at_utc":time.strftime("%Y-%m-%dT%H:%M:%S"),
+                     "history":store.history(),"raw_snapshots":store.raw_archive()}
             b=json.dumps(payload,ensure_ascii=False,indent=2).encode("utf-8")
             self.send_response(200); self.send_header("Content-Type","application/json; charset=utf-8"); self.send_header("Content-Disposition",'attachment; filename="tse_history_backup.json"')
             self.send_header("Content-Length",str(len(b))); self.end_headers(); self.wfile.write(b); return

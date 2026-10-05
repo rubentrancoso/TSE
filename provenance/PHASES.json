@@ -1,0 +1,248 @@
+{
+  "schema_version": 1,
+  "notes": [
+    "A ordem abaixo representa a sequência analítica, não necessariamente a ordem de coleta.",
+    "Uma fase pode ser reproduzível com fonte secundária e ainda estar pendente de replay com fonte primária.",
+    "Quando uma fonte primária substituta for adicionada, rerodar a fase e todas as dependentes."
+  ],
+  "phases": [
+    {
+      "id": "1",
+      "script": "analyze_forensics.py",
+      "sources": [
+        "local_tse_capture_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase1_summary.json"
+      ]
+    },
+    {
+      "id": "2",
+      "script": "analyze_phase2_sections.py",
+      "sources": [
+        "tse_urna_2026",
+        "local_tse_capture_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase2_sections_summary.json"
+      ]
+    },
+    {
+      "id": "3A",
+      "script": "analyze_phase3_arrivals.py",
+      "sources": [
+        "tse_urna_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase3_arrivals_summary.json"
+      ]
+    },
+    {
+      "id": "3B",
+      "script": "analyze_phase3b_external_timeline.py",
+      "sources": [
+        "arvor_timeline_2026",
+        "vitor_capture_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase3b_summary.json"
+      ]
+    },
+    {
+      "id": "3C",
+      "script": "analyze_phase3c_cross_cargo.py",
+      "sources": [
+        "vitor_capture_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase3c_summary.json"
+      ]
+    },
+    {
+      "id": "3D",
+      "script": "analyze_phase3d_candidate_motion.py",
+      "sources": [
+        "arvor_timeline_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase3d_candidate_motion_summary.json"
+      ]
+    },
+    {
+      "id": "3E",
+      "script": "analyze_phase3e_batch_benchmark.py",
+      "sources": [
+        "arvor_timeline_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase3e_summary.json"
+      ]
+    },
+    {
+      "id": "3F",
+      "script": "analyze_phase3f_matched_windows.py",
+      "sources": [
+        "arvor_timeline_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase3f_summary.json"
+      ]
+    },
+    {
+      "id": "3G",
+      "script": "analyze_phase3g_uf_delay_bias.py",
+      "sources": [
+        "arvor_timeline_2026",
+        "vitor_capture_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase3g_summary.json"
+      ]
+    },
+    {
+      "id": "3H",
+      "script": "analyze_phase3h_late_counting.py",
+      "sources": [
+        "vitor_capture_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase3h_summary.json"
+      ]
+    },
+    {
+      "id": "3I",
+      "script": "analyze_phase3i_geographic_decomposition.py",
+      "sources": [
+        "vitor_capture_2026",
+        "tse_ea20_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase3i_summary.json"
+      ]
+    },
+    {
+      "id": "3J",
+      "script": "analyze_phase3j_zone_completion_bias.py",
+      "sources": [
+        "arvor_zones_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase3j_summary.json"
+      ]
+    },
+    {
+      "id": "3K",
+      "script": "analyze_phase3k_residual_timing.py",
+      "sources": [
+        "arvor_zones_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase3k_summary.json"
+      ]
+    },
+    {
+      "id": "4A",
+      "script": "analyze_phase4a_governor_president_bounds.py",
+      "sources": [
+        "arvor_governor_2026",
+        "tse_ea20_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase4a_summary.json"
+      ]
+    },
+    {
+      "id": "4B",
+      "script": "analyze_phase4b_full_right_blocks.py",
+      "sources": [
+        "tse_ea20_2026",
+        "political_classifier_arvor"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase4b_summary.json"
+      ]
+    },
+    {
+      "id": "4C",
+      "script": "analyze_phase4c_classification_sensitivity.py",
+      "sources": [
+        "political_classifier_arvor"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase4c_summary.json"
+      ]
+    },
+    {
+      "id": "4D",
+      "script": "analyze_phase4d_municipality_bounds.py",
+      "sources": [
+        "tse_ea20_2026",
+        "political_classifier_arvor"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase4d_summary.json"
+      ]
+    },
+    {
+      "id": "4E",
+      "script": "analyze_phase4e_pl_senate_claim.py",
+      "sources": [
+        "tse_ea20_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase4e_summary.json"
+      ]
+    },
+    {
+      "id": "4F",
+      "script": "analyze_phase4f_post_resume_monotonicity.py",
+      "sources": [
+        "arvor_timeline_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase4f_summary.json"
+      ]
+    },
+    {
+      "id": "4G",
+      "script": "analyze_phase4g_order_invariance.py",
+      "sources": [
+        "arvor_timeline_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase4g_summary.json"
+      ]
+    },
+    {
+      "id": "4H",
+      "script": "analyze_phase4h_late_zone_composition.py",
+      "sources": [
+        "arvor_zones_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase4h_summary.json"
+      ]
+    },
+    {
+      "id": "4I",
+      "script": "analyze_phase4i_local_tail_coverage.py",
+      "sources": [
+        "local_tse_capture_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase4i_summary.json"
+      ]
+    },
+    {
+      "id": "4J",
+      "script": "analyze_phase4j_post_resume_geography.py",
+      "sources": [
+        "vitor_capture_2026",
+        "local_tse_capture_2026"
+      ],
+      "outputs": [
+        "data/forensics/analysis/phase4j_summary.json"
+      ]
+    }
+  ]
+}

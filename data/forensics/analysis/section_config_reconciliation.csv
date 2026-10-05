@@ -1,0 +1,1271 @@
+﻿uf,municipality_code,municipality_name,ea20_st,ea20_ts,ea20_pst,ea20_dt,ea20_ht,ea16_all_sections,ea16_principal_sections,ea16_with_aux_timestamp,diff_all_minus_ea20_ts,diff_principal_minus_ea20_ts,selected_model,selected_config_sections,diff_config_minus_ea20_ts,ea20_path
+BA,30007,LUÍS EDUARDO MAGALHÃES,241,241,100.0,04/10/2026,20:28:06,248,241,241,7,0,principal,241,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30007.json
+BA,30058,EUNÁPOLIS,267,267,100.0,04/10/2026,20:58:10,298,267,267,31,0,principal,267,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30058.json
+BA,30660,IUIU,28,28,100.0,04/10/2026,20:08:23,28,28,28,0,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30660.json
+BA,30678,JABORANDI,34,34,100.0,04/10/2026,21:24:32,34,34,34,0,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30678.json
+BA,30694,JUSSARI,16,16,100.0,04/10/2026,20:54:15,23,16,16,7,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30694.json
+BA,30716,AMÉRICA DOURADA,42,42,100.0,04/10/2026,19:18:41,43,42,42,1,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30716.json
+BA,30732,ARATACA,24,24,100.0,04/10/2026,19:12:39,24,24,24,0,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30732.json
+BA,30759,BARRO ALTO,41,41,100.0,04/10/2026,20:11:24,41,41,41,0,0,principal,41,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30759.json
+BA,30775,BARROCAS,52,52,100.0,04/10/2026,22:18:25,52,52,52,0,0,principal,52,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30775.json
+BA,30791,BURITIRAMA,53,53,100.0,04/10/2026,21:40:19,57,53,53,4,0,principal,53,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30791.json
+BA,30813,CAPELA DO ALTO ALEGRE,36,36,100.0,04/10/2026,21:31:33,36,36,36,0,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30813.json
+BA,30830,CAPIM GROSSO,75,75,100.0,04/10/2026,20:47:04,76,75,75,1,0,principal,75,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30830.json
+BA,30856,CANUDOS,51,51,100.0,04/10/2026,20:10:04,56,51,51,5,0,principal,51,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30856.json
+BA,30872,DIAS D'ÁVILA,169,169,100.0,04/10/2026,20:52:12,172,169,169,3,0,principal,169,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30872.json
+BA,30899,FÁTIMA,48,48,100.0,04/10/2026,23:05:02,49,48,48,1,0,principal,48,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30899.json
+BA,30910,FILADÉLFIA,50,50,100.0,04/10/2026,20:54:44,51,50,50,1,0,principal,50,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30910.json
+BA,30937,GAVIÃO,19,19,100.0,04/10/2026,20:13:34,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30937.json
+BA,30953,GUAJERU,21,21,100.0,04/10/2026,20:59:12,29,21,21,8,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30953.json
+BA,30970,HELIÓPOLIS,39,39,100.0,04/10/2026,21:36:43,41,39,39,2,0,principal,39,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30970.json
+BA,30996,JOÃO DOURADO,59,59,100.0,04/10/2026,21:00:05,63,59,59,4,0,principal,59,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\30996.json
+BA,33014,ABAÍRA,29,29,100.0,04/10/2026,20:58:29,30,29,29,1,0,principal,29,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33014.json
+BA,33030,ABARÉ,45,45,100.0,04/10/2026,22:31:50,45,45,45,0,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33030.json
+BA,33057,ACAJUTIBA,39,39,100.0,04/10/2026,20:58:21,42,39,39,3,0,principal,39,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33057.json
+BA,33065,ADUSTINA,45,45,100.0,04/10/2026,21:06:17,46,45,45,1,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33065.json
+BA,33073,ÁGUA FRIA,45,45,100.0,04/10/2026,20:58:22,64,45,45,19,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33073.json
+BA,33090,ÉRICO CARDOSO,34,34,100.0,04/10/2026,20:32:58,38,34,34,4,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33090.json
+BA,33111,AIQUARA,14,14,100.0,04/10/2026,19:14:00,14,14,14,0,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33111.json
+BA,33138,ALAGOINHAS,366,366,100.0,04/10/2026,21:12:53,383,366,366,17,0,principal,366,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33138.json
+BA,33154,ALCOBAÇA,57,57,100.0,04/10/2026,21:44:34,61,57,57,4,0,principal,57,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33154.json
+BA,33170,ALMADINA,15,15,100.0,04/10/2026,18:59:54,29,15,15,14,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33170.json
+BA,33197,AMARGOSA,84,84,100.0,04/10/2026,21:56:14,90,84,84,6,0,principal,84,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33197.json
+BA,33219,AMÉLIA RODRIGUES,64,64,100.0,04/10/2026,21:17:13,65,64,64,1,0,principal,64,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33219.json
+BA,33235,ANAGÉ,68,68,100.0,04/10/2026,21:52:29,87,68,68,19,0,principal,68,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33235.json
+BA,33251,ANDARAÍ,37,37,100.0,04/10/2026,21:08:08,41,37,37,4,0,principal,37,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33251.json
+BA,33260,ANDORINHA,44,44,100.0,04/10/2026,22:12:55,48,44,44,4,0,principal,44,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33260.json
+BA,33278,ANGICAL,49,49,100.0,04/10/2026,19:16:59,57,49,49,8,0,principal,49,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33278.json
+BA,33294,ANGUERA,36,36,100.0,04/10/2026,21:26:08,42,36,36,6,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33294.json
+BA,33316,ANTAS,33,33,100.0,04/10/2026,20:54:43,37,33,33,4,0,principal,33,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33316.json
+BA,33332,ANTÔNIO CARDOSO,38,38,100.0,04/10/2026,21:43:33,40,38,38,2,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33332.json
+BA,33359,ANTÔNIO GONÇALVES,35,35,100.0,04/10/2026,20:12:40,43,35,35,8,0,principal,35,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33359.json
+BA,33375,APORÁ,45,45,100.0,04/10/2026,21:09:07,47,45,45,2,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33375.json
+BA,33383,ARAÇÁS,30,30,100.0,04/10/2026,19:18:31,30,30,30,0,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33383.json
+BA,33391,ARACATU,43,43,100.0,04/10/2026,21:02:24,46,43,43,3,0,principal,43,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33391.json
+BA,33405,APUAREMA,18,18,100.0,04/10/2026,21:39:53,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33405.json
+BA,33413,ARACI,131,131,100.0,04/10/2026,22:05:30,136,131,131,5,0,principal,131,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33413.json
+BA,33430,ARAMARI,35,35,100.0,04/10/2026,19:27:25,35,35,35,0,0,principal,35,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33430.json
+BA,33456,ARATUÍPE,28,28,100.0,04/10/2026,19:26:37,30,28,28,2,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33456.json
+BA,33472,AURELINO LEAL,34,34,100.0,04/10/2026,19:07:37,34,34,34,0,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33472.json
+BA,33499,BAIANÓPOLIS,45,45,100.0,04/10/2026,21:37:29,49,45,45,4,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33499.json
+BA,33510,BAIXA GRANDE,56,56,100.0,04/10/2026,21:09:32,57,56,56,1,0,principal,56,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33510.json
+BA,33529,BANZAÊ,42,42,100.0,04/10/2026,20:46:19,43,42,42,1,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33529.json
+BA,33537,BARRA,139,139,100.0,04/10/2026,22:04:32,145,139,139,6,0,principal,139,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33537.json
+BA,33553,BARRA DA ESTIVA,67,67,100.0,04/10/2026,21:30:59,73,67,67,6,0,principal,67,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33553.json
+BA,33570,BARRA DO CHOÇA,110,110,100.0,04/10/2026,19:16:12,111,110,110,1,0,principal,110,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33570.json
+BA,33596,BARRA DO MENDES,57,57,100.0,04/10/2026,20:59:47,61,57,57,4,0,principal,57,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33596.json
+BA,33618,BARRA DO ROCHA,14,14,100.0,04/10/2026,18:56:22,26,14,14,12,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33618.json
+BA,33634,BARREIRAS,325,325,100.0,04/10/2026,21:10:46,337,325,325,12,0,principal,325,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33634.json
+BA,33650,BARRO PRETO,21,21,100.0,04/10/2026,19:19:10,23,21,21,2,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33650.json
+BA,33677,BELMONTE,55,55,100.0,04/10/2026,20:51:17,58,55,55,3,0,principal,55,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33677.json
+BA,33693,BELO CAMPO,54,58,93.103448276,04/10/2026,20:59:55,62,58,58,4,0,principal,58,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33693.json
+BA,33715,BIRITINGA,43,43,100.0,04/10/2026,21:50:53,46,43,43,3,0,principal,43,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33715.json
+BA,33731,BOA NOVA,48,48,100.0,04/10/2026,20:52:16,58,48,48,10,0,principal,48,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33731.json
+BA,33758,BOA VISTA DO TUPIM,51,51,100.0,04/10/2026,21:47:09,55,51,51,4,0,principal,51,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33758.json
+BA,33774,BOM JESUS DA LAPA,160,160,100.0,04/10/2026,23:09:21,174,160,160,14,0,principal,160,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33774.json
+BA,33782,BOM JESUS DA SERRA,32,32,100.0,04/10/2026,20:31:36,34,32,32,2,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33782.json
+BA,33790,BONINAL,45,45,100.0,04/10/2026,21:56:14,46,45,45,1,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33790.json
+BA,33804,BONITO,42,42,100.0,04/10/2026,21:24:18,42,42,42,0,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33804.json
+BA,33812,BOQUIRA,69,69,100.0,04/10/2026,21:50:09,77,69,69,8,0,principal,69,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33812.json
+BA,33839,BOTUPORÃ,35,35,100.0,04/10/2026,21:12:48,37,35,35,2,0,principal,35,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33839.json
+BA,33855,BREJÕES,37,37,100.0,04/10/2026,21:48:54,37,37,37,0,0,principal,37,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33855.json
+BA,33871,BREJOLÂNDIA,31,31,100.0,04/10/2026,21:56:28,32,31,31,1,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33871.json
+BA,33898,BROTAS DE MACAÚBAS,38,38,100.0,04/10/2026,22:07:34,50,38,38,12,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33898.json
+BA,33910,BRUMADO,173,173,100.0,04/10/2026,20:16:30,193,173,173,20,0,principal,173,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33910.json
+BA,33936,BUERAREMA,42,42,100.0,04/10/2026,19:14:21,42,42,42,0,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33936.json
+BA,33952,CAATIBA,23,23,100.0,04/10/2026,18:42:59,34,23,23,11,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33952.json
+BA,33960,CABACEIRAS DO PARAGUAÇU,46,46,100.0,04/10/2026,20:16:00,47,46,46,1,0,principal,46,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33960.json
+BA,33979,CACHOEIRA,85,85,100.0,04/10/2026,21:07:28,87,85,85,2,0,principal,85,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33979.json
+BA,33995,CACULÉ,61,61,100.0,04/10/2026,20:30:49,61,61,61,0,0,principal,61,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\33995.json
+BA,34010,CAEM,28,28,100.0,04/10/2026,21:46:33,33,28,28,5,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34010.json
+BA,34029,CAETANOS,34,34,100.0,04/10/2026,22:45:31,34,34,34,0,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34029.json
+BA,34037,CAETITÉ,139,139,100.0,04/10/2026,22:09:25,162,139,139,23,0,principal,139,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34037.json
+BA,34053,CAFARNAUM,49,49,100.0,04/10/2026,20:14:57,50,49,49,1,0,principal,49,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34053.json
+BA,34070,CAIRU,46,46,100.0,04/10/2026,21:07:52,47,46,46,1,0,principal,46,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34070.json
+BA,34096,CALDEIRÃO GRANDE,34,34,100.0,04/10/2026,20:12:21,34,34,34,0,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34096.json
+BA,34118,CAMACAN,66,66,100.0,04/10/2026,20:55:49,82,66,66,16,0,principal,66,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34118.json
+BA,34134,CAMAÇARI,564,564,100.0,04/10/2026,21:10:44,572,564,564,8,0,principal,564,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34134.json
+BA,34150,CAMAMU,79,79,100.0,04/10/2026,22:02:44,91,79,79,12,0,principal,79,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34150.json
+BA,34177,CAMPO ALEGRE DE LOURDES,84,84,100.0,04/10/2026,21:56:49,88,84,84,4,0,principal,84,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34177.json
+BA,34193,CAMPO FORMOSO,208,208,100.0,04/10/2026,22:32:22,231,208,208,23,0,principal,208,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34193.json
+BA,34215,CANÁPOLIS,31,31,100.0,04/10/2026,22:52:26,34,31,31,3,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34215.json
+BA,34231,CANARANA,69,69,100.0,04/10/2026,22:24:05,74,69,69,5,0,principal,69,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34231.json
+BA,34258,CANAVIEIRAS,90,90,100.0,04/10/2026,20:59:29,91,90,90,1,0,principal,90,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34258.json
+BA,34274,CANDEAL,27,27,100.0,04/10/2026,21:02:15,28,27,27,1,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34274.json
+BA,34290,CANDEIAS,192,192,100.0,04/10/2026,22:59:06,202,192,192,10,0,principal,192,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34290.json
+BA,34312,CANDIBA,36,36,100.0,04/10/2026,20:51:52,36,36,36,0,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34312.json
+BA,34339,CÂNDIDO SALES,79,79,100.0,04/10/2026,20:59:44,88,79,79,9,0,principal,79,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34339.json
+BA,34355,CANSANÇÃO,97,97,100.0,04/10/2026,23:11:27,114,97,97,17,0,principal,97,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34355.json
+BA,34363,CARAÍBAS,24,24,100.0,04/10/2026,21:53:19,30,24,24,6,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34363.json
+BA,34371,CARAVELAS,49,49,100.0,04/10/2026,21:00:42,51,49,49,2,0,principal,49,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34371.json
+BA,34398,CARDEAL DA SILVA,22,22,100.0,04/10/2026,20:15:09,31,22,22,9,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34398.json
+BA,34410,CARINHANHA,75,75,100.0,04/10/2026,22:13:25,79,75,75,4,0,principal,75,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34410.json
+BA,34436,CASA NOVA,185,185,100.0,05/10/2026,00:39:20,202,185,185,17,0,principal,185,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34436.json
+BA,34452,CASTRO ALVES,80,80,100.0,04/10/2026,21:16:53,85,80,80,5,0,principal,80,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34452.json
+BA,34479,CATOLÂNDIA,15,15,100.0,04/10/2026,22:12:54,17,15,15,2,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34479.json
+BA,34495,CATU,127,127,100.0,04/10/2026,23:23:27,130,127,127,3,0,principal,127,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34495.json
+BA,34509,CATURAMA,30,30,100.0,04/10/2026,18:40:06,31,30,30,1,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34509.json
+BA,34517,CENTRAL,52,52,100.0,04/10/2026,20:56:04,55,52,52,3,0,principal,52,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34517.json
+BA,34533,CHORROCHÓ,31,31,100.0,04/10/2026,21:14:38,39,31,31,8,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34533.json
+BA,34550,CÍCERO DANTAS,82,82,100.0,04/10/2026,20:58:28,84,82,82,2,0,principal,82,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34550.json
+BA,34576,CIPÓ,46,46,100.0,04/10/2026,21:32:33,46,46,46,0,0,principal,46,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34576.json
+BA,34592,COARACI,61,61,100.0,04/10/2026,19:16:58,79,61,61,18,0,principal,61,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34592.json
+BA,34614,COCOS,53,53,100.0,04/10/2026,23:09:17,56,53,53,3,0,principal,53,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34614.json
+BA,34630,CONCEIÇÃO DA FEIRA,57,57,100.0,04/10/2026,20:56:04,58,57,57,1,0,principal,57,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34630.json
+BA,34657,CONCEIÇÃO DO ALMEIDA,49,49,100.0,04/10/2026,20:53:22,54,49,49,5,0,principal,49,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34657.json
+BA,34673,CONCEIÇÃO DO COITÉ,186,187,99.465240642,04/10/2026,21:00:07,194,187,187,7,0,principal,187,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34673.json
+BA,34690,CONCEIÇÃO DO JACUÍPE,80,80,100.0,04/10/2026,21:17:28,81,80,80,1,0,principal,80,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34690.json
+BA,34711,CONDE,59,59,100.0,04/10/2026,20:56:27,59,59,59,0,0,principal,59,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34711.json
+BA,34738,CONDEÚBA,59,59,100.0,04/10/2026,20:49:15,67,59,59,8,0,principal,59,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34738.json
+BA,34754,CONTENDAS DO SINCORÁ,15,15,100.0,04/10/2026,20:53:27,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34754.json
+BA,34770,CORAÇÃO DE MARIA,67,67,100.0,04/10/2026,20:58:44,67,67,67,0,0,principal,67,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34770.json
+BA,34797,CORDEIROS,25,25,100.0,04/10/2026,19:15:30,25,25,25,0,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34797.json
+BA,34819,CORIBE,45,45,100.0,04/10/2026,21:09:07,48,45,45,3,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34819.json
+BA,34835,CORONEL JOÃO SÁ,48,48,100.0,04/10/2026,20:54:49,49,48,48,1,0,principal,48,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34835.json
+BA,34851,CORRENTINA,94,94,100.0,04/10/2026,22:42:51,115,94,94,21,0,principal,94,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34851.json
+BA,34878,COTEGIPE,42,42,100.0,04/10/2026,20:19:17,44,42,42,2,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34878.json
+BA,34894,CRAVOLÂNDIA,15,15,100.0,04/10/2026,20:13:41,18,15,15,3,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34894.json
+BA,34916,CRISÓPOLIS,53,53,100.0,04/10/2026,20:51:40,53,53,53,0,0,principal,53,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34916.json
+BA,34932,CRISTÓPOLIS,45,45,100.0,04/10/2026,20:56:34,52,45,45,7,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34932.json
+BA,34959,CRUZ DAS ALMAS,154,154,100.0,04/10/2026,20:56:08,155,154,154,1,0,principal,154,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34959.json
+BA,34975,CURAÇÁ,96,96,100.0,04/10/2026,23:00:52,109,96,96,13,0,principal,96,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34975.json
+BA,34991,DÁRIO MEIRA,30,30,100.0,04/10/2026,20:51:11,30,30,30,0,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\34991.json
+BA,35017,DOM BASÍLIO,37,37,100.0,04/10/2026,20:49:34,37,37,37,0,0,principal,37,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35017.json
+BA,35033,DOM MACEDO COSTA,16,16,100.0,04/10/2026,19:29:28,22,16,16,6,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35033.json
+BA,35050,ELÍSIO MEDRADO,24,24,100.0,04/10/2026,21:26:08,27,24,24,3,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35050.json
+BA,35076,ENCRUZILHADA,55,55,100.0,04/10/2026,20:50:11,61,55,55,6,0,principal,55,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35076.json
+BA,35092,ENTRE RIOS,105,105,100.0,04/10/2026,21:01:30,115,105,105,10,0,principal,105,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35092.json
+BA,35114,ESPLANADA,84,84,100.0,04/10/2026,21:26:08,88,84,84,4,0,principal,84,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35114.json
+BA,35130,EUCLIDES DA CUNHA,150,150,100.0,04/10/2026,23:40:58,174,150,150,24,0,principal,150,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35130.json
+BA,35149,FEIRA DA MATA,16,16,100.0,04/10/2026,20:40:33,17,16,16,1,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35149.json
+BA,35157,FEIRA DE SANTANA,1218,1218,100.0,04/10/2026,21:41:30,1276,1218,1218,58,0,principal,1218,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35157.json
+BA,35173,FIRMINO ALVES,19,19,100.0,04/10/2026,18:41:20,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35173.json
+BA,35190,FLORESTA AZUL,25,25,100.0,04/10/2026,21:42:18,34,25,25,9,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35190.json
+BA,35211,FORMOSA DO RIO PRETO,72,72,100.0,04/10/2026,21:33:19,84,72,72,12,0,principal,72,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35211.json
+BA,35238,GANDU,78,78,100.0,04/10/2026,21:01:23,80,78,78,2,0,principal,78,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35238.json
+BA,35254,GENTIO DO OURO,41,41,100.0,04/10/2026,20:10:14,48,41,41,7,0,principal,41,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35254.json
+BA,35270,GLÓRIA,52,52,100.0,04/10/2026,20:59:13,65,52,52,13,0,principal,52,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35270.json
+BA,35297,GONGOGI,19,19,100.0,04/10/2026,19:27:36,23,19,19,4,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35297.json
+BA,35319,GOVERNADOR MANGABEIRA,60,60,100.0,04/10/2026,20:18:41,67,60,60,7,0,principal,60,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35319.json
+BA,35335,GUANAMBI,192,192,100.0,04/10/2026,21:01:33,193,192,192,1,0,principal,192,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35335.json
+BA,35351,GUARATINGA,58,58,100.0,04/10/2026,20:52:03,64,58,58,6,0,principal,58,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35351.json
+BA,35378,IAÇU,73,73,100.0,04/10/2026,21:53:29,76,73,73,3,0,principal,73,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35378.json
+BA,35394,IBIASSUCÊ,31,31,100.0,04/10/2026,21:12:12,32,31,31,1,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35394.json
+BA,35416,IBICARAÍ,61,61,100.0,04/10/2026,20:14:26,89,61,61,28,0,principal,61,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35416.json
+BA,35432,IBICOARA,46,46,100.0,04/10/2026,21:04:37,47,46,46,1,0,principal,46,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35432.json
+BA,35459,IBICUÍ,39,39,100.0,04/10/2026,22:05:29,44,39,39,5,0,principal,39,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35459.json
+BA,35475,IBIPEBA,53,53,100.0,04/10/2026,22:02:19,59,53,53,6,0,principal,53,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35475.json
+BA,35491,SANTA RITA DE CÁSSIA,80,80,100.0,04/10/2026,21:00:38,97,80,80,17,0,principal,80,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35491.json
+BA,35513,IBIPITANGA,44,44,100.0,04/10/2026,21:00:57,47,44,44,3,0,principal,44,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35513.json
+BA,35530,IBIQUERA,15,15,100.0,04/10/2026,18:36:22,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35530.json
+BA,35556,IBIRAPITANGA,48,48,100.0,04/10/2026,19:04:13,56,48,48,8,0,principal,48,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35556.json
+BA,35572,IBIRAPUÃ,28,28,100.0,04/10/2026,20:57:57,28,28,28,0,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35572.json
+BA,35599,IBIRATAIA,54,54,100.0,04/10/2026,19:23:11,56,54,54,2,0,principal,54,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35599.json
+BA,35610,IBITIARA,46,46,100.0,04/10/2026,21:31:18,49,46,46,3,0,principal,46,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35610.json
+BA,35637,IBITITÁ,62,62,100.0,04/10/2026,21:01:20,68,62,62,6,0,principal,62,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35637.json
+BA,35653,IBOTIRAMA,81,81,100.0,04/10/2026,21:01:08,86,81,81,5,0,principal,81,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35653.json
+BA,35670,ICHU,18,18,100.0,04/10/2026,21:33:33,22,18,18,4,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35670.json
+BA,35696,IGAPORÃ,36,36,100.0,04/10/2026,21:01:18,38,36,36,2,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35696.json
+BA,35700,IGRAPIÚNA,33,33,100.0,04/10/2026,22:19:00,45,33,33,12,0,principal,33,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35700.json
+BA,35718,IGUAÍ,57,57,100.0,04/10/2026,20:59:15,75,57,57,18,0,principal,57,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35718.json
+BA,35734,ILHÉUS,409,409,100.0,04/10/2026,21:43:10,472,409,409,63,0,principal,409,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35734.json
+BA,35750,INHAMBUPE,83,83,100.0,04/10/2026,21:32:18,88,83,83,5,0,principal,83,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35750.json
+BA,35777,IPECAETÁ,48,48,100.0,04/10/2026,20:52:45,56,48,48,8,0,principal,48,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35777.json
+BA,35793,IPIAÚ,117,117,100.0,04/10/2026,21:18:03,124,117,117,7,0,principal,117,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35793.json
+BA,35815,IPIRÁ,155,155,100.0,04/10/2026,21:49:10,174,155,155,19,0,principal,155,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35815.json
+BA,35831,IPUPIARA,28,28,100.0,04/10/2026,20:58:23,30,28,28,2,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35831.json
+BA,35858,IRAJUBA,21,21,100.0,04/10/2026,21:00:34,21,21,21,0,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35858.json
+BA,35874,IRAMAIA,31,31,100.0,04/10/2026,21:02:57,31,31,31,0,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35874.json
+BA,35890,IRAQUARA,63,63,100.0,04/10/2026,21:36:08,63,63,63,0,0,principal,63,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35890.json
+BA,35912,IRARÁ,90,90,100.0,04/10/2026,20:51:01,91,90,90,1,0,principal,90,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35912.json
+BA,35939,IRECÊ,163,163,100.0,04/10/2026,22:15:03,166,163,163,3,0,principal,163,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35939.json
+BA,35947,ITABELA,70,70,100.0,04/10/2026,20:12:24,72,70,70,2,0,principal,70,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35947.json
+BA,35955,ITABERABA,151,151,100.0,04/10/2026,22:13:06,157,151,151,6,0,principal,151,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35955.json
+BA,35971,ITABUNA,453,453,100.0,04/10/2026,21:00:37,455,453,453,2,0,principal,453,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35971.json
+BA,35998,ITACARÉ,59,59,100.0,04/10/2026,21:11:23,66,59,59,7,0,principal,59,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\35998.json
+BA,36013,ITAETÉ,39,40,97.5,04/10/2026,20:59:48,44,40,40,4,0,principal,40,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36013.json
+BA,36030,ITAGI,36,36,100.0,04/10/2026,20:51:19,36,36,36,0,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36030.json
+BA,36056,ITAGIBÁ,41,41,100.0,04/10/2026,20:06:13,41,41,41,0,0,principal,41,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36056.json
+BA,36072,ITAGIMIRIM,22,22,100.0,04/10/2026,19:18:33,22,22,22,0,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36072.json
+BA,36080,ITAGUAÇU DA BAHIA,36,36,100.0,04/10/2026,22:29:05,39,36,36,3,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36080.json
+BA,36099,ITAJU DO COLÔNIA,20,20,100.0,04/10/2026,19:23:57,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36099.json
+BA,36110,ITAJUÍPE,56,56,100.0,04/10/2026,20:48:23,79,56,56,23,0,principal,56,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36110.json
+BA,36137,ITAMARAJU,152,152,100.0,04/10/2026,21:59:10,168,152,152,16,0,principal,152,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36137.json
+BA,36153,ITAMARI,24,24,100.0,04/10/2026,19:22:46,25,24,24,1,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36153.json
+BA,36170,ITAMBÉ,65,65,100.0,04/10/2026,21:43:34,83,65,65,18,0,principal,65,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36170.json
+BA,36196,ITANAGRA,20,20,100.0,04/10/2026,19:28:57,23,20,20,3,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36196.json
+BA,36218,ITANHÉM,50,50,100.0,04/10/2026,21:00:18,69,50,50,19,0,principal,50,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36218.json
+BA,36234,ITAPARICA,64,64,100.0,04/10/2026,22:19:15,66,64,64,2,0,principal,64,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36234.json
+BA,36250,ITAPÉ,28,28,100.0,04/10/2026,19:22:42,32,28,28,4,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36250.json
+BA,36277,ITAPEBI,26,26,100.0,04/10/2026,19:17:26,40,26,26,14,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36277.json
+BA,36293,ITAPETINGA,159,159,100.0,04/10/2026,20:53:24,195,159,159,36,0,principal,159,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36293.json
+BA,36315,ITAPICURU,75,75,100.0,04/10/2026,22:09:35,77,75,75,2,0,principal,75,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36315.json
+BA,36331,ITAPITANGA,21,21,100.0,04/10/2026,19:24:04,35,21,21,14,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36331.json
+BA,36358,ITAQUARA,21,21,100.0,04/10/2026,20:55:17,21,21,21,0,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36358.json
+BA,36374,ITARANTIM,47,47,100.0,04/10/2026,19:24:23,49,47,47,2,0,principal,47,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36374.json
+BA,36382,ITATIM,40,40,100.0,04/10/2026,21:31:09,42,40,40,2,0,principal,40,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36382.json
+BA,36390,ITIRUÇU,33,33,100.0,04/10/2026,20:48:41,41,33,33,8,0,principal,33,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36390.json
+BA,36412,ITIÚBA,97,97,100.0,04/10/2026,21:42:44,105,97,97,8,0,principal,97,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36412.json
+BA,36439,ITORORÓ,56,56,100.0,04/10/2026,20:46:57,56,56,56,0,0,principal,56,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36439.json
+BA,36455,ITUAÇU,57,57,100.0,04/10/2026,21:00:27,61,57,57,4,0,principal,57,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36455.json
+BA,36471,ITUBERÁ,65,65,100.0,04/10/2026,21:25:33,67,65,65,2,0,principal,65,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36471.json
+BA,36498,JACARACI,39,39,100.0,04/10/2026,21:00:58,39,39,39,0,0,principal,39,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36498.json
+BA,36510,JACOBINA,192,192,100.0,04/10/2026,21:25:43,210,192,192,18,0,principal,192,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36510.json
+BA,36536,JAGUAQUARA,117,117,100.0,04/10/2026,20:56:26,118,117,117,1,0,principal,117,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36536.json
+BA,36552,JAGUARARI,89,89,100.0,04/10/2026,20:55:18,100,89,89,11,0,principal,89,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36552.json
+BA,36579,JAGUARIPE,49,49,100.0,04/10/2026,20:57:39,50,49,49,1,0,principal,49,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36579.json
+BA,36595,JANDAÍRA,33,33,100.0,04/10/2026,20:41:40,34,33,33,1,0,principal,33,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36595.json
+BA,36617,JEQUIÉ,359,359,100.0,04/10/2026,21:31:09,378,359,359,19,0,principal,359,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36617.json
+BA,36633,JEREMOABO,104,104,100.0,04/10/2026,22:49:21,113,104,104,9,0,principal,104,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36633.json
+BA,36650,JIQUIRIÇÁ,38,38,100.0,04/10/2026,20:58:11,38,38,38,0,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36650.json
+BA,36676,JITAÚNA,45,45,100.0,04/10/2026,21:02:33,59,45,45,14,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36676.json
+BA,36692,JUAZEIRO,495,495,100.0,04/10/2026,22:22:02,502,495,495,7,0,principal,495,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36692.json
+BA,36706,JUCURUÇU,30,30,100.0,04/10/2026,20:58:06,34,30,30,4,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36706.json
+BA,36714,JUSSARA,50,50,100.0,04/10/2026,20:56:12,50,50,50,0,0,principal,50,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36714.json
+BA,36730,JUSSIAPE,27,27,100.0,04/10/2026,23:02:21,39,27,27,12,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36730.json
+BA,36757,LAFAIETE COUTINHO,15,15,100.0,04/10/2026,20:34:40,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36757.json
+BA,36765,LAGOA REAL,36,36,100.0,04/10/2026,21:56:14,46,36,36,10,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36765.json
+BA,36773,LAJE,62,62,100.0,04/10/2026,22:07:00,62,62,62,0,0,principal,62,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36773.json
+BA,36790,LAJEDÃO,16,16,100.0,04/10/2026,18:48:15,27,16,16,11,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36790.json
+BA,36811,LAJEDINHO,11,11,100.0,04/10/2026,20:57:15,18,11,11,7,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36811.json
+BA,36820,LAJEDO DO TABOCAL,25,25,100.0,04/10/2026,19:08:05,29,25,25,4,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36820.json
+BA,36838,LAMARÃO,28,28,100.0,04/10/2026,21:18:27,36,28,28,8,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36838.json
+BA,36854,LAURO DE FREITAS,413,413,100.0,04/10/2026,21:38:19,413,413,413,0,0,principal,413,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36854.json
+BA,36870,LENÇÓIS,24,24,100.0,04/10/2026,20:55:03,28,24,24,4,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36870.json
+BA,36897,LICÍNIO DE ALMEIDA,32,32,100.0,04/10/2026,21:16:52,32,32,32,0,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36897.json
+BA,36919,LIVRAMENTO DE NOSSA SENHORA,114,114,100.0,04/10/2026,21:07:56,122,114,114,8,0,principal,114,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36919.json
+BA,36935,MACAJUBA,32,32,100.0,04/10/2026,20:57:18,33,32,32,1,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36935.json
+BA,36951,MACARANI,42,42,100.0,04/10/2026,19:26:18,57,42,42,15,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36951.json
+BA,36978,MACAÚBAS,142,142,100.0,04/10/2026,21:11:34,159,142,142,17,0,principal,142,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36978.json
+BA,36994,MACURURÉ,24,24,100.0,04/10/2026,23:02:31,31,24,24,7,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\36994.json
+BA,37010,MAIQUINIQUE,23,23,100.0,04/10/2026,19:21:10,27,23,23,4,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37010.json
+BA,37036,MAIRI,49,49,100.0,04/10/2026,21:48:09,55,49,49,6,0,principal,49,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37036.json
+BA,37052,MALHADA,45,45,100.0,04/10/2026,21:54:29,46,45,45,1,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37052.json
+BA,37079,MALHADA DE PEDRAS,26,26,100.0,04/10/2026,21:33:08,29,26,26,3,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37079.json
+BA,37095,MANOEL VITORINO,44,44,100.0,04/10/2026,21:03:47,48,44,44,4,0,principal,44,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37095.json
+BA,37117,MARACÁS,74,74,100.0,04/10/2026,21:01:00,80,74,74,6,0,principal,74,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37117.json
+BA,37133,MARAGOGIPE,122,122,100.0,04/10/2026,22:18:27,124,122,122,2,0,principal,122,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37133.json
+BA,37150,MARAÚ,57,57,100.0,04/10/2026,22:15:10,67,57,57,10,0,principal,57,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37150.json
+BA,37176,MARCIONÍLIO SOUZA,27,27,100.0,04/10/2026,21:05:17,33,27,27,6,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37176.json
+BA,37192,MASCOTE,34,34,100.0,04/10/2026,20:58:16,43,34,34,9,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37192.json
+BA,37214,MATA DE SÃO JOÃO,128,128,100.0,04/10/2026,20:56:34,130,128,128,2,0,principal,128,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37214.json
+BA,37222,MATINA,31,31,100.0,04/10/2026,20:56:22,31,31,31,0,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37222.json
+BA,37230,MEDEIROS NETO,66,66,100.0,04/10/2026,21:44:34,84,66,66,18,0,principal,66,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37230.json
+BA,37257,MIGUEL CALMON,77,77,100.0,04/10/2026,21:32:59,82,77,77,5,0,principal,77,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37257.json
+BA,37273,MILAGRES,35,35,100.0,04/10/2026,21:22:28,35,35,35,0,0,principal,35,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37273.json
+BA,37290,MIRANGABA,45,45,100.0,04/10/2026,20:52:31,53,45,45,8,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37290.json
+BA,37303,MIRANTE,30,30,100.0,04/10/2026,23:09:17,30,30,30,0,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37303.json
+BA,37311,MONTE SANTO,162,162,100.0,04/10/2026,23:19:38,184,162,162,22,0,principal,162,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37311.json
+BA,37338,MORPARÁ,30,30,100.0,04/10/2026,20:51:21,33,30,30,3,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37338.json
+BA,37354,MORRO DO CHAPÉU,91,91,100.0,04/10/2026,21:00:16,107,91,91,16,0,principal,91,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37354.json
+BA,37370,MORTUGABA,33,33,100.0,04/10/2026,21:45:44,33,33,33,0,0,principal,33,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37370.json
+BA,37397,MUCUGÊ,34,34,100.0,04/10/2026,23:49:53,39,34,34,5,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37397.json
+BA,37419,MUCURI,98,98,100.0,04/10/2026,20:40:00,102,98,98,4,0,principal,98,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37419.json
+BA,37427,MULUNGU DO MORRO,38,38,100.0,04/10/2026,21:33:19,42,38,38,4,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37427.json
+BA,37435,MUNDO NOVO,56,56,100.0,04/10/2026,20:57:21,63,56,56,7,0,principal,56,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37435.json
+BA,37451,MUNIZ FERREIRA,32,32,100.0,04/10/2026,20:53:53,32,32,32,0,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37451.json
+BA,37460,MUQUÉM DO SÃO FRANCISCO,31,31,100.0,04/10/2026,21:55:39,34,31,31,3,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37460.json
+BA,37478,MURITIBA,73,73,100.0,04/10/2026,20:49:05,74,73,73,1,0,principal,73,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37478.json
+BA,37494,MUTUÍPE,56,56,100.0,04/10/2026,20:25:33,56,56,56,0,0,principal,56,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37494.json
+BA,37516,NAZARÉ,72,72,100.0,04/10/2026,21:12:23,76,72,72,4,0,principal,72,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37516.json
+BA,37532,NILO PEÇANHA,30,30,100.0,04/10/2026,23:00:31,31,30,30,1,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37532.json
+BA,37559,NOVA CANAÃ,43,43,100.0,04/10/2026,22:05:40,47,43,43,4,0,principal,43,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37559.json
+BA,37567,NOVA FÁTIMA,29,29,100.0,04/10/2026,20:59:33,33,29,29,4,0,principal,29,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37567.json
+BA,37575,NOVA ITARANA,23,23,100.0,04/10/2026,20:12:57,23,23,23,0,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37575.json
+BA,37583,NOVA REDENÇÃO,21,21,100.0,04/10/2026,20:43:01,25,21,21,4,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37583.json
+BA,37591,NOVA SOURE,70,70,100.0,04/10/2026,22:20:35,80,70,70,10,0,principal,70,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37591.json
+BA,37613,NOVA VIÇOSA,101,101,100.0,04/10/2026,21:26:43,111,101,101,10,0,principal,101,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37613.json
+BA,37621,NOVO TRIUNFO,25,25,100.0,04/10/2026,20:57:37,25,25,25,0,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37621.json
+BA,37630,OLINDINA,69,69,100.0,04/10/2026,20:54:16,73,69,69,4,0,principal,69,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37630.json
+BA,37656,OLIVEIRA DOS BREJINHOS,70,70,100.0,04/10/2026,20:59:15,73,70,70,3,0,principal,70,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37656.json
+BA,37672,OURIÇANGAS,26,26,100.0,04/10/2026,21:21:17,27,26,26,1,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37672.json
+BA,37680,OUROLÂNDIA,44,44,100.0,04/10/2026,21:57:49,45,44,44,1,0,principal,44,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37680.json
+BA,37699,PALMAS DE MONTE ALTO,69,69,100.0,04/10/2026,22:25:16,69,69,69,0,0,principal,69,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37699.json
+BA,37710,PALMEIRAS,24,24,100.0,04/10/2026,22:28:55,25,24,24,1,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37710.json
+BA,37737,PARAMIRIM,61,61,100.0,04/10/2026,21:32:43,71,61,61,10,0,principal,61,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37737.json
+BA,37753,PARATINGA,79,79,100.0,04/10/2026,23:14:47,88,79,79,9,0,principal,79,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37753.json
+BA,37770,PARIPIRANGA,87,87,100.0,04/10/2026,21:14:39,88,87,87,1,0,principal,87,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37770.json
+BA,37796,PAU BRASIL,26,26,100.0,04/10/2026,21:04:37,38,26,26,12,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37796.json
+BA,37818,PAULO AFONSO,258,258,100.0,04/10/2026,21:14:37,285,258,258,27,0,principal,258,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37818.json
+BA,37834,PEDRÃO,21,21,100.0,04/10/2026,19:21:25,21,21,21,0,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37834.json
+BA,37850,PEDRO ALEXANDRE,35,35,100.0,04/10/2026,21:44:43,39,35,35,4,0,principal,35,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37850.json
+BA,37877,PIATÃ,76,76,100.0,04/10/2026,20:07:05,84,76,76,8,0,principal,76,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37877.json
+BA,37893,PILÃO ARCADO,121,121,100.0,04/10/2026,21:51:20,134,121,121,13,0,principal,121,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37893.json
+BA,37915,PINDAÍ,42,42,100.0,04/10/2026,20:59:24,42,42,42,0,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37915.json
+BA,37931,PINDOBAÇU,57,57,100.0,04/10/2026,23:49:23,65,57,57,8,0,principal,57,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37931.json
+BA,37940,PIRAÍ DO NORTE,24,24,100.0,04/10/2026,20:59:25,26,24,24,2,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37940.json
+BA,37958,PIRIPÁ,27,27,100.0,04/10/2026,19:25:19,27,27,27,0,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37958.json
+BA,37974,PIRITIBA,48,48,100.0,04/10/2026,19:27:14,51,48,48,3,0,principal,48,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37974.json
+BA,37990,PLANALTINO,25,25,100.0,04/10/2026,21:07:52,30,25,25,5,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\37990.json
+BA,38016,PLANALTO,77,77,100.0,04/10/2026,20:50:10,81,77,77,4,0,principal,77,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38016.json
+BA,38032,POÇÕES,126,126,100.0,04/10/2026,20:54:31,133,126,126,7,0,principal,126,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38032.json
+BA,38059,POJUCA,88,88,100.0,04/10/2026,19:31:31,88,88,88,0,0,principal,88,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38059.json
+BA,38067,PONTO NOVO,44,44,100.0,04/10/2026,20:58:29,44,44,44,0,0,principal,44,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38067.json
+BA,38075,PORTO SEGURO,323,323,100.0,04/10/2026,21:16:13,323,323,323,0,0,principal,323,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38075.json
+BA,38091,POTIRAGUÁ,29,29,100.0,04/10/2026,19:25:10,32,29,29,3,0,principal,29,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38091.json
+BA,38113,PRADO,76,76,100.0,04/10/2026,21:26:33,84,76,76,8,0,principal,76,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38113.json
+BA,38130,PRESIDENTE DUTRA,48,48,100.0,04/10/2026,20:59:52,52,48,48,4,0,principal,48,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38130.json
+BA,38156,PRESIDENTE JÂNIO QUADROS,35,35,100.0,04/10/2026,20:48:27,37,35,35,2,0,principal,35,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38156.json
+BA,38164,PRESIDENTE TANCREDO NEVES,65,65,100.0,04/10/2026,22:44:45,69,65,65,4,0,principal,65,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38164.json
+BA,38172,QUEIMADAS,66,66,100.0,04/10/2026,22:14:15,66,66,66,0,0,principal,66,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38172.json
+BA,38199,QUIJINGUE,69,69,100.0,04/10/2026,23:09:19,80,69,69,11,0,principal,69,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38199.json
+BA,38210,REMANSO,108,108,100.0,04/10/2026,21:39:55,113,108,108,5,0,principal,108,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38210.json
+BA,38237,RETIROLÂNDIA,44,44,100.0,04/10/2026,21:13:37,56,44,44,12,0,principal,44,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38237.json
+BA,38253,RIACHÃO DAS NEVES,72,72,100.0,04/10/2026,21:26:19,89,72,72,17,0,principal,72,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38253.json
+BA,38270,RIACHÃO DO JACUÍPE,94,94,100.0,04/10/2026,20:59:52,100,94,94,6,0,principal,94,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38270.json
+BA,38296,RIACHO DE SANTANA,78,78,100.0,04/10/2026,22:22:10,88,78,78,10,0,principal,78,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38296.json
+BA,38318,RIBEIRA DO AMPARO,44,44,100.0,04/10/2026,20:52:56,46,44,44,2,0,principal,44,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38318.json
+BA,38334,RIBEIRA DO POMBAL,142,142,100.0,04/10/2026,22:17:53,148,142,142,6,0,principal,142,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38334.json
+BA,38342,RIBEIRÃO DO LARGO,28,28,100.0,04/10/2026,20:20:56,29,28,28,1,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38342.json
+BA,38350,RIO DE CONTAS,44,44,100.0,04/10/2026,21:00:23,49,44,44,5,0,principal,44,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38350.json
+BA,38377,RIO DO ANTÔNIO,40,40,100.0,04/10/2026,20:58:26,42,40,40,2,0,principal,40,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38377.json
+BA,38393,RIO DO PIRES,38,38,100.0,04/10/2026,20:42:25,41,38,38,3,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38393.json
+BA,38415,RIO REAL,94,94,100.0,04/10/2026,21:07:28,95,94,94,1,0,principal,94,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38415.json
+BA,38431,RODELAS,22,22,100.0,04/10/2026,20:58:42,22,22,22,0,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38431.json
+BA,38458,RUY BARBOSA,81,81,100.0,04/10/2026,21:21:29,86,81,81,5,0,principal,81,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38458.json
+BA,38474,SALINAS DA MARGARIDA,45,45,100.0,04/10/2026,21:02:48,45,45,45,0,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38474.json
+BA,38490,SALVADOR,5124,5124,100.0,04/10/2026,21:47:13,5212,5124,5124,88,0,principal,5124,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38490.json
+BA,38512,SANTA BÁRBARA,61,61,100.0,04/10/2026,21:52:19,67,61,61,6,0,principal,61,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38512.json
+BA,38539,SANTA BRÍGIDA,42,42,100.0,04/10/2026,22:49:11,47,42,42,5,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38539.json
+BA,38555,SANTA CRUZ CABRÁLIA,82,82,100.0,04/10/2026,21:00:30,82,82,82,0,0,principal,82,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38555.json
+BA,38571,SANTA CRUZ DA VITÓRIA,16,16,100.0,04/10/2026,18:45:58,17,16,16,1,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38571.json
+BA,38598,SANTA INÊS,30,30,100.0,04/10/2026,20:14:43,36,30,30,6,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38598.json
+BA,38610,SANTALUZ,104,104,100.0,04/10/2026,21:50:29,104,104,104,0,0,principal,104,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38610.json
+BA,38636,SANTA MARIA DA VITÓRIA,113,113,100.0,04/10/2026,22:14:00,118,113,113,5,0,principal,113,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38636.json
+BA,38652,SANTANA,68,68,100.0,04/10/2026,22:17:30,73,68,68,5,0,principal,68,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38652.json
+BA,38679,SANTANÓPOLIS,29,29,100.0,04/10/2026,21:01:18,38,29,29,9,0,principal,29,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38679.json
+BA,38695,SANTA TEREZINHA,34,34,100.0,04/10/2026,20:43:51,35,34,34,1,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38695.json
+BA,38717,SANTO AMARO,154,154,100.0,04/10/2026,21:01:26,170,154,154,16,0,principal,154,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38717.json
+BA,38733,SANTO ANTÔNIO DE JESUS,237,237,100.0,04/10/2026,20:51:37,253,237,237,16,0,principal,237,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38733.json
+BA,38750,SANTO ESTEVÃO,120,120,100.0,04/10/2026,21:45:09,124,120,120,4,0,principal,120,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38750.json
+BA,38776,SÃO DESIDÉRIO,94,94,100.0,04/10/2026,22:06:40,108,94,94,14,0,principal,94,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38776.json
+BA,38792,SÃO FÉLIX,38,38,100.0,04/10/2026,19:27:58,40,38,38,2,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38792.json
+BA,38806,SÃO DOMINGOS,29,29,100.0,04/10/2026,20:26:46,31,29,29,2,0,principal,29,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38806.json
+BA,38814,SÃO FELIPE,67,67,100.0,04/10/2026,20:09:29,75,67,67,8,0,principal,67,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38814.json
+BA,38822,SÃO FÉLIX DO CORIBE,40,40,100.0,04/10/2026,22:43:45,42,40,40,2,0,principal,40,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38822.json
+BA,38830,SÃO FRANCISCO DO CONDE,108,108,100.0,04/10/2026,21:37:04,112,108,108,4,0,principal,108,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38830.json
+BA,38857,SÃO GONÇALO DOS CAMPOS,93,93,100.0,04/10/2026,21:41:19,99,93,93,6,0,principal,93,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38857.json
+BA,38865,SÃO JOSÉ DO JACUÍPE,27,27,100.0,04/10/2026,21:04:52,27,27,27,0,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38865.json
+BA,38873,SÃO MIGUEL DAS MATAS,35,35,100.0,04/10/2026,21:43:34,40,35,35,5,0,principal,35,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38873.json
+BA,38890,SÃO SEBASTIÃO DO PASSÉ,105,105,100.0,04/10/2026,21:40:31,105,105,105,0,0,principal,105,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38890.json
+BA,38911,SAPEAÇU,57,57,100.0,04/10/2026,19:07:02,59,57,57,2,0,principal,57,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38911.json
+BA,38938,SÁTIRO DIAS,49,49,100.0,04/10/2026,20:58:53,59,49,49,10,0,principal,49,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38938.json
+BA,38946,SAUBARA,38,38,100.0,04/10/2026,21:33:59,38,38,38,0,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38946.json
+BA,38954,SAÚDE,32,32,100.0,04/10/2026,20:52:23,35,32,32,3,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38954.json
+BA,38970,SEABRA,121,121,100.0,04/10/2026,21:56:40,126,121,121,5,0,principal,121,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38970.json
+BA,38997,SEBASTIÃO LARANJEIRAS,26,26,100.0,04/10/2026,21:22:28,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\38997.json
+BA,39012,SENHOR DO BONFIM,174,174,100.0,04/10/2026,21:29:34,198,174,174,24,0,principal,174,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39012.json
+BA,39039,SENTO SÉ,103,103,100.0,04/10/2026,20:57:21,110,103,103,7,0,principal,103,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39039.json
+BA,39047,SERRA DO RAMALHO,90,90,100.0,04/10/2026,22:24:50,103,90,90,13,0,principal,90,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39047.json
+BA,39055,SERRA DOURADA,52,52,100.0,04/10/2026,21:57:49,59,52,52,7,0,principal,52,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39055.json
+BA,39071,SERRA PRETA,60,60,100.0,04/10/2026,21:52:19,70,60,60,10,0,principal,60,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39071.json
+BA,39098,SERRINHA,218,218,100.0,04/10/2026,22:22:20,227,218,218,9,0,principal,218,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39098.json
+BA,39110,SERROLÂNDIA,37,37,100.0,04/10/2026,21:27:08,38,37,37,1,0,principal,37,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39110.json
+BA,39136,SIMÕES FILHO,260,260,100.0,04/10/2026,21:17:35,264,260,260,4,0,principal,260,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39136.json
+BA,39144,SÍTIO DO MATO,38,38,100.0,04/10/2026,22:38:26,38,38,38,0,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39144.json
+BA,39152,SOUTO SOARES,47,47,100.0,04/10/2026,20:57:15,50,47,47,3,0,principal,47,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39152.json
+BA,39179,TABOCAS DO BREJO VELHO,36,36,100.0,04/10/2026,21:57:59,39,36,36,3,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39179.json
+BA,39195,TANHAÇU,57,57,100.0,04/10/2026,21:51:29,59,57,57,2,0,principal,57,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39195.json
+BA,39217,TANQUINHO,28,28,100.0,04/10/2026,21:00:41,29,28,28,1,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39217.json
+BA,39233,TAPEROÁ,45,45,100.0,04/10/2026,21:19:52,52,45,45,7,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39233.json
+BA,39250,TAPIRAMUTÁ,37,37,100.0,04/10/2026,20:12:48,37,37,37,0,0,principal,37,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39250.json
+BA,39276,TEODORO SAMPAIO,24,24,100.0,04/10/2026,19:17:21,25,24,24,1,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39276.json
+BA,39292,TEOFILÂNDIA,62,62,100.0,04/10/2026,22:06:59,74,62,62,12,0,principal,62,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39292.json
+BA,39314,TEOLÂNDIA,37,37,100.0,04/10/2026,21:51:28,37,37,37,0,0,principal,37,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39314.json
+BA,39330,TERRA NOVA,35,35,100.0,04/10/2026,20:06:58,36,35,35,1,0,principal,35,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39330.json
+BA,39357,TREMEDAL,51,51,100.0,04/10/2026,21:11:23,80,51,51,29,0,principal,51,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39357.json
+BA,39373,TUCANO,133,133,100.0,04/10/2026,22:27:21,142,133,133,9,0,principal,133,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39373.json
+BA,39390,UAUÁ,82,82,100.0,04/10/2026,20:35:25,87,82,82,5,0,principal,82,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39390.json
+BA,39411,UBAÍRA,54,54,100.0,04/10/2026,21:54:04,65,54,54,11,0,principal,54,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39411.json
+BA,39438,UBAITABA,43,43,100.0,04/10/2026,20:12:54,43,43,43,0,0,principal,43,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39438.json
+BA,39454,UBATÃ,41,41,100.0,04/10/2026,19:25:26,60,41,41,19,0,principal,41,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39454.json
+BA,39470,UIBAÍ,43,43,100.0,04/10/2026,20:57:13,44,43,43,1,0,principal,43,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39470.json
+BA,39489,UMBURANAS,35,35,100.0,04/10/2026,23:22:47,38,35,35,3,0,principal,35,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39489.json
+BA,39497,UNA,64,64,100.0,04/10/2026,20:11:26,69,64,64,5,0,principal,64,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39497.json
+BA,39519,URANDI,43,43,100.0,04/10/2026,20:50:11,44,43,43,1,0,principal,43,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39519.json
+BA,39535,URUÇUCA,62,62,100.0,04/10/2026,20:48:18,94,62,62,32,0,principal,62,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39535.json
+BA,39551,UTINGA,42,42,100.0,04/10/2026,20:59:17,48,42,42,6,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39551.json
+BA,39578,VALENÇA,195,195,100.0,04/10/2026,22:22:01,198,195,195,3,0,principal,195,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39578.json
+BA,39594,VALENTE,73,73,100.0,04/10/2026,20:29:04,78,73,73,5,0,principal,73,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39594.json
+BA,39616,VÁRZEA DO POÇO,25,25,100.0,04/10/2026,19:13:30,25,25,25,0,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39616.json
+BA,39624,VARZEDO,30,30,100.0,04/10/2026,20:59:14,33,30,30,3,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39624.json
+BA,39632,VERA CRUZ,107,107,100.0,04/10/2026,21:08:44,110,107,107,3,0,principal,107,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39632.json
+BA,39640,VEREDA,23,23,100.0,04/10/2026,22:15:55,28,23,23,5,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39640.json
+BA,39659,VITÓRIA DA CONQUISTA,766,766,100.0,04/10/2026,22:28:31,778,766,766,12,0,principal,766,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39659.json
+BA,39675,WAGNER,22,22,100.0,04/10/2026,21:00:34,28,22,22,6,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39675.json
+BA,39691,WENCESLAU GUIMARÃES,54,54,100.0,04/10/2026,21:51:28,55,54,54,1,0,principal,54,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39691.json
+BA,39713,XIQUE-XIQUE,124,124,100.0,04/10/2026,23:13:47,144,124,124,20,0,principal,124,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39713.json
+BA,39730,LAPÃO,86,86,100.0,04/10/2026,21:00:37,91,86,86,5,0,principal,86,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39730.json
+BA,39748,MADRE DE DEUS,49,49,100.0,04/10/2026,21:31:19,49,49,49,0,0,principal,49,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39748.json
+BA,39756,MAETINGA,20,20,100.0,04/10/2026,20:58:30,22,20,20,2,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39756.json
+BA,39772,MANSIDÃO,37,37,100.0,04/10/2026,22:06:49,42,37,37,5,0,principal,37,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39772.json
+BA,39799,NORDESTINA,36,36,100.0,04/10/2026,21:23:43,38,36,36,2,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39799.json
+BA,39810,PÉ DE SERRA,43,43,100.0,04/10/2026,22:19:15,47,43,43,4,0,principal,43,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39810.json
+BA,39837,PINTADAS,29,29,100.0,04/10/2026,20:10:11,36,29,29,7,0,principal,29,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39837.json
+BA,39845,QUIXABEIRA,31,31,100.0,04/10/2026,21:01:18,32,31,31,1,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39845.json
+BA,39853,RAFAEL JAMBEIRO,63,63,100.0,04/10/2026,22:35:30,65,63,63,2,0,principal,63,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39853.json
+BA,39870,SANTA LUZIA,30,30,100.0,04/10/2026,20:39:57,31,30,30,1,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39870.json
+BA,39896,SÃO GABRIEL,68,68,100.0,04/10/2026,22:15:00,72,68,68,4,0,principal,68,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39896.json
+BA,39900,SÍTIO DO QUINTO,34,34,100.0,04/10/2026,20:59:30,37,34,34,3,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39900.json
+BA,39918,TANQUE NOVO,45,45,100.0,04/10/2026,22:32:35,48,45,45,3,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39918.json
+BA,39926,SÃO JOSÉ DA VITÓRIA,19,19,100.0,04/10/2026,19:00:42,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39926.json
+BA,39934,TEIXEIRA DE FREITAS,303,303,100.0,04/10/2026,22:08:04,342,303,303,39,0,principal,303,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39934.json
+BA,39942,NOVO HORIZONTE,38,38,100.0,04/10/2026,21:00:10,42,38,38,4,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39942.json
+BA,39950,VÁRZEA NOVA,36,36,100.0,04/10/2026,19:22:47,36,36,36,0,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39950.json
+BA,39969,NOVA IBIÁ,19,19,100.0,04/10/2026,20:13:32,20,19,19,1,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39969.json
+BA,39977,VÁRZEA DA ROÇA,38,38,100.0,04/10/2026,22:13:50,51,38,38,13,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39977.json
+BA,39985,SOBRADINHO,60,60,100.0,04/10/2026,21:01:25,60,60,60,0,0,principal,60,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39985.json
+BA,39993,WANDERLEY,36,36,100.0,04/10/2026,20:49:29,39,36,36,3,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\ba\39993.json
+MG,40002,ALFREDO VASCONCELOS,18,18,100.0,04/10/2026,20:46:24,19,18,18,1,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40002.json
+MG,40010,ABADIA DOS DOURADOS,21,21,100.0,04/10/2026,20:03:45,23,21,21,2,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40010.json
+MG,40029,ARAPORÃ,19,19,100.0,04/10/2026,18:01:09,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40029.json
+MG,40037,ABAETÉ,62,62,100.0,04/10/2026,18:46:01,65,62,62,3,0,principal,62,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40037.json
+MG,40045,BRASILÂNDIA DE MINAS,38,38,100.0,04/10/2026,20:59:43,38,38,38,0,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40045.json
+MG,40053,ABRE CAMPO,40,40,100.0,04/10/2026,19:15:16,40,40,40,0,0,principal,40,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40053.json
+MG,40061,CAPITÃO ANDRADE,14,14,100.0,04/10/2026,21:32:58,15,14,14,1,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40061.json
+MG,40070,ACAIACA,13,13,100.0,04/10/2026,19:10:17,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40070.json
+MG,40088,CARNEIRINHO,26,26,100.0,04/10/2026,20:11:00,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40088.json
+MG,40096,AÇUCENA,34,34,100.0,04/10/2026,19:25:09,41,34,34,7,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40096.json
+MG,40100,CATUJI,27,27,100.0,04/10/2026,21:13:38,27,27,27,0,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40100.json
+MG,40118,ÁGUA BOA,38,38,100.0,04/10/2026,20:12:02,46,38,38,8,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40118.json
+MG,40126,DIVISA ALEGRE,15,15,100.0,04/10/2026,21:00:19,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40126.json
+MG,40134,ÁGUA COMPRIDA,10,10,100.0,04/10/2026,19:16:56,10,10,10,0,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40134.json
+MG,40142,DIVISÓPOLIS,19,19,100.0,04/10/2026,20:47:19,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40142.json
+MG,40150,AGUANIL,13,13,100.0,04/10/2026,20:35:12,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40150.json
+MG,40169,DURANDÉ,24,24,100.0,04/10/2026,21:00:18,25,24,24,1,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40169.json
+MG,40177,ÁGUAS FORMOSAS,49,49,100.0,04/10/2026,20:20:31,53,49,49,4,0,principal,49,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40177.json
+MG,40185,ENTRE FOLHAS,20,20,100.0,04/10/2026,20:11:23,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40185.json
+MG,40193,ÁGUAS VERMELHAS,31,31,100.0,04/10/2026,20:59:58,31,31,31,0,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40193.json
+MG,40207,FERVEDOURO,28,28,100.0,04/10/2026,19:07:10,34,28,28,6,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40207.json
+MG,40215,AIMORÉS,64,64,100.0,04/10/2026,20:57:43,73,64,64,9,0,principal,64,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40215.json
+MG,40223,FRANCISCÓPOLIS,16,16,100.0,04/10/2026,19:30:48,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40223.json
+MG,40231,AIURUOCA,20,20,100.0,04/10/2026,19:19:13,22,20,20,2,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40231.json
+MG,40240,ICARAÍ DE MINAS,32,32,100.0,04/10/2026,21:01:37,32,32,32,0,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40240.json
+MG,40258,ALAGOA,9,9,100.0,04/10/2026,19:17:58,9,9,9,0,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40258.json
+MG,40266,IPABA,42,42,100.0,04/10/2026,20:07:14,42,42,42,0,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40266.json
+MG,40274,ALBERTINA,10,10,100.0,04/10/2026,20:04:28,10,10,10,0,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40274.json
+MG,40282,JAÍBA,91,91,100.0,04/10/2026,22:20:25,92,91,91,1,0,principal,91,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40282.json
+MG,40290,ALÉM PARAÍBA,106,106,100.0,04/10/2026,19:31:50,120,106,106,14,0,principal,106,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40290.json
+MG,40304,JAMPRUCA,15,15,100.0,04/10/2026,19:13:28,16,15,15,1,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40304.json
+MG,40312,ALFENAS,177,177,100.0,04/10/2026,19:31:46,178,177,177,1,0,principal,177,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40312.json
+MG,40320,JUATUBA,79,79,100.0,04/10/2026,20:54:09,82,79,79,3,0,principal,79,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40320.json
+MG,40339,ALMENARA,108,108,100.0,04/10/2026,20:54:32,114,108,108,6,0,principal,108,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40339.json
+MG,40347,LAGOA GRANDE,22,22,100.0,04/10/2026,20:47:33,22,22,22,0,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40347.json
+MG,40355,ALPERCATA,23,23,100.0,04/10/2026,18:32:16,26,23,23,3,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40355.json
+MG,40363,LIMEIRA DO OESTE,19,19,100.0,04/10/2026,19:12:02,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40363.json
+MG,40371,ALPINÓPOLIS,47,47,100.0,04/10/2026,18:56:04,48,47,47,1,0,principal,47,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40371.json
+MG,40380,LONTRA,26,26,100.0,04/10/2026,22:03:44,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40380.json
+MG,40398,ALTEROSA,42,42,100.0,04/10/2026,19:01:04,42,42,42,0,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40398.json
+MG,40401,MAMONAS,24,24,100.0,04/10/2026,20:53:11,27,24,24,3,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40401.json
+MG,40410,ALTO RIO DOCE,34,34,100.0,04/10/2026,19:30:53,36,34,34,2,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40410.json
+MG,40428,MATA VERDE,24,24,100.0,04/10/2026,19:13:31,24,24,24,0,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40428.json
+MG,40436,ALVARENGA,19,19,100.0,04/10/2026,19:04:55,20,19,19,1,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40436.json
+MG,40444,MATIAS CARDOSO,28,28,100.0,04/10/2026,22:05:14,28,28,28,0,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40444.json
+MG,40452,ALVINÓPOLIS,42,42,100.0,04/10/2026,19:24:37,42,42,42,0,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40452.json
+MG,40460,MONTEZUMA,26,26,100.0,04/10/2026,19:24:17,29,26,26,3,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40460.json
+MG,40479,ALVORADA DE MINAS,16,16,100.0,04/10/2026,19:25:41,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40479.json
+MG,40487,NAQUE,15,15,100.0,04/10/2026,21:12:22,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40487.json
+MG,40495,AMPARO DO SERRA,18,18,100.0,04/10/2026,19:08:00,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40495.json
+MG,40509,NOVO ORIENTE DE MINAS,26,26,100.0,04/10/2026,20:50:30,28,26,26,2,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40509.json
+MG,40517,ANDRADAS,100,100,100.0,04/10/2026,18:56:39,102,100,100,2,0,principal,100,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40517.json
+MG,40525,PALMÓPOLIS,20,20,100.0,04/10/2026,19:16:31,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40525.json
+MG,40533,CACHOEIRA DE PAJEÚ,30,30,100.0,04/10/2026,19:05:55,30,30,30,0,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40533.json
+MG,40541,PEDRAS DE MARIA DA CRUZ,30,30,100.0,04/10/2026,21:01:11,31,30,30,1,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40541.json
+MG,40550,ANDRELÂNDIA,37,37,100.0,04/10/2026,18:46:38,43,37,37,6,0,principal,37,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40550.json
+MG,40568,PERIQUITO,21,21,100.0,04/10/2026,20:33:17,21,21,21,0,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40568.json
+MG,40576,ANTÔNIO CARLOS,33,33,100.0,04/10/2026,20:14:07,34,33,33,1,0,principal,33,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40576.json
+MG,40584,PONTO DOS VOLANTES,31,31,100.0,04/10/2026,20:56:32,32,31,31,1,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40584.json
+MG,40592,ANTÔNIO DIAS,35,35,100.0,04/10/2026,21:58:34,37,35,35,2,0,principal,35,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40592.json
+MG,40606,RIACHINHO,20,20,100.0,04/10/2026,19:06:50,21,20,20,1,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40606.json
+MG,40614,ANTÔNIO PRADO DE MINAS,9,9,100.0,04/10/2026,17:47:05,9,9,9,0,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40614.json
+MG,40622,ROSÁRIO DA LIMEIRA,12,16,75.0,04/10/2026,20:57:03,17,16,16,1,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40622.json
+MG,40630,ARAÇAÍ,10,10,100.0,04/10/2026,18:54:53,10,10,10,0,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40630.json
+MG,40649,SANTA BÁRBARA DO LESTE,24,24,100.0,04/10/2026,20:59:13,29,24,24,5,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40649.json
+MG,40657,ARACITABA,9,9,100.0,04/10/2026,20:13:08,14,9,9,5,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40657.json
+MG,40665,SANTA RITA DE MINAS,20,20,100.0,04/10/2026,20:09:34,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40665.json
+MG,40673,ARAÇUAÍ,90,90,100.0,04/10/2026,20:32:49,100,90,90,10,0,principal,90,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40673.json
+MG,40681,SANTANA DO PARAÍSO,77,77,100.0,04/10/2026,20:49:08,78,77,77,1,0,principal,77,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40681.json
+MG,40690,ARAGUARI,286,286,100.0,04/10/2026,19:18:24,315,286,286,29,0,principal,286,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40690.json
+MG,40703,SÃO JOÃO DA LAGOA,18,18,100.0,04/10/2026,20:52:28,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40703.json
+MG,40711,ARANTINA,9,9,100.0,04/10/2026,19:16:58,12,9,9,3,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40711.json
+MG,40720,SÃO JOÃO DO MANHUAÇU,27,27,100.0,04/10/2026,21:36:43,27,27,27,0,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40720.json
+MG,40738,ARAPONGA,24,24,100.0,04/10/2026,19:28:30,28,24,24,4,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40738.json
+MG,40746,SÃO JOÃO DO MANTENINHA,19,19,100.0,04/10/2026,19:24:04,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40746.json
+MG,40754,ARAPUÁ,11,11,100.0,04/10/2026,18:40:20,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40754.json
+MG,40762,SÃO JOÃO DO PACUÍ,16,16,100.0,04/10/2026,20:09:16,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40762.json
+MG,40770,ARAÚJOS,21,21,100.0,04/10/2026,20:50:43,21,21,21,0,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40770.json
+MG,40789,SÃO JOSÉ DA LAPA,68,68,100.0,04/10/2026,20:11:18,70,68,68,2,0,principal,68,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40789.json
+MG,40797,ARAXÁ,248,248,100.0,04/10/2026,20:16:36,254,248,248,6,0,principal,248,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40797.json
+MG,40800,SARZEDO,75,75,100.0,04/10/2026,22:15:01,75,75,75,0,0,principal,75,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40800.json
+MG,40819,ARCEBURGO,21,21,100.0,04/10/2026,19:06:24,21,21,21,0,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40819.json
+MG,40827,SEM PEIXE,12,12,100.0,04/10/2026,20:55:14,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40827.json
+MG,40835,ARCOS,109,109,100.0,04/10/2026,20:35:39,110,109,109,1,0,principal,109,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40835.json
+MG,40843,SENADOR AMARAL,16,16,100.0,04/10/2026,21:51:18,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40843.json
+MG,40851,AREADO,39,39,100.0,04/10/2026,18:36:30,39,39,39,0,0,principal,39,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40851.json
+MG,40860,UBAPORANGA,41,41,100.0,04/10/2026,20:13:22,42,41,41,1,0,principal,41,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40860.json
+MG,40878,ARGIRITA,12,12,100.0,04/10/2026,19:10:57,13,12,12,1,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40878.json
+MG,40886,URUCUIA,27,27,100.0,04/10/2026,20:12:52,28,27,27,1,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40886.json
+MG,40894,ARINOS,48,48,100.0,04/10/2026,20:42:47,51,48,48,3,0,principal,48,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40894.json
+MG,40908,VARGEM ALEGRE,21,21,100.0,04/10/2026,19:19:15,21,21,21,0,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40908.json
+MG,40916,ASTOLFO DUTRA,36,36,100.0,04/10/2026,19:28:01,37,36,36,1,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40916.json
+MG,40924,JOSENÓPOLIS,13,13,100.0,04/10/2026,18:34:28,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40924.json
+MG,40932,ATALÉIA,38,38,100.0,04/10/2026,23:41:17,43,38,38,5,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40932.json
+MG,40940,JUVENÍLIA,22,22,100.0,04/10/2026,20:51:47,22,22,22,0,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40940.json
+MG,40959,AUGUSTO DE LIMA,19,19,100.0,04/10/2026,20:16:42,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40959.json
+MG,40967,LEME DO PRADO,15,15,100.0,04/10/2026,20:58:08,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40967.json
+MG,40975,BAEPENDI,53,53,100.0,04/10/2026,20:19:20,55,53,53,2,0,principal,53,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40975.json
+MG,40983,LUISBURGO,18,18,100.0,04/10/2026,21:48:18,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40983.json
+MG,40991,BALDIM,27,27,100.0,04/10/2026,20:51:57,30,27,27,3,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\40991.json
+MG,41009,LUISLÂNDIA,28,28,100.0,04/10/2026,20:48:31,28,28,28,0,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41009.json
+MG,41017,BAMBUÍ,65,65,100.0,04/10/2026,20:37:23,68,65,65,3,0,principal,65,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41017.json
+MG,41025,MÁRIO CAMPOS,35,35,100.0,04/10/2026,20:17:16,38,35,35,3,0,principal,35,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41025.json
+MG,41033,BANDEIRA,16,16,100.0,04/10/2026,19:14:58,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41033.json
+MG,41041,MARTINS SOARES,25,25,100.0,04/10/2026,20:12:09,25,25,25,0,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41041.json
+MG,41050,BANDEIRA DO SUL,18,18,100.0,04/10/2026,20:18:34,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41050.json
+MG,41068,MIRAVÂNIA,14,14,100.0,04/10/2026,20:57:59,15,14,14,1,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41068.json
+MG,41076,BARÃO DE COCAIS,76,76,100.0,04/10/2026,20:58:48,78,76,76,2,0,principal,76,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41076.json
+MG,41084,MONTE FORMOSO,15,15,100.0,04/10/2026,19:10:49,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41084.json
+MG,41092,BARÃO DE MONTE ALTO,19,19,100.0,04/10/2026,20:49:08,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41092.json
+MG,41106,NATALÂNDIA,12,12,100.0,04/10/2026,18:58:27,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41106.json
+MG,41114,BARBACENA,322,322,100.0,04/10/2026,21:00:32,350,322,322,28,0,principal,322,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41114.json
+MG,41122,NINHEIRA,42,42,100.0,04/10/2026,20:57:22,43,42,42,1,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41122.json
+MG,41130,BARRA LONGA,24,24,100.0,04/10/2026,19:08:00,25,24,24,1,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41130.json
+MG,41149,NOVA BELÉM,14,14,100.0,04/10/2026,18:32:29,17,14,14,3,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41149.json
+MG,41157,TRÊS MARIAS,82,82,100.0,04/10/2026,19:15:54,91,82,82,9,0,principal,82,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41157.json
+MG,41165,NOVA PORTEIRINHA,26,26,100.0,04/10/2026,19:24:16,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41165.json
+MG,41173,BARROSO,54,54,100.0,04/10/2026,21:01:43,54,54,54,0,0,principal,54,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41173.json
+MG,41181,NOVORIZONTE,15,15,100.0,04/10/2026,20:59:52,24,15,15,9,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41181.json
+MG,41190,BELA VISTA DE MINAS,33,33,100.0,04/10/2026,19:12:10,33,33,33,0,0,principal,33,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41190.json
+MG,41203,OLHOS D'ÁGUA,20,20,100.0,04/10/2026,20:54:40,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41203.json
+MG,41211,BELMIRO BRAGA,12,12,100.0,04/10/2026,20:40:21,14,12,12,2,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41211.json
+MG,41220,ORATÓRIOS,15,15,100.0,04/10/2026,19:21:45,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41220.json
+MG,41238,BELO HORIZONTE,4927,4927,100.0,04/10/2026,22:21:03,5059,4927,4927,132,0,principal,4927,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41238.json
+MG,41246,ORIZÂNIA,20,20,100.0,04/10/2026,20:57:52,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41246.json
+MG,41254,BELO ORIENTE,70,70,100.0,04/10/2026,20:53:04,71,70,70,1,0,principal,70,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41254.json
+MG,41262,PADRE CARVALHO,19,19,100.0,04/10/2026,20:57:56,20,19,19,1,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41262.json
+MG,41270,BELO VALE,31,31,100.0,04/10/2026,19:22:28,32,31,31,1,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41270.json
+MG,41289,PAI PEDRO,18,18,100.0,04/10/2026,22:08:14,19,18,18,1,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41289.json
+MG,41297,BERILO,38,38,100.0,04/10/2026,20:45:14,41,38,38,3,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41297.json
+MG,41300,PATIS,25,25,100.0,04/10/2026,20:09:56,27,25,25,2,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41300.json
+MG,41319,BERTÓPOLIS,17,17,100.0,04/10/2026,20:55:17,21,17,17,4,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41319.json
+MG,41327,PEDRA BONITA,19,19,100.0,04/10/2026,21:01:18,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41327.json
+MG,41335,BETIM,1008,1008,100.0,04/10/2026,20:55:28,1012,1008,1008,4,0,principal,1008,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41335.json
+MG,41343,PIEDADE DE CARATINGA,26,26,100.0,04/10/2026,19:26:45,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41343.json
+MG,41351,BIAS FORTES,12,12,100.0,04/10/2026,21:21:42,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41351.json
+MG,41360,PINGO D'ÁGUA,14,14,100.0,04/10/2026,21:52:18,17,14,14,3,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41360.json
+MG,41378,BICAS,47,47,100.0,04/10/2026,17:47:32,47,47,47,0,0,principal,47,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41378.json
+MG,41386,PINTÓPOLIS,28,28,100.0,04/10/2026,18:56:57,29,28,28,1,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41386.json
+MG,41394,BIQUINHAS,10,10,100.0,04/10/2026,20:59:57,10,10,10,0,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41394.json
+MG,41408,PONTO CHIQUE,13,13,100.0,04/10/2026,19:16:23,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41408.json
+MG,41416,BOA ESPERANÇA,89,89,100.0,04/10/2026,19:04:15,89,89,89,0,0,principal,89,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41416.json
+MG,41424,REDUTO,17,17,100.0,04/10/2026,21:03:12,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41424.json
+MG,41432,BOCAINA DE MINAS,14,14,100.0,04/10/2026,19:31:22,14,14,14,0,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41432.json
+MG,41440,SANTA BÁRBARA DO MONTE VERDE,11,11,100.0,04/10/2026,19:04:57,13,11,11,2,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41440.json
+MG,41459,BOCAIÚVA,116,116,100.0,04/10/2026,20:59:01,118,116,116,2,0,principal,116,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41459.json
+MG,41467,SANTA CRUZ DE MINAS,19,19,100.0,04/10/2026,21:22:17,20,19,19,1,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41467.json
+MG,41475,BOM DESPACHO,125,125,100.0,04/10/2026,21:08:18,125,125,125,0,0,principal,125,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41475.json
+MG,41483,SANTA CRUZ DE SALINAS,15,15,100.0,04/10/2026,20:50:01,21,15,15,6,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41483.json
+MG,41491,BOM JARDIM DE MINAS,23,23,100.0,04/10/2026,20:54:53,26,23,23,3,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41491.json
+MG,41505,SANTA HELENA DE MINAS,18,18,100.0,04/10/2026,21:01:18,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41505.json
+MG,41513,BOM JESUS DA PENHA,11,11,100.0,04/10/2026,19:03:07,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41513.json
+MG,41521,SANTO ANTÔNIO DO RETIRO,26,26,100.0,04/10/2026,21:01:17,27,26,26,1,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41521.json
+MG,41530,BOM JESUS DO AMPARO,19,19,100.0,04/10/2026,20:20:21,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41530.json
+MG,41548,SÃO DOMINGOS DAS DORES,20,20,100.0,04/10/2026,20:54:55,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41548.json
+MG,41556,BOM JESUS DO GALHO,38,41,92.682926829,04/10/2026,20:52:48,64,41,41,23,0,principal,41,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41556.json
+MG,41564,SÃO FÉLIX DE MINAS,13,13,100.0,04/10/2026,20:47:02,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41564.json
+MG,41572,BOM REPOUSO,29,29,100.0,04/10/2026,21:35:43,29,29,29,0,0,principal,29,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41572.json
+MG,41580,SÃO GERALDO DO BAIXIO,12,12,100.0,04/10/2026,20:27:59,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41580.json
+MG,41599,BOM SUCESSO,51,51,100.0,04/10/2026,20:55:29,52,51,51,1,0,principal,51,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41599.json
+MG,41602,SÃO JOÃO DAS MISSÕES,36,36,100.0,05/10/2026,00:45:39,41,36,36,5,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41602.json
+MG,41610,BONFIM,25,25,100.0,04/10/2026,19:10:31,26,25,25,1,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41610.json
+MG,41629,SÃO JOAQUIM DE BICAS,70,70,100.0,04/10/2026,20:07:15,70,70,70,0,0,principal,70,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41629.json
+MG,41637,BONFINÓPOLIS DE MINAS,22,22,100.0,04/10/2026,18:17:18,22,22,22,0,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41637.json
+MG,41645,SÃO JOSÉ DA BARRA,26,26,100.0,04/10/2026,19:30:03,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41645.json
+MG,41653,BORDA DA MATA,45,45,100.0,04/10/2026,20:10:08,45,45,45,0,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41653.json
+MG,41661,ALTO CAPARAÓ,13,13,100.0,04/10/2026,20:49:52,16,13,13,3,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41661.json
+MG,41670,BOTELHOS,40,40,100.0,04/10/2026,19:10:43,40,40,40,0,0,principal,40,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41670.json
+MG,41688,ANGELÂNDIA,21,21,100.0,04/10/2026,20:08:44,23,21,21,2,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41688.json
+MG,41696,BOTUMIRIM,10,19,52.631578947,04/10/2026,21:00:32,20,19,19,1,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41696.json
+MG,41700,ARICANDUVA,15,15,100.0,04/10/2026,19:02:19,16,15,15,1,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41700.json
+MG,41718,BRASÍLIA DE MINAS,95,95,100.0,04/10/2026,20:58:07,113,95,95,18,0,principal,95,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41718.json
+MG,41726,BERIZAL,13,13,100.0,04/10/2026,21:56:04,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41726.json
+MG,41734,BRÁS PIRES,15,15,100.0,04/10/2026,19:01:48,16,15,15,1,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41734.json
+MG,41742,BONITO DE MINAS,38,38,100.0,04/10/2026,21:48:54,40,38,38,2,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41742.json
+MG,41750,BRAÚNAS,20,20,100.0,04/10/2026,19:19:04,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41750.json
+MG,41769,BUGRE,16,16,100.0,04/10/2026,20:38:57,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41769.json
+MG,41777,BRAZÓPOLIS,41,41,100.0,04/10/2026,20:56:47,41,41,41,0,0,principal,41,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41777.json
+MG,41785,CABECEIRA GRANDE,18,18,100.0,04/10/2026,21:00:49,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41785.json
+MG,41793,BRUMADINHO,107,107,100.0,04/10/2026,20:07:34,108,107,107,1,0,principal,107,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41793.json
+MG,41807,CAMPO AZUL,17,17,100.0,04/10/2026,20:49:27,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41807.json
+MG,41815,BUENO BRANDÃO,25,25,100.0,04/10/2026,21:02:47,25,25,25,0,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41815.json
+MG,41823,CANTAGALO,11,11,100.0,04/10/2026,19:25:14,14,11,11,3,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41823.json
+MG,41831,BUENÓPOLIS,30,30,100.0,04/10/2026,19:14:55,34,30,30,4,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41831.json
+MG,41840,CATAS ALTAS,15,15,100.0,04/10/2026,20:09:23,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41840.json
+MG,41858,BURITIS,66,66,100.0,04/10/2026,20:51:15,72,66,66,6,0,principal,66,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41858.json
+MG,41866,CATUTI,17,17,100.0,04/10/2026,21:27:58,18,17,17,1,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41866.json
+MG,41874,BURITIZEIRO,75,75,100.0,04/10/2026,20:48:22,77,75,75,2,0,principal,75,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41874.json
+MG,41882,CHAPADA GAÚCHA,34,34,100.0,04/10/2026,21:56:39,35,34,34,1,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41882.json
+MG,41890,CABO VERDE,31,31,100.0,04/10/2026,19:03:04,31,31,31,0,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41890.json
+MG,41904,CÔNEGO MARINHO,28,28,100.0,04/10/2026,20:29:59,31,28,28,3,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41904.json
+MG,41912,CACHOEIRA DA PRATA,13,13,100.0,04/10/2026,20:13:21,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41912.json
+MG,41920,CONFINS,23,23,100.0,04/10/2026,19:11:12,23,23,23,0,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41920.json
+MG,41939,CACHOEIRA DE MINAS,33,33,100.0,04/10/2026,18:39:03,33,33,33,0,0,principal,33,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41939.json
+MG,41947,CÓRREGO FUNDO,19,19,100.0,04/10/2026,19:12:29,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41947.json
+MG,41955,CACHOEIRA DOURADA,9,9,100.0,04/10/2026,18:15:00,10,9,9,1,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41955.json
+MG,41963,CRISÓLITA,19,19,100.0,04/10/2026,20:08:22,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41963.json
+MG,41971,CAETANÓPOLIS,31,31,100.0,04/10/2026,19:12:09,31,31,31,0,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41971.json
+MG,41980,CUPARAQUE,16,16,100.0,04/10/2026,20:50:20,19,16,16,3,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41980.json
+MG,41998,CAETÉ,106,106,100.0,04/10/2026,20:11:48,106,106,106,0,0,principal,106,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\41998.json
+MG,42005,CURRAL DE DENTRO,12,19,63.157894737,04/10/2026,20:59:54,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42005.json
+MG,42013,CAIANA,16,16,100.0,04/10/2026,20:04:47,19,16,16,3,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42013.json
+MG,42021,DELTA,25,25,100.0,04/10/2026,19:08:06,25,25,25,0,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42021.json
+MG,42030,CAJURI,17,17,100.0,04/10/2026,20:14:30,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42030.json
+MG,42048,DOM BOSCO,13,13,100.0,04/10/2026,18:26:30,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42048.json
+MG,42056,CALDAS,40,40,100.0,04/10/2026,19:24:29,46,40,40,6,0,principal,40,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42056.json
+MG,42064,FREI LAGONEGRO,12,12,100.0,04/10/2026,19:08:52,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42064.json
+MG,42072,CAMACHO,15,15,100.0,04/10/2026,19:19:56,17,15,15,2,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42072.json
+MG,42080,FRUTA DE LEITE,23,23,100.0,04/10/2026,20:13:11,36,23,23,13,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42080.json
+MG,42099,CAMANDUCAIA,51,51,100.0,04/10/2026,19:29:13,51,51,51,0,0,principal,51,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42099.json
+MG,42102,GAMELEIRAS,20,20,100.0,04/10/2026,21:38:28,21,20,20,1,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42102.json
+MG,42110,CAMBUÍ,65,65,100.0,04/10/2026,20:34:11,65,65,65,0,0,principal,65,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42110.json
+MG,42129,GLAUCILÂNDIA,14,14,100.0,04/10/2026,20:08:49,14,14,14,0,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42129.json
+MG,42137,CAMBUQUIRA,32,32,100.0,04/10/2026,19:25:28,32,32,32,0,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42137.json
+MG,42145,GOIABEIRA,9,9,100.0,04/10/2026,20:59:25,12,9,9,3,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42145.json
+MG,42153,CAMPANÁRIO,14,14,100.0,04/10/2026,20:31:15,15,14,14,1,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42153.json
+MG,42161,GOIANÁ,12,12,100.0,04/10/2026,19:15:51,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42161.json
+MG,42170,CAMPANHA,36,36,100.0,04/10/2026,20:07:03,36,36,36,0,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42170.json
+MG,42188,GUARACIAMA,15,15,100.0,04/10/2026,21:04:52,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42188.json
+MG,42196,CAMPESTRE,58,58,100.0,04/10/2026,20:20:52,62,58,58,4,0,principal,58,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42196.json
+MG,42200,IBIRACATU,21,21,100.0,04/10/2026,20:57:27,22,21,21,1,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42200.json
+MG,42218,CAMPINA VERDE,69,69,100.0,04/10/2026,18:57:55,69,69,69,0,0,principal,69,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42218.json
+MG,42226,IMBÉ DE MINAS,20,20,100.0,04/10/2026,20:59:30,21,20,20,1,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42226.json
+MG,42234,CAMPO BELO,120,120,100.0,04/10/2026,19:08:16,120,120,120,0,0,principal,120,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42234.json
+MG,42242,INDAIABIRA,21,21,100.0,04/10/2026,20:58:31,26,21,21,5,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42242.json
+MG,42250,CAMPO DO MEIO,33,33,100.0,04/10/2026,20:07:55,33,33,33,0,0,principal,33,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42250.json
+MG,42269,JAPONVAR,29,29,100.0,04/10/2026,20:49:56,30,29,29,1,0,principal,29,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42269.json
+MG,42277,CAMPO FLORIDO,25,25,100.0,04/10/2026,20:29:22,25,25,25,0,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42277.json
+MG,42285,JENIPAPO DE MINAS,18,18,100.0,04/10/2026,21:09:08,20,18,18,2,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42285.json
+MG,42293,CAMPOS ALTOS,34,34,100.0,04/10/2026,18:28:14,34,34,34,0,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42293.json
+MG,42307,JOSÉ GONÇALVES DE MINAS,13,13,100.0,04/10/2026,21:00:25,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42307.json
+MG,42315,CAMPOS GERAIS,62,62,100.0,04/10/2026,20:48:56,62,62,62,0,0,principal,62,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42315.json
+MG,42323,JOSÉ RAYDAN,15,15,100.0,04/10/2026,20:34:55,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42323.json
+MG,42331,CANAÃ,18,18,100.0,04/10/2026,18:57:51,20,18,18,2,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42331.json
+MG,42340,SÃO SEBASTIÃO DA VARGEM ALEGRE,9,9,100.0,04/10/2026,20:52:27,9,9,9,0,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42340.json
+MG,42358,CANÁPOLIS,27,27,100.0,04/10/2026,19:15:08,27,27,27,0,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42358.json
+MG,42366,SÃO SEBASTIÃO DO ANTA,17,17,100.0,04/10/2026,21:00:53,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42366.json
+MG,42374,CANA VERDE,17,17,100.0,04/10/2026,19:11:22,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42374.json
+MG,42382,SERRANÓPOLIS DE MINAS,16,16,100.0,04/10/2026,19:22:39,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42382.json
+MG,42390,CANDEIAS,42,42,100.0,04/10/2026,19:14:43,46,42,42,4,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42390.json
+MG,42404,SETUBINHA,29,29,100.0,04/10/2026,21:48:54,30,29,29,1,0,principal,29,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42404.json
+MG,42412,CAPARAÓ,15,15,100.0,04/10/2026,20:10:28,24,15,15,9,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42412.json
+MG,42420,TAPARUBA,13,13,100.0,04/10/2026,22:06:14,16,13,13,3,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42420.json
+MG,42439,CAPELA NOVA,18,18,100.0,04/10/2026,19:31:32,19,18,18,1,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42439.json
+MG,42447,UNIÃO DE MINAS,12,12,100.0,04/10/2026,18:22:12,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42447.json
+MG,42455,CAPELINHA,94,94,100.0,04/10/2026,20:40:13,103,94,94,9,0,principal,94,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42455.json
+MG,42463,URUANA DE MINAS,11,11,100.0,04/10/2026,20:22:24,12,11,11,1,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42463.json
+MG,42471,CAPETINGA,18,18,100.0,04/10/2026,19:13:31,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42471.json
+MG,42480,VARGEM GRANDE DO RIO PARDO,18,18,100.0,04/10/2026,20:54:03,19,18,18,1,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42480.json
+MG,42498,CAPIM BRANCO,26,26,100.0,04/10/2026,19:27:10,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42498.json
+MG,42501,VARJÃO DE MINAS,20,20,100.0,04/10/2026,18:58:45,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42501.json
+MG,42510,CAPINÓPOLIS,43,43,100.0,04/10/2026,19:08:40,56,43,43,13,0,principal,43,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42510.json
+MG,42528,VERDELÂNDIA,27,27,100.0,04/10/2026,20:11:15,27,27,27,0,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42528.json
+MG,42536,CAPITÃO ENÉAS,46,46,100.0,04/10/2026,21:23:53,46,46,46,0,0,principal,46,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42536.json
+MG,42544,VEREDINHA,18,18,100.0,04/10/2026,20:43:15,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42544.json
+MG,42552,CAPITÓLIO,22,22,100.0,04/10/2026,20:50:18,22,22,22,0,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42552.json
+MG,42560,VERMELHO NOVO,17,17,100.0,04/10/2026,19:05:24,18,17,17,1,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42560.json
+MG,42579,CAPUTIRA,28,28,100.0,04/10/2026,21:04:28,28,28,28,0,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42579.json
+MG,42587,TOCOS DO MOJI,13,13,100.0,04/10/2026,19:27:05,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42587.json
+MG,42595,CARAÍ,47,47,100.0,04/10/2026,22:13:25,48,47,47,1,0,principal,47,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42595.json
+MG,42617,CARANAÍBA,13,13,100.0,04/10/2026,20:32:14,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42617.json
+MG,42633,CARANDAÍ,65,65,100.0,04/10/2026,20:17:39,68,65,65,3,0,principal,65,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42633.json
+MG,42650,CARANGOLA,78,78,100.0,04/10/2026,19:22:54,78,78,78,0,0,principal,78,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42650.json
+MG,42676,CARATINGA,210,210,100.0,04/10/2026,21:00:12,226,210,210,16,0,principal,210,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42676.json
+MG,42692,CARBONITA,29,29,100.0,04/10/2026,19:24:25,32,29,29,3,0,principal,29,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42692.json
+MG,42714,CAREAÇU,16,16,100.0,04/10/2026,21:04:52,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42714.json
+MG,42730,CARLOS CHAGAS,54,54,100.0,04/10/2026,20:50:22,54,54,54,0,0,principal,54,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42730.json
+MG,42757,CARMÉSIA,10,10,100.0,04/10/2026,20:10:59,10,10,10,0,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42757.json
+MG,42773,CARMO DA CACHOEIRA,30,30,100.0,04/10/2026,19:04:06,32,30,30,2,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42773.json
+MG,42790,CARMO DA MATA,36,36,100.0,04/10/2026,19:12:55,36,36,36,0,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42790.json
+MG,42811,CARMO DE MINAS,32,32,100.0,04/10/2026,18:46:34,32,32,32,0,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42811.json
+MG,42838,CARMO DO CAJURU,57,57,100.0,04/10/2026,19:03:55,57,57,57,0,0,principal,57,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42838.json
+MG,42854,CARMO DO PARANAÍBA,81,81,100.0,04/10/2026,19:07:00,86,81,81,5,0,principal,81,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42854.json
+MG,42870,CARMO DO RIO CLARO,59,59,100.0,04/10/2026,20:37:33,59,59,59,0,0,principal,59,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42870.json
+MG,42897,CARMÓPOLIS DE MINAS,52,52,100.0,04/10/2026,19:04:11,54,52,52,2,0,principal,52,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42897.json
+MG,42919,CARRANCAS,12,12,100.0,04/10/2026,20:49:40,18,12,12,6,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42919.json
+MG,42935,CARVALHÓPOLIS,12,12,100.0,04/10/2026,18:58:24,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42935.json
+MG,42951,CARVALHOS,15,15,100.0,04/10/2026,19:16:52,22,15,15,7,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42951.json
+MG,42978,CASA GRANDE,10,10,100.0,04/10/2026,20:33:10,10,10,10,0,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42978.json
+MG,42994,CASCALHO RICO,12,12,100.0,04/10/2026,19:06:31,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\42994.json
+MG,43010,CÁSSIA,39,39,100.0,04/10/2026,17:58:19,39,39,39,0,0,principal,39,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43010.json
+MG,43036,CONCEIÇÃO DA BARRA DE MINAS,12,12,100.0,04/10/2026,20:49:08,13,12,12,1,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43036.json
+MG,43052,CATAGUASES,169,169,100.0,04/10/2026,20:04:25,177,169,169,8,0,principal,169,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43052.json
+MG,43079,CATAS ALTAS DA NORUEGA,14,14,100.0,04/10/2026,20:11:26,14,14,14,0,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43079.json
+MG,43095,CAXAMBU,52,52,100.0,04/10/2026,19:19:33,53,52,52,1,0,principal,52,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43095.json
+MG,43117,CEDRO DO ABAETÉ,4,4,100.0,04/10/2026,18:38:29,5,4,4,1,0,principal,4,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43117.json
+MG,43133,CENTRAL DE MINAS,21,21,100.0,04/10/2026,19:24:18,21,21,21,0,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43133.json
+MG,43150,CENTRALINA,26,26,100.0,04/10/2026,19:19:44,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43150.json
+MG,43176,CHÁCARA,17,17,100.0,04/10/2026,17:51:59,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43176.json
+MG,43192,CHALÉ,17,17,100.0,04/10/2026,19:21:17,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43192.json
+MG,43214,CHAPADA DO NORTE,38,38,100.0,04/10/2026,22:35:21,43,38,38,5,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43214.json
+MG,43230,CHIADOR,14,14,100.0,04/10/2026,19:16:57,14,14,14,0,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43230.json
+MG,43257,CIPOTÂNEA,18,18,100.0,04/10/2026,18:45:21,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43257.json
+MG,43273,CLARAVAL,14,14,100.0,04/10/2026,20:16:38,14,14,14,0,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43273.json
+MG,43290,CLARO DOS POÇÕES,32,32,100.0,04/10/2026,21:12:22,32,32,32,0,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43290.json
+MG,43311,CLÁUDIO,71,71,100.0,04/10/2026,20:03:51,71,71,71,0,0,principal,71,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43311.json
+MG,43338,COIMBRA,20,20,100.0,04/10/2026,20:38:57,22,20,20,2,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43338.json
+MG,43354,COLUNA,25,25,100.0,04/10/2026,20:06:58,27,25,25,2,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43354.json
+MG,43370,COMENDADOR GOMES,9,9,100.0,04/10/2026,18:29:36,9,9,9,0,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43370.json
+MG,43397,COMERCINHO,26,26,100.0,04/10/2026,20:59:52,27,26,26,1,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43397.json
+MG,43419,CONCEIÇÃO DA APARECIDA,25,25,100.0,04/10/2026,19:11:20,25,25,25,0,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43419.json
+MG,43435,CONCEIÇÃO DAS PEDRAS,11,11,100.0,04/10/2026,20:12:51,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43435.json
+MG,43451,CONCEIÇÃO DAS ALAGOAS,61,61,100.0,04/10/2026,18:39:47,62,61,61,1,0,principal,61,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43451.json
+MG,43478,CONCEIÇÃO DE IPANEMA,16,16,100.0,04/10/2026,22:05:40,17,16,16,1,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43478.json
+MG,43494,CONCEIÇÃO DO MATO DENTRO,73,73,100.0,04/10/2026,20:55:32,83,73,73,10,0,principal,73,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43494.json
+MG,43516,CONCEIÇÃO DO PARÁ,17,17,100.0,04/10/2026,20:50:41,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43516.json
+MG,43532,CONCEIÇÃO DO RIO VERDE,37,37,100.0,04/10/2026,19:18:32,37,37,37,0,0,principal,37,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43532.json
+MG,43559,CONCEIÇÃO DOS OUROS,34,34,100.0,04/10/2026,19:01:11,37,34,34,3,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43559.json
+MG,43575,CONGONHAL,30,30,100.0,04/10/2026,20:58:09,30,30,30,0,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43575.json
+MG,43591,CONGONHAS,126,126,100.0,04/10/2026,20:46:53,126,126,126,0,0,principal,126,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43591.json
+MG,43613,CONGONHAS DO NORTE,16,16,100.0,04/10/2026,20:50:23,18,16,16,2,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43613.json
+MG,43630,CONQUISTA,20,20,100.0,04/10/2026,19:26:27,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43630.json
+MG,43656,CONSELHEIRO LAFAIETE,308,308,100.0,04/10/2026,20:40:49,323,308,308,15,0,principal,308,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43656.json
+MG,43672,CONSELHEIRO PENA,63,63,100.0,04/10/2026,21:45:20,70,63,63,7,0,principal,63,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43672.json
+MG,43699,CONSOLAÇÃO,7,7,100.0,04/10/2026,19:03:54,7,7,7,0,0,principal,7,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43699.json
+MG,43710,CONTAGEM,1359,1359,100.0,04/10/2026,20:50:59,1421,1359,1359,62,0,principal,1359,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43710.json
+MG,43737,COQUEIRAL,26,26,100.0,04/10/2026,19:03:47,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43737.json
+MG,43753,CORAÇÃO DE JESUS,81,81,100.0,04/10/2026,21:04:37,86,81,81,5,0,principal,81,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43753.json
+MG,43770,CORDISBURGO,24,24,100.0,04/10/2026,20:53:29,24,24,24,0,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43770.json
+MG,43796,CORDISLÂNDIA,12,12,100.0,04/10/2026,20:59:45,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43796.json
+MG,43818,CORINTO,71,71,100.0,04/10/2026,20:49:19,78,71,71,7,0,principal,71,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43818.json
+MG,43834,COROACI,30,30,100.0,04/10/2026,19:12:24,31,30,30,1,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43834.json
+MG,43850,COROMANDEL,72,72,100.0,04/10/2026,19:21:49,78,72,72,6,0,principal,72,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43850.json
+MG,43877,CORONEL FABRICIANO,262,262,100.0,04/10/2026,20:30:05,265,262,262,3,0,principal,262,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43877.json
+MG,43893,CORONEL MURTA,23,23,100.0,04/10/2026,21:15:02,26,23,23,3,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43893.json
+MG,43915,CORONEL PACHECO,16,16,100.0,04/10/2026,19:29:11,17,16,16,1,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43915.json
+MG,43931,CORONEL XAVIER CHAVES,14,14,100.0,04/10/2026,18:43:50,15,14,14,1,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43931.json
+MG,43958,CÓRREGO DANTA,14,14,100.0,04/10/2026,18:35:01,14,14,14,0,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43958.json
+MG,43974,CÓRREGO DO BOM JESUS,15,15,100.0,04/10/2026,20:34:05,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43974.json
+MG,43990,CÓRREGO NOVO,16,16,100.0,04/10/2026,19:31:21,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\43990.json
+MG,44016,COUTO DE MAGALHÃES DE MINAS,14,14,100.0,04/10/2026,20:56:29,14,14,14,0,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44016.json
+MG,44032,CRISTAIS,25,25,100.0,04/10/2026,20:35:25,28,25,25,3,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44032.json
+MG,44059,CRISTÁLIA,18,18,100.0,04/10/2026,18:43:50,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44059.json
+MG,44075,CRISTIANO OTONI,16,16,100.0,04/10/2026,19:20:46,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44075.json
+MG,44091,CRISTINA,26,26,100.0,04/10/2026,18:47:25,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44091.json
+MG,44113,CRUCILÂNDIA,15,15,100.0,04/10/2026,19:21:46,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44113.json
+MG,44130,CRUZEIRO DA FORTALEZA,13,13,100.0,04/10/2026,20:07:36,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44130.json
+MG,44156,CRUZÍLIA,37,37,100.0,04/10/2026,19:02:29,37,37,37,0,0,principal,37,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44156.json
+MG,44172,CURVELO,203,203,100.0,04/10/2026,20:59:57,215,203,203,12,0,principal,203,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44172.json
+MG,44199,DATAS,18,18,100.0,04/10/2026,20:53:35,19,18,18,1,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44199.json
+MG,44210,DELFIM MOREIRA,22,22,100.0,04/10/2026,20:47:33,22,22,22,0,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44210.json
+MG,44237,DELFINÓPOLIS,20,20,100.0,04/10/2026,19:26:47,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44237.json
+MG,44253,DESCOBERTO,13,13,100.0,04/10/2026,19:17:51,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44253.json
+MG,44270,DESTERRO DE ENTRE RIOS,22,22,100.0,04/10/2026,21:00:48,26,22,22,4,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44270.json
+MG,44296,DESTERRO DO MELO,14,14,100.0,04/10/2026,20:11:51,14,14,14,0,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44296.json
+MG,44318,DIAMANTINA,132,132,100.0,04/10/2026,20:58:19,144,132,132,12,0,principal,132,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44318.json
+MG,44334,DIOGO DE VASCONCELOS,16,16,100.0,04/10/2026,20:54:12,18,16,16,2,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44334.json
+MG,44350,DIONÍSIO,29,29,100.0,04/10/2026,19:13:10,29,29,29,0,0,principal,29,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44350.json
+MG,44377,DIVINÉSIA,17,17,100.0,04/10/2026,19:02:02,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44377.json
+MG,44393,DIVINO,48,48,100.0,04/10/2026,20:03:49,48,48,48,0,0,principal,48,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44393.json
+MG,44415,DIVINO DAS LARANJEIRAS,16,16,100.0,04/10/2026,20:53:43,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44415.json
+MG,44431,DIVINOLÂNDIA DE MINAS,19,19,100.0,04/10/2026,20:32:35,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44431.json
+MG,44458,DIVINÓPOLIS,501,501,100.0,04/10/2026,19:22:15,504,501,501,3,0,principal,501,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44458.json
+MG,44474,DIVISA NOVA,15,15,100.0,04/10/2026,20:31:39,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44474.json
+MG,44490,DOM CAVATI,20,20,100.0,04/10/2026,19:08:10,22,20,20,2,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44490.json
+MG,44512,DOM JOAQUIM,18,18,100.0,04/10/2026,20:49:18,24,18,18,6,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44512.json
+MG,44539,DOM SILVÉRIO,15,15,100.0,04/10/2026,19:18:50,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44539.json
+MG,44555,DOM VIÇOSO,9,9,100.0,04/10/2026,20:53:58,9,9,9,0,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44555.json
+MG,44571,DONA EUSÉBIA,19,19,100.0,04/10/2026,19:30:22,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44571.json
+MG,44598,DORES DE CAMPOS,27,27,100.0,04/10/2026,20:55:32,27,27,27,0,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44598.json
+MG,44610,DORES DE GUANHÃES,20,20,100.0,04/10/2026,20:59:27,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44610.json
+MG,44636,DORES DO INDAIÁ,42,42,100.0,04/10/2026,18:31:33,52,42,42,10,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44636.json
+MG,44652,DORES DO TURVO,19,19,100.0,04/10/2026,18:19:48,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44652.json
+MG,44679,DORESÓPOLIS,7,7,100.0,04/10/2026,20:52:33,7,7,7,0,0,principal,7,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44679.json
+MG,44695,DOURADOQUARA,7,7,100.0,04/10/2026,18:59:08,7,7,7,0,0,principal,7,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44695.json
+MG,44717,ELÓI MENDES,58,58,100.0,04/10/2026,20:12:35,58,58,58,0,0,principal,58,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44717.json
+MG,44733,ENGENHEIRO CALDAS,30,30,100.0,04/10/2026,19:05:15,30,30,30,0,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44733.json
+MG,44750,ENGENHEIRO NAVARRO,19,19,100.0,04/10/2026,20:58:19,20,19,19,1,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44750.json
+MG,44776,ENTRE RIOS DE MINAS,40,40,100.0,04/10/2026,20:18:46,47,40,40,7,0,principal,40,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44776.json
+MG,44792,ERVÁLIA,63,63,100.0,04/10/2026,19:21:59,70,63,63,7,0,principal,63,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44792.json
+MG,44814,ESMERALDAS,187,187,100.0,04/10/2026,19:10:33,188,187,187,1,0,principal,187,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44814.json
+MG,44830,ESPERA FELIZ,61,61,100.0,04/10/2026,20:24:30,67,61,61,6,0,principal,61,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44830.json
+MG,44857,ESPINOSA,103,103,100.0,04/10/2026,21:59:44,114,103,103,11,0,principal,103,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44857.json
+MG,44873,ESPÍRITO SANTO DO DOURADO,16,16,100.0,04/10/2026,20:53:43,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44873.json
+MG,44890,ESTIVA,34,34,100.0,04/10/2026,18:48:44,34,34,34,0,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44890.json
+MG,44911,ESTRELA DALVA,10,10,100.0,04/10/2026,20:09:11,17,10,10,7,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44911.json
+MG,44938,ESTRELA DO INDAIÁ,11,11,100.0,04/10/2026,18:56:47,12,11,11,1,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44938.json
+MG,44954,ESTRELA DO SUL,20,20,100.0,04/10/2026,18:55:52,21,20,20,1,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44954.json
+MG,44970,EUGENÓPOLIS,31,31,100.0,04/10/2026,18:28:51,31,31,31,0,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44970.json
+MG,44997,EWBANK DA CÂMARA,14,14,100.0,04/10/2026,19:11:11,14,14,14,0,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\44997.json
+MG,45012,EXTREMA,116,116,100.0,04/10/2026,19:26:20,116,116,116,0,0,principal,116,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45012.json
+MG,45039,FAMA,11,11,100.0,04/10/2026,19:16:05,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45039.json
+MG,45055,FARIA LEMOS,13,13,100.0,04/10/2026,18:37:05,15,13,13,2,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45055.json
+MG,45071,FELÍCIO DOS SANTOS,16,16,100.0,04/10/2026,19:15:59,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45071.json
+MG,45098,SÃO GONÇALO DO RIO PRETO,12,12,100.0,04/10/2026,20:58:51,13,12,12,1,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45098.json
+MG,45110,FELISBURGO,17,17,100.0,04/10/2026,19:22:19,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45110.json
+MG,45136,FELIXLÂNDIA,39,39,100.0,04/10/2026,20:57:23,40,39,39,1,0,principal,39,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45136.json
+MG,45152,FERNANDES TOURINHO,11,11,100.0,04/10/2026,19:09:00,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45152.json
+MG,45179,FERROS,35,35,100.0,04/10/2026,20:10:56,38,35,35,3,0,principal,35,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45179.json
+MG,45195,FLORESTAL,22,22,100.0,04/10/2026,20:51:12,22,22,22,0,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45195.json
+MG,45217,FORMIGA,180,180,100.0,04/10/2026,19:26:24,180,180,180,0,0,principal,180,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45217.json
+MG,45233,FORMOSO,23,23,100.0,04/10/2026,19:07:16,23,23,23,0,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45233.json
+MG,45250,FORTALEZA DE MINAS,11,11,100.0,04/10/2026,19:11:34,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45250.json
+MG,45276,FORTUNA DE MINAS,11,11,100.0,04/10/2026,20:14:23,14,11,11,3,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45276.json
+MG,45292,FRANCISCO BADARÓ,30,30,100.0,04/10/2026,20:12:46,31,30,30,1,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45292.json
+MG,45314,FRANCISCO DUMONT,17,17,100.0,04/10/2026,19:13:54,18,17,17,1,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45314.json
+MG,45330,FRANCISCO SÁ,86,86,100.0,04/10/2026,20:49:59,95,86,86,9,0,principal,86,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45330.json
+MG,45357,FREI GASPAR,19,19,100.0,04/10/2026,21:30:58,24,19,19,5,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45357.json
+MG,45373,FREI INOCÊNCIO,28,28,100.0,04/10/2026,19:02:10,28,28,28,0,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45373.json
+MG,45390,FRONTEIRA,31,31,100.0,04/10/2026,20:56:37,32,31,31,1,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45390.json
+MG,45411,FRUTAL,125,125,100.0,04/10/2026,20:13:21,125,125,125,0,0,principal,125,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45411.json
+MG,45438,FUNILÂNDIA,19,19,100.0,04/10/2026,20:25:15,20,19,19,1,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45438.json
+MG,45454,GALILÉIA,20,20,100.0,04/10/2026,18:42:35,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45454.json
+MG,45470,GONÇALVES,15,15,100.0,04/10/2026,18:48:07,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45470.json
+MG,45497,GONZAGA,18,18,100.0,04/10/2026,20:58:49,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45497.json
+MG,45519,GOUVEIA,35,35,100.0,04/10/2026,21:11:23,36,35,35,1,0,principal,35,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45519.json
+MG,45535,GOVERNADOR VALADARES,661,661,100.0,04/10/2026,21:26:00,680,661,661,19,0,principal,661,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45535.json
+MG,45551,GRÃO MOGOL,42,42,100.0,04/10/2026,21:13:52,43,42,42,1,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45551.json
+MG,45578,GRUPIARA,7,7,100.0,04/10/2026,18:42:33,8,7,7,1,0,principal,7,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45578.json
+MG,45594,GUANHÃES,88,88,100.0,04/10/2026,19:26:43,88,88,88,0,0,principal,88,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45594.json
+MG,45616,GUAPÉ,37,37,100.0,04/10/2026,20:57:46,41,37,37,4,0,principal,37,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45616.json
+MG,45632,GUARACIABA,32,32,100.0,04/10/2026,20:56:30,32,32,32,0,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45632.json
+MG,45659,GUARANÉSIA,42,42,100.0,04/10/2026,19:10:49,42,42,42,0,0,principal,42,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45659.json
+MG,45675,GUARANI,22,22,100.0,04/10/2026,19:24:36,22,22,22,0,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45675.json
+MG,45691,GUARARÁ,15,15,100.0,04/10/2026,17:34:14,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45691.json
+MG,45713,GUARDA-MOR,20,20,100.0,04/10/2026,20:42:31,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45713.json
+MG,45730,GUAXUPÉ,111,111,100.0,04/10/2026,19:01:01,111,111,111,0,0,principal,111,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45730.json
+MG,45756,GUIDOVAL,27,27,100.0,04/10/2026,20:31:44,28,27,27,1,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45756.json
+MG,45772,GUIMARÂNIA,24,24,100.0,04/10/2026,19:20:38,24,24,24,0,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45772.json
+MG,45799,GUIRICEMA,25,25,100.0,04/10/2026,20:49:10,29,25,25,4,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45799.json
+MG,45810,GURINHATÃ,26,26,100.0,04/10/2026,20:48:33,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45810.json
+MG,45837,HELIODORA,17,17,100.0,04/10/2026,20:11:49,18,17,17,1,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45837.json
+MG,45853,IAPU,26,26,100.0,04/10/2026,20:58:20,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45853.json
+MG,45870,IBERTIOGA,16,16,100.0,04/10/2026,20:48:32,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45870.json
+MG,45896,IBIÁ,58,58,100.0,04/10/2026,18:59:18,63,58,58,5,0,principal,58,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45896.json
+MG,45918,IBIAÍ,21,21,100.0,04/10/2026,22:05:54,21,21,21,0,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45918.json
+MG,45934,IBIRACI,27,27,100.0,04/10/2026,18:33:20,28,27,27,1,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45934.json
+MG,45950,IBIRITÉ,353,353,100.0,04/10/2026,20:48:25,354,353,353,1,0,principal,353,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45950.json
+MG,45977,IBITIÚRA DE MINAS,11,11,100.0,04/10/2026,18:35:45,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45977.json
+MG,45993,IBITURUNA,9,9,100.0,04/10/2026,19:03:56,9,9,9,0,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\45993.json
+MG,46019,IGARAPÉ,100,100,100.0,04/10/2026,19:01:47,100,100,100,0,0,principal,100,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46019.json
+MG,46035,IGARATINGA,25,25,100.0,04/10/2026,18:49:38,25,25,25,0,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46035.json
+MG,46051,IGUATAMA,25,25,100.0,04/10/2026,18:48:40,26,25,25,1,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46051.json
+MG,46078,IJACI,15,16,93.75,04/10/2026,20:59:43,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46078.json
+MG,46094,ILICÍNEA,28,28,100.0,04/10/2026,20:57:34,28,28,28,0,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46094.json
+MG,46116,INCONFIDENTES,17,17,100.0,04/10/2026,19:26:46,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46116.json
+MG,46132,INDIANÓPOLIS,16,16,100.0,04/10/2026,19:20:44,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46132.json
+MG,46159,INGAÍ,11,11,100.0,04/10/2026,19:00:33,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46159.json
+MG,46175,INHAPIM,74,74,100.0,04/10/2026,22:33:56,77,74,74,3,0,principal,74,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46175.json
+MG,46191,INHAÚMA,18,18,100.0,04/10/2026,19:15:24,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46191.json
+MG,46213,INIMUTABA,22,22,100.0,04/10/2026,20:51:00,24,22,22,2,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46213.json
+MG,46230,IPANEMA,50,50,100.0,04/10/2026,21:21:18,52,50,50,2,0,principal,50,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46230.json
+MG,46256,IPATINGA,543,543,100.0,04/10/2026,20:39:08,546,543,543,3,0,principal,543,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46256.json
+MG,46272,IPIAÇU,13,13,100.0,04/10/2026,20:07:30,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46272.json
+MG,46299,IPUIÚNA,24,24,100.0,04/10/2026,19:16:39,24,24,24,0,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46299.json
+MG,46310,IRAÍ DE MINAS,21,21,100.0,04/10/2026,19:21:02,22,21,21,1,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46310.json
+MG,46337,ITABIRA,277,277,100.0,04/10/2026,21:27:24,281,277,277,4,0,principal,277,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46337.json
+MG,46353,ITABIRINHA,37,37,100.0,04/10/2026,18:56:32,37,37,37,0,0,principal,37,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46353.json
+MG,46370,ITABIRITO,135,135,100.0,04/10/2026,20:06:44,146,135,135,11,0,principal,135,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46370.json
+MG,46396,ITACAMBIRA,25,25,100.0,04/10/2026,20:07:52,28,25,25,3,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46396.json
+MG,46418,ITACARAMBI,50,50,100.0,04/10/2026,20:55:50,53,50,50,3,0,principal,50,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46418.json
+MG,46434,ITAGUARA,43,43,100.0,04/10/2026,20:23:43,47,43,43,4,0,principal,43,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46434.json
+MG,46450,ITAIPÉ,30,30,100.0,04/10/2026,22:05:54,32,30,30,2,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46450.json
+MG,46477,ITAJUBÁ,221,221,100.0,04/10/2026,20:08:48,222,221,221,1,0,principal,221,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46477.json
+MG,46493,ITAMARANDIBA,85,85,100.0,04/10/2026,20:39:57,89,85,85,4,0,principal,85,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46493.json
+MG,46515,ITAMARATI DE MINAS,14,14,100.0,04/10/2026,19:09:11,15,14,14,1,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46515.json
+MG,46531,ITAMBACURI,65,65,100.0,04/10/2026,20:57:19,78,65,65,13,0,principal,65,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46531.json
+MG,46558,ITAMBÉ DO MATO DENTRO,10,10,100.0,04/10/2026,20:51:22,10,10,10,0,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46558.json
+MG,46574,ITAMOGI,27,27,100.0,04/10/2026,19:18:41,27,27,27,0,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46574.json
+MG,46590,ITAMONTE,36,36,100.0,04/10/2026,19:19:19,36,36,36,0,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46590.json
+MG,46612,ITANHANDU,36,36,100.0,04/10/2026,18:09:34,36,36,36,0,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46612.json
+MG,46639,ITANHOMI,33,33,100.0,04/10/2026,20:34:28,35,33,33,2,0,principal,33,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46639.json
+MG,46655,ITAOBIM,54,54,100.0,04/10/2026,21:08:09,58,54,54,4,0,principal,54,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46655.json
+MG,46671,ITAPAGIPE,33,33,100.0,04/10/2026,18:15:06,33,33,33,0,0,principal,33,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46671.json
+MG,46698,ITAPECERICA,72,72,100.0,04/10/2026,18:22:09,73,72,72,1,0,principal,72,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46698.json
+MG,46710,ITAPEVA,26,26,100.0,04/10/2026,19:10:51,27,26,26,1,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46710.json
+MG,46736,ITATIAIUÇU,38,38,100.0,04/10/2026,20:50:34,38,38,38,0,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46736.json
+MG,46752,ITAÚNA,232,232,100.0,04/10/2026,19:11:10,232,232,232,0,0,principal,232,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46752.json
+MG,46779,ITAVERAVA,20,20,100.0,04/10/2026,20:44:47,21,20,20,1,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46779.json
+MG,46795,ITINGA,39,39,100.0,04/10/2026,22:21:47,43,39,39,4,0,principal,39,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46795.json
+MG,46817,ITUETA,19,19,100.0,04/10/2026,20:13:06,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46817.json
+MG,46833,ITUIUTABA,275,275,100.0,04/10/2026,21:00:28,278,275,275,3,0,principal,275,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46833.json
+MG,46850,ITUMIRIM,22,22,100.0,04/10/2026,18:22:26,22,22,22,0,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46850.json
+MG,46876,ITURAMA,86,86,100.0,04/10/2026,19:09:20,86,86,86,0,0,principal,86,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46876.json
+MG,46892,ITUTINGA,12,12,100.0,04/10/2026,19:07:23,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46892.json
+MG,46914,JABOTICATUBAS,51,51,100.0,04/10/2026,20:56:28,54,51,51,3,0,principal,51,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46914.json
+MG,46930,JACINTO,32,32,100.0,04/10/2026,19:23:49,33,32,32,1,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46930.json
+MG,46957,JACUÍ,19,19,100.0,04/10/2026,19:07:42,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46957.json
+MG,46973,JACUTINGA,52,52,100.0,04/10/2026,20:49:41,52,52,52,0,0,principal,52,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46973.json
+MG,46990,JAGUARAÇU,11,11,100.0,04/10/2026,18:57:20,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\46990.json
+MG,47015,JANAÚBA,197,197,100.0,04/10/2026,20:48:37,197,197,197,0,0,principal,197,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47015.json
+MG,47031,JANUÁRIA,191,191,100.0,04/10/2026,21:16:14,225,191,191,34,0,principal,191,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47031.json
+MG,47058,JAPARAÍBA,11,11,100.0,04/10/2026,20:09:18,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47058.json
+MG,47074,JECEABA,23,23,100.0,04/10/2026,19:08:17,24,23,23,1,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47074.json
+MG,47090,JEQUERI,34,34,100.0,04/10/2026,20:39:45,37,34,34,3,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47090.json
+MG,47112,JEQUITAÍ,22,22,100.0,04/10/2026,21:22:28,22,22,22,0,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47112.json
+MG,47139,JEQUITIBÁ,24,24,100.0,04/10/2026,20:08:44,24,24,24,0,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47139.json
+MG,47155,JEQUITINHONHA,59,59,100.0,04/10/2026,20:13:59,65,59,59,6,0,principal,59,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47155.json
+MG,47171,JESUÂNIA,13,13,100.0,04/10/2026,19:21:18,14,13,13,1,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47171.json
+MG,47198,JOAÍMA,34,40,85.0,04/10/2026,20:56:18,41,40,40,1,0,principal,40,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47198.json
+MG,47210,JOANÉSIA,23,23,100.0,04/10/2026,19:04:57,23,23,23,0,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47210.json
+MG,47236,JOÃO MONLEVADE,216,216,100.0,04/10/2026,19:21:29,218,216,216,2,0,principal,216,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47236.json
+MG,47252,JOÃO PINHEIRO,129,129,100.0,04/10/2026,20:43:38,136,129,129,7,0,principal,129,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47252.json
+MG,47279,JOAQUIM FELÍCIO,16,16,100.0,04/10/2026,19:25:34,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47279.json
+MG,47295,JORDÂNIA,28,28,100.0,04/10/2026,21:00:37,28,28,28,0,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47295.json
+MG,47317,NOVA UNIÃO,18,18,100.0,04/10/2026,19:18:27,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47317.json
+MG,47333,JUIZ DE FORA,1256,1256,100.0,04/10/2026,21:05:47,1343,1256,1256,87,0,principal,1256,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47333.json
+MG,47350,JURAMENTO,15,15,100.0,04/10/2026,21:11:57,16,15,15,1,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47350.json
+MG,47376,JURUAIA,24,24,100.0,04/10/2026,19:17:26,24,24,24,0,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47376.json
+MG,47392,LADAINHA,41,41,100.0,04/10/2026,21:28:08,42,41,41,1,0,principal,41,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47392.json
+MG,47414,LAGAMAR,21,21,100.0,04/10/2026,20:59:27,22,21,21,1,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47414.json
+MG,47430,LAGOA DA PRATA,107,107,100.0,04/10/2026,20:09:28,107,107,107,0,0,principal,107,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47430.json
+MG,47457,LAGOA DOS PATOS,14,14,100.0,04/10/2026,19:20:05,14,14,14,0,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47457.json
+MG,47473,LAGOA DOURADA,32,32,100.0,04/10/2026,21:14:52,37,32,32,5,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47473.json
+MG,47490,LAGOA FORMOSA,53,53,100.0,04/10/2026,20:48:03,54,53,53,1,0,principal,53,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47490.json
+MG,47511,LAGOA SANTA,175,175,100.0,04/10/2026,19:25:35,178,175,175,3,0,principal,175,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47511.json
+MG,47538,LAJINHA,52,52,100.0,04/10/2026,20:38:13,52,52,52,0,0,principal,52,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47538.json
+MG,47554,LAMBARI,50,50,100.0,04/10/2026,20:03:43,50,50,50,0,0,principal,50,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47554.json
+MG,47570,LAMIM,11,11,100.0,04/10/2026,19:30:56,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47570.json
+MG,47597,LARANJAL,20,20,100.0,04/10/2026,19:09:35,24,20,20,4,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47597.json
+MG,47619,LASSANCE,20,20,100.0,04/10/2026,21:01:12,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47619.json
+MG,47635,LAVRAS,213,213,100.0,04/10/2026,21:01:46,213,213,213,0,0,principal,213,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47635.json
+MG,47651,LEANDRO FERREIRA,10,10,100.0,04/10/2026,20:23:52,10,10,10,0,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47651.json
+MG,47678,LEOPOLDINA,132,132,100.0,04/10/2026,19:07:33,142,132,132,10,0,principal,132,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47678.json
+MG,47694,LIBERDADE,17,17,100.0,04/10/2026,18:36:01,19,17,17,2,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47694.json
+MG,47716,LIMA DUARTE,46,46,100.0,04/10/2026,20:27:25,50,46,46,4,0,principal,46,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47716.json
+MG,47732,LUMINÁRIAS,16,16,100.0,04/10/2026,19:24:28,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47732.json
+MG,47759,LUZ,56,56,100.0,04/10/2026,18:38:34,56,56,56,0,0,principal,56,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47759.json
+MG,47775,MACHACALIS,21,21,100.0,04/10/2026,20:18:14,21,21,21,0,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47775.json
+MG,47791,MACHADO,92,92,100.0,04/10/2026,19:16:36,92,92,92,0,0,principal,92,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47791.json
+MG,47813,MADRE DE DEUS DE MINAS,16,16,100.0,04/10/2026,20:44:14,17,16,16,1,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47813.json
+MG,47830,MALACACHETA,58,58,100.0,04/10/2026,20:32:48,63,58,58,5,0,principal,58,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47830.json
+MG,47856,MANGA,63,63,100.0,04/10/2026,22:33:56,64,63,63,1,0,principal,63,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47856.json
+MG,47872,MANHUAÇU,181,181,100.0,04/10/2026,21:37:06,181,181,181,0,0,principal,181,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47872.json
+MG,47899,MANHUMIRIM,60,60,100.0,04/10/2026,18:37:04,66,60,60,6,0,principal,60,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47899.json
+MG,47910,MANTENA,73,73,100.0,04/10/2026,19:10:15,75,73,73,2,0,principal,73,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47910.json
+MG,47937,MARAVILHAS,18,18,100.0,04/10/2026,21:00:49,19,18,18,1,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47937.json
+MG,47953,MAR DE ESPANHA,40,40,100.0,04/10/2026,20:39:35,42,40,40,2,0,principal,40,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47953.json
+MG,47970,MARIA DA FÉ,37,37,100.0,04/10/2026,20:54:16,38,37,37,1,0,principal,37,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47970.json
+MG,47996,MARIANA,160,160,100.0,04/10/2026,20:56:31,164,160,160,4,0,principal,160,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\47996.json
+MG,48011,MARILAC,15,15,100.0,04/10/2026,20:53:42,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48011.json
+MG,48038,MARIPÁ DE MINAS,12,12,100.0,04/10/2026,17:22:40,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48038.json
+MG,48054,MARLIÉRIA,17,17,100.0,04/10/2026,20:11:11,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48054.json
+MG,48070,MARMELÓPOLIS,10,10,100.0,04/10/2026,20:47:24,10,10,10,0,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48070.json
+MG,48097,MARTINHO CAMPOS,38,38,100.0,04/10/2026,19:10:14,38,38,38,0,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48097.json
+MG,48119,MATERLÂNDIA,18,18,100.0,04/10/2026,18:44:02,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48119.json
+MG,48135,MATEUS LEME,93,93,100.0,04/10/2026,20:51:12,95,93,93,2,0,principal,93,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48135.json
+MG,48151,MATIAS BARBOSA,36,36,100.0,04/10/2026,19:11:16,37,36,36,1,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48151.json
+MG,48178,MATIPÓ,43,43,100.0,04/10/2026,21:29:43,44,43,43,1,0,principal,43,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48178.json
+MG,48194,MATO VERDE,41,41,100.0,04/10/2026,20:56:45,42,41,41,1,0,principal,41,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48194.json
+MG,48216,MATOZINHOS,92,92,100.0,04/10/2026,19:27:12,92,92,92,0,0,principal,92,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48216.json
+MG,48232,MATUTINA,12,12,100.0,04/10/2026,19:09:10,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48232.json
+MG,48259,MEDEIROS,11,11,100.0,04/10/2026,20:50:50,12,11,11,1,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48259.json
+MG,48275,MEDINA,54,54,100.0,04/10/2026,21:02:08,57,54,54,3,0,principal,54,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48275.json
+MG,48291,MENDES PIMENTEL,20,20,100.0,04/10/2026,20:59:25,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48291.json
+MG,48313,MERCÊS,27,27,100.0,04/10/2026,19:13:31,27,27,27,0,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48313.json
+MG,48330,MESQUITA,21,21,100.0,04/10/2026,18:39:04,21,21,21,0,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48330.json
+MG,48356,MINAS NOVAS,78,78,100.0,04/10/2026,21:16:03,82,78,78,4,0,principal,78,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48356.json
+MG,48372,MINDURI,15,15,100.0,04/10/2026,18:00:43,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48372.json
+MG,48399,MIRABELA,39,39,100.0,04/10/2026,20:16:41,40,39,39,1,0,principal,39,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48399.json
+MG,48410,MIRADOURO,32,32,100.0,04/10/2026,20:52:13,32,32,32,0,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48410.json
+MG,48437,MIRAÍ,41,41,100.0,04/10/2026,20:56:20,41,41,41,0,0,principal,41,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48437.json
+MG,48453,MOEDA,19,19,100.0,04/10/2026,20:56:33,22,19,19,3,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48453.json
+MG,48470,MOEMA,24,24,100.0,04/10/2026,19:12:43,24,24,24,0,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48470.json
+MG,48496,MONJOLOS,10,10,100.0,04/10/2026,19:10:43,10,10,10,0,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48496.json
+MG,48518,MONSENHOR PAULO,20,20,100.0,04/10/2026,20:15:48,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48518.json
+MG,48534,MONTALVÂNIA,55,55,100.0,04/10/2026,20:06:13,58,55,55,3,0,principal,55,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48534.json
+MG,48550,MONTE ALEGRE DE MINAS,52,52,100.0,04/10/2026,18:36:54,58,52,52,6,0,principal,52,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48550.json
+MG,48577,MONTE AZUL,75,75,100.0,04/10/2026,20:39:31,80,75,75,5,0,principal,75,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48577.json
+MG,48593,MONTE BELO,32,32,100.0,04/10/2026,20:33:10,33,32,32,1,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48593.json
+MG,48615,MONTE CARMELO,108,108,100.0,04/10/2026,20:13:18,109,108,108,1,0,principal,108,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48615.json
+MG,48631,MONTE SANTO DE MINAS,48,48,100.0,04/10/2026,18:48:17,48,48,48,0,0,principal,48,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48631.json
+MG,48658,MONTES CLAROS,921,921,100.0,04/10/2026,22:10:11,959,921,921,38,0,principal,921,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48658.json
+MG,48674,MONTE SIÃO,53,53,100.0,04/10/2026,19:05:37,53,53,53,0,0,principal,53,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48674.json
+MG,48690,MORADA NOVA DE MINAS,28,28,100.0,04/10/2026,20:59:49,28,28,28,0,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48690.json
+MG,48712,MORRO DA GARÇA,10,10,100.0,04/10/2026,20:12:02,13,10,10,3,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48712.json
+MG,48739,MORRO DO PILAR,18,18,100.0,04/10/2026,21:01:18,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48739.json
+MG,48755,MUNHOZ,19,19,100.0,04/10/2026,20:58:50,20,19,19,1,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48755.json
+MG,48771,MURIAÉ,273,273,100.0,04/10/2026,19:32:10,279,273,273,6,0,principal,273,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48771.json
+MG,48798,MUTUM,71,71,100.0,04/10/2026,20:56:23,71,71,71,0,0,principal,71,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48798.json
+MG,48810,MUZAMBINHO,51,51,100.0,04/10/2026,18:25:05,51,51,51,0,0,principal,51,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48810.json
+MG,48836,NACIP RAYDAN,9,9,100.0,04/10/2026,19:12:50,9,9,9,0,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48836.json
+MG,48852,NANUQUE,108,108,100.0,04/10/2026,20:52:34,124,108,108,16,0,principal,108,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48852.json
+MG,48879,NATÉRCIA,17,17,100.0,04/10/2026,20:03:48,19,17,17,2,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48879.json
+MG,48895,NAZARENO,22,22,100.0,04/10/2026,20:49:06,22,22,22,0,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48895.json
+MG,48917,NEPOMUCENO,67,67,100.0,04/10/2026,19:22:35,69,67,67,2,0,principal,67,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48917.json
+MG,48933,NOVA ERA,63,63,100.0,04/10/2026,19:12:22,63,63,63,0,0,principal,63,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48933.json
+MG,48950,NOVA LIMA,227,227,100.0,04/10/2026,20:33:05,233,227,227,6,0,principal,227,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48950.json
+MG,48976,NOVA MÓDICA,14,14,100.0,04/10/2026,20:04:32,17,14,14,3,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48976.json
+MG,48992,NOVA PONTE,36,36,100.0,04/10/2026,19:17:26,36,36,36,0,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\48992.json
+MG,49018,NOVA RESENDE,38,38,100.0,04/10/2026,19:23:06,38,38,38,0,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49018.json
+MG,49034,NOVA SERRANA,202,202,100.0,04/10/2026,20:19:51,204,202,202,2,0,principal,202,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49034.json
+MG,49050,NOVO CRUZEIRO,85,85,100.0,04/10/2026,20:50:59,88,85,85,3,0,principal,85,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49050.json
+MG,49077,OLARIA,8,8,100.0,04/10/2026,18:56:48,10,8,8,2,0,principal,8,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49077.json
+MG,49093,OLÍMPIO NORONHA,9,9,100.0,04/10/2026,18:54:59,9,9,9,0,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49093.json
+MG,49115,OLIVEIRA,110,110,100.0,04/10/2026,19:26:49,110,110,110,0,0,principal,110,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49115.json
+MG,49131,OLIVEIRA FORTES,10,10,100.0,04/10/2026,19:09:36,17,10,10,7,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49131.json
+MG,49158,ONÇA DE PITANGUI,15,15,100.0,04/10/2026,19:20:04,17,15,15,2,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49158.json
+MG,49174,OURO BRANCO,91,91,100.0,04/10/2026,21:15:53,99,91,91,8,0,principal,91,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49174.json
+MG,49190,OURO FINO,84,84,100.0,04/10/2026,18:57:43,84,84,84,0,0,principal,84,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49190.json
+MG,49212,OURO PRETO,203,203,100.0,04/10/2026,21:37:53,213,203,203,10,0,principal,203,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49212.json
+MG,49239,OURO VERDE DE MINAS,25,25,100.0,04/10/2026,23:24:47,25,25,25,0,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49239.json
+MG,49255,PADRE PARAÍSO,46,46,100.0,04/10/2026,20:53:58,51,46,46,5,0,principal,46,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49255.json
+MG,49271,PAINEIRAS,15,15,100.0,04/10/2026,19:22:22,18,15,15,3,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49271.json
+MG,49298,PAINS,22,22,100.0,04/10/2026,20:24:35,23,22,22,1,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49298.json
+MG,49310,PAIVA,8,8,100.0,04/10/2026,19:09:49,8,8,8,0,0,principal,8,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49310.json
+MG,49336,PALMA,19,19,100.0,04/10/2026,19:01:29,20,19,19,1,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49336.json
+MG,49352,FRONTEIRA DOS VALES,17,17,100.0,04/10/2026,20:08:46,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49352.json
+MG,49379,PAPAGAIOS,33,33,100.0,04/10/2026,20:56:42,33,33,33,0,0,principal,33,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49379.json
+MG,49395,PARACATU,197,197,100.0,04/10/2026,20:44:33,198,197,197,1,0,principal,197,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49395.json
+MG,49417,PARÁ DE MINAS,225,225,100.0,04/10/2026,21:13:53,247,225,225,22,0,principal,225,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49417.json
+MG,49433,PARAGUAÇU,50,50,100.0,04/10/2026,20:58:51,50,50,50,0,0,principal,50,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49433.json
+MG,49450,PARAISÓPOLIS,48,48,100.0,04/10/2026,19:03:26,48,48,48,0,0,principal,48,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49450.json
+MG,49476,PARAOPEBA,63,63,100.0,04/10/2026,19:08:31,63,63,63,0,0,principal,63,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49476.json
+MG,49492,PASSABÉM,7,7,100.0,04/10/2026,17:46:45,7,7,7,0,0,principal,7,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49492.json
+MG,49514,PASSA QUATRO,38,38,100.0,04/10/2026,20:57:15,38,38,38,0,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49514.json
+MG,49530,PASSA TEMPO,28,28,100.0,04/10/2026,18:46:53,28,28,28,0,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49530.json
+MG,49557,PASSA VINTE,9,9,100.0,04/10/2026,18:23:11,10,9,9,1,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49557.json
+MG,49573,PASSOS,284,284,100.0,04/10/2026,19:11:33,298,284,284,14,0,principal,284,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49573.json
+MG,49590,PATOS DE MINAS,372,372,100.0,04/10/2026,19:29:10,419,372,372,47,0,principal,372,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49590.json
+MG,49611,PATROCÍNIO,222,222,100.0,04/10/2026,20:27:05,223,222,222,1,0,principal,222,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49611.json
+MG,49638,PATROCÍNIO DO MURIAÉ,19,19,100.0,04/10/2026,18:29:13,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49638.json
+MG,49654,PAULA CÂNDIDO,30,30,100.0,04/10/2026,20:50:49,31,30,30,1,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49654.json
+MG,49670,PAULISTAS,18,18,100.0,04/10/2026,21:52:18,21,18,18,3,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49670.json
+MG,49697,PAVÃO,19,19,100.0,04/10/2026,19:22:56,30,19,19,11,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49697.json
+MG,49719,PEÇANHA,45,45,100.0,04/10/2026,21:47:44,49,45,45,4,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49719.json
+MG,49735,PEDRA AZUL,68,68,100.0,04/10/2026,19:23:19,68,68,68,0,0,principal,68,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49735.json
+MG,49751,PEDRA DO ANTA,16,16,100.0,04/10/2026,18:59:44,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49751.json
+MG,49778,PEDRA DO INDAIÁ,15,15,100.0,04/10/2026,20:18:34,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49778.json
+MG,49794,PEDRA DOURADA,10,10,100.0,04/10/2026,18:13:54,10,10,10,0,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49794.json
+MG,49816,PEDRALVA,30,30,100.0,04/10/2026,20:12:45,31,30,30,1,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49816.json
+MG,49832,PEDRINÓPOLIS,13,13,100.0,04/10/2026,17:49:29,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49832.json
+MG,49859,PEDRO LEOPOLDO,166,166,100.0,04/10/2026,19:18:12,170,166,166,4,0,principal,166,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49859.json
+MG,49875,PEDRO TEIXEIRA,10,10,100.0,04/10/2026,19:26:23,10,10,10,0,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49875.json
+MG,49891,PEQUERI,12,12,100.0,04/10/2026,17:25:48,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49891.json
+MG,49913,PEQUI,16,16,100.0,04/10/2026,19:21:22,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49913.json
+MG,49930,PERDIGÃO,28,28,100.0,04/10/2026,20:20:47,29,28,28,1,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49930.json
+MG,49956,PERDIZES,55,55,100.0,04/10/2026,18:00:07,55,55,55,0,0,principal,55,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49956.json
+MG,49972,PERDÕES,56,56,100.0,04/10/2026,18:49:36,57,56,56,1,0,principal,56,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49972.json
+MG,49999,PESCADOR,14,14,100.0,04/10/2026,20:59:49,15,14,14,1,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\49999.json
+MG,50016,PIAU,13,13,100.0,04/10/2026,20:56:53,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50016.json
+MG,50032,PIEDADE DE PONTE NOVA,13,13,100.0,04/10/2026,20:53:59,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50032.json
+MG,50059,PIEDADE DO RIO GRANDE,16,16,100.0,04/10/2026,20:23:20,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50059.json
+MG,50075,PIEDADE DOS GERAIS,14,14,100.0,04/10/2026,22:43:11,16,14,14,2,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50075.json
+MG,50091,PIMENTA,23,23,100.0,04/10/2026,20:12:37,23,23,23,0,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50091.json
+MG,50113,PIRACEMA,22,22,100.0,04/10/2026,19:00:56,23,22,22,1,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50113.json
+MG,50130,PIRAJUBA,14,14,100.0,04/10/2026,19:09:29,14,14,14,0,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50130.json
+MG,50156,PIRANGA,48,48,100.0,04/10/2026,20:05:23,53,48,48,5,0,principal,48,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50156.json
+MG,50172,PIRANGUÇU,15,15,100.0,04/10/2026,20:54:59,18,15,15,3,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50172.json
+MG,50199,PIRANGUINHO,23,23,100.0,04/10/2026,20:55:51,23,23,23,0,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50199.json
+MG,50210,PIRAPETINGA,37,37,100.0,04/10/2026,19:07:31,43,37,37,6,0,principal,37,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50210.json
+MG,50237,PIRAPORA,137,137,100.0,04/10/2026,20:40:46,141,137,137,4,0,principal,137,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50237.json
+MG,50253,PIRAÚBA,27,27,100.0,04/10/2026,20:55:32,27,27,27,0,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50253.json
+MG,50270,PITANGUI,70,70,100.0,04/10/2026,19:25:46,72,70,70,2,0,principal,70,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50270.json
+MG,50296,PIUMHI,75,75,100.0,04/10/2026,20:11:52,75,75,75,0,0,principal,75,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50296.json
+MG,50318,PLANURA,25,25,100.0,04/10/2026,20:50:40,25,25,25,0,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50318.json
+MG,50334,POÇO FUNDO,37,37,100.0,04/10/2026,20:24:50,37,37,37,0,0,principal,37,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50334.json
+MG,50350,POÇOS DE CALDAS,401,401,100.0,04/10/2026,20:28:24,449,401,401,48,0,principal,401,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50350.json
+MG,50377,POCRANE,26,26,100.0,04/10/2026,22:05:39,28,26,26,2,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50377.json
+MG,50393,POMPÉU,69,69,100.0,04/10/2026,20:51:03,69,69,69,0,0,principal,69,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50393.json
+MG,50415,PONTE NOVA,152,152,100.0,04/10/2026,20:08:47,160,152,152,8,0,principal,152,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50415.json
+MG,50431,PORTEIRINHA,113,113,100.0,04/10/2026,22:08:15,122,113,113,9,0,principal,113,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50431.json
+MG,50458,PORTO FIRME,30,30,100.0,04/10/2026,21:50:28,30,30,30,0,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50458.json
+MG,50474,POTÉ,41,41,100.0,04/10/2026,21:39:29,46,41,41,5,0,principal,41,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50474.json
+MG,50490,POUSO ALEGRE,360,360,100.0,04/10/2026,20:51:43,363,360,360,3,0,principal,360,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50490.json
+MG,50512,POUSO ALTO,18,18,100.0,04/10/2026,20:06:45,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50512.json
+MG,50539,PRADOS,23,23,100.0,04/10/2026,19:23:59,24,23,23,1,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50539.json
+MG,50555,PRATA,76,76,100.0,04/10/2026,19:10:51,76,76,76,0,0,principal,76,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50555.json
+MG,50571,PRATÁPOLIS,25,25,100.0,04/10/2026,18:18:58,27,25,25,2,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50571.json
+MG,50598,PRATINHA,11,11,100.0,04/10/2026,19:08:55,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50598.json
+MG,50610,PRESIDENTE BERNARDES,23,23,100.0,04/10/2026,20:05:27,24,23,23,1,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50610.json
+MG,50636,PRESIDENTE JUSCELINO,17,17,100.0,04/10/2026,20:17:04,19,17,17,2,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50636.json
+MG,50652,PRESIDENTE KUBITSCHEK,12,12,100.0,04/10/2026,20:51:10,17,12,12,5,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50652.json
+MG,50679,PRESIDENTE OLEGÁRIO,51,51,100.0,04/10/2026,19:23:11,56,51,51,5,0,principal,51,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50679.json
+MG,50695,ALTO JEQUITIBÁ,28,28,100.0,04/10/2026,20:13:14,32,28,28,4,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50695.json
+MG,50717,PRUDENTE DE MORAIS,26,26,100.0,04/10/2026,20:50:13,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50717.json
+MG,50733,QUARTEL GERAL,13,13,100.0,04/10/2026,19:31:19,17,13,13,4,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50733.json
+MG,50750,QUELUZITO,8,8,100.0,04/10/2026,19:15:17,10,8,8,2,0,principal,8,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50750.json
+MG,50776,RAPOSOS,40,40,100.0,04/10/2026,20:45:39,44,40,40,4,0,principal,40,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50776.json
+MG,50792,RAUL SOARES,68,68,100.0,04/10/2026,19:02:33,68,68,68,0,0,principal,68,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50792.json
+MG,50814,RECREIO,26,26,100.0,04/10/2026,21:46:08,37,26,26,11,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50814.json
+MG,50830,RESENDE COSTA,33,33,100.0,04/10/2026,18:25:07,37,33,33,4,0,principal,33,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50830.json
+MG,50857,RESPLENDOR,53,53,100.0,04/10/2026,19:29:47,55,53,53,2,0,principal,53,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50857.json
+MG,50873,RESSAQUINHA,18,18,100.0,04/10/2026,20:37:49,19,18,18,1,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50873.json
+MG,50890,RIACHO DOS MACHADOS,31,31,100.0,04/10/2026,20:58:39,35,31,31,4,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50890.json
+MG,50911,RIBEIRÃO DAS NEVES,662,662,100.0,04/10/2026,20:07:49,675,662,662,13,0,principal,662,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50911.json
+MG,50938,RIBEIRÃO VERMELHO,12,12,100.0,04/10/2026,19:01:50,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50938.json
+MG,50954,RIO ACIMA,26,26,100.0,04/10/2026,20:23:40,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50954.json
+MG,50970,RIO CASCA,36,36,100.0,04/10/2026,18:59:26,36,36,36,0,0,principal,36,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50970.json
+MG,50997,RIO DOCE,9,9,100.0,04/10/2026,19:22:31,9,9,9,0,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\50997.json
+MG,51012,RIO DO PRADO,13,13,100.0,04/10/2026,20:12:57,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51012.json
+MG,51039,RIO ESPERA,23,23,100.0,04/10/2026,18:57:42,23,23,23,0,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51039.json
+MG,51055,RIO MANSO,16,16,100.0,04/10/2026,19:02:06,17,16,16,1,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51055.json
+MG,51071,RIO NOVO,30,30,100.0,04/10/2026,18:56:56,31,30,30,1,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51071.json
+MG,51098,RIO PARANAÍBA,39,39,100.0,04/10/2026,20:55:30,41,39,39,2,0,principal,39,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51098.json
+MG,51110,RIO PARDO DE MINAS,108,108,100.0,04/10/2026,20:56:42,112,108,108,4,0,principal,108,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51110.json
+MG,51136,RIO PIRACICABA,47,47,100.0,04/10/2026,19:16:22,47,47,47,0,0,principal,47,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51136.json
+MG,51152,RIO POMBA,45,45,100.0,04/10/2026,20:32:11,45,45,45,0,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51152.json
+MG,51179,RIO PRETO,18,18,100.0,04/10/2026,20:54:31,22,18,18,4,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51179.json
+MG,51195,RIO VERMELHO,41,41,100.0,04/10/2026,19:20:36,41,41,41,0,0,principal,41,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51195.json
+MG,51217,RITÁPOLIS,19,19,100.0,04/10/2026,18:18:51,22,19,19,3,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51217.json
+MG,51233,ROCHEDO DE MINAS,8,8,100.0,04/10/2026,20:12:24,9,8,8,1,0,principal,8,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51233.json
+MG,51250,RODEIRO,21,21,100.0,04/10/2026,21:07:07,22,21,21,1,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51250.json
+MG,51276,ROMARIA,10,10,100.0,04/10/2026,19:29:20,11,10,10,1,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51276.json
+MG,51292,RUBELITA,33,33,100.0,04/10/2026,19:19:27,42,33,33,9,0,principal,33,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51292.json
+MG,51314,RUBIM,25,25,100.0,04/10/2026,18:59:08,25,25,25,0,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51314.json
+MG,51330,SABARÁ,295,295,100.0,04/10/2026,21:22:45,303,295,295,8,0,principal,295,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51330.json
+MG,51357,SABINÓPOLIS,44,44,100.0,04/10/2026,19:06:18,45,44,44,1,0,principal,44,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51357.json
+MG,51373,SACRAMENTO,60,60,100.0,04/10/2026,18:59:36,62,60,60,2,0,principal,60,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51373.json
+MG,51390,SALINAS,107,107,100.0,04/10/2026,20:21:32,122,107,107,15,0,principal,107,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51390.json
+MG,51411,SALTO DA DIVISA,18,18,100.0,04/10/2026,20:43:05,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51411.json
+MG,51438,SANTA BÁRBARA,81,81,100.0,04/10/2026,20:32:02,81,81,81,0,0,principal,81,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51438.json
+MG,51454,SANTA BÁRBARA DO TUGÚRIO,18,18,100.0,04/10/2026,19:11:01,21,18,18,3,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51454.json
+MG,51470,SANTA CRUZ DO ESCALVADO,17,17,100.0,04/10/2026,19:17:12,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51470.json
+MG,51497,SANTA EFIGÊNIA DE MINAS,13,13,100.0,04/10/2026,20:52:37,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51497.json
+MG,51519,SANTA FÉ DE MINAS,14,14,100.0,04/10/2026,19:06:44,18,14,14,4,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51519.json
+MG,51535,SANTA JULIANA,32,32,100.0,04/10/2026,20:10:13,33,32,32,1,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51535.json
+MG,51551,SANTA LUZIA,479,479,100.0,04/10/2026,20:09:02,480,479,479,1,0,principal,479,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51551.json
+MG,51578,SANTA MARGARIDA,38,38,100.0,04/10/2026,21:00:50,39,38,38,1,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51578.json
+MG,51594,SANTA MARIA DE ITABIRA,28,28,100.0,04/10/2026,20:56:32,29,28,28,1,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51594.json
+MG,51616,SANTA MARIA DO SALTO,16,16,100.0,04/10/2026,19:06:50,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51616.json
+MG,51632,SANTA MARIA DO SUAÇUÍ,43,43,100.0,04/10/2026,18:59:09,43,43,43,0,0,principal,43,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51632.json
+MG,51659,SANTANA DA VARGEM,20,20,100.0,04/10/2026,18:49:22,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51659.json
+MG,51675,SANTANA DE CATAGUASES,14,14,100.0,04/10/2026,20:14:16,17,14,14,3,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51675.json
+MG,51691,SANTANA DE PIRAPAMA,26,26,100.0,04/10/2026,20:15:09,35,26,26,9,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51691.json
+MG,51713,SANTANA DO DESERTO,13,13,100.0,04/10/2026,20:49:19,14,13,13,1,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51713.json
+MG,51730,SANTANA DO GARAMBÉU,7,7,100.0,04/10/2026,19:23:11,7,7,7,0,0,principal,7,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51730.json
+MG,51756,SANTANA DO JACARÉ,13,13,100.0,04/10/2026,20:39:11,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51756.json
+MG,51772,SANTANA DO MANHUAÇU,26,26,100.0,04/10/2026,21:33:18,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51772.json
+MG,51799,SANTANA DO RIACHO,20,20,100.0,04/10/2026,22:15:45,22,20,20,2,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51799.json
+MG,51810,SANTANA DOS MONTES,12,12,100.0,04/10/2026,20:11:18,17,12,12,5,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51810.json
+MG,51837,SANTA RITA DE CALDAS,23,23,100.0,04/10/2026,19:07:20,23,23,23,0,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51837.json
+MG,51853,SANTA RITA DE JACUTINGA,20,20,100.0,04/10/2026,19:11:27,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51853.json
+MG,51870,SANTA RITA DE IBITIPOCA,14,14,100.0,04/10/2026,21:46:18,14,14,14,0,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51870.json
+MG,51896,SANTA RITA DO ITUETO,24,24,100.0,04/10/2026,20:11:14,26,24,24,2,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51896.json
+MG,51918,SANTA RITA DO SAPUCAÍ,93,93,100.0,04/10/2026,19:12:25,94,93,93,1,0,principal,93,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51918.json
+MG,51934,SANTA ROSA DA SERRA,12,12,100.0,04/10/2026,18:48:03,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51934.json
+MG,51950,SANTA VITÓRIA,65,65,100.0,04/10/2026,18:45:16,68,65,65,3,0,principal,65,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51950.json
+MG,51977,SANTO ANTÔNIO DO AMPARO,46,47,97.872340426,04/10/2026,21:00:26,50,47,47,3,0,principal,47,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51977.json
+MG,51993,SANTO ANTÔNIO DO AVENTUREIRO,15,15,100.0,04/10/2026,20:42:25,22,15,15,7,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\51993.json
+MG,52019,SANTO ANTÔNIO DO GRAMA,12,12,100.0,04/10/2026,18:48:59,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52019.json
+MG,52035,SANTO ANTÔNIO DO ITAMBÉ,11,11,100.0,04/10/2026,20:12:52,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52035.json
+MG,52051,SANTO ANTÔNIO DO JACINTO,30,30,100.0,04/10/2026,20:30:00,30,30,30,0,0,principal,30,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52051.json
+MG,52078,SANTO ANTÔNIO DO MONTE,79,79,100.0,04/10/2026,21:01:46,82,79,79,3,0,principal,79,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52078.json
+MG,52094,SANTO ANTÔNIO DO RIO ABAIXO,9,9,100.0,04/10/2026,19:24:56,10,9,9,1,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52094.json
+MG,52116,SANTO HIPÓLITO,11,11,100.0,04/10/2026,20:08:04,12,11,11,1,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52116.json
+MG,52132,SANTOS DUMONT,130,130,100.0,04/10/2026,20:16:32,138,130,130,8,0,principal,130,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52132.json
+MG,52159,SÃO BENTO ABADE,12,12,100.0,04/10/2026,19:21:57,12,12,12,0,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52159.json
+MG,52175,SÃO BRÁS DO SUAÇUÍ,12,12,100.0,04/10/2026,19:18:46,14,12,12,2,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52175.json
+MG,52191,SÃO DOMINGOS DO PRATA,44,44,100.0,04/10/2026,20:52:25,51,44,44,7,0,principal,44,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52191.json
+MG,52213,SÃO FRANCISCO,152,152,100.0,04/10/2026,20:47:31,156,152,152,4,0,principal,152,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52213.json
+MG,52230,SÃO FRANCISCO DE PAULA,23,23,100.0,04/10/2026,19:05:50,23,23,23,0,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52230.json
+MG,52256,SÃO FRANCISCO DE SALES,23,23,100.0,04/10/2026,18:56:38,23,23,23,0,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52256.json
+MG,52272,SÃO FRANCISCO DO GLÓRIA,13,13,100.0,04/10/2026,18:57:44,18,13,13,5,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52272.json
+MG,52299,SÃO GERALDO,20,20,100.0,04/10/2026,20:52:23,20,20,20,0,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52299.json
+MG,52310,SÃO GERALDO DA PIEDADE,13,13,100.0,04/10/2026,22:48:05,15,13,13,2,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52310.json
+MG,52337,SÃO GONÇALO DO ABAETÉ,21,21,100.0,04/10/2026,20:15:27,23,21,21,2,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52337.json
+MG,52353,SÃO GONÇALO DO PARÁ,32,32,100.0,04/10/2026,19:20:56,32,32,32,0,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52353.json
+MG,52370,SÃO GONÇALO DO RIO ABAIXO,38,38,100.0,04/10/2026,20:58:30,39,38,38,1,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52370.json
+MG,52396,SÃO GONÇALO DO SAPUCAÍ,58,58,100.0,04/10/2026,21:01:08,58,58,58,0,0,principal,58,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52396.json
+MG,52418,SÃO GOTARDO,98,98,100.0,04/10/2026,19:05:16,100,98,98,2,0,principal,98,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52418.json
+MG,52434,SÃO JOÃO BATISTA DO GLÓRIA,21,21,100.0,04/10/2026,19:24:40,22,21,21,1,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52434.json
+MG,52450,SÃO JOÃO DA MATA,11,11,100.0,04/10/2026,18:47:18,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52450.json
+MG,52477,SÃO JOÃO DA PONTE,83,83,100.0,04/10/2026,20:52:04,85,83,83,2,0,principal,83,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52477.json
+MG,52493,SÃO JOÃO DEL REI,218,218,100.0,04/10/2026,20:59:00,241,218,218,23,0,principal,218,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52493.json
+MG,52515,SÃO JOÃO DO ORIENTE,22,22,100.0,04/10/2026,20:52:00,22,22,22,0,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52515.json
+MG,52531,SÃO JOÃO DO PARAÍSO,82,82,100.0,04/10/2026,20:49:57,90,82,82,8,0,principal,82,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52531.json
+MG,52558,SÃO JOÃO EVANGELISTA,38,38,100.0,04/10/2026,19:29:59,42,38,38,4,0,principal,38,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52558.json
+MG,52574,SÃO JOÃO NEPOMUCENO,66,66,100.0,04/10/2026,18:40:47,68,66,66,2,0,principal,66,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52574.json
+MG,52590,SÃO JOSÉ DA SAFIRA,15,15,100.0,04/10/2026,19:15:20,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52590.json
+MG,52612,SÃO JOSÉ DA VARGINHA,14,14,100.0,04/10/2026,20:47:33,15,14,14,1,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52612.json
+MG,52639,SÃO JOSÉ DO ALEGRE,11,11,100.0,04/10/2026,20:56:09,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52639.json
+MG,52655,SÃO JOSÉ DO DIVINO,12,12,100.0,04/10/2026,19:13:22,15,12,12,3,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52655.json
+MG,52671,SÃO JOSÉ DO GOIABAL,16,16,100.0,04/10/2026,19:03:09,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52671.json
+MG,52698,SÃO JOSÉ DO JACURI,21,21,100.0,04/10/2026,20:07:11,21,21,21,0,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52698.json
+MG,52710,SÃO JOSÉ DO MANTIMENTO,10,10,100.0,04/10/2026,19:05:14,10,10,10,0,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52710.json
+MG,52736,SÃO LOURENÇO,116,116,100.0,04/10/2026,18:25:59,116,116,116,0,0,principal,116,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52736.json
+MG,52752,SÃO MIGUEL DO ANTA,23,23,100.0,04/10/2026,19:24:29,23,23,23,0,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52752.json
+MG,52779,SÃO PEDRO DA UNIÃO,14,14,100.0,04/10/2026,18:56:44,14,14,14,0,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52779.json
+MG,52795,SÃO PEDRO DOS FERROS,24,24,100.0,04/10/2026,19:11:11,24,24,24,0,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52795.json
+MG,52817,SÃO PEDRO DO SUAÇUÍ,15,15,100.0,04/10/2026,20:52:03,18,15,15,3,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52817.json
+MG,52833,SÃO ROMÃO,26,26,100.0,04/10/2026,20:06:35,28,26,26,2,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52833.json
+MG,52850,SÃO ROQUE DE MINAS,18,18,100.0,04/10/2026,20:44:10,24,18,18,6,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52850.json
+MG,52876,SÃO SEBASTIÃO DA BELA VISTA,18,18,100.0,04/10/2026,20:54:55,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52876.json
+MG,52892,SÃO SEBASTIÃO DO MARANHÃO,34,34,100.0,04/10/2026,19:23:57,34,34,34,0,0,principal,34,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52892.json
+MG,52914,SÃO SEBASTIÃO DO OESTE,29,29,100.0,04/10/2026,20:30:08,31,29,29,2,0,principal,29,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52914.json
+MG,52930,SÃO SEBASTIÃO DO PARAÍSO,147,147,100.0,04/10/2026,18:57:49,148,147,147,1,0,principal,147,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52930.json
+MG,52957,SÃO SEBASTIÃO DO RIO PRETO,9,9,100.0,04/10/2026,20:11:01,9,9,9,0,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52957.json
+MG,52973,SÃO SEBASTIÃO DO RIO VERDE,7,7,100.0,04/10/2026,18:24:52,7,7,7,0,0,principal,7,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52973.json
+MG,52990,SÃO TIAGO,32,32,100.0,04/10/2026,20:46:24,33,32,32,1,0,principal,32,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\52990.json
+MG,53015,SÃO TOMÁS DE AQUINO,17,17,100.0,04/10/2026,18:34:02,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53015.json
+MG,53031,SÃO THOMÉ DAS LETRAS,19,19,100.0,04/10/2026,20:48:38,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53031.json
+MG,53058,SÃO VICENTE DE MINAS,22,22,100.0,04/10/2026,18:16:46,22,22,22,0,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53058.json
+MG,53074,SAPUCAÍ-MIRIM,18,18,100.0,04/10/2026,19:09:15,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53074.json
+MG,53090,SARDOÁ,16,16,100.0,04/10/2026,20:59:43,16,16,16,0,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53090.json
+MG,53112,SENADOR CORTES,9,9,100.0,04/10/2026,19:24:38,9,9,9,0,0,principal,9,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53112.json
+MG,53139,SENADOR FIRMINO,24,24,100.0,04/10/2026,18:20:08,24,24,24,0,0,principal,24,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53139.json
+MG,53155,SENADOR JOSÉ BENTO,8,8,100.0,04/10/2026,19:10:48,8,8,8,0,0,principal,8,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53155.json
+MG,53171,SENADOR MODESTINO GONÇALVES,12,17,70.588235294,04/10/2026,20:59:43,20,17,17,3,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53171.json
+MG,53198,SENHORA DE OLIVEIRA,17,17,100.0,04/10/2026,21:10:57,18,17,17,1,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53198.json
+MG,53210,SENHORA DO PORTO,14,14,100.0,04/10/2026,19:26:47,14,14,14,0,0,principal,14,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53210.json
+MG,53236,SENHORA DOS REMÉDIOS,29,29,100.0,04/10/2026,21:02:33,31,29,29,2,0,principal,29,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53236.json
+MG,53252,SERICITA,22,22,100.0,04/10/2026,20:52:04,22,22,22,0,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53252.json
+MG,53279,SERITINGA,7,7,100.0,04/10/2026,18:47:19,7,7,7,0,0,principal,7,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53279.json
+MG,53295,SERRA AZUL DE MINAS,11,11,100.0,04/10/2026,18:27:13,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53295.json
+MG,53317,SERRA DA SAUDADE,4,4,100.0,04/10/2026,18:32:32,5,4,4,1,0,principal,4,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53317.json
+MG,53333,SERRA DOS AIMORÉS,26,26,100.0,04/10/2026,19:22:21,28,26,26,2,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53333.json
+MG,53350,SERRA DO SALITRE,31,31,100.0,04/10/2026,20:48:04,31,31,31,0,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53350.json
+MG,53376,SERRANIA,18,18,100.0,04/10/2026,19:13:35,18,18,18,0,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53376.json
+MG,53392,SERRANOS,10,10,100.0,04/10/2026,17:47:27,12,10,10,2,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53392.json
+MG,53414,SERRO,56,56,100.0,04/10/2026,21:08:10,56,56,56,0,0,principal,56,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53414.json
+MG,53430,SETE LAGOAS,535,535,100.0,04/10/2026,20:56:57,554,535,535,19,0,principal,535,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53430.json
+MG,53457,SILVEIRÂNIA,10,10,100.0,04/10/2026,19:05:40,10,10,10,0,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53457.json
+MG,53473,SILVIANÓPOLIS,21,21,100.0,04/10/2026,20:07:47,21,21,21,0,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53473.json
+MG,53490,SIMÃO PEREIRA,10,10,100.0,04/10/2026,20:48:50,12,10,10,2,0,principal,10,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53490.json
+MG,53511,SIMONÉSIA,57,57,100.0,04/10/2026,21:09:07,58,57,57,1,0,principal,57,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53511.json
+MG,53538,SOBRÁLIA,18,18,100.0,04/10/2026,20:13:01,19,18,18,1,0,principal,18,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53538.json
+MG,53554,SOLEDADE DE MINAS,17,17,100.0,04/10/2026,18:22:22,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53554.json
+MG,53570,TABULEIRO,13,13,100.0,04/10/2026,19:21:18,19,13,13,6,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53570.json
+MG,53597,TAIOBEIRAS,84,84,100.0,04/10/2026,20:45:58,84,84,84,0,0,principal,84,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53597.json
+MG,53619,TAPIRA,15,15,100.0,04/10/2026,20:42:01,15,15,15,0,0,principal,15,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53619.json
+MG,53635,TAPIRAÍ,8,8,100.0,04/10/2026,19:14:22,8,8,8,0,0,principal,8,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53635.json
+MG,53651,TAQUARAÇU DE MINAS,19,19,100.0,04/10/2026,20:08:04,19,19,19,0,0,principal,19,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53651.json
+MG,53678,TARUMIRIM,44,44,100.0,04/10/2026,20:56:05,47,44,44,3,0,principal,44,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53678.json
+MG,53694,TEIXEIRAS,45,45,100.0,04/10/2026,18:41:00,46,45,45,1,0,principal,45,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53694.json
+MG,53716,TEÓFILO OTONI,335,335,100.0,04/10/2026,21:16:08,375,335,335,40,0,principal,335,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53716.json
+MG,53732,TIMÓTEO,175,175,100.0,04/10/2026,20:14:37,175,175,175,0,0,principal,175,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53732.json
+MG,53759,TIRADENTES,22,22,100.0,04/10/2026,20:56:53,27,22,22,5,0,principal,22,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53759.json
+MG,53775,TIROS,25,25,100.0,04/10/2026,20:10:51,29,25,25,4,0,principal,25,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53775.json
+MG,53791,TOCANTINS,47,47,100.0,04/10/2026,22:10:54,49,47,47,2,0,principal,47,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53791.json
+MG,53813,TOLEDO,21,21,100.0,04/10/2026,19:26:11,23,21,21,2,0,principal,21,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53813.json
+MG,53830,TOMBOS,26,26,100.0,04/10/2026,18:11:20,26,26,26,0,0,principal,26,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53830.json
+MG,53856,TRÊS CORAÇÕES,173,173,100.0,04/10/2026,20:44:16,175,173,173,2,0,principal,173,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53856.json
+MG,53872,TRÊS PONTAS,153,153,100.0,04/10/2026,18:49:35,155,153,153,2,0,principal,153,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53872.json
+MG,53899,TUMIRITINGA,17,17,100.0,04/10/2026,21:07:42,19,17,17,2,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53899.json
+MG,53910,TUPACIGUARA,65,65,100.0,04/10/2026,19:00:09,77,65,65,12,0,principal,65,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53910.json
+MG,53937,TURMALINA,56,56,100.0,04/10/2026,20:16:07,57,56,56,1,0,principal,56,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53937.json
+MG,53953,TURVOLÂNDIA,17,17,100.0,04/10/2026,21:01:12,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53953.json
+MG,53970,UBÁ,239,239,100.0,04/10/2026,21:44:45,256,239,239,17,0,principal,239,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53970.json
+MG,53996,UBAÍ,43,43,100.0,04/10/2026,21:27:33,47,43,43,4,0,principal,43,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\53996.json
+MG,54011,UBERABA,795,795,100.0,04/10/2026,20:49:44,858,795,795,63,0,principal,795,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54011.json
+MG,54038,UBERLÂNDIA,1703,1703,100.0,04/10/2026,21:26:45,1737,1703,1703,34,0,principal,1703,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54038.json
+MG,54054,UMBURATIBA,13,13,100.0,04/10/2026,19:10:40,13,13,13,0,0,principal,13,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54054.json
+MG,54070,UNAÍ,191,191,100.0,04/10/2026,20:39:46,194,191,191,3,0,principal,191,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54070.json
+MG,54097,URUCÂNIA,27,27,100.0,04/10/2026,20:06:58,27,27,27,0,0,principal,27,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54097.json
+MG,54119,VARGEM BONITA,8,8,100.0,04/10/2026,20:50:16,13,8,8,5,0,principal,8,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54119.json
+MG,54135,VARGINHA,305,305,100.0,04/10/2026,19:05:02,312,305,305,7,0,principal,305,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54135.json
+MG,54151,VÁRZEA DA PALMA,85,85,100.0,04/10/2026,21:41:19,85,85,85,0,0,principal,85,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54151.json
+MG,54178,VARZELÂNDIA,54,54,100.0,04/10/2026,22:53:11,54,54,54,0,0,principal,54,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54178.json
+MG,54194,VAZANTE,53,53,100.0,04/10/2026,19:18:09,57,53,53,4,0,principal,53,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54194.json
+MG,54216,WENCESLAU BRAZ,11,11,100.0,04/10/2026,20:47:32,12,11,11,1,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54216.json
+MG,54232,VERÍSSIMO,11,11,100.0,04/10/2026,19:17:37,11,11,11,0,0,principal,11,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54232.json
+MG,54259,VESPASIANO,301,301,100.0,04/10/2026,20:30:34,304,301,301,3,0,principal,301,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54259.json
+MG,54275,VIÇOSA,193,193,100.0,04/10/2026,20:53:38,194,193,193,1,0,principal,193,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54275.json
+MG,54291,VIEIRAS,12,12,100.0,04/10/2026,20:52:26,13,12,12,1,0,principal,12,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54291.json
+MG,54313,MATHIAS LOBATO,16,16,100.0,04/10/2026,18:40:57,18,16,16,2,0,principal,16,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54313.json
+MG,54330,VIRGEM DA LAPA,31,31,100.0,04/10/2026,21:56:04,35,31,31,4,0,principal,31,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54330.json
+MG,54356,VIRGÍNIA,23,23,100.0,04/10/2026,20:20:08,23,23,23,0,0,principal,23,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54356.json
+MG,54372,VIRGINÓPOLIS,28,28,100.0,04/10/2026,19:20:47,35,28,28,7,0,principal,28,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54372.json
+MG,54399,VIRGOLÂNDIA,17,17,100.0,04/10/2026,18:43:37,17,17,17,0,0,principal,17,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54399.json
+MG,54410,VISCONDE DO RIO BRANCO,102,102,100.0,04/10/2026,20:58:06,116,102,102,14,0,principal,102,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54410.json
+MG,54437,VOLTA GRANDE,20,20,100.0,04/10/2026,19:04:44,21,20,20,1,0,principal,20,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54437.json
+MG,54453,ITAÚ DE MINAS,35,35,100.0,04/10/2026,19:05:20,35,35,35,0,0,principal,35,0,data\forensics\runs\20261005T104314Z\live\municipio\mg\54453.json

@@ -1,0 +1,12 @@
+﻿uf,municipality_code,municipality_name,zone,selected_model,ea16_config_sections,ea16_all_sections,ea16_principal_sections,ea16_with_aux_timestamp,ea20_zone_st,ea20_zone_ts,ea20_zone_pst,diff_config_minus_zone_ts,fetch_error
+BA,33693,BELO CAMPO,0177,principal,58,62,58,58,54,58,93.103448276,0,
+BA,34673,CONCEIÇÃO DO COITÉ,0132,principal,187,194,187,187,186,187,99.465240642,0,
+BA,36013,ITAETÉ,0119,principal,40,44,40,40,39,40,97.5,0,
+MG,40622,ROSÁRIO DA LIMEIRA,0187,principal,16,17,16,16,12,16,75.0,0,
+MG,41556,BOM JESUS DO GALHO,0072,principal,41,64,41,41,38,41,92.682926829,0,
+MG,41696,BOTUMIRIM,0120,principal,19,20,19,19,10,19,52.631578947,0,
+MG,42005,CURRAL DE DENTRO,0266,principal,19,19,19,19,12,19,63.157894737,0,
+MG,46078,IJACI,0160,principal,16,16,16,16,15,16,93.75,0,
+MG,47198,JOAÍMA,0149,principal,40,41,40,40,40,40,100.0,0,
+MG,51977,SANTO ANTÔNIO DO AMPARO,0046,principal,47,50,47,47,46,47,97.872340426,0,
+MG,53171,SENADOR MODESTINO GONÇALVES,0135,principal,17,20,17,17,12,17,70.588235294,0,

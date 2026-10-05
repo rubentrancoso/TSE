@@ -330,3 +330,37 @@ Isso restringe a investigação a duas classes principais de explicação, ainda
 **Próxima ação:** executar novamente `python analyze_forensics.py`, versionar os novos relatórios e então decidir, com base em `ts` versus `st`, se a etapa seguinte é:
 - localizar arquivos municipais atrasados; ou
 - baixar/analisar EA16 para localizar as 6 e 36 seções adicionais.
+
+
+---
+
+## 2026-10-05 — E0010 — Preparação da Fase 2: localização das seções divergentes
+
+**Evento:** criação do `analyze_phase2_sections.py`.
+
+**Commit:** `dec96cd17b725c0b85a42adf504e8df217c00713`
+
+**Objetivo:** sair da divergência agregada de 6 seções na BA e 36 em MG e tentar localizar em quais municípios, zonas e seções ela está.
+
+**Fontes técnicas utilizadas para construir o teste:**
+- EA20: define `ts` como total de seções da abrangência e `st` como totalizadas;
+- EA16: estrutura UF → município → zona → seção;
+- EA18: para cada seção recebida, informa situação, hashes recebidos e nomes/tipos dos arquivos de urna.
+
+**Procedimento implementado:**
+1. baixar/preservar EA16 oficial de BA e MG para o pleito 3220;
+2. comparar a configuração de seções com o `ts` dos EA20 municipais;
+3. considerar explicitamente a possibilidade de seções agregadas, comparando dois modelos: todas as seções e apenas seções principais;
+4. localizar municípios em que a contagem configurada não coincide com EA20;
+5. baixar EA20 por zona somente nos municípios anômalos;
+6. localizar zonas ainda divergentes;
+7. consultar EA18 das seções candidatas que já tenham data/hora de arquivo auxiliar;
+8. registrar se BU/RDV/log aparecem como tipos de arquivos disponíveis, sem baixar ainda os binários.
+
+**Artefatos derivados previstos:**
+- `phase2_sections_summary.json`
+- `section_config_reconciliation.csv`
+- `zone_reconciliation.csv`
+- `section_candidates.csv`
+
+**Próxima ação:** executar localmente a Fase 1 atualizada e a Fase 2, versionar somente os relatórios derivados e analisar os resultados antes de avançar para a reconstrução temporal da paralisação presidencial.

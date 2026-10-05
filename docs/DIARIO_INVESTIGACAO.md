@@ -1571,3 +1571,102 @@ Isso sugere que a hipótese de “apuração mais tardia” pode aparecer na **p
 1. atraso técnico;
 2. apuração estruturalmente mais tardia;
 3. swing político do resultado.
+
+
+---
+
+## 2026-10-05 — E0037 — Resultado da Fase 3H: UFs pró-Lula estavam menos avançadas proporcionalmente
+
+**Evento:** análise dos resultados versionados da Fase 3H.
+
+**Commit dos resultados:** `61499e5`
+
+### Resultado principal
+
+No snapshot de ~19:06:
+- UFs com Lula na frente: mediana de **65,95%** apurado;
+- UFs com Flávio na frente: mediana de **91,50%** apurado.
+
+No snapshot de ~19:32:
+- Lula-led: mediana de **83,20%**;
+- Flávio-led: mediana de **97,74%**.
+
+Correlação de Spearman entre margem Lula−Flávio e percentual apurado:
+- 19:06: **−0,629**
+- 19:32: **−0,626**
+
+Isso indica associação clara entre maior vantagem de Lula e menor avanço proporcional da apuração naquele momento.
+
+### Escala absoluta
+
+Apesar dessa diferença proporcional, o grupo Flávio-led possui eleitorado total muito maior.
+
+Proxy de eleitorado ainda associado à fração não apurada em 19:06:
+- Lula-led: **~19,83 milhões**
+- Flávio-led: **~25,70 milhões**
+
+Em 19:32:
+- Lula-led: **~12,25 milhões**
+- Flávio-led: **~11,62 milhões**
+
+Portanto:
+- em termos proporcionais, as UFs pró-Lula estavam muito mais atrasadas;
+- em termos absolutos de escala potencial, às 19:06 ainda havia mais eleitorado associado à parte não apurada nas UFs pró-Flávio;
+- por volta de 19:32 os dois blocos ficam em escala absoluta semelhante, com pequena vantagem do grupo Lula-led.
+
+### Relação com swing posterior
+
+Spearman entre percentual não apurado em 19:06 e swing Lula−Flávio até 19:32:
+- **+0,168**
+
+Spearman entre percentual não apurado em 19:32 e swing até 20:47:
+- **+0,358**
+
+A associação posterior é positiva, mas moderada.
+
+### Conclusão limitada
+
+A hipótese de “apuração tardia” é sustentada **na dimensão proporcional por UF**: estados pró-Lula estavam significativamente menos avançados.
+
+Isso não equivale a afirmar que esses estados tiveram mais travamentos técnicos; a Fase 3G mostrou o contrário para essa métrica específica.
+
+Também não basta, por si só, para explicar toda a redistribuição nacional entre os dois primeiros. É necessário decompor o saldo posterior por UF e comparar:
+- o que já era esperado pela composição geográfica observada;
+- o que veio além dessa expectativa dentro das próprias UFs.
+
+---
+
+## 2026-10-05 — E0038 — Implementação da Fase 3I: decomposição geográfica do movimento até o final
+
+**Evento:** criação do `analyze_phase3i_geographic_decomposition.py`.
+
+**Commit:** `21750fbe3ccbcfe510cf7b9e134c999aa8e86025`
+
+**Objetivo:** medir, por UF, de onde veio a redução posterior da margem Flávio−Lula.
+
+### Método
+
+Para cada snapshot de 19:06, 19:32 e 20:47:
+
+1. usar a margem histórica aproximada por UF armazenada na fonte;
+2. usar o resultado final oficial do TSE por UF;
+3. calcular o movimento líquido real restante:
+   - `margem_final_UF - margem_snapshot_UF`;
+4. comparar com a projeção `rem_net` da própria fonte, que assume que o restante da UF manteria a composição observada naquele instante;
+5. separar contribuições de UFs Lula-led e Flávio-led;
+6. reconciliar a soma das margens finais das 28 abrangências com o nacional oficial.
+
+### Limitação da margem histórica por UF
+
+A fonte guarda `marg` arredondada em milhares de votos:
+`round((Flávio - Lula)/1000)`.
+
+Portanto a decomposição histórica por UF tem erro de arredondamento de aproximadamente ±500 votos por UF. A margem nacional histórica é exata.
+
+### Pergunta central
+
+Quanto do movimento posterior a favor de Lula já era previsível apenas pela geografia que faltava contar, mantendo os percentuais então observados dentro de cada UF?
+
+E quanto do movimento veio de mudança adicional da composição do voto tardio **dentro das próprias UFs**?
+
+**Próxima ação:** executar a Fase 3I, versionar os três artefatos derivados e analisar a decomposição.

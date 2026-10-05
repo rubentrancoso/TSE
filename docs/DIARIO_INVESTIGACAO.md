@@ -1004,3 +1004,41 @@ Isso ainda pode ser estatisticamente interessante, mas exige comparação com o 
 - `phase3e_summary.json`
 
 **Próxima ação:** executar a Fase 3E e versionar os resultados.
+
+
+---
+
+## 2026-10-05 — E0025 — Falha de execução da Fase 3E e correção
+
+**Evento:** primeira execução de `analyze_phase3e_batch_benchmark.py` falhou antes de gerar artefatos derivados.
+
+**Erro observado:**
+
+`TypeError: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'`
+
+A exceção ocorreu ao tentar converter `d_vv` para inteiro.
+
+### Causa
+
+A série histórica contém linhas que não representam um lote comparável e, por isso, não possuem delta calculado em campos como `d_vv`, `d_st` e deltas por candidato. A primeira versão histórica é um exemplo esperado dessa situação.
+
+O código da primeira versão da Fase 3E assumia incorretamente que toda linha não regressiva teria deltas completos.
+
+### Impacto
+
+- nenhum relatório da Fase 3E foi produzido;
+- nenhum resultado estatístico foi calculado;
+- portanto não há conclusão analítica a revisar;
+- o repositório local permaneceu sem arquivos derivados novos, razão pela qual o Git corretamente informou `nothing to commit`.
+
+### Correção
+
+O script passou a:
+- aceitar campos ausentes/nulos;
+- ignorar linhas sem delta completo em vez de falhar;
+- ignorar separadamente versões marcadas como regressivas;
+- registrar no resumo quantas linhas históricas foram descartadas por cada motivo.
+
+**Commit da correção:** `8ce589d0b5d1894d85a8e502c3295feb3a997579`
+
+**Próxima ação:** atualizar o branch local, executar novamente a Fase 3E, versionar os três artefatos derivados e só então interpretar os percentis empíricos.

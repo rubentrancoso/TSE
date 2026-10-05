@@ -1,0 +1,143 @@
+{
+  "format": "tse-forensics-phase3h-late-counting-v1",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/vitoropereira/eleicoes2026/10c03a7d52058a2650836953b612939ba02a3235/snapshots/2026-10-04_1832_36.6pct/dados.json",
+      "path": "data\\forensics\\external\\vitoropereira-eleicoes2026\\10c03a7d52058a2650836953b612939ba02a3235\\s1832.json",
+      "sha256": "c7ee39df93da4457b5b96a3f9c7879c88d2fae3fa800d3bb2860a43c248d7d47",
+      "bytes": 11843,
+      "reused": true,
+      "label": "18:32"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/vitoropereira/eleicoes2026/10c03a7d52058a2650836953b612939ba02a3235/snapshots/2026-10-04_1906_64.8pct/dados.json",
+      "path": "data\\forensics\\external\\vitoropereira-eleicoes2026\\10c03a7d52058a2650836953b612939ba02a3235\\s1906.json",
+      "sha256": "10c9d9b709cf71f8c82fe00d1e00d3ff1b9f0cd0f7575fe6954434d1e2f162a5",
+      "bytes": 11912,
+      "reused": true,
+      "label": "19:06"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/vitoropereira/eleicoes2026/10c03a7d52058a2650836953b612939ba02a3235/snapshots/2026-10-04_1932_84.9pct/dados.json",
+      "path": "data\\forensics\\external\\vitoropereira-eleicoes2026\\10c03a7d52058a2650836953b612939ba02a3235\\s1932.json",
+      "sha256": "665b83fc536fc996b80222782210f2bc3c78037d9e94cfc7021dbef0826158d2",
+      "bytes": 11957,
+      "reused": true,
+      "label": "19:32"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/vitoropereira/eleicoes2026/10c03a7d52058a2650836953b612939ba02a3235/snapshots/2026-10-04_2047_93.2pct/dados.json",
+      "path": "data\\forensics\\external\\vitoropereira-eleicoes2026\\10c03a7d52058a2650836953b612939ba02a3235\\s2047.json",
+      "sha256": "1edb2dbdd344a40d69fcf5705c9ef781e7fec6c5f927bcdf76ebe1880603ddfb",
+      "bytes": 12029,
+      "reused": true,
+      "label": "20:47"
+    }
+  ],
+  "question": "UFs com Lula na frente estavam proporcionalmente menos apuradas e portanto tinham mais resultado relativo para entrar depois?",
+  "groups": {
+    "lula_led": {
+      "n": 11,
+      "electorate_total": 50350622,
+      "pst_1906_mean": 64.82090909090908,
+      "pst_1906_median": 65.95,
+      "pst_1932_mean": 78.97545454545455,
+      "pst_1932_median": 83.2,
+      "unreported_pct_1906_median": 34.05,
+      "unreported_pct_1932_median": 16.799999999999997,
+      "progress_1906_1932_median": 13.969999999999992,
+      "swing_1906_1932_median_pp": 0.29999999999999716,
+      "swing_1932_2047_median_pp": 0.6999999999999886,
+      "proxy_unreported_electorate_1906_sum": 19832815.638,
+      "proxy_unreported_electorate_1932_sum": 12249250.473100001
+    },
+    "flavio_led": {
+      "n": 16,
+      "electorate_total": 107478346,
+      "pst_1906_mean": 85.57625,
+      "pst_1906_median": 91.495,
+      "pst_1932_mean": 93.643125,
+      "pst_1932_median": 97.735,
+      "unreported_pct_1906_median": 8.504999999999995,
+      "unreported_pct_1932_median": 2.2650000000000006,
+      "progress_1906_1932_median": 6.1299999999999955,
+      "swing_1906_1932_median_pp": 0.30000000000000426,
+      "swing_1932_2047_median_pp": 0.20000000000000107,
+      "proxy_unreported_electorate_1906_sum": 25696654.599400003,
+      "proxy_unreported_electorate_1932_sum": 11620822.562800001
+    }
+  },
+  "correlations": {
+    "spearman_lula_margin_vs_pst_1906": -0.6288156288156288,
+    "spearman_lula_margin_vs_pst_1932": -0.6263736263736264,
+    "spearman_unreported_1906_vs_swing_1906_1932": 0.16773609245889318,
+    "spearman_unreported_1932_vs_swing_1932_2047": 0.3582774034398929
+  },
+  "largest_unreported_pct_1906": [
+    {
+      "uf": "AL",
+      "leader": "Lula",
+      "unreported_pct": 60.63,
+      "margin_lula_minus_flavio_pp": 18.4
+    },
+    {
+      "uf": "CE",
+      "leader": "Lula",
+      "unreported_pct": 50.49,
+      "margin_lula_minus_flavio_pp": 28.4
+    },
+    {
+      "uf": "BA",
+      "leader": "Lula",
+      "unreported_pct": 48.95,
+      "margin_lula_minus_flavio_pp": 35.1
+    },
+    {
+      "uf": "RJ",
+      "leader": "Flavio",
+      "unreported_pct": 47.15,
+      "margin_lula_minus_flavio_pp": -14.5
+    },
+    {
+      "uf": "PE",
+      "leader": "Lula",
+      "unreported_pct": 42.71,
+      "margin_lula_minus_flavio_pp": 29.9
+    },
+    {
+      "uf": "MA",
+      "leader": "Lula",
+      "unreported_pct": 38.48,
+      "margin_lula_minus_flavio_pp": 30.299999999999997
+    },
+    {
+      "uf": "MG",
+      "leader": "Flavio",
+      "unreported_pct": 37.72,
+      "margin_lula_minus_flavio_pp": -7.0
+    },
+    {
+      "uf": "RN",
+      "leader": "Lula",
+      "unreported_pct": 34.05,
+      "margin_lula_minus_flavio_pp": 25.299999999999997
+    },
+    {
+      "uf": "PA",
+      "leader": "Lula",
+      "unreported_pct": 29.459999999999994,
+      "margin_lula_minus_flavio_pp": 2.4000000000000057
+    },
+    {
+      "uf": "AP",
+      "leader": "Lula",
+      "unreported_pct": 29.209999999999994,
+      "margin_lula_minus_flavio_pp": 2.5
+    }
+  ],
+  "interpretation_rules": [
+    "Menor pst nas UFs Lula-led sustenta uma forma de 'apuração tardia' geográfica, mesmo que não haja mais eventos técnicos de freeze.",
+    "Proxy_unreported_electorate não é número de votos faltantes; serve apenas para comparar escala potencial entre grupos.",
+    "Correlação entre parte não apurada e swing posterior mede associação descritiva, não causalidade."
+  ]
+}

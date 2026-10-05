@@ -65,7 +65,7 @@ python collect_forensics.py portal --download-portal-files
 python collect_forensics.py all --download-portal-files
 ```
 
-Os arquivos ficam em `data/forensics/`. Cada snapshot recebe um diretório com timestamp UTC; downloads interrompidos usam arquivo temporário e podem ser retomados. Em toda execução, o próprio script informa se boletins de urna, arquivos `.bu/.imgbu/.rdv` e votação por seção estão disponíveis, e registra a tentativa em `urn_availability_history.jsonl`. Execute novamente o coletor quando o TSE publicar novos conjuntos.
+Os arquivos ficam em `data/forensics/`. O coletor é idempotente: um snapshot final em 100% não é baixado novamente, execuções interrompidas reutilizam os JSONs concluídos e arquivos do portal já existentes são apenas conferidos por SHA-256. Em toda execução, o próprio script informa se boletins de urna, arquivos `.bu/.imgbu/.rdv` e votação por seção estão disponíveis, e registra a tentativa em `urn_availability_history.jsonl`. Execute novamente o coletor quando o TSE publicar novos conjuntos.
 
 ## Opções
 

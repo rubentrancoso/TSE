@@ -1272,3 +1272,90 @@ A investigação será feita em camadas:
 Hipótese registrada para uma fase posterior, em todas as UFs.
 
 **Prioridade:** começar por Presidente × Governador, onde há um voto por cargo e os limites matemáticos são mais limpos. Depois incorporar Senado com modelo específico para duas escolhas por eleitor.
+
+
+---
+
+## 2026-10-05 — E0032 — Correção de enquadramento: hipótese de alinhamento ideológico será testada, não descartada
+
+**Evento:** correção do enquadramento metodológico da E0031.
+
+A investigação adotará explicitamente como **hipótese de trabalho testável**:
+
+> **H0-alinhamento:** quem vota em uma candidatura classificada como de direita para Governador/Senado tende a votar também em uma candidatura presidencial classificada como de direita.
+
+Essa hipótese não será tratada previamente como verdadeira nem falsa. O objetivo é **medir o desvio observado**, quantificá-lo por seção/município/UF e avaliar se o padrão é coerente, raro ou extremo em comparação com referências internas e históricas.
+
+### Governador × Presidente — métricas principais
+
+Para cada seção:
+- `N`: comparecimento;
+- `G_R`: votos válidos em candidato(s) a Governador classificados como direita;
+- `P_R`: votos válidos em candidato(s) presidenciais classificados como direita;
+- `L`: votos em Lula.
+
+Serão calculados:
+
+1. **Déficit mínimo de alinhamento direita→direita**
+   - `max(0, G_R - P_R)`
+   - interpretação: quantidade mínima de eleitores de Governador-direita que, necessariamente, não podem estar contidos no conjunto Presidente-direita.
+
+2. **Taxa mínima de violação da hipótese de alinhamento**
+   - `max(0, G_R - P_R) / G_R`, quando `G_R > 0`.
+
+3. **Sobreposição mínima Governador-direita × Lula**
+   - `max(0, G_R + L - N)`
+   - esse é um limite matemático inferior: se positivo, existe necessariamente pelo menos essa quantidade de votos cruzados, independentemente de qualquer reconstrução individual.
+
+4. **Sobreposição máxima possível**
+   - `min(G_R, L)`.
+
+5. **Intervalo possível de voto cruzado**
+   - `[max(0, G_R + L - N), min(G_R, L)]`.
+
+6. **Resíduo de alinhamento por seção**
+   - comparar participação de Presidente-direita contra participação de Governador-direita, controlando comparecimento, brancos/nulos, município e zona.
+
+### Senado × Presidente
+
+Como cada eleitor pode registrar dois votos para Senado, a análise será específica.
+
+Se `S_R` for o total de votos dados a candidatos classificados como direita ao Senado em uma seção com `N` eleitores votantes:
+
+- número mínimo de eleitores que deram **ao menos um** voto de Senado à direita:
+  `ceil(S_R / 2)`;
+- número máximo:
+  `min(N, S_R)`.
+
+Assim, um limite inferior conservador para eleitores que necessariamente combinaram ao menos um voto de Senado-direita com Lula é:
+
+`max(0, ceil(S_R/2) + L - N)`.
+
+Também serão feitos testes candidato-a-candidato para Senado, onde cada candidatura individual pode receber no máximo um voto de cada eleitor.
+
+### Classificação ideológica
+
+A classificação "direita / esquerda / centro / não classificado" será uma **entrada explícita e versionada do modelo**, não inferida silenciosamente pelo código.
+
+Para cada candidatura serão preservados:
+- UF;
+- cargo;
+- candidato;
+- partido/federação/coligação;
+- classe adotada;
+- fonte/justificativa;
+- eventual ambiguidade.
+
+Também será possível rodar cenários alternativos de classificação para medir sensibilidade.
+
+### Objetivo
+
+Produzir, para as 27 UFs:
+- distribuição do desvio por seção;
+- municípios e zonas com maior/menor alinhamento;
+- limites mínimos de voto cruzado;
+- comparação entre estados;
+- comparação com eleições anteriores quando possível;
+- identificação de padrões extremos que mereçam inspeção de BU/seção.
+
+**Importante:** esta etapa não presume que o desvio seja normal, anormal, legítimo ou ilegítimo. Ela mede o fenômeno a partir da hipótese de alinhamento definida acima.

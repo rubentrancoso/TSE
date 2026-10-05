@@ -231,3 +231,102 @@ A próxima entrada deverá registrar:
 - diferenças candidato por candidato;
 - se a divergência corresponde a categoria territorial/administrativa legítima, defasagem dos JSONs ou outra causa;
 - evidências utilizadas para aceitar ou rejeitar cada explicação.
+
+
+---
+
+## 2026-10-05 — E0008 — Diagnóstico quantitativo das divergências BA/MG
+
+**Evento:** leitura dos relatórios regenerados e versionados após a ampliação da Fase 1.
+
+**Commit que preservou os resultados:** `10e0788d0d0d9759be58349f6af96c9b8725d72e`
+
+**Arquivos usados:**
+- `data/forensics/analysis/phase1_summary.json`
+- `data/forensics/analysis/municipality_reconciliation.csv`
+- `data/forensics/analysis/uf_candidate_reconciliation.csv`
+- `data/forensics/analysis/accounting_errors.csv`
+
+### Bahia
+
+Diferença UF − soma dos 417 municípios:
+- seções totalizadas: **+6**;
+- comparecimento: **+1.322**;
+- votos válidos: **+1.244**;
+- brancos: **+29**;
+- nulos: **+49**.
+
+Identidade contábil da diferença:
+
+`1.244 + 29 + 49 = 1.322`
+
+Diferenças por candidato que somam os 1.244 votos válidos adicionais:
+- 13: **+967**
+- 14: **+9**
+- 21: **+1**
+- 22: **+236**
+- 55: **+13**
+- 70: **+17**
+- 80: **+1**
+- demais: **0**
+
+### Minas Gerais
+
+Diferença UF − soma dos 853 municípios:
+- seções totalizadas: **+36**;
+- comparecimento: **+8.413**;
+- votos válidos: **+7.908**;
+- brancos: **+138**;
+- nulos: **+367**.
+
+Identidade contábil da diferença:
+
+`7.908 + 138 + 367 = 8.413`
+
+Diferenças por candidato somam exatamente os 7.908 votos válidos adicionais. Maiores componentes:
+- 13: **+4.898**
+- 22: **+2.600**
+- 14: **+97**
+- 70: **+177**
+- 55: **+91**
+- demais diferenças menores completam exatamente o total.
+
+### Observação técnica
+
+As divergências não têm a forma de um erro aritmético interno: em BA e MG, o excedente estadual forma um conjunto contabilmente fechado de comparecimento, votos válidos, brancos, nulos e votos por candidato.
+
+Além disso:
+- BA apresenta exatamente **6 seções totalizadas a mais** no agregado estadual;
+- MG apresenta exatamente **36 seções totalizadas a mais** no agregado estadual.
+
+Isso restringe a investigação a duas classes principais de explicação, ainda sem escolher entre elas:
+
+1. os JSONs municipais usados na soma não estavam realmente completos/atualizados; ou
+2. existem seções contabilizadas na abrangência estadual que não entram da mesma forma na soma dos arquivos municipais de Presidente.
+
+**Status:** anomalia localizada e contabilmente caracterizada; causa ainda não determinada.
+
+---
+
+## 2026-10-05 — E0009 — Teste preparado para distinguir defasagem municipal de diferença estrutural de abrangência
+
+**Evento:** ampliação adicional do `analyze_forensics.py`.
+
+**Commit:** `af514c7e1d7b4f32383d6543bdcad805480731b7`
+
+**Novo teste:**
+- comparar `ts` (total de seções existentes na abrangência), além de `st` (seções totalizadas);
+- identificar qualquer município cujo JSON ainda tenha `st != ts` ou percentual abaixo de 100%;
+- contar municípios incompletos;
+- produzir `municipality_completion_anomalies.csv`.
+
+**Por que este teste é decisivo nesta etapa:**
+
+- Se a soma dos `ts` municipais for igual ao `ts` estadual, mas a soma dos `st` ficar abaixo, a hipótese mais direta será **snapshot municipal incompleto/defasado**.
+- Se todos os municípios estiverem em 100% e o próprio `ts` estadual exceder a soma dos `ts` municipais exatamente em 6 (BA) e 36 (MG), teremos demonstrado uma **diferença estrutural de abrangência**, que deverá ser localizada usando EA16/EA18 e, depois, arquivos de zona/seção.
+
+**Base documental:** a especificação EA20 define `ts` como quantidade de seções da abrangência e `st` como quantidade de seções totalizadas. A especificação EA16 mapeia UF → município → zona → seção e permite avançar para a identificação das seções.
+
+**Próxima ação:** executar novamente `python analyze_forensics.py`, versionar os novos relatórios e então decidir, com base em `ts` versus `st`, se a etapa seguinte é:
+- localizar arquivos municipais atrasados; ou
+- baixar/analisar EA16 para localizar as 6 e 36 seções adicionais.

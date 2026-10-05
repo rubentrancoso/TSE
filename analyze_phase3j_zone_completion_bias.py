@@ -421,7 +421,7 @@ def main():
 
     u = summary["uf_summary"]
     p = summary["pooled_within_uf_quartiles"]
-    print("\\nFASE 3J — conclusão das zonas x inclinação presidencial")
+    print("\nFASE 3J — conclusão das zonas x inclinação presidencial")
     print(f"- zonas completas utilizáveis: {len(rows)}")
     print(
         f"- UFs Spearman positivo em 2026: {u['ufs_positive_spearman_2026']}/"

@@ -899,3 +899,108 @@ Isso pode explicar a percepção visual de que apenas os dois primeiros “mexer
 - `phase3d_candidate_motion_summary.json`
 
 **Próxima ação:** executar a Fase 3D, versionar os resultados e então partir para a análise condicionada por geografia, que é o teste estatístico relevante.
+
+
+---
+
+## 2026-10-05 — E0023 — Resultado da Fase 3D: candidatos menores não ficaram parados
+
+**Evento:** análise dos resultados versionados da Fase 3D.
+
+**Commit dos resultados:** `1c70672`
+
+### Catch-up 1 — 19:14:08
+
+Lote:
+- **87.608 seções**
+- **21.016.324 votos válidos**
+
+Votos adicionados:
+- Flávio Bolsonaro: **+10.082.597**
+- Lula: **+9.216.075**
+- Augusto Cury: **+629.674**
+- Renan Santos: **+503.159**
+- Ronaldo Caiado: **+472.374**
+- demais agrupados: **+112.445**
+
+Candidatos fora do top 2:
+- total: **+1.717.652 votos**
+- participação no lote: **8,173%**
+- grupos com delta zero: **0**
+
+Mudança de participação no lote versus acumulado anterior:
+- Cury: **+0,040 pp**
+- Renan: **+0,075 pp**
+- Caiado: **−0,132 pp**
+- outros: **+0,023 pp**
+- Flávio: **−2,228 pp**
+- Lula: **+2,221 pp**
+
+### Catch-up 2 — 20:04:39
+
+Lote:
+- **100.614 seções**
+- **24.728.306 votos válidos**
+
+Votos adicionados:
+- Flávio Bolsonaro: **+11.137.351**
+- Lula: **+11.697.901**
+- Augusto Cury: **+710.669**
+- Renan Santos: **+553.291**
+- Ronaldo Caiado: **+508.289**
+- demais agrupados: **+120.805**
+
+Candidatos fora do top 2:
+- total: **+1.893.054 votos**
+- participação no lote: **7,655%**
+- grupos com delta zero: **0**
+
+Mudança de participação no lote versus acumulado anterior:
+- Cury: **−0,093 pp**
+- Renan: **−0,102 pp**
+- Caiado: **−0,287 pp**
+- outros: **−0,030 pp**
+- Flávio: **−4,546 pp**
+- Lula: **+5,058 pp**
+
+### Conclusão limitada
+
+A formulação “os outros candidatos ficaram parados” é rejeitada em termos de **votos absolutos**: todos os grupos cresceram materialmente e os candidatos fora do top 2 somaram mais de 1,7 milhão e 1,89 milhão de votos nos dois catch-ups.
+
+A observação visual corresponde melhor a outra propriedade:
+- a **participação percentual** dos candidatos menores mudou pouco;
+- a maior redistribuição percentual ocorreu entre os dois primeiros.
+
+Isso ainda pode ser estatisticamente interessante, mas exige comparação com o comportamento normal dos demais lotes e, idealmente, controle geográfico.
+
+---
+
+## 2026-10-05 — E0024 — Implementação da Fase 3E: benchmark empírico dos lotes
+
+**Evento:** criação do `analyze_phase3e_batch_benchmark.py`.
+
+**Commit:** `3c92531a6172da38d8fa6096b0c15fd3ae1f2fd5`
+
+**Pergunta:** a estabilidade percentual relativa dos candidatos menores nos dois grandes catch-ups é realmente incomum em comparação com os demais lotes da mesma noite?
+
+**Método:**
+- usar todas as versões nacionais genuínas e não regressivas preservadas na mesma série histórica;
+- para cada lote, calcular:
+  - RMS da mudança em pontos percentuais dos candidatos fora do top 2;
+  - maior mudança absoluta entre esses candidatos;
+  - RMS da mudança dos dois primeiros;
+  - razão entre movimento top 2 e movimento dos demais;
+- comparar os dois catch-ups contra:
+  - todos os lotes;
+  - apenas lotes grandes, definidos como >= 1 milhão de votos válidos adicionados.
+
+**Vantagem metodológica:** o controle é empírico, baseado na própria noite eleitoral. Não supõe que as seções tenham chegado em ordem aleatória.
+
+**Limitação:** mesmo esse benchmark ainda é nacional. O passo posterior continua sendo condicionamento por UF/município/seção quando houver snapshots históricos suficientes.
+
+**Saídas previstas:**
+- `phase3e_batch_benchmark.csv`
+- `phase3e_target_percentiles.csv`
+- `phase3e_summary.json`
+
+**Próxima ação:** executar a Fase 3E e versionar os resultados.

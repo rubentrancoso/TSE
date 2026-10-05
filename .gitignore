@@ -1,4 +1,12 @@
-data/
+# Dados brutos podem ocupar centenas de MB/GB: não versionar.
+data/**
+
+# Mas versionar os resultados derivados da investigação.
+!data/forensics/
+data/forensics/**
+!data/forensics/analysis/
+!data/forensics/analysis/**
+
 __pycache__/
 *.pyc
 .DS_Store

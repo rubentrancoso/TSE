@@ -63,6 +63,7 @@ class Store:
         self.last_success=None
         self.last_changed=None
         self.last_was_new=False
+        self.polling_enabled=True
         self.init()
     def conn(self):
         c=sqlite3.connect(DB_PATH)
@@ -160,8 +161,9 @@ def import_backfill():
 
 def collector(interval):
     while True:
-        try: collect_once()
-        except: pass
+        if store.polling_enabled:
+            try: collect_once()
+            except: pass
         time.sleep(interval)
 
 class Handler(SimpleHTTPRequestHandler):
@@ -183,6 +185,7 @@ class Handler(SimpleHTTPRequestHandler):
             return self.send_json({"ok":not bool(store.last_error),"error":store.last_error,
                 "last_poll":store.last_poll,"last_success":store.last_success,
                 "last_changed":store.last_changed,"last_was_new":store.last_was_new,
+                "polling_enabled":store.polling_enabled,
                 "points":len(h),"latest":h[-1] if h else None})
         if path=="/api/raw/latest":
             return self.send_json(store.latest_raw() or {})
@@ -204,6 +207,9 @@ class Handler(SimpleHTTPRequestHandler):
         return super().do_GET()
     def do_POST(self):
         path=urlparse(self.path).path
+        if path=="/api/polling/toggle":
+            store.polling_enabled=not store.polling_enabled
+            return self.send_json({"ok":True,"polling_enabled":store.polling_enabled})
         if path=="/api/refresh":
             try: return self.send_json({"ok":True,"snapshot":collect_once()})
             except Exception as e: return self.send_json({"ok":False,"error":str(e)},500)

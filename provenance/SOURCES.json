@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "policy": {
+    "immutable_raw": "Nunca sobrescrever uma evidência bruta já adquirida; nova aquisição recebe novo caminho/hash.",
+    "hash_required": "Toda fonte externa material deve registrar SHA-256 quando adquirida.",
+    "primary_preference": "Fonte primária tem precedência. Capturas independentes são mantidas como controles e não apagadas quando a primária for obtida.",
+    "replacement_rule": "Substituir a origem no estágio de normalização, rerodar todos os testes dependentes e comparar os resultados antigos e novos."
+  },
+  "sources": [
+    {
+      "id": "tse_ea20_2026",
+      "label": "TSE Resultados 2026 - arquivos de resultado EA20",
+      "class": "primary",
+      "authority": "Tribunal Superior Eleitoral",
+      "url_pattern": "https://resultados.tse.jus.br/oficial/ele2026/{pleito}/dados/...",
+      "local_roots": [
+        "data/forensics/runs",
+        "data/forensics/external/tse-final"
+      ],
+      "status": "available_current_and_locally_captured",
+      "primary_replacement_needed": false
+    },
+    {
+      "id": "tse_urna_2026",
+      "label": "TSE Resultados 2026 - configuração/artefatos por seção EA16/EA18/BU/RDV/log",
+      "class": "primary",
+      "authority": "Tribunal Superior Eleitoral",
+      "url_pattern": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/...",
+      "local_roots": [
+        "data/forensics/section-config",
+        "data/forensics/portal"
+      ],
+      "status": "partially_acquired",
+      "primary_replacement_needed": false
+    },
+    {
+      "id": "tse_open_data_2026",
+      "label": "Portal de Dados Abertos do TSE - eleição 2026",
+      "class": "primary",
+      "authority": "Tribunal Superior Eleitoral",
+      "url_pattern": "https://dadosabertos.tse.jus.br/",
+      "local_roots": [
+        "data/forensics/portal"
+      ],
+      "status": "catalogued_and_downloadable",
+      "primary_replacement_needed": false
+    },
+    {
+      "id": "tse_open_data_2022",
+      "label": "Dados oficiais TSE 2022 usados como controle histórico",
+      "class": "primary",
+      "authority": "Tribunal Superior Eleitoral",
+      "url_pattern": "https://dadosabertos.tse.jus.br/",
+      "local_roots": [
+        "data/forensics/portal",
+        "data/forensics/external/tse-2022"
+      ],
+      "status": "target_for_full_primary_replay",
+      "primary_replacement_needed": false
+    },
+    {
+      "id": "local_tse_capture_2026",
+      "label": "Capturas próprias de respostas oficiais do TSE",
+      "class": "primary_capture",
+      "authority": "Conteúdo TSE preservado pelo projeto TSE",
+      "local_roots": [
+        "data/forensics/runs",
+        "data/tse_history.sqlite3"
+      ],
+      "status": "available",
+      "primary_replacement_needed": false,
+      "note": "O conteúdo é primário; a data/hora de captura é produzida pelo nosso coletor."
+    },
+    {
+      "id": "arvor_timeline_2026",
+      "label": "ArvorCo/PNAD - linha_do_tempo.json",
+      "class": "derived_capture",
+      "authority": "ArvorCo, derivado de respostas públicas do TSE",
+      "pinned_commit": "beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415",
+      "url": "https://raw.githubusercontent.com/ArvorCo/PNAD/beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415/analysis/apuracao_2026/dados/linha_do_tempo.json",
+      "local_paths": [
+        "data/forensics/external/ArvorCo-PNAD/beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415/linha_do_tempo.json"
+      ],
+      "sha256": "3e29b16d2827f88e407096d6fa494a3d1b862f8156633f1a7f905e799f70af73",
+      "status": "pinned_and_reproducible_but_not_primary",
+      "primary_replacement_needed": true,
+      "primary_replacement_target": "Histórico bruto de versões EA20 do TSE, idealmente arquivos/respostas originais com timestamps e hashes."
+    },
+    {
+      "id": "arvor_zones_2026",
+      "label": "ArvorCo/PNAD - zonas.json",
+      "class": "derived_capture",
+      "authority": "ArvorCo, derivado de respostas TSE 2026 e dados TSE 2022",
+      "pinned_commit": "beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415",
+      "url": "https://raw.githubusercontent.com/ArvorCo/PNAD/beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415/analysis/apuracao_2026/dados/zonas.json",
+      "local_paths": [
+        "data/forensics/external/ArvorCo-PNAD/beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415/zonas.json"
+      ],
+      "sha256": "c8486cd0475213a2ef3a74c32b43f3b940b1d492ad846a2e74b8d866c8ecd1ff",
+      "status": "pinned_and_reproducible_but_not_primary",
+      "primary_replacement_needed": true,
+      "primary_replacement_target": "Reconstruir zonas.json internamente a partir do histórico bruto TSE 2026 + microdados oficiais TSE 2022."
+    },
+    {
+      "id": "vitor_capture_2026",
+      "label": "vitoropereira/eleicoes2026 - snapshots contemporâneos",
+      "class": "public_capture",
+      "authority": "Captura independente de respostas públicas do TSE",
+      "pinned_commits": [
+        "3f4d7442dd601eb1b11afb8e9510d1373c495e7c",
+        "10c03a7d52058a2650836953b612939ba02a3235"
+      ],
+      "local_roots": [
+        "data/forensics/external/vitoropereira-eleicoes2026"
+      ],
+      "status": "pinned_and_reproducible_but_not_primary",
+      "primary_replacement_needed": true,
+      "primary_replacement_target": "Versões originais TSE correspondentes aos mesmos instantes; manter Vitor como cross-check independente."
+    },
+    {
+      "id": "arvor_governor_2026",
+      "label": "ArvorCo/PNAD - governadores.json",
+      "class": "derived_capture",
+      "authority": "ArvorCo, derivado de arquivos oficiais TSE",
+      "pinned_commit": "beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415",
+      "status": "replaceable_with_primary",
+      "primary_replacement_needed": true,
+      "primary_replacement_target": "Arquivos finais oficiais TSE de Governador por UF."
+    },
+    {
+      "id": "political_classifier_arvor",
+      "label": "ArvorCo campos.json - classificação ideológica",
+      "class": "analytical_coding",
+      "authority": "Classificação editorial/analítica, não dado eleitoral primário",
+      "pinned_commit": "beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415",
+      "status": "must_remain_explicit_assumption",
+      "primary_replacement_needed": false,
+      "note": "Não existe fonte primária única para classificação ideológica; deve ser tratada como hipótese/codificação e submetida a sensibilidade."
+    },
+    {
+      "id": "pedreirorr_backfill_2026",
+      "label": "pedreirorr/painel-eleicao-2026 - backfill do painel",
+      "class": "public_capture",
+      "authority": "Captura externa de respostas TSE",
+      "url": "https://raw.githubusercontent.com/pedreirorr/painel-eleicao-2026/dados/historico-6257.json",
+      "status": "auxiliary_not_core_forensic_source",
+      "primary_replacement_needed": true
+    }
+  ]
+}

@@ -528,3 +528,29 @@ A documentação técnica do TSE informa que os campos `da` e `ha` do EA16 regis
 - se os tempos EA16 preservarem a sequência da noite eleitoral, eles passam a ser o eixo temporal da reconstrução seção a seção;
 - se os tempos estiverem regenerados/agrupados posteriormente e não reproduzirem a evolução, a Fase 3 precisará depender de capturas históricas contemporâneas adicionais ou de outro artefato temporal oficial.
 
+
+
+---
+
+## 2026-10-05 — E0015 — Implementação do teste temporal nacional EA16
+
+**Evento:** criação do `analyze_phase3_arrivals.py`.
+
+**Commit:** `af9589d99e35ddfa90f7b0591cf1d26969b2a458`
+
+**Objetivo:** testar, em escala nacional, se os campos `da/ha` atuais do EA16 ainda preservam uma sequência temporal utilizável para reconstruir a chegada dos arquivos de urna durante a noite da eleição.
+
+**Procedimento:**
+- baixar EA16 das 27 UFs;
+- considerar apenas seções principais;
+- contar cobertura de `da/ha`;
+- gerar histograma minuto a minuto;
+- registrar primeiro/último minuto e picos de geração;
+- comparar depois essa distribuição com a série presidencial preservada.
+
+**Artefatos derivados:**
+- `phase3_arrivals_summary.json`
+- `phase3_arrivals_by_minute.csv`
+- `phase3_arrivals_by_uf.csv`
+
+**Critério de decisão:** os timestamps somente serão usados como eixo temporal se apresentarem progressão compatível com a apuração. Uma concentração artificial posterior ou regeneração em massa impedirá seu uso como substituto de snapshots históricos.

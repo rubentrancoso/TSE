@@ -2247,3 +2247,167 @@ O script também verifica:
 - \`phase4b_summary.json\`
 
 **Próxima ação:** executar a Fase 4B. Se a violação mínima continuar positiva depois de agregar **todo** o bloco presidencial de direita, então teremos um resultado substancialmente mais forte do que o teste Flávio-isolado da Fase 4A.
+
+
+---
+
+## 2026-10-05 — E0047 — Resultado da Fase 4B: bloco completo de direita/CD
+
+**Evento:** análise dos resultados versionados da Fase 4B.
+
+**Commit dos resultados:** \`b794a6c\`
+
+### Cobertura
+
+- UFs analisadas: **27**
+- linhas de inventário de candidaturas: **508**
+- UFs com \`G_R > P_R\` e, portanto, violação mínima obrigatória da hipótese de alinhamento perfeito: **13**
+- UFs com sobreposição mínima obrigatória Governador-direita × Lula > 0: **7**
+- reconciliação dos votos válidos dos candidatos com \`v.vv\`:
+  - Presidente: **0 erros**
+  - Governador: **0 erros**
+- votos válidos sem classificação na taxonomia usada:
+  - Presidente: **0**
+  - Governador: **0**
+
+### Maiores violações mínimas \`max(0, G_R - P_R)\`
+
+Cenário usado: \`direita + centro-direita\` nos dois cargos.
+
+- PB: **1.146.651** (**56,68%** de \`G_R\`)
+- MG: **1.068.784** (**14,85%**)
+- BA: **1.059.171** (**29,19%**)
+- SP: **655.183** (**4,52%**)
+- RN: **507.418** (**40,10%**)
+- MT: **238.529** (**15,15%**)
+- AL: **128.745** (**14,41%**)
+- MS: **125.107** (**12,10%**)
+- PA: **92.800** (**3,96%**)
+- RR: **75.752** (**24,11%**)
+- AC: **49.409** (**13,69%**)
+- SE: **21.639** (**4,68%**)
+- PI: **11.757** (**2,09%**)
+
+### Sobreposição mínima obrigatória Governador-direita × Lula
+
+- PB: **880.227** (**43,51%** de \`G_R\`)
+- RN: **332.237** (**26,26%**)
+- BA: **239.242** (**6,59%**)
+- MT: **104.293** (**6,62%**)
+- RR: **55.891** (**17,79%**)
+- MS: **9.567** (**0,93%**)
+- AC: **7.463** (**2,07%**)
+
+Esses valores são limites inferiores combinatórios usando os totais agregados.
+
+### Comparecimento Presidente × Governador
+
+O script marcou diferença de comparecimento nas **27 UFs**, sempre com Presidente acima de Governador. Soma das diferenças:
+- **165.584** comparecimentos a mais no cargo Presidente.
+
+Esse padrão é compatível com a regra oficial de **voto em trânsito**:
+- quem vota em trânsito dentro da mesma UF pode votar em todos os cargos;
+- quem está em outra UF pode votar **apenas para Presidente**;
+- eleitor inscrito no exterior em trânsito no Brasil também vota apenas para Presidente.
+
+Portanto a diferença sistemática Presidente > Governador não é, por si só, erro de qualidade.
+
+Além disso, usar o comparecimento presidencial como universo \`N\` nos limites Governador×Lula torna o limite **conservador**, porque \`N\` inclui pessoas que nem eram elegíveis ao cargo Governador naquela UF.
+
+### Conclusão limitada
+
+A Fase 4B produz um resultado substancialmente mais forte que a 4A: mesmo somando todos os presidenciáveis classificados como direita/centro-direita, há **13 UFs** nas quais o bloco de Governador-direita é maior que o bloco presidencial equivalente.
+
+Em 7 UFs a interseção Governador-direita × Lula é matematicamente positiva mesmo usando o universo presidencial ampliado pelo voto em trânsito.
+
+Entretanto, o resultado ainda depende da fronteira classificatória:
+- PSD aparece como \`centro\`;
+- AVANTE aparece como \`centro\`;
+- PSDB aparece como \`centro-esquerda\` na classificação partidária, embora alguns candidatos específicos possam ser percebidos politicamente de outra forma.
+
+Por isso nenhuma conclusão substantiva deve ser fechada antes de uma análise de sensibilidade da classificação.
+
+---
+
+## 2026-10-05 — E0048 — Evidência externa visual: alegação de pausa e swing Lula/Flávio
+
+**Evento:** recebida captura de uma postagem pública com a alegação de que:
+1. os updates da apuração teriam sido interrompidos por cerca de uma hora;
+2. após a retomada, Lula teria crescido e Flávio caído.
+
+A imagem contém um gráfico com pontos aproximados:
+- 17:35
+- 18:00
+- 18:30
+- 18:48
+- 20:14
+- 20:30
+
+e marca uma faixa contínua entre ~18:48 e ~20:14 como período de interrupção.
+
+### Comparação com a cronologia já reconstruída
+
+A alegação tem um **núcleo factual parcial**:
+- houve interrupção/defasagem relevante na publicação nacional de Presidente;
+- após os grandes catch-ups, a participação relativa de Lula sobe e a de Flávio cai.
+
+Porém o desenho de uma única pausa contínua 18:48→20:14 é simplificado demais.
+
+A série de maior resolução já reconstruída mostrou:
+- atualização nacional em **18:48:59**;
+- nova atualização em **19:14:08**;
+- principal congelamento nacional de **19:14:08 a 20:04:39** (~50,52 min);
+- pausa geral de geração EA20 de **19:32:47 a 20:01:55** (~29,13 min).
+
+Portanto o gráfico da postagem **omite o catch-up nacional de 19:14** e não deve ser usado sozinho para afirmar que não houve nenhum update entre 18:48 e 20:14.
+
+### Relação com os demais testes
+
+- Fase 3F: os catch-ups tiveram movimento top-2 extremo contra janelas de tamanho comparável;
+- Fases 3J/3K: resultados geograficamente tardios já eram estruturalmente mais pró-Lula em 2022, e o gradiente agregado tardio foi ligeiramente menor em 2026.
+
+Assim, a postagem registra uma percepção pública relevante e uma parte verdadeira da cronologia, mas **não estabelece causa** para o swing.
+
+---
+
+## 2026-10-05 — E0049 — Implementação da Fase 4C: sensibilidade da classificação ideológica
+
+**Evento:** criação do \`analyze_phase4c_classification_sensitivity.py\`.
+
+**Commit:** \`aa630d87fbce7be4069e4063bc9de9240dea6cc4\`
+
+### Objetivo
+
+Verificar se as 13 violações mínimas da Fase 4B sobrevivem a diferentes fronteiras de classificação.
+
+### Cenários
+
+1. \`strict_symmetric\`
+   - Governador: direita
+   - Presidente: direita
+
+2. \`broad_symmetric\`
+   - Governador: direita + centro-direita
+   - Presidente: direita + centro-direita
+   - reproduz a Fase 4B
+
+3. \`nonleft_symmetric\`
+   - Governador: direita + centro-direita + centro
+   - Presidente: direita + centro-direita + centro
+
+4. \`stress_min_violation\`
+   - Governador: somente direita
+   - Presidente: direita + centro-direita + centro
+
+O quarto cenário é propositalmente assimétrico e conservador:
+- minimiza \`G\`;
+- maximiza \`P\` dentro da taxonomia usada.
+
+Se \`G > P\` persistir mesmo nesse cenário, a conclusão é robusta à fronteira direita/CD/centro usada pela fonte.
+
+### Saídas previstas
+
+- \`phase4c_sensitivity_by_uf.csv\`
+- \`phase4c_summary.json\`
+
+**Próxima ação:** executar a Fase 4C e somente depois selecionar UFs para aprofundamento por município/zona/seção.

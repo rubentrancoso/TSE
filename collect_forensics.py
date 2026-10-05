@@ -104,6 +104,56 @@ def write_manifest(path, records):
     atomic_write(path, payload.encode("utf-8"))
 
 
+def append_jsonl(path, row):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("ab") as stream:
+        stream.write((json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n").encode("utf-8"))
+        stream.flush()
+        os.fsync(stream.fileno())
+
+
+def urn_data_availability(datasets):
+    def searchable(dataset):
+        resource_names = " ".join(str(item.get("name", "")) for item in dataset.get("resources", []))
+        return (str(dataset.get("name", "")) + " " + str(dataset.get("title", "")) + " " + resource_names).lower()
+
+    texts = [(dataset, searchable(dataset)) for dataset in datasets]
+    checks = {
+        "boletins_de_urna": lambda text: "boletim" in text and "urna" in text,
+        "arquivos_transmitidos_bu_imgbu_rdv": lambda text: "arquivos transmitidos" in text or "arquivos-transmitidos" in text or ".imgbu" in text or ".rdv" in text,
+        "votacao_por_secao": lambda text: "votação por seção" in text or "votacao por secao" in text or "seção eleitoral" in text,
+    }
+    result = {}
+    for key, predicate in checks.items():
+        matches = [dataset for dataset, text in texts if predicate(text)]
+        result[key] = {
+            "available": bool(matches),
+            "datasets": [item.get("name") for item in matches],
+            "resources": sum(len(item.get("resources", [])) for item in matches),
+        }
+    result["any_urn_level_source_available"] = any(item["available"] for item in result.values())
+    return result
+
+
+def print_urn_availability(status, download_files):
+    labels = {
+        "boletins_de_urna": "Boletins de urna",
+        "arquivos_transmitidos_bu_imgbu_rdv": "Arquivos .bu/.imgbu/.rdv",
+        "votacao_por_secao": "Votação por seção",
+    }
+    print("\nVerificação de dados urna por urna:", flush=True)
+    for key, label in labels.items():
+        item = status[key]
+        situation = "DISPONÍVEL" if item["available"] else "AINDA NÃO DISPONÍVEL"
+        suffix = f" ({item['resources']} recursos)" if item["available"] else ""
+        print(f"- {label}: {situation}{suffix}", flush=True)
+    if status["any_urn_level_source_available"]:
+        action = "download solicitado nesta execução" if download_files else "somente disponibilidade verificada"
+        print(f"- Ação: {action}.", flush=True)
+    else:
+        print("- Ação: o catálogo oficial foi consultado, mas ainda não há arquivo urna por urna para baixar.", flush=True)
+
+
 def collect_live(output, workers):
     run_dir = output / "runs" / utc_stamp()
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -209,6 +259,16 @@ def collect_portal(output, download_files):
         item for item in catalog.get("result", {}).get("results", [])
         if str(item.get("name", "")).startswith("resultados-2026")
     ]
+    urn_status = urn_data_availability(datasets)
+    availability_event = {
+        "checked_at_utc": iso_utc(),
+        "catalog_url": catalog_url,
+        "download_requested": download_files,
+        **urn_status,
+    }
+    print_urn_availability(urn_status, download_files)
+    append_jsonl(portal_dir / "urn_availability_history.jsonl", availability_event)
+    atomic_write(portal_dir / "urn_availability_latest.json", json.dumps(availability_event, ensure_ascii=False, indent=2).encode("utf-8"))
     atomic_write(portal_dir / "catalog.json", json.dumps(catalog, ensure_ascii=False, indent=2).encode("utf-8"))
 
     records = []
@@ -251,6 +311,7 @@ def collect_portal(output, download_files):
         "format": "tse-forensics-portal-v1",
         "created_at_utc": iso_utc(),
         "datasets_found": [item.get("name") for item in datasets],
+        "urn_data_availability": urn_status,
         "download_files": download_files,
         "records_ok": len(records) - len(errors),
         "records_error": len(errors),

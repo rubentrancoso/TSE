@@ -3261,3 +3261,94 @@ A busca permanece aberta; nenhuma afirmação "igual a 2022" será feita sem uma
 Executar a Fase 4H e versionar:
 - \`phase4h_late_zone_thresholds.csv\`
 - \`phase4h_summary.json\`
+---
+
+## 2026-10-05 — E0065 — Resultado da Fase 4H: gradiente tardio quase replica 2022
+
+**Evento:** análise dos resultados versionados da Fase 4H.
+
+**Commit dos resultados:** `009c96db7374b12d21c1e4bea2516e65cdbb4d6a`
+
+### Resultado
+
+Zonas completas analisadas: **6.094**.
+
+No corte de 20:04:39:
+- zonas ainda incompletas: **2.732**;
+- Lula 2026: **50,98%**;
+- Flávio 2026: **41,87%**;
+- margem Lula−Flávio: **+9,11 pp**;
+- mesmas zonas em 2022: margem Lula−Bolsonaro **+16,04 pp**.
+
+O contraste mais informativo é LATE−EARLY:
+- 2026: **+24,39 pp**;
+- 2022: **+23,64 pp**;
+- delta do gradiente 2026−2022: **+0,75 pp**.
+
+Cortes seguintes:
+- 20:30: delta do gradiente **+0,56 pp**;
+- 21:00: **+0,21 pp**;
+- 22:00: **−1,03 pp**;
+- 00:00: **−2,75 pp**.
+
+### Interpretação
+
+O fato de as zonas que concluem mais tarde serem muito mais pró-Lula não é exclusivo de 2026. O mesmo ordenamento geográfico já carregava gradiente semelhante, e em vários cortes ainda maior, em 2022.
+
+Isso fornece uma explicação composicional forte para o pool tardio pró-Lula observado na Fase 4G.
+
+### Limitação decisiva
+
+Os votos finais das zonas ainda incompletas às 20:04 somam **65,13 milhões**, enquanto o pool real restante depois de 20:04:39 é **18,81 milhões**.
+
+Razão: **3,46×**.
+
+Logo a Fase 4H caracteriza a geografia tardia, mas não reconstrói os votos exatos incorporados depois do corte.
+
+### Próxima ação
+
+Auditar a cobertura temporal dos snapshots locais e reconstruir apenas o trecho realmente preservado, sem extrapolação.
+
+---
+
+## 2026-10-05 — E0066 — Implementação da Fase 4I: cobertura local e reconstrução da cauda
+
+**Evento:** criação de `analyze_phase4i_local_tail_coverage.py`.
+
+**Commit:** `79b01690073f67483d61c023403685079633a40b`
+
+Também foi criado o resumo executivo de uma página:
+- `docs/ONE_PAGE_INVESTIGACAO.md`
+- commit: `89ff1b5dc37b4c7463d2ae6c75272b7769436597`
+
+### Objetivo
+
+Antes de tentar atribuir geograficamente os **18.809.656** votos restantes após 20:04:39, medir exatamente o que os snapshots locais preservam.
+
+A Fase 4I:
+1. identifica o snapshot local mais próximo do corte;
+2. mede a lacuna temporal entre 20:04:39 e esse snapshot;
+3. calcula que fração do pool da Fase 4G está efetivamente coberta;
+4. reconstrói por UF a cauda entre o primeiro snapshot útil e o final;
+5. reconcilia a soma das UFs contra o delta nacional;
+6. marca explicitamente se uma reconstrução geográfica completa do pool 20:04→final é possível com os dados locais.
+
+### Regra metodológica
+
+Se não houver snapshot no corte, o script **não extrapola** os votos faltantes para UFs, municípios ou zonas.
+
+A diferença nacional não coberta é registrada apenas como lacuna aritmética. Para atribuição geográfica determinística será necessário histórico de versões cobrindo o corte, como o banco bruto de um coletor contemporâneo ou fonte temporal equivalente.
+
+### Próxima ação
+
+Executar:
+
+```
+python analyze_phase4i_local_tail_coverage.py
+```
+
+Depois versionar:
+- `data/forensics/analysis/phase4i_local_tail_by_uf.csv`
+- `data/forensics/analysis/phase4i_summary.json`
+
+e registrar o resultado antes de decidir a Fase 4J.

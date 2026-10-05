@@ -48,7 +48,9 @@ OUT = ROOT / "analysis"
 UA = "TSE-forensics-phase3g/1.0"
 
 ARVOR_COMMIT = "beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415"
-VITOR_COMMIT = "3f4d7442dd601eb1b11afb8e9510d1373c495e7c"
+# Primeiro commit verificado que contém os quatro snapshots usados abaixo.
+# O commit anterior (3f4d744...) ainda não continha o snapshot de 20:47.
+VITOR_COMMIT = "10c03a7d52058a2650836953b612939ba02a3235"
 
 ARVOR_URL = (
     "https://raw.githubusercontent.com/ArvorCo/PNAD/"

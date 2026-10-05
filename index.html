@@ -341,6 +341,25 @@ function drawChartCursor(g){
    const pp=Math.abs((+first.pct||0)-(+second.pct||0));
    lines.push({color:"#f59e0b",text:"Diferença percentual: "+pp.toFixed(2).replace(".",",")+" p.p."});
  }
+ const pointLeader=Object.values(row.cand||{}).sort((a,b)=>(+b.votos||0)-(+a.votos||0))[0];
+ if(pointLeader){
+   const leaderVotes=+pointLeader.votos||0,currentValid=+row.vv||0;
+   const currentNeed=Math.max(0,Math.floor(currentValid/2)+1-leaderVotes);
+   const processed=(+row.c||0)+(+row.a||0),total=+row.te||0;
+   const hasElectorate=total>0&&processed>0;
+   const remaining=hasElectorate?Math.max(0,total-processed):0;
+   let estimatedFinalValid=currentValid;
+   if(hasElectorate)estimatedFinalValid+=remaining*(currentValid/processed);
+   else if((+row.pst||0)>0)estimatedFinalValid=currentValid/(+row.pst/100);
+   const estimatedNeed=Math.max(0,Math.floor(estimatedFinalValid/2)+1-leaderVotes);
+   const needLabel=n=>n>0?"+"+fmt(n)+" votos":"atingida";
+   lines.push({color:"#667085",text:"Maioria no parcial: "+needLabel(currentNeed)});
+   lines.push({color:"#f79009",text:"Maioria final estimada: "+needLabel(estimatedNeed)});
+   if(hasElectorate){
+     const guaranteedNeed=Math.max(0,Math.floor((currentValid+remaining)/2)+1-leaderVotes);
+     lines.push({color:"#12b76a",text:"Garantia matemática: "+needLabel(guaranteedNeed)});
+   }
+ }
  g.font="700 11px system-ui";
  const textWidth=Math.max(g.measureText(title).width,...lines.map(x=>g.measureText(x.text).width));
  const bw=Math.min(s.w-s.pad.l-s.pad.r,Math.max(155,textWidth+30)),bh=28+lines.length*18;

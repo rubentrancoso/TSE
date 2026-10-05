@@ -428,3 +428,31 @@ Todo resultado relevante deverá vir acompanhado de:
 - teste de hipótese alternativa.
 
 O objetivo é produzir uma análise que qualquer pessoa tecnicamente habilitada consiga reproduzir de forma independente.
+
+
+---
+
+## 14. Diário cronológico obrigatório da investigação
+
+Além deste protocolo, toda execução e toda decisão analítica relevante devem ser registradas em:
+
+`docs/DIARIO_INVESTIGACAO.md`
+
+O diário é **append-only em termos conceituais**: resultados anteriores não devem ser apagados ou reescritos para coincidir com conclusões posteriores. Quando um achado for corrigido, a correção deve aparecer como uma nova entrada, contendo a referência à entrada anterior e a razão da revisão.
+
+Cada entrada deve, quando aplicável, registrar:
+
+1. data e identificador sequencial da etapa;
+2. ação executada;
+3. script/versão/commit utilizado;
+4. arquivos de entrada;
+5. resultado bruto relevante;
+6. interpretação permitida naquele momento;
+7. limitações conhecidas;
+8. anomalias encontradas;
+9. hipóteses abertas;
+10. decisão sobre o próximo teste;
+11. arquivos derivados produzidos;
+12. commit que preservou a etapa.
+
+Dessa forma, o histórico do Git e o diário formam conjuntamente uma trilha de auditoria temporal e reproduzível.

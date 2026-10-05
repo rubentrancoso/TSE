@@ -41,6 +41,16 @@ O histórico local fica em `data/tse_history.sqlite3` e não é apagado quando o
 
 O script `collect_forensics.py` usa somente a biblioteca padrão do Python, grava cada arquivo com SHA-256 e produz manifestos para auditoria posterior.
 
+Para executar **toda a coleta de uma vez** — snapshot nacional/UF/municípios e download de todos os arquivos oficiais encontrados no portal:
+
+```bash
+python collect_forensics.py
+```
+
+No Windows, também é possível dar duplo clique em `COLETAR_TUDO_WINDOWS.bat`.
+
+Os comandos abaixo são opcionais, apenas para executar partes isoladas:
+
 ```bash
 # Descobre os conjuntos oficiais de 2026 disponíveis hoje e salva os metadados
 python collect_forensics.py portal

@@ -1424,3 +1424,53 @@ Criado `analyze_phase3g_uf_delay_bias.py`.
 - `phase3g_summary.json`
 
 **Próxima ação:** executar a Fase 3G, versionar os resultados e só então aceitar, rejeitar ou reformular essa hipótese.
+
+
+---
+
+## 2026-10-05 — E0034 — Falha da Fase 3G por commit-fonte incompleto e correção
+
+**Evento:** primeira execução de `analyze_phase3g_uf_delay_bias.py` falhou antes de gerar relatórios.
+
+**Erro observado:** `HTTP Error 404: Not Found`.
+
+### Causa
+
+A Fase 3G havia fixado a fonte `vitoropereira/eleicoes2026` no commit:
+
+`3f4d7442dd601eb1b11afb8e9510d1373c495e7c`
+
+Esse commit contém os snapshots de:
+- 18:32;
+- 19:06;
+- 19:32;
+
+mas **ainda não contém** o snapshot de 20:47 usado pelo script.
+
+A ausência do arquivo no commit fixado provocou o 404. Não houve falha estatística nem problema nos dados locais.
+
+### Verificação da correção
+
+Foi localizado e verificado o commit:
+
+`10c03a7d52058a2650836953b612939ba02a3235`
+
+Ele contém os quatro snapshots necessários:
+- `snapshots/2026-10-04_1832_36.6pct/dados.json`
+- `snapshots/2026-10-04_1906_64.8pct/dados.json`
+- `snapshots/2026-10-04_1932_84.9pct/dados.json`
+- `snapshots/2026-10-04_2047_93.2pct/dados.json`
+
+### Impacto
+
+- nenhum relatório da Fase 3G foi produzido;
+- `git status` permaneceu limpo;
+- não há resultado analítico a revisar.
+
+### Correção
+
+`analyze_phase3g_uf_delay_bias.py` passou a fixar a fonte no commit `10c03a7d...`.
+
+**Commit da correção:** `71654ebd7e237e23e2f77158420a93cc5717d2b6`
+
+**Próxima ação:** atualizar o branch local e executar novamente a Fase 3G.

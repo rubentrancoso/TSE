@@ -697,3 +697,99 @@ A captura ArvorCo registra também uma **lacuna geral de geração de arquivos d
 - `phase3b_crosscheck.csv`
 
 **Próxima ação:** executar a Fase 3B, versionar os quatro derivados e, em seguida, iniciar a comparação histórica específica Presidente × Governador na parte da janela anterior à pausa geral.
+
+
+---
+
+## 2026-10-05 — E0019 — Terceira captura contemporânea e preparação da Fase 3C
+
+**Evento:** localização de uma terceira fonte pública independente com respostas brutas reais do TSE preservadas em ciclos durante a noite de 04/10/2026.
+
+**Fonte:** repositório `madebysandro/apuracao-2026`, commit fixado `8917e32edb3aafd72664dc47a5ba53f576575197`.
+
+O próprio repositório descreve `fixtures/tse-provisorio/` como uma sequência real de respostas brutas do TSE extraída de uma gravação contemporânea. Cada pasta representa um ciclo de captura e preserva, no mesmo instante aproximado, arquivos de:
+- Presidente nacional;
+- Presidente por UF;
+- Governador;
+- Senador;
+- Deputado Federal;
+- Deputado Estadual.
+
+A gravação disponível usa o Pará para os cargos estaduais, o que permite um teste cruzado especialmente útil: comparar, no mesmo ciclo, a quantidade de seções presente em Presidente/PA e nos quatro cargos da eleição estadual 6259.
+
+### Inspeção preliminar antes da automação
+
+**Ciclo 21:36:05Z (~18:36 BRT):**
+- Presidente BR: 159.242 seções;
+- Presidente PA: 9.210;
+- Governador PA: 9.247;
+- Senador PA: 9.247;
+- Deputado Federal PA: 9.247;
+- Deputado Estadual PA: 9.247.
+
+**Ciclo 21:39:46Z (~18:39 BRT):**
+- Presidente BR: 182.745;
+- Presidente PA: 9.764;
+- Governador PA: 9.819;
+- Senador PA: 9.819;
+- Deputado Federal PA: 9.819;
+- Deputado Estadual PA: 9.819.
+
+**Ciclo 21:44:49Z (~18:44 BRT):**
+- Presidente BR: 207.533;
+- Presidente PA: 10.636;
+- Governador PA: 10.570;
+- Senador PA: 10.570;
+- Deputado Federal PA: 10.570;
+- Deputado Estadual PA: 10.570.
+
+**Ciclo 23:17:25Z (~20:17 BRT):**
+- Presidente BR: 449.547;
+- Presidente PA: 18.258;
+- Governador PA: 18.272;
+- Deputado Federal PA: 18.272.
+
+**Ciclo 00:01:02Z (~21:01 BRT):**
+- Presidente BR: 490.242;
+- Presidente PA: 20.149;
+- Governador PA: 20.188;
+- Senador PA: 20.188;
+- Deputado Federal PA: 20.188;
+- Deputado Estadual PA: 20.188.
+
+### Observação preliminar
+
+Nos ciclos preservados, os cargos estaduais 6259 do Pará aparecem com números de seções idênticos ou quase idênticos entre si. O Presidente/PA acompanha o mesmo conjunto com diferença de poucas dezenas de seções, compatível com a geração assíncrona dos arquivos dentro de um mesmo ciclo de captura.
+
+Isso fornece evidência independente de que os cargos de uma mesma UF avançavam sobre praticamente o mesmo conjunto de seções, como esperado pelo fato de serem originados dos mesmos boletins.
+
+### Limitação importante
+
+A gravação tem ciclos em ~18:36–18:44 e volta apenas em ~20:16. Portanto ela **não cobre diretamente o trecho 18:49–19:32**, que é justamente a parte mais importante da defasagem presidencial antes da pausa geral.
+
+Ela não resolve sozinha a pergunta central, mas:
+1. valida o comportamento cruzado entre cargos na mesma UF;
+2. fornece uma terceira captura independente;
+3. reduz a plausibilidade de tratar cada cargo como se recebesse um conjunto de seções totalmente distinto;
+4. orienta a próxima busca para snapshots preservados especificamente dentro de 18:49–19:32.
+
+### Implementação
+
+Criado `analyze_phase3c_cross_cargo.py`.
+
+**Commit:** `9c133162acec5f73ef22438b298d4a016d51c378`
+
+O script:
+- baixa e preserva os arquivos brutos fixados pelo commit da fonte;
+- calcula SHA-256;
+- extrai `ts`, `st`, `hg`, `ht`, votos válidos e totais;
+- compara Presidente/PA com Governador/Senador/Deputados no mesmo ciclo;
+- mede a dispersão de seções entre os cargos estaduais;
+- gera uma tabela de alinhamento temporal.
+
+**Saídas previstas:**
+- `phase3c_summary.json`
+- `phase3c_cross_cargo_cycles.csv`
+- `phase3c_pa_alignment.csv`
+
+**Próxima ação:** executar a Fase 3C, versionar os derivados e depois ampliar a busca por capturas contemporâneas dentro de 18:49–19:32, priorizando snapshots de Governador/Presidente da mesma UF.

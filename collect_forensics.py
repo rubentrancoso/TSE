@@ -167,33 +167,81 @@ def result_percent(run_dir):
         return 0.0
 
 
-def choose_live_run(output):
+def load_summary(run_dir):
+    try:
+        return json.loads((run_dir / "summary.json").read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+
+def plan_live_run(output, national_data):
     runs_dir = output / "runs"
     runs = sorted((item for item in runs_dir.glob("*") if item.is_dir()), reverse=True)
     if not runs:
         return "new", runs_dir / utc_stamp(), None
-    latest = runs[0]
-    summary_path = latest / "summary.json"
-    if not summary_path.exists():
-        return "resume", latest, None
-    try:
-        summary = json.loads(summary_path.read_text(encoding="utf-8"))
-    except Exception:
-        return "resume", latest, None
-    if summary.get("files_error", 0):
-        return "resume", latest, summary
-    if result_percent(latest) >= 100:
-        return "final", latest, summary
+
+    complete = []
+    resumable = []
+    for run_dir in runs:
+        summary = load_summary(run_dir)
+        if summary and not summary.get("files_error", 0):
+            complete.append((run_dir, summary))
+        else:
+            resumable.append((run_dir, summary))
+
+    for run_dir, summary in complete:
+        national_path = run_dir / "live" / "br.json"
+        if result_percent(run_dir) >= 100:
+            return "unchanged", run_dir, summary
+        if national_path.exists() and national_path.read_bytes() == national_data:
+            return "unchanged", run_dir, summary
+
+    for run_dir, summary in resumable:
+        national_path = run_dir / "live" / "br.json"
+        if national_path.exists() and national_path.read_bytes() == national_data:
+            return "resume", run_dir, summary
+
     return "new", runs_dir / utc_stamp(), None
 
 
+def human_bytes(size):
+    value = float(size)
+    for unit in ("B", "KB", "MB", "GB", "TB"):
+        if value < 1024 or unit == "TB":
+            return f"{value:.2f} {unit}"
+        value /= 1024
+
+
+def print_local_panorama(output):
+    runs_dir = output / "runs"
+    runs = sorted((item for item in runs_dir.glob("*") if item.is_dir()), reverse=True)
+    portal_files = [item for item in (output / "portal" / "files").rglob("*") if item.is_file() and not item.name.endswith(".part")]
+    partials = [item for item in output.rglob("*.part") if item.is_file()]
+    print("Panorama local antes da coleta:", flush=True)
+    print(f"- snapshots encontrados: {len(runs)}", flush=True)
+    if runs:
+        latest = runs[0]
+        result_files = list((latest / "live" / "uf").glob("*.json")) + list((latest / "live" / "municipio").rglob("*.json"))
+        summary = load_summary(latest)
+        state = "concluído" if summary and not summary.get("files_error", 0) else "interrompido/incompleto"
+        print(f"- snapshot mais recente: {latest.name} · {len(result_files)}/5785 JSONs · {result_percent(latest):.2f}% · {state}", flush=True)
+    print(f"- arquivos completos do portal: {len(portal_files)} · {human_bytes(sum(item.stat().st_size for item in portal_files))}", flush=True)
+    print(f"- arquivos temporários incompletos: {len(partials)}", flush=True)
+
+
 def collect_live(output, workers):
-    mode, run_dir, previous_summary = choose_live_run(output)
-    if mode == "final":
-        print(f"Snapshot oficial final já existe em {run_dir}; 5.785 JSONs não serão baixados novamente.", flush=True)
-        return {**previous_summary, "reused": True, "reuse_reason": "final_snapshot_already_complete"}
+    national_url = f"{RESULTS_BASE}/dados/br/br-c{OFFICE_CODE}-e{ELECTION_CODE}-u.json"
+    national_data = fetch_bytes(national_url)
+    json.loads(national_data.decode("utf-8-sig"))
+    mode, run_dir, previous_summary = plan_live_run(output, national_data)
+    if mode == "unchanged":
+        print(f"- totalização nacional sem mudança: snapshot {run_dir.name} será reutilizado.", flush=True)
+        print("- JSONs por UF/município para baixar: 0/5785.\n", flush=True)
+        return {**previous_summary, "reused": True, "reuse_reason": "national_result_unchanged"}
     if mode == "resume":
-        print(f"Retomando snapshot incompleto em {run_dir}; arquivos concluídos serão reutilizados.", flush=True)
+        print(f"- retomando snapshot incompleto: {run_dir.name}.", flush=True)
+    else:
+        print("- a totalização nacional mudou: será criado um novo snapshot.", flush=True)
     run_dir.mkdir(parents=True, exist_ok=True)
     records = []
 
@@ -209,8 +257,12 @@ def collect_live(output, workers):
         atomic_write(config_path, config_data)
         records.append(json_record("config", config_url, config_path, config_data, reused=False))
 
-    national_url = f"{RESULTS_BASE}/dados/br/br-c{OFFICE_CODE}-e{ELECTION_CODE}-u.json"
-    records.append(fetch_json_file("national", national_url, run_dir / "live" / "br.json"))
+    national_path = run_dir / "live" / "br.json"
+    if national_path.exists() and national_path.read_bytes() == national_data:
+        records.append(json_record("national", national_url, national_path, national_data, reused=True))
+    else:
+        atomic_write(national_path, national_data)
+        records.append(json_record("national", national_url, national_path, national_data, reused=False))
 
     jobs = []
     for region in config.get("abr", []):
@@ -232,9 +284,17 @@ def collect_live(output, workers):
             ))
 
     total = len(jobs)
-    completed = 0
+    pending = []
+    for kind, url, path, extra in jobs:
+        if path.exists() and path.stat().st_size:
+            records.append(fetch_json_file(kind, url, path, **extra))
+        else:
+            pending.append((kind, url, path, extra))
+    completed = total - len(pending)
+    print(f"- JSONs por UF/município já locais: {completed}/{total}", flush=True)
+    print(f"- JSONs por UF/município para baixar: {len(pending)}/{total}\n", flush=True)
     with concurrent.futures.ThreadPoolExecutor(max_workers=max(1, workers)) as pool:
-        futures = [pool.submit(fetch_json_file, kind, url, path, **extra) for kind, url, path, extra in jobs]
+        futures = [pool.submit(fetch_json_file, kind, url, path, **extra) for kind, url, path, extra in pending]
         for future in concurrent.futures.as_completed(futures):
             records.append(future.result())
             completed += 1
@@ -318,7 +378,27 @@ def collect_portal(output, download_files):
     atomic_write(portal_dir / "urn_availability_latest.json", json.dumps(availability_event, ensure_ascii=False, indent=2).encode("utf-8"))
     atomic_write(portal_dir / "catalog.json", json.dumps(catalog, ensure_ascii=False, indent=2).encode("utf-8"))
 
+    portal_total = 0
+    portal_local = 0
+    if download_files:
+        for dataset in datasets:
+            slug = safe_filename(dataset.get("name", "dataset"))
+            for resource in dataset.get("resources", []):
+                url = resource.get("url") or ""
+                basename = safe_filename(Path(urllib.parse.urlparse(url).path).name)
+                resource_id = safe_filename(str(resource.get("id", "")))[:12]
+                path = portal_dir / "files" / slug / f"{resource_id}--{basename}"
+                portal_total += 1
+                if path.exists() and path.stat().st_size:
+                    portal_local += 1
+        print("\nPanorama dos arquivos do portal:", flush=True)
+        print(f"- recursos oficiais encontrados: {portal_total}", flush=True)
+        print(f"- já disponíveis localmente: {portal_local}", flush=True)
+        print(f"- ainda para baixar: {portal_total-portal_local}\n", flush=True)
+
     records = []
+    portal_reused = 0
+    portal_downloaded = 0
     for dataset in datasets:
         slug = safe_filename(dataset.get("name", "dataset"))
         metadata_path = portal_dir / "metadata" / f"{slug}.json"
@@ -348,13 +428,18 @@ def collect_portal(output, download_files):
                     "reused": reused,
                     "captured_at_utc": iso_utc(),
                 })
-                suffix = " (já baixado; reutilizado)" if reused else ""
-                print(f"Portal: {slug} / {resource.get('name')}{suffix}", flush=True)
+                if reused:
+                    portal_reused += 1
+                else:
+                    portal_downloaded += 1
+                    print(f"Portal: {slug} / {resource.get('name')}", flush=True)
             except Exception as exc:
                 records.append({"kind": "portal-resource", "dataset": slug, "url": url, "path": str(path), "error": str(exc)})
 
     write_manifest(portal_dir / "manifest.jsonl", records)
     errors = [row for row in records if row.get("error")]
+    if download_files:
+        print(f"Portal concluído: {portal_reused} reutilizados · {portal_downloaded} baixados agora · {len(errors)} erros.\n", flush=True)
     summary = {
         "format": "tse-forensics-portal-v1",
         "created_at_utc": iso_utc(),
@@ -383,6 +468,8 @@ def main():
     if run_everything:
         print("Modo completo: snapshot nacional/UF/municípios + todos os arquivos do portal.", flush=True)
         print("O download oficial pode ocupar muitos GB e será retomado se for interrompido.\n", flush=True)
+    print_local_panorama(output)
+    print("", flush=True)
     summaries = []
     if args.command in ("snapshot", "all"):
         summaries.append(collect_live(output, args.workers))

@@ -447,3 +447,84 @@ Uma distribuição artificial pode, em princípio, ser construída para preserva
 Quanto mais dimensões independentes precisam fechar ao mesmo tempo, mais restritiva se torna qualquer hipótese de alteração.
 
 **Próxima fase prioritária:** após concluir a localização das 42 seções auxiliares de BA/MG, iniciar a Fase 3 — reconstrução temporal e cruzada entre cargos durante a janela da paralisação presidencial.
+
+
+---
+
+## 2026-10-05 — E0013 — Fechamento da investigação auxiliar BA/MG
+
+**Evento:** análise dos resultados versionados da Fase 1 atualizada e da Fase 2.
+
+**Commit dos resultados:** `3cf592b9730e588f3fdeb490adaab93952f51e48`
+
+### Resultado BA
+
+- `ts` estadual: **35.476**
+- soma de `ts` municipais: **35.476**
+- diferença estrutural de seções: **0**
+- `st` estadual: **35.476**
+- soma de `st` municipais: **35.470**
+- diferença de seções totalizadas: **6**
+- municípios ainda incompletos no snapshot: **3**
+- faltantes nesses municípios: **4 + 1 + 1 = 6**
+
+### Resultado MG
+
+- `ts` estadual: **52.062**
+- soma de `ts` municipais: **52.062**
+- diferença estrutural de seções: **0**
+- `st` estadual: **52.062**
+- soma de `st` municipais: **52.026**
+- diferença de seções totalizadas: **36**
+- municípios ainda incompletos no snapshot: **8**
+- faltantes nesses municípios: **4 + 3 + 9 + 7 + 1 + 6 + 1 + 5 = 36**
+
+### EA16
+
+A contagem de **seções principais** do EA16 fecha exatamente com o `ts` estadual:
+- BA: **35.476**
+- MG: **52.062**
+
+Portanto, não há evidência aqui de seções estaduais “extras” fora da estrutura municipal. A diferença observada decorre de arquivos EA20 municipais que permaneciam atrás do agregado estadual.
+
+### EA18 e artefatos de urna
+
+A Fase 2 consultou as seções das zonas investigadas:
+- BA: **285** seções consultadas;
+- MG: **175** seções consultadas;
+- total: **460** seções.
+
+Resultado:
+- **460/460** com EA18 disponível;
+- **460/460** com status `Totalizada`;
+- **460/460** listando `bu`;
+- **460/460** listando `rdv`;
+- **460/460** listando `log`;
+- **460/460** listando `vota`;
+- erros de consulta: **0**.
+
+**Conclusão limitada:** a divergência BA/MG é explicada por defasagem dos EA20 municipais/zonais em relação ao agregado estadual; não é uma discrepância estrutural na quantidade total de seções. Essa conclusão é específica a esta anomalia auxiliar.
+
+**Observação adicional importante:** em Joaíma/MG, o EA20 municipal preservado estava em **85% (34/40)**, enquanto o EA20 de zona consultado posteriormente já aparecia em **100% (40/40)**. Isso demonstra concretamente que diferentes abrangências/arquivos podem refletir versões temporais distintas.
+
+**Decisão:** encerrar BA/MG como trilha auxiliar explicada e retomar imediatamente a anomalia principal — a defasagem de milhões de votos na divulgação presidencial em comparação com cargos estaduais.
+
+---
+
+## 2026-10-05 — E0014 — Plano de viabilidade temporal para a Fase 3
+
+**Pergunta:** os arquivos oficiais atuais ainda preservam informação temporal suficiente para reconstruir quais seções já estavam disponíveis durante a janela da paralisação presidencial?
+
+A documentação técnica do TSE informa que os campos `da` e `ha` do EA16 registram data/hora de geração do arquivo auxiliar da seção e podem ser usados para identificar a chegada dos arquivos da urna.
+
+**Teste de viabilidade definido:**
+1. baixar/preservar EA16 das 27 UFs;
+2. usar apenas seções principais;
+3. construir histograma nacional minuto a minuto de `da/ha`;
+4. comparar essa cronologia com a série histórica presidencial já preservada;
+5. verificar se a cronologia atual do EA16 é compatível com a evolução observada no dia da eleição.
+
+**Decisão condicional:**
+- se os tempos EA16 preservarem a sequência da noite eleitoral, eles passam a ser o eixo temporal da reconstrução seção a seção;
+- se os tempos estiverem regenerados/agrupados posteriormente e não reproduzirem a evolução, a Fase 3 precisará depender de capturas históricas contemporâneas adicionais ou de outro artefato temporal oficial.
+

@@ -35,7 +35,28 @@ O backfill é uma captura externa de respostas públicas do TSE; por isso o pain
 
 ## Preservação dos dados
 
-O histórico local fica em `data/tse_history.sqlite3` e não é apagado quando o programa ou o navegador são fechados. Para manter uma segunda cópia portátil, use o botão **Backup JSON**; o arquivo baixado contém todos os pontos normalizados necessários para reconstruir a evolução do gráfico.
+O histórico local fica em `data/tse_history.sqlite3` e não é apagado quando o programa ou o navegador são fechados. Para manter uma segunda cópia portátil, use o botão **Backup JSON**; o arquivo inclui a série normalizada, o horário UTC de captura e os JSONs brutos recebidos do TSE.
+
+## Coleta forense oficial
+
+O script `collect_forensics.py` usa somente a biblioteca padrão do Python, grava cada arquivo com SHA-256 e produz manifestos para auditoria posterior.
+
+```bash
+# Descobre os conjuntos oficiais de 2026 disponíveis hoje e salva os metadados
+python collect_forensics.py portal
+
+# Preserva um snapshot nacional, por UF e de todos os municípios
+python collect_forensics.py snapshot
+
+# Baixa também todos os ZIP/CSV oficiais encontrados no portal
+# Atenção: o volume pode chegar a muitos GB.
+python collect_forensics.py portal --download-portal-files
+
+# Executa snapshot e coleta do portal numa única chamada
+python collect_forensics.py all --download-portal-files
+```
+
+Os arquivos ficam em `data/forensics/`. Cada snapshot recebe um diretório com timestamp UTC; downloads interrompidos usam arquivo temporário e podem ser retomados. Execute novamente o comando `portal` quando o TSE publicar novos conjuntos, como boletins de urna, votação por seção e arquivos transmitidos para totalização.
 
 ## Opções
 

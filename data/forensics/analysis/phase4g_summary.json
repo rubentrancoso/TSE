@@ -1,0 +1,77 @@
+{
+  "format": "tse-forensics-phase4g-order-invariance-v1",
+  "source": {
+    "url": "https://raw.githubusercontent.com/ArvorCo/PNAD/beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415/analysis/apuracao_2026/dados/linha_do_tempo.json",
+    "path": "data\\forensics\\external\\ArvorCo-PNAD\\beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415\\linha_do_tempo.json",
+    "sha256": "3e29b16d2827f88e407096d6fa494a3d1b862f8156633f1a7f905e799f70af73",
+    "bytes": 178854,
+    "reused": true
+  },
+  "window": {
+    "start_brt": "2026-10-04 20:04:39",
+    "end_brt": "2026-10-05 02:59:31",
+    "batches": 152,
+    "start_valid_votes": 100491132,
+    "final_valid_votes": 119300788,
+    "remaining_valid_votes": 18809656
+  },
+  "exact_cumulative": {
+    "lula_start_pct": 43.49215013320777,
+    "lula_final_pct": 45.1627679106361,
+    "lula_strict_increases": 152,
+    "lula_non_increases": 0,
+    "flavio_start_pct": 48.46621291916584,
+    "flavio_final_pct": 47.02777235637371,
+    "flavio_strict_decreases": 152,
+    "flavio_non_decreases": 0,
+    "note": "Percentuais recalculados dos votos inteiros cumulativos. Os 2 'empates' da Fase 4F eram arredondamento do campo pct a quatro casas; nos totais exatos são mudanças estritas."
+  },
+  "remaining_pool": {
+    "valid_votes": 18809656,
+    "lula_votes": 10173784,
+    "flavio_votes": 7400257,
+    "lula_share_pct": 54.088091775841086,
+    "flavio_share_pct": 39.34286198535476,
+    "lula_minus_flavio_margin_pp": 14.745229790486327
+  },
+  "batch_distribution": {
+    "all_batches_lula_gt_flavio": true,
+    "batches_lula_gt_flavio": 152,
+    "min_lula_batch_share_pct": 47.675323897550555,
+    "max_lula_batch_share_pct": 98.04469273743017,
+    "min_flavio_batch_share_pct": 0.8379888268156425,
+    "max_flavio_batch_share_pct": 46.21848739495798,
+    "min_lula_minus_flavio_batch_margin_pp": 2.8307348332102293
+  },
+  "order_invariance_certificate": {
+    "lula_adversarial_order": {
+      "candidate": "lula",
+      "adversarial_sort": "batch share descending",
+      "batches": 152,
+      "failures": [],
+      "failure_count": 0,
+      "minimum_headroom_pp": 2.513611422834998,
+      "final_simulated_pct": 45.1627679106361
+    },
+    "flavio_adversarial_order": {
+      "candidate": "flavio",
+      "adversarial_sort": "batch share ascending",
+      "batches": 152,
+      "failures": [],
+      "failure_count": 0,
+      "minimum_headroom_pp": 0.8092873831566081,
+      "final_simulated_pct": 47.02777235637371
+    },
+    "monotonic_for_any_permutation": true,
+    "logic": [
+      "Para Lula, ordenar os lotes por share Lula decrescente maximiza o acumulado antes de cada lote de share menor. Se nem nessa ordem um lote reduz o acumulado, nenhuma outra ordem reduz.",
+      "Para Flávio, ordenar por share Flávio crescente minimiza o acumulado antes de cada lote de share maior. Se nem nessa ordem um lote eleva o acumulado, nenhuma outra ordem eleva."
+    ]
+  },
+  "interpretation": [
+    "A sequência de 152 mudanças no mesmo sentido é real quando calculada diretamente dos votos inteiros.",
+    "Condicionando ao conjunto exato de lotes que restou após 20:04:39, a monotonicidade não depende da ordem observada se o certificado adversarial fechar sem falhas.",
+    "Nesse caso não faz sentido aplicar (1/2)^152 como probabilidade de uma 'sequência aleatória de caras/coroas': os lotes não são eventos equiprováveis nem independentes e têm composição geográfica sistemática.",
+    "A pergunta causal relevante passa a ser por que o conjunto remanescente era tão mais favorável a Lula. Fases 3J/3K mostraram que zonas tardias já tinham viés pró-Lula em 2022."
+  ]
+}

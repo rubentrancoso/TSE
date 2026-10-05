@@ -1,0 +1,463 @@
+{
+  "format": "tse-forensics-phase3c-cross-cargo-v1",
+  "source": {
+    "repo": "madebysandro/apuracao-2026",
+    "commit": "8917e32edb3aafd72664dc47a5ba53f576575197",
+    "description": "fixtures reais do TSE extraídas de uma gravação contemporânea; respostas brutas preservadas por ciclo"
+  },
+  "manifest": [
+    {
+      "cycle": "2026-10-04T21-36-05-598Z",
+      "key": "presidente_br",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-36-05-598Z/presidente.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-36-05-598Z\\presidente.json",
+      "sha256": "f3b90a4e3c7b21a224603c33d97972f1faf0b2e9c4a7a3c078ff6c0c9eae9ae0",
+      "bytes": 9228,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-36-05-598Z",
+      "key": "presidente_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-36-05-598Z/pres-pa.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-36-05-598Z\\pres-pa.json",
+      "sha256": "12b3403c99de1e6ca2ff2e499ca79adf3845c2bbacabd65231a7c79d90f0c93b",
+      "bytes": 9235,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-36-05-598Z",
+      "key": "governador_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-36-05-598Z/governador.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-36-05-598Z\\governador.json",
+      "sha256": "ab5eb077ca50ec1483cda9bc02aa14b86f997c4bc6b68a88569e0a1a66d13eef",
+      "bytes": 5766,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-36-05-598Z",
+      "key": "senador_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-36-05-598Z/senador.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-36-05-598Z\\senador.json",
+      "sha256": "a3a9932698b5b6e9d830f3ac4e3332c1c276882f23811e94bfd1819184f5352d",
+      "bytes": 10824,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-36-05-598Z",
+      "key": "depfed_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-36-05-598Z/depfed.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-36-05-598Z\\depfed.json",
+      "sha256": "2c4303b30285dcfba5099b329df385ecee7bb74095ee222c96403c3f61084191",
+      "bytes": 71045,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-36-05-598Z",
+      "key": "depest_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-36-05-598Z/depest.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-36-05-598Z\\depest.json",
+      "sha256": "3cd2fa24552ff9a9194db3cbe83c2b5b647b3771fa38c17453a75fa00966787c",
+      "bytes": 105530,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-38-48-884Z",
+      "key": "presidente_br",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-38-48-884Z/presidente.json",
+      "status": 404
+    },
+    {
+      "cycle": "2026-10-04T21-38-48-884Z",
+      "key": "presidente_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-38-48-884Z/pres-pa.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-38-48-884Z\\pres-pa.json",
+      "sha256": "5b9a42276772e1b35344d3c5d8a4b1e000112e2258a6504a59925b8ebbb10da6",
+      "bytes": 9238,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-38-48-884Z",
+      "key": "governador_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-38-48-884Z/governador.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-38-48-884Z\\governador.json",
+      "sha256": "05e598967b64f5cdb983a5da742754eaca4efd4750fbc21c4ca044da2e4ef2c6",
+      "bytes": 5766,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-38-48-884Z",
+      "key": "senador_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-38-48-884Z/senador.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-38-48-884Z\\senador.json",
+      "sha256": "a1e47b145a75fbff39af64ac8790038dc905cba044c02e6a99b51b2add65a996",
+      "bytes": 10827,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-38-48-884Z",
+      "key": "depfed_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-38-48-884Z/depfed.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-38-48-884Z\\depfed.json",
+      "sha256": "d843e74c76ffe4818cd0d4c49d8c41eec2cdb4806677c8addca2e13b9c34d618",
+      "bytes": 71058,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-38-48-884Z",
+      "key": "depest_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-38-48-884Z/depest.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-38-48-884Z\\depest.json",
+      "sha256": "3dc5da2ec230f6c18e8d20c753fe9eebcee66d23575fb02790dd48c08d5a66c4",
+      "bytes": 105538,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-39-46-908Z",
+      "key": "presidente_br",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-39-46-908Z/presidente.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-39-46-908Z\\presidente.json",
+      "sha256": "456111f19acdcaf3ad63ceb8da191bae3779655d478a578b79d2d5781a17b603",
+      "bytes": 9233,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-39-46-908Z",
+      "key": "presidente_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-39-46-908Z/pres-pa.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-39-46-908Z\\pres-pa.json",
+      "sha256": "08cbefc5f53f574adb760a8a0add4c67e4d8aa59d1be9d358e9eb31bd2bc4413",
+      "bytes": 9238,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-39-46-908Z",
+      "key": "governador_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-39-46-908Z/governador.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-39-46-908Z\\governador.json",
+      "sha256": "120d541cb85f9a9ca7bb05ca7659c9de2de95ca01b484b80b6041da86cbad64f",
+      "bytes": 5766,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-39-46-908Z",
+      "key": "senador_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-39-46-908Z/senador.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-39-46-908Z\\senador.json",
+      "sha256": "f0ed96cbe8c52c0a301635471844ec9de474a05f1e6a48305c44d7db79148085",
+      "bytes": 10827,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-39-46-908Z",
+      "key": "depfed_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-39-46-908Z/depfed.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-39-46-908Z\\depfed.json",
+      "sha256": "8b708a789dabb8c7c808a857ec663dc5a2a9eee9776884c5c5400cdf0fa9fc19",
+      "bytes": 71059,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-39-46-908Z",
+      "key": "depest_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-39-46-908Z/depest.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-39-46-908Z\\depest.json",
+      "sha256": "0ad03db5f81df077e9dfa4ee42e28ee10f9cc2e985cc6d1ff587a02171392e79",
+      "bytes": 105540,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-44-49-070Z",
+      "key": "presidente_br",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-44-49-070Z/presidente.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-44-49-070Z\\presidente.json",
+      "sha256": "8d94ebc9c9260c476eaeaaf2a78acb46482bbf8520a5754665d601d4ef32a55d",
+      "bytes": 9235,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-44-49-070Z",
+      "key": "presidente_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-44-49-070Z/pres-pa.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-44-49-070Z\\pres-pa.json",
+      "sha256": "264efb13e13a743fd83c178c82d79f4db56e0eaccdba195a1983cd751ad30ea7",
+      "bytes": 9242,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-44-49-070Z",
+      "key": "governador_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-44-49-070Z/governador.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-44-49-070Z\\governador.json",
+      "sha256": "a58f12736072640c06a538b7beaceda18d2f715cb327dd377234dde5bcf84f30",
+      "bytes": 5774,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-44-49-070Z",
+      "key": "senador_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-44-49-070Z/senador.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-44-49-070Z\\senador.json",
+      "sha256": "8b6c5ed68bc380810a9c306001db87a82338344f0598a274fa9851e4a9a0f8e0",
+      "bytes": 10833,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-44-49-070Z",
+      "key": "depfed_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-44-49-070Z/depfed.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-44-49-070Z\\depfed.json",
+      "sha256": "9e101e46b0c14bd4ec7d82ca3237fbffb5387165e0d8d11178f6b589533b7b08",
+      "bytes": 71071,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T21-44-49-070Z",
+      "key": "depest_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T21-44-49-070Z/depest.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T21-44-49-070Z\\depest.json",
+      "sha256": "1accdee86258fc378d1ed40f3dc26852fc73a1e2c2c8db004200ce4d96322daa",
+      "bytes": 105560,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T23-17-25-721Z",
+      "key": "presidente_br",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T23-17-25-721Z/presidente.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T23-17-25-721Z\\presidente.json",
+      "sha256": "d7600228d3776e5889a8682b2bcbfebe1332cb5ee464ad8d4dd09deaa56cbe56",
+      "bytes": 9253,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T23-17-25-721Z",
+      "key": "presidente_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T23-17-25-721Z/pres-pa.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T23-17-25-721Z\\pres-pa.json",
+      "sha256": "c9907920370e2f30a60ec0b0b19e03d23cb5dad285b9d7925074ee1ac9b3b8f8",
+      "bytes": 9251,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T23-17-25-721Z",
+      "key": "governador_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T23-17-25-721Z/governador.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T23-17-25-721Z\\governador.json",
+      "sha256": "e88a1e6f4850878dda3701ce09111ad281538ca32442848daf2ceb396727aa58",
+      "bytes": 5773,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T23-17-25-721Z",
+      "key": "senador_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T23-17-25-721Z/senador.json",
+      "status": 404
+    },
+    {
+      "cycle": "2026-10-04T23-17-25-721Z",
+      "key": "depfed_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T23-17-25-721Z/depfed.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-04T23-17-25-721Z\\depfed.json",
+      "sha256": "bdf979090dcac3616d0b19db3be48609f18c262066029824e2dcb3522d1d8125",
+      "bytes": 71153,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-04T23-17-25-721Z",
+      "key": "depest_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-04T23-17-25-721Z/depest.json",
+      "status": 404
+    },
+    {
+      "cycle": "2026-10-05T00-01-02-086Z",
+      "key": "presidente_br",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-05T00-01-02-086Z/presidente.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-05T00-01-02-086Z\\presidente.json",
+      "sha256": "0c19dfe033bcce7f3b22e9942e6e6e7db0f4f9883bc008cffbba0da1dd6ad2ae",
+      "bytes": 9249,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-05T00-01-02-086Z",
+      "key": "presidente_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-05T00-01-02-086Z/pres-pa.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-05T00-01-02-086Z\\pres-pa.json",
+      "sha256": "3baa2fbcee1ef17ca5f43ff2e99cd591859b89176f6ae2cccd80e0c9ca782214",
+      "bytes": 9249,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-05T00-01-02-086Z",
+      "key": "governador_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-05T00-01-02-086Z/governador.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-05T00-01-02-086Z\\governador.json",
+      "sha256": "681793814f0df338dbe5c2fa169b97dca22097476d1048ba47b56ee3837cd57a",
+      "bytes": 5769,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-05T00-01-02-086Z",
+      "key": "senador_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-05T00-01-02-086Z/senador.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-05T00-01-02-086Z\\senador.json",
+      "sha256": "63e73c2cbe4d46205f78290e7e48204db0393d4052a77499370f139870c1daa9",
+      "bytes": 10844,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-05T00-01-02-086Z",
+      "key": "depfed_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-05T00-01-02-086Z/depfed.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-05T00-01-02-086Z\\depfed.json",
+      "sha256": "02a7a5dd4c1bc3851f5ce1539ee2bfa4b5364b0e3b17e54895f54b353536d070",
+      "bytes": 71159,
+      "reused": false,
+      "status": 200
+    },
+    {
+      "cycle": "2026-10-05T00-01-02-086Z",
+      "key": "depest_pa",
+      "url": "https://raw.githubusercontent.com/madebysandro/apuracao-2026/8917e32edb3aafd72664dc47a5ba53f576575197/fixtures/tse-provisorio/2026-10-05T00-01-02-086Z/depest.json",
+      "path": "data\\forensics\\external\\madebysandro-apuracao-2026\\8917e32edb3aafd72664dc47a5ba53f576575197\\2026-10-05T00-01-02-086Z\\depest.json",
+      "sha256": "2d6bdd6a57c78bb860de48f430c89ef56cbb3def6712e40a3bb29c4ddc98292d",
+      "bytes": 105676,
+      "reused": false,
+      "status": 200
+    }
+  ],
+  "cycles_requested": 6,
+  "records_loaded": 33,
+  "alignment_cycles": 6,
+  "pa_state_cargo_alignment": {
+    "max_spread_sections_among_6259_cargos": 4,
+    "max_abs_president_pa_vs_state_median_sections": 66,
+    "landmarks": [
+      {
+        "cycle_utc": "2026-10-04T21-36-05-598Z",
+        "pres_br_st": 159242,
+        "pres_br_hg": "18:32:24",
+        "pres_pa_st": 9210,
+        "pres_pa_hg": "18:34:37",
+        "state_cargos_n": 4,
+        "state_st_min": 9247,
+        "state_st_max": 9247,
+        "state_st_spread": 0,
+        "state_st_median": 9247.0,
+        "pres_pa_minus_state_median": -37,
+        "abs_pres_pa_minus_state_median": 37,
+        "governador_st": 9247,
+        "senador_st": 9247,
+        "depfed_st": 9247,
+        "depest_st": 9247
+      },
+      {
+        "cycle_utc": "2026-10-04T21-39-46-908Z",
+        "pres_br_st": 182745,
+        "pres_br_hg": "18:37:14",
+        "pres_pa_st": 9764,
+        "pres_pa_hg": "18:38:50",
+        "state_cargos_n": 4,
+        "state_st_min": 9819,
+        "state_st_max": 9819,
+        "state_st_spread": 0,
+        "state_st_median": 9819.0,
+        "pres_pa_minus_state_median": -55,
+        "abs_pres_pa_minus_state_median": 55,
+        "governador_st": 9819,
+        "senador_st": 9819,
+        "depfed_st": 9819,
+        "depest_st": 9819
+      },
+      {
+        "cycle_utc": "2026-10-04T21-44-49-070Z",
+        "pres_br_st": 207533,
+        "pres_br_hg": "18:43:29",
+        "pres_pa_st": 10636,
+        "pres_pa_hg": "18:44:10",
+        "state_cargos_n": 4,
+        "state_st_min": 10570,
+        "state_st_max": 10570,
+        "state_st_spread": 0,
+        "state_st_median": 10570.0,
+        "pres_pa_minus_state_median": 66,
+        "abs_pres_pa_minus_state_median": 66,
+        "governador_st": 10570,
+        "senador_st": 10570,
+        "depfed_st": 10570,
+        "depest_st": 10570
+      },
+      {
+        "cycle_utc": "2026-10-04T23-17-25-721Z",
+        "pres_br_st": 449547,
+        "pres_br_hg": "20:16:43",
+        "pres_pa_st": 18258,
+        "pres_pa_hg": "20:16:19",
+        "state_cargos_n": 2,
+        "state_st_min": 18272,
+        "state_st_max": 18272,
+        "state_st_spread": 0,
+        "state_st_median": 18272.0,
+        "pres_pa_minus_state_median": -14,
+        "abs_pres_pa_minus_state_median": 14,
+        "governador_st": 18272,
+        "senador_st": null,
+        "depfed_st": 18272,
+        "depest_st": null
+      },
+      {
+        "cycle_utc": "2026-10-05T00-01-02-086Z",
+        "pres_br_st": 490242,
+        "pres_br_hg": "21:00:07",
+        "pres_pa_st": 20149,
+        "pres_pa_hg": "20:59:39",
+        "state_cargos_n": 4,
+        "state_st_min": 20188,
+        "state_st_max": 20188,
+        "state_st_spread": 0,
+        "state_st_median": 20188.0,
+        "pres_pa_minus_state_median": -39,
+        "abs_pres_pa_minus_state_median": 39,
+        "governador_st": 20188,
+        "senador_st": 20188,
+        "depfed_st": 20188,
+        "depest_st": 20188
+      }
+    ]
+  },
+  "interpretation": [
+    "Nos ciclos preservados, Governador/Senador/Deputados do Pará operam sobre contagens de seções iguais ou quase iguais entre si; isso é compatível com a origem comum nos mesmos boletins/seções.",
+    "O arquivo de Presidente do Pará acompanha os cargos estaduais com diferenças pequenas de dezenas de seções, explicáveis pela geração assíncrona dos arquivos dentro do mesmo ciclo de captura.",
+    "A fonte preserva ciclos imediatamente antes (~18:36–18:44) e depois (~20:16 e ~21:00) do período crítico, mas não contém ciclos entre ~18:44 e ~20:16; portanto não mede diretamente Governador durante 18:49–19:32.",
+    "O resultado fortalece a premissa técnica de que, quando uma seção está disponível na camada estadual, os diferentes cargos do mesmo estado avançam em conjunto; a próxima busca deve procurar snapshots adicionais especificamente dentro de 18:49–19:32."
+  ]
+}

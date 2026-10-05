@@ -1,0 +1,392 @@
+{
+  "format": "tse-forensics-phase3k-residual-timing-v1",
+  "input": "data\\forensics\\analysis\\phase3j_zone_rows.csv",
+  "usable_zones_with_2022": 6070,
+  "n_ufs": 27,
+  "spearman_delta_margin": {
+    "median": 0.10881870445211798,
+    "positive_ufs": 20,
+    "negative_ufs": 7
+  },
+  "delta_of_gradient_by_uf": {
+    "median_pp": 1.3329410580974521,
+    "positive_ufs": 16,
+    "negative_ufs": 11
+  },
+  "pooled_within_uf_quartiles": {
+    "early_2026": {
+      "validos": 19366911,
+      "lula": 8879370,
+      "direita": 9045247,
+      "margem_lula_menos_direita_pp": -0.8564969395480776
+    },
+    "late_2026": {
+      "validos": 39866538,
+      "lula": 18389742,
+      "direita": 18292199,
+      "margem_lula_menos_direita_pp": 0.24467386658956944
+    },
+    "late_minus_early_2026_pp": 1.101170806137647,
+    "early_2022": {
+      "validos": 19379670,
+      "lula": 9465858,
+      "direita": 8331750,
+      "margem_lula_menos_direita_pp": 5.852050112308414
+    },
+    "late_2022": {
+      "validos": 39601160,
+      "lula": 19537181,
+      "direita": 16640948,
+      "margem_lula_menos_direita_pp": 7.313505462971286
+    },
+    "late_minus_early_2022_pp": 1.461455350662872,
+    "delta_of_late_gradient_2026_minus_2022_pp": -0.36028454452522496
+  },
+  "key_ufs": [
+    {
+      "uf": "AM",
+      "n_zonas": 74,
+      "spearman_complete_vs_delta_margin_pp": -0.14401658807259834,
+      "early_margin_2026_pp": -14.228440290872895,
+      "late_margin_2026_pp": 36.09237421018937,
+      "late_minus_early_2026_pp": 50.320814501062266,
+      "early_margin_2022_pp": -13.040305365987024,
+      "late_margin_2022_pp": 43.50792375464066,
+      "late_minus_early_2022_pp": 56.54822912062768,
+      "delta_of_late_gradient_2026_minus_2022_pp": -6.227414619565415
+    },
+    {
+      "uf": "BA",
+      "n_zonas": 446,
+      "spearman_complete_vs_delta_margin_pp": -0.06558203273475083,
+      "early_margin_2026_pp": 34.58955709645145,
+      "late_margin_2026_pp": 44.46190098426983,
+      "late_minus_early_2026_pp": 9.872343887818381,
+      "early_margin_2022_pp": 41.357888106093704,
+      "late_margin_2022_pp": 52.86910669220638,
+      "late_minus_early_2022_pp": 11.511218586112676,
+      "delta_of_late_gradient_2026_minus_2022_pp": -1.6388746982942948
+    },
+    {
+      "uf": "CE",
+      "n_zonas": 205,
+      "spearman_complete_vs_delta_margin_pp": -0.15139067913675766,
+      "early_margin_2026_pp": 23.06623507083004,
+      "late_margin_2026_pp": 40.146187557137395,
+      "late_minus_early_2026_pp": 17.079952486307356,
+      "early_margin_2022_pp": 29.410217191801774,
+      "late_margin_2022_pp": 50.96012208877978,
+      "late_minus_early_2022_pp": 21.549904896978003,
+      "delta_of_late_gradient_2026_minus_2022_pp": -4.469952410670647
+    },
+    {
+      "uf": "MA",
+      "n_zonas": 219,
+      "spearman_complete_vs_delta_margin_pp": 0.19967043143766297,
+      "early_margin_2026_pp": 31.976312615655175,
+      "late_margin_2026_pp": 36.20557301084641,
+      "late_minus_early_2026_pp": 4.229260395191233,
+      "early_margin_2022_pp": 41.09917533527082,
+      "late_margin_2022_pp": 45.43479427069363,
+      "late_minus_early_2022_pp": 4.335618935422808,
+      "delta_of_late_gradient_2026_minus_2022_pp": -0.1063585402315752
+    },
+    {
+      "uf": "MG",
+      "n_zonas": 891,
+      "spearman_complete_vs_delta_margin_pp": 0.07947253945399811,
+      "early_margin_2026_pp": -9.23864791763536,
+      "late_margin_2026_pp": 3.0367111475775705,
+      "late_minus_early_2026_pp": 12.27535906521293,
+      "early_margin_2022_pp": 0.07924003942139135,
+      "late_margin_2022_pp": 13.015632433258421,
+      "late_minus_early_2022_pp": 12.93639239383703,
+      "delta_of_late_gradient_2026_minus_2022_pp": -0.6610333286241001
+    },
+    {
+      "uf": "PA",
+      "n_zonas": 159,
+      "spearman_complete_vs_delta_margin_pp": 0.046594773482822247,
+      "early_margin_2026_pp": -2.0284374971049894,
+      "late_margin_2026_pp": 23.40605920614005,
+      "late_minus_early_2026_pp": 25.43449670324504,
+      "early_margin_2022_pp": 1.5837348253293961,
+      "late_margin_2022_pp": 30.199687097077064,
+      "late_minus_early_2022_pp": 28.615952271747666,
+      "delta_of_late_gradient_2026_minus_2022_pp": -3.181455568502628
+    },
+    {
+      "uf": "PE",
+      "n_zonas": 209,
+      "spearman_complete_vs_delta_margin_pp": -0.3171224032522995,
+      "early_margin_2026_pp": 29.223628469591457,
+      "late_margin_2026_pp": 42.82279705277226,
+      "late_minus_early_2026_pp": 13.599168583180802,
+      "early_margin_2022_pp": 29.853788002500647,
+      "late_margin_2022_pp": 49.20691761477719,
+      "late_minus_early_2022_pp": 19.353129612276543,
+      "delta_of_late_gradient_2026_minus_2022_pp": -5.753961029095741
+    },
+    {
+      "uf": "SP",
+      "n_zonas": 768,
+      "spearman_complete_vs_delta_margin_pp": 0.34477000560074034,
+      "early_margin_2026_pp": -30.984309243919935,
+      "late_margin_2026_pp": -7.438783635555432,
+      "late_minus_early_2026_pp": 23.545525608364503,
+      "early_margin_2022_pp": -21.363796805515808,
+      "late_margin_2022_pp": -0.6330280825736714,
+      "late_minus_early_2022_pp": 20.730768722942138,
+      "delta_of_late_gradient_2026_minus_2022_pp": 2.8147568854223657
+    }
+  ],
+  "largest_positive_delta_gradient": [
+    {
+      "uf": "RR",
+      "n_zonas": 14,
+      "spearman_complete_vs_delta_margin_pp": 0.42857142857142855,
+      "early_margin_2026_pp": -49.51759200415969,
+      "late_margin_2026_pp": -14.753099691822547,
+      "late_minus_early_2026_pp": 34.76449231233714,
+      "early_margin_2022_pp": -41.43345158323479,
+      "late_margin_2022_pp": -18.144698226362127,
+      "late_minus_early_2022_pp": 23.288753356872665,
+      "delta_of_late_gradient_2026_minus_2022_pp": 11.475738955464475
+    },
+    {
+      "uf": "AP",
+      "n_zonas": 17,
+      "spearman_complete_vs_delta_margin_pp": 0.46343181345198725,
+      "early_margin_2026_pp": 10.46997624560243,
+      "late_margin_2026_pp": -5.673479020850081,
+      "late_minus_early_2026_pp": -16.143455266452513,
+      "early_margin_2022_pp": 18.753591954022987,
+      "late_margin_2022_pp": -4.581040562479476,
+      "late_minus_early_2022_pp": -23.334632516502463,
+      "delta_of_late_gradient_2026_minus_2022_pp": 7.19117725004995
+    },
+    {
+      "uf": "TO",
+      "n_zonas": 140,
+      "spearman_complete_vs_delta_margin_pp": 0.1551752799691238,
+      "early_margin_2026_pp": 5.642423785251679,
+      "late_margin_2026_pp": -15.134925226143126,
+      "late_minus_early_2026_pp": -20.777349011394804,
+      "early_margin_2022_pp": 21.835040924961366,
+      "late_margin_2022_pp": -3.7027890030969495,
+      "late_minus_early_2022_pp": -25.537829928058315,
+      "delta_of_late_gradient_2026_minus_2022_pp": 4.760480916663511
+    },
+    {
+      "uf": "RS",
+      "n_zonas": 522,
+      "spearman_complete_vs_delta_margin_pp": 0.13894894761338905,
+      "early_margin_2026_pp": -28.33371433059249,
+      "late_margin_2026_pp": -16.582304870696376,
+      "late_minus_early_2026_pp": 11.751409459896113,
+      "early_margin_2022_pp": -11.681922746781115,
+      "late_margin_2022_pp": -4.518701141991518,
+      "late_minus_early_2022_pp": 7.163221604789597,
+      "delta_of_late_gradient_2026_minus_2022_pp": 4.588187855106516
+    },
+    {
+      "uf": "AL",
+      "n_zonas": 107,
+      "spearman_complete_vs_delta_margin_pp": 0.10932444436431739,
+      "early_margin_2026_pp": 27.860201331368966,
+      "late_margin_2026_pp": 9.578747375087497,
+      "late_minus_early_2026_pp": -18.281453956281467,
+      "early_margin_2022_pp": 36.80265513126491,
+      "late_margin_2022_pp": 14.252533166705401,
+      "late_minus_early_2022_pp": -22.550121964559512,
+      "delta_of_late_gradient_2026_minus_2022_pp": 4.268668008278045
+    },
+    {
+      "uf": "RN",
+      "n_zonas": 172,
+      "spearman_complete_vs_delta_margin_pp": 0.10366780195366998,
+      "early_margin_2026_pp": 40.13500244294652,
+      "late_margin_2026_pp": 18.36984889153068,
+      "late_minus_early_2026_pp": -21.765153551415843,
+      "early_margin_2022_pp": 49.63417916656471,
+      "late_margin_2022_pp": 24.28242165826816,
+      "late_minus_early_2022_pp": -25.351757508296547,
+      "delta_of_late_gradient_2026_minus_2022_pp": 3.5866039568807047
+    },
+    {
+      "uf": "AC",
+      "n_zonas": 23,
+      "spearman_complete_vs_delta_margin_pp": -0.003952569169960474,
+      "early_margin_2026_pp": -35.639884475166895,
+      "late_margin_2026_pp": -37.51278282749009,
+      "late_minus_early_2026_pp": -1.8728983523231975,
+      "early_margin_2022_pp": -30.883648352754637,
+      "late_margin_2022_pp": -36.187294682821225,
+      "late_minus_early_2022_pp": -5.303646330066588,
+      "delta_of_late_gradient_2026_minus_2022_pp": 3.4307479777433905
+    },
+    {
+      "uf": "PB",
+      "n_zonas": 230,
+      "spearman_complete_vs_delta_margin_pp": 0.10881870445211798,
+      "early_margin_2026_pp": 49.0334270776316,
+      "late_margin_2026_pp": 20.984925216736926,
+      "late_minus_early_2026_pp": -28.048501860894675,
+      "early_margin_2022_pp": 57.85124617953808,
+      "late_margin_2022_pp": 26.67380484640059,
+      "late_minus_early_2022_pp": -31.17744133313749,
+      "delta_of_late_gradient_2026_minus_2022_pp": 3.1289394722428163
+    },
+    {
+      "uf": "MT",
+      "n_zonas": 146,
+      "spearman_complete_vs_delta_margin_pp": 0.09603398297630113,
+      "early_margin_2026_pp": -40.78120915142212,
+      "late_margin_2026_pp": -29.019655182208083,
+      "late_minus_early_2026_pp": 11.761553969214035,
+      "early_margin_2022_pp": -26.993606509735542,
+      "late_margin_2022_pp": -18.359761728781333,
+      "late_minus_early_2022_pp": 8.63384478095421,
+      "delta_of_late_gradient_2026_minus_2022_pp": 3.127709188259825
+    },
+    {
+      "uf": "SP",
+      "n_zonas": 768,
+      "spearman_complete_vs_delta_margin_pp": 0.34477000560074034,
+      "early_margin_2026_pp": -30.984309243919935,
+      "late_margin_2026_pp": -7.438783635555432,
+      "late_minus_early_2026_pp": 23.545525608364503,
+      "early_margin_2022_pp": -21.363796805515808,
+      "late_margin_2022_pp": -0.6330280825736714,
+      "late_minus_early_2022_pp": 20.730768722942138,
+      "delta_of_late_gradient_2026_minus_2022_pp": 2.8147568854223657
+    }
+  ],
+  "largest_negative_delta_gradient": [
+    {
+      "uf": "AM",
+      "n_zonas": 74,
+      "spearman_complete_vs_delta_margin_pp": -0.14401658807259834,
+      "early_margin_2026_pp": -14.228440290872895,
+      "late_margin_2026_pp": 36.09237421018937,
+      "late_minus_early_2026_pp": 50.320814501062266,
+      "early_margin_2022_pp": -13.040305365987024,
+      "late_margin_2022_pp": 43.50792375464066,
+      "late_minus_early_2022_pp": 56.54822912062768,
+      "delta_of_late_gradient_2026_minus_2022_pp": -6.227414619565415
+    },
+    {
+      "uf": "PE",
+      "n_zonas": 209,
+      "spearman_complete_vs_delta_margin_pp": -0.3171224032522995,
+      "early_margin_2026_pp": 29.223628469591457,
+      "late_margin_2026_pp": 42.82279705277226,
+      "late_minus_early_2026_pp": 13.599168583180802,
+      "early_margin_2022_pp": 29.853788002500647,
+      "late_margin_2022_pp": 49.20691761477719,
+      "late_minus_early_2022_pp": 19.353129612276543,
+      "delta_of_late_gradient_2026_minus_2022_pp": -5.753961029095741
+    },
+    {
+      "uf": "CE",
+      "n_zonas": 205,
+      "spearman_complete_vs_delta_margin_pp": -0.15139067913675766,
+      "early_margin_2026_pp": 23.06623507083004,
+      "late_margin_2026_pp": 40.146187557137395,
+      "late_minus_early_2026_pp": 17.079952486307356,
+      "early_margin_2022_pp": 29.410217191801774,
+      "late_margin_2022_pp": 50.96012208877978,
+      "late_minus_early_2022_pp": 21.549904896978003,
+      "delta_of_late_gradient_2026_minus_2022_pp": -4.469952410670647
+    },
+    {
+      "uf": "DF",
+      "n_zonas": 19,
+      "spearman_complete_vs_delta_margin_pp": -0.6444251825204814,
+      "early_margin_2026_pp": -11.000655382327363,
+      "late_margin_2026_pp": -18.6416766500303,
+      "late_minus_early_2026_pp": -7.641021267702936,
+      "early_margin_2022_pp": -14.496152856039586,
+      "late_margin_2022_pp": -18.285940517037798,
+      "late_minus_early_2022_pp": -3.7897876609982113,
+      "delta_of_late_gradient_2026_minus_2022_pp": -3.8512336067047244
+    },
+    {
+      "uf": "PA",
+      "n_zonas": 159,
+      "spearman_complete_vs_delta_margin_pp": 0.046594773482822247,
+      "early_margin_2026_pp": -2.0284374971049894,
+      "late_margin_2026_pp": 23.40605920614005,
+      "late_minus_early_2026_pp": 25.43449670324504,
+      "early_margin_2022_pp": 1.5837348253293961,
+      "late_margin_2022_pp": 30.199687097077064,
+      "late_minus_early_2022_pp": 28.615952271747666,
+      "delta_of_late_gradient_2026_minus_2022_pp": -3.181455568502628
+    },
+    {
+      "uf": "SE",
+      "n_zonas": 77,
+      "spearman_complete_vs_delta_margin_pp": -0.08062427539452204,
+      "early_margin_2026_pp": 27.81995824348251,
+      "late_margin_2026_pp": 35.01875005219948,
+      "late_minus_early_2026_pp": 7.198791808716969,
+      "early_margin_2022_pp": 28.429808816435095,
+      "late_margin_2022_pp": 38.32751257672476,
+      "late_minus_early_2022_pp": 9.897703760289662,
+      "delta_of_late_gradient_2026_minus_2022_pp": -2.6989119515726934
+    },
+    {
+      "uf": "PR",
+      "n_zonas": 418,
+      "spearman_complete_vs_delta_margin_pp": 0.020596531258790966,
+      "early_margin_2026_pp": -26.16380098014785,
+      "late_margin_2026_pp": -25.913110318227574,
+      "late_minus_early_2026_pp": 0.25069066192027734,
+      "early_margin_2022_pp": -17.417546244887117,
+      "late_margin_2022_pp": -14.641070941996501,
+      "late_minus_early_2022_pp": 2.7764753028906153,
+      "delta_of_late_gradient_2026_minus_2022_pp": -2.525784640970338
+    },
+    {
+      "uf": "BA",
+      "n_zonas": 446,
+      "spearman_complete_vs_delta_margin_pp": -0.06558203273475083,
+      "early_margin_2026_pp": 34.58955709645145,
+      "late_margin_2026_pp": 44.46190098426983,
+      "late_minus_early_2026_pp": 9.872343887818381,
+      "early_margin_2022_pp": 41.357888106093704,
+      "late_margin_2022_pp": 52.86910669220638,
+      "late_minus_early_2022_pp": 11.511218586112676,
+      "delta_of_late_gradient_2026_minus_2022_pp": -1.6388746982942948
+    },
+    {
+      "uf": "MG",
+      "n_zonas": 891,
+      "spearman_complete_vs_delta_margin_pp": 0.07947253945399811,
+      "early_margin_2026_pp": -9.23864791763536,
+      "late_margin_2026_pp": 3.0367111475775705,
+      "late_minus_early_2026_pp": 12.27535906521293,
+      "early_margin_2022_pp": 0.07924003942139135,
+      "late_margin_2022_pp": 13.015632433258421,
+      "late_minus_early_2022_pp": 12.93639239383703,
+      "delta_of_late_gradient_2026_minus_2022_pp": -0.6610333286241001
+    },
+    {
+      "uf": "MS",
+      "n_zonas": 88,
+      "spearman_complete_vs_delta_margin_pp": 0.316191411108916,
+      "early_margin_2026_pp": -24.837369293098526,
+      "late_margin_2026_pp": -21.79199746041104,
+      "late_minus_early_2026_pp": 3.0453718326874863,
+      "early_margin_2022_pp": -14.70309747504404,
+      "late_margin_2022_pp": -11.48288781733564,
+      "late_minus_early_2022_pp": 3.2202096577083985,
+      "delta_of_late_gradient_2026_minus_2022_pp": -0.17483782502091216
+    }
+  ],
+  "interpretation_rules": [
+    "Pooled delta-of-gradient <= 0 means the late-zone Lula advantage was no stronger in 2026 than in the same geographic ordering in 2022.",
+    "Positive Spearman for delta_margin means later zones shifted more toward Lula relative to 2022; this can coexist with a pooled delta-of-gradient that is negative because zone sizes differ.",
+    "This is a historical-control test, not causal proof. Candidate field, turnout, third-party vote and rezoneamento differ across elections."
+  ]
+}

@@ -24,7 +24,7 @@ Investigar de forma reproduzível a defasagem observada na divulgação da elei�
 - A monotonicidade é invariante à ordem dos mesmos 152 lotes; portanto `(1/2)^152` não é um modelo probabilístico válido para o fenômeno.
 - Zonas que concluem mais tarde são estruturalmente mais pró-Lula. Esse gradiente também aparece nas mesmas zonas em 2022.
 - Na Fase 4H, no corte 20:04, a diferença LATE−EARLY da margem foi +24,39 pp em 2026 e +23,64 pp em 2022; delta histórico de apenas +0,75 pp.
-- O total final das zonas ainda incompletas às 20:04 é 3,46× maior que o pool real restante. Logo horário de conclusão de zona caracteriza a geografia tardia, mas não reconstrói sozinho os votos que entraram depois do corte.
+- O total final das zonas ainda incompletas às 20:04 é 3,46× maior que o pool real restante. Logo horário de conclusão de zona caracteriza a geografia tardia, mas não reconstrói sozinho os votos que entraram depois do corte.\n- A Fase 4I mostrou que os snapshots locais cobrem apenas 999.110 válidos, ou 5,31% do pool pós-20:04.\n- Uma captura independente já preservada às 20:05:57 contém os 28 agregados exatos por UF/ZZ. Ela permite reconstruir 18.480.901 válidos, **98,25%** do pool pós-20:04; ficam sem geografia exata apenas 328.755 válidos (1,75%), correspondentes aos 78 segundos iniciais.
 
 ## Alegações já testadas
 
@@ -37,17 +37,17 @@ Investigar de forma reproduzível a defasagem observada na divulgação da elei�
 
 ## O que ainda falta
 
-A principal lacuna é reconstruir geograficamente o conjunto exato de 18.809.656 votos incorporados depois de 20:04:39. Os snapshots locais conhecidos começam cerca de 21:20 BRT, portanto podem cobrir somente a cauda desse pool. A reconstrução completa exige histórico de versões por UF/município/zona no corte de 20:04, como o banco bruto do coletor externo ou fonte temporal equivalente.
+A lacuna geográfica foi reduzida drasticamente: a captura independente das 20:05:57 permite cobrir 98,25% do pool pós-retomada. Restam sem atribuição geográfica exata apenas 328.755 votos válidos entre 20:04:39 e 20:05:57.
 
 Também permanece aberta a busca por uma série nacional de 2022 com resolução temporal comparável.
 
 ## Próxima fase
 
-**Fase 4I — auditoria de cobertura e reconstrução da cauda local.**
+**Fase 4J — reconstrução geográfica quase completa do pool pós-retomada.**
 
 Objetivos:
-- medir exatamente quanto do pool pós-20:04 é coberto pelos snapshots locais;
-- reconstruir por UF o trecho entre o primeiro snapshot local útil e o final;
-- reconciliar essa soma com o delta nacional;
-- registrar quantitativamente a lacuna 20:04→primeiro snapshot local;
-- decidir se a próxima etapa exige obter o histórico bruto externo ou se os dados locais bastam.
+- reconstruir por UF o trecho 20:05:57→final;
+- fechar o corte independente e o final;
+- medir a composição Lula/Flávio dos 18,48 milhões reconstruídos;
+- identificar quais UFs explicam o pool tardio;
+- comparar essa geografia com os controles históricos já obtidos.

@@ -793,3 +793,109 @@ O script:
 - `phase3c_pa_alignment.csv`
 
 **Próxima ação:** executar a Fase 3C, versionar os derivados e depois ampliar a busca por capturas contemporâneas dentro de 18:49–19:32, priorizando snapshots de Governador/Presidente da mesma UF.
+
+
+---
+
+## 2026-10-05 — E0020 — Resultado da Fase 3C: alinhamento entre cargos estaduais e Presidente/PA
+
+**Evento:** análise dos resultados versionados da Fase 3C.
+
+**Commit dos resultados:** `1321549ea56c54e0e016f2245e3db3a800e2a9bc`
+
+**Cobertura:** 6 ciclos contemporâneos preservados; 33 arquivos brutos carregados.
+
+### Resultado
+
+Nos ciclos com Governador/Senador/Deputados do Pará:
+- a maior dispersão entre os cargos estaduais 6259 no mesmo ciclo foi de apenas **4 seções**;
+- em vários ciclos, os quatro cargos estaduais tinham exatamente o mesmo `st`;
+- a maior diferença absoluta entre Presidente/PA e a mediana dos cargos estaduais foi de **66 seções**.
+
+Exemplos:
+- ~18:36 BRT: Presidente/PA 9.210; quatro cargos estaduais 9.247;
+- ~18:39 BRT: Presidente/PA 9.764; quatro cargos estaduais 9.819;
+- ~18:44 BRT: Presidente/PA 10.636; quatro cargos estaduais 10.570;
+- ~20:17 BRT: Presidente/PA 18.258; Governador e Dep. Federal 18.272;
+- ~21:01 BRT: Presidente/PA 20.149; quatro cargos estaduais 20.188.
+
+**Interpretação limitada:** a captura confirma empiricamente que os cargos estaduais de uma mesma UF avançam sobre praticamente o mesmo conjunto de seções, e que Presidente/UF acompanha esse conjunto com defasagens pequenas de publicação. Isso é compatível com a origem comum nos mesmos boletins/urnas.
+
+**Limitação:** a fonte não cobre diretamente 18:49–19:32, portanto ainda não prova o comportamento de Governador durante toda a janela crítica.
+
+---
+
+## 2026-10-05 — E0021 — Hipótese: apenas os dois primeiros candidatos se moveriam nos grandes lotes
+
+**Evento:** foi levantada a observação visual de que, quando a atualização nacional de Presidente retorna, os dois primeiros colocados mudariam enquanto os demais candidatos permaneceriam praticamente parados.
+
+**Status inicial:** hipótese testável; não será aceita nem rejeitada por inspeção visual do gráfico.
+
+### Razão metodológica
+
+Em um gráfico com eixo vertical de dezenas de milhões de votos:
+- um candidato que ganha 10–12 milhões de votos produz deslocamento visual muito grande;
+- um candidato com 2–3% dos votos pode ganhar 500–700 mil votos no mesmo lote e parecer quase horizontal na mesma escala.
+
+Portanto, o teste correto precisa comparar:
+1. delta absoluto de votos;
+2. participação do candidato no lote;
+3. participação acumulada antes do lote;
+4. mudança em pontos percentuais;
+5. posteriormente, composição geográfica do lote.
+
+### Inspeção preliminar dos dados nacionais preservados
+
+No grande destravamento de **20:04:39**, o lote contém **24.728.306 votos válidos**.
+
+Deltas observados:
+- Flávio Bolsonaro: **+11.137.351**
+- Lula: **+11.697.901**
+- Augusto Cury: **+710.669**
+- Renan Santos: **+553.291**
+- Ronaldo Caiado: **+508.289**
+- demais candidatos agrupados: **+120.805**
+
+Logo, os candidatos fora do top 2 somaram **+1.893.054 votos** no lote, equivalentes a **7,655%** dos votos válidos adicionados. Nenhum desses grupos teve delta zero.
+
+Comparação de participação acumulada antes do lote versus participação dentro do lote:
+- Flávio: 49,585% → 45,039% no lote;
+- Lula: 42,247% → 47,306%;
+- Cury: 2,967% → 2,874%;
+- Renan: 2,340% → 2,237%;
+- Caiado: 2,343% → 2,055%;
+- outros agrupados: 0,518% → 0,489%.
+
+**Observação preliminar:** no grande lote nacional, os candidatos menores não ficaram parados em votos absolutos. O que ficou relativamente estável foi sua **participação percentual**, porque a participação deles no lote ficou próxima da participação acumulada anterior. A maior redistribuição relativa ocorreu entre os dois primeiros.
+
+Isso pode explicar a percepção visual de que apenas os dois primeiros “mexeram”.
+
+**Importante:** essa constatação não encerra a análise estatística. A composição geográfica dos lotes não é aleatória; portanto o próximo teste deve comparar as participações por UF/município/seção antes de concluir se a estabilidade percentual dos menores é comum ou incomum.
+
+---
+
+## 2026-10-05 — E0022 — Implementação da Fase 3D: movimento dos candidatos
+
+**Evento:** criação do `analyze_phase3d_candidate_motion.py`.
+
+**Commit:** `a596d55c79f4e2392af1366d6ac561066c089bf6`
+
+**Objetivo:** testar formalmente a hipótese da E0021 nos dois grandes lotes presidenciais.
+
+**Métricas produzidas por candidato/grupo:**
+- votos antes e depois;
+- delta absoluto;
+- crescimento relativo;
+- participação acumulada antes do lote;
+- participação dentro do lote;
+- diferença em pontos percentuais;
+- valor descritivo esperado caso mantivesse a participação anterior;
+- razão observado/esperado.
+
+**Regra:** a comparação com a participação anterior é apenas descritiva. Não será transformada em p-valor multinomial, pois a ordem de chegada das seções não é aleatória.
+
+**Saídas previstas:**
+- `phase3d_candidate_batches.csv`
+- `phase3d_candidate_motion_summary.json`
+
+**Próxima ação:** executar a Fase 3D, versionar os resultados e então partir para a análise condicionada por geografia, que é o teste estatístico relevante.

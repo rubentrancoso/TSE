@@ -1,0 +1,159 @@
+{
+  "format": "tse-forensics-phase3b-external-timeline-v1",
+  "sources": [
+    {
+      "name": "arvor_linha_do_tempo",
+      "url": "https://raw.githubusercontent.com/ArvorCo/PNAD/beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415/analysis/apuracao_2026/dados/linha_do_tempo.json",
+      "path": "data\\forensics\\external\\ArvorCo-PNAD\\beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415\\linha_do_tempo.json",
+      "sha256": "3e29b16d2827f88e407096d6fa494a3d1b862f8156633f1a7f905e799f70af73",
+      "bytes": 178854,
+      "reused": false
+    },
+    {
+      "name": "vitor_comparacao_fontes",
+      "url": "https://raw.githubusercontent.com/vitoropereira/eleicoes2026/3f4d7442dd601eb1b11afb8e9510d1373c495e7c/marcos/75pct/comparacao_fontes.json",
+      "path": "data\\forensics\\external\\vitoropereira-eleicoes2026\\3f4d7442dd601eb1b11afb8e9510d1373c495e7c\\comparacao_fontes.json",
+      "sha256": "08f3cef0fc683f2bc0a5148ab8bc65262b5c5ee5df2f35fd0ea5e1d029bec753",
+      "bytes": 8443,
+      "reused": false
+    },
+    {
+      "name": "vitor_historico",
+      "url": "https://raw.githubusercontent.com/vitoropereira/eleicoes2026/3f4d7442dd601eb1b11afb8e9510d1373c495e7c/historico.json",
+      "path": "data\\forensics\\external\\vitoropereira-eleicoes2026\\3f4d7442dd601eb1b11afb8e9510d1373c495e7c\\historico.json",
+      "sha256": "212dd884a25d9a2b1452d09dd778d375920cff8c9ae50e261f6ca3812b77ab93",
+      "bytes": 351,
+      "reused": false
+    }
+  ],
+  "source_status": "capturas independentes/derivadas de respostas públicas do TSE; evidência temporal secundária, não artefato oficial assinado",
+  "independent_crosscheck_all_zero": true,
+  "presidential_national_freeze": {
+    "start_brt": "2026-10-04 19:14:08",
+    "end_brt": "2026-10-04 20:04:39",
+    "minutes": 50.52,
+    "sections_start": 323539,
+    "sections_end": 424153,
+    "http_reads": {
+      "por_classe": {
+        "nao_modificado": 100,
+        "ok": 1
+      },
+      "total": 101,
+      "ultima": "2026-10-04T23:05:18.482Z"
+    }
+  },
+  "maximum_visible_national_vs_uf_lag": {
+    "hora_brt": "19:14",
+    "secoes": 110011,
+    "pp_do_total": 22.04,
+    "nacional_st": 235931,
+    "soma_ufs_st": 345942
+  },
+  "unlock_batch": {
+    "sections": 100614,
+    "valid_votes": 24728306,
+    "flavio_votes": 11137351,
+    "lula_votes": 11697901,
+    "flavio_pct_of_batch": 45.0389,
+    "lula_pct_of_batch": 47.3057
+  },
+  "general_result_generation_gap": {
+    "start_brt": "2026-10-04 19:32:47",
+    "end_brt": "2026-10-04 20:01:55",
+    "minutes": 29.13,
+    "fetches_during_gap": {
+      "igual": 663,
+      "nao_existe": 423,
+      "nao_modificado": 57337,
+      "ok": 24148,
+      "timeout": 2
+    },
+    "ab_versions_during_gap": 52
+  },
+  "phase_segmentation": [
+    {
+      "phase": "A",
+      "start_brt": "2026-10-04 18:48:59",
+      "end_brt": "2026-10-04 19:14:08",
+      "minutes": 25.15,
+      "description": "EA20 nacional de Presidente sem nova versão; UFs/lower layers continuam avançando.",
+      "national_sections_start": 235931,
+      "national_sections_end": 323539,
+      "all_u_result_generation_paused": "no"
+    },
+    {
+      "phase": "B",
+      "start_brt": "2026-10-04 19:14:08",
+      "end_brt": "2026-10-04 19:32:47",
+      "minutes": 18.65,
+      "description": "Nacional de Presidente segue congelado; soma das UFs e monitoramento continuam avançando.",
+      "national_sections_start": 323539,
+      "national_sections_end": 323539,
+      "all_u_result_generation_paused": "no"
+    },
+    {
+      "phase": "C",
+      "start_brt": "2026-10-04 19:32:47",
+      "end_brt": "2026-10-04 20:01:55",
+      "minutes": 29.13,
+      "description": "Lacuna geral: nenhuma nova geração de arquivo EA20 (-u) de qualquer cargo/nível; EA14/EA15 (-ab) ainda têm uma rodada nova.",
+      "national_sections_start": 323539,
+      "national_sections_end": 323539,
+      "all_u_result_generation_paused": "yes"
+    },
+    {
+      "phase": "D",
+      "start_brt": "2026-10-04 20:01:55",
+      "end_brt": "2026-10-04 20:04:39",
+      "minutes": 2.73,
+      "description": "Arquivos de resultado voltam a ser gerados; nacional de Presidente ainda aguarda até publicar o lote acumulado.",
+      "national_sections_start": 323539,
+      "national_sections_end": 424153,
+      "all_u_result_generation_paused": "no"
+    }
+  ],
+  "vitor_observations": [
+    "PE: ht 20:16:22, mas gravado às 19:33 (relógio adiantado na origem); conteúdo válido.",
+    "Às 19:04 o arquivo br ainda mostrava dados das 18:44 — já vinha ~20 min atrasado antes de travar.",
+    "O instante exato em que o nacional real passou de 75% não pode ser reconstruído: os arquivos das UFs não eram guardados entre 19:06 e 19:32."
+  ],
+  "vitor_history": [
+    {
+      "ht": "18:19:48",
+      "pst": 24.45,
+      "f": 50.94,
+      "l": 40.97
+    },
+    {
+      "ht": "18:23:39",
+      "pst": 27.88,
+      "f": 50.85,
+      "l": 41.05
+    },
+    {
+      "ht": "18:32:50",
+      "pst": 36.6,
+      "f": 50.63,
+      "l": 41.23
+    },
+    {
+      "ht": "19:06:33",
+      "pst": 64.81,
+      "f": 49.58,
+      "l": 42.25
+    },
+    {
+      "ht": "19:32:06",
+      "pst": 84.93,
+      "f": 48.47,
+      "l": 43.49
+    }
+  ],
+  "interpretation": [
+    "A defasagem do EA20 nacional de Presidente é reproduzida por duas capturas independentes.",
+    "Antes da lacuna geral, os arquivos de UF/monitoramento avançavam enquanto o nacional de Presidente permanecia atrás.",
+    "Entre 19:32:47 e 20:01:55 há evidência independente de uma pausa mais ampla na geração de EA20 (-u) de todos os cargos/níveis; portanto a alegação de que Governador continuou normalmente durante toda a pausa presidencial precisa ser dividida por fases.",
+    "O grande lote nacional posterior deve ser auditado contra os conjuntos estaduais/seções correspondentes; sua existência isoladamente não determina a causa da defasagem."
+  ]
+}

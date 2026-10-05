@@ -1,0 +1,6 @@
+﻿metric,arvor_value,vitor_value,difference,note
+national_frozen_sections,323539,323539,0,Mesmo estado nacional congelado em dois coletores.
+national_frozen_valid_votes,75762826,75762826,0,Votos válidos do estado congelado.
+national_unlocked_sections,424153,424153,0,Primeiro grande estado nacional após destravamento.
+national_unlocked_valid_votes,100491132,100491132,0,Votos válidos do primeiro grande estado após destravamento.
+uf_sum_landmark_sections,423988,423988,0,"Soma das UFs no patamar ~84,93%; horário de visibilidade difere entre coletores."

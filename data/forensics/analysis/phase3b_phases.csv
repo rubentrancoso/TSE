@@ -1,0 +1,5 @@
+﻿phase,start_brt,end_brt,minutes,description,national_sections_start,national_sections_end,all_u_result_generation_paused
+A,2026-10-04 18:48:59,2026-10-04 19:14:08,25.15,EA20 nacional de Presidente sem nova versão; UFs/lower layers continuam avançando.,235931,323539,no
+B,2026-10-04 19:14:08,2026-10-04 19:32:47,18.65,Nacional de Presidente segue congelado; soma das UFs e monitoramento continuam avançando.,323539,323539,no
+C,2026-10-04 19:32:47,2026-10-04 20:01:55,29.13,Lacuna geral: nenhuma nova geração de arquivo EA20 (-u) de qualquer cargo/nível; EA14/EA15 (-ab) ainda têm uma rodada nova.,323539,323539,yes
+D,2026-10-04 20:01:55,2026-10-04 20:04:39,2.73,Arquivos de resultado voltam a ser gerados; nacional de Presidente ainda aguarda até publicar o lote acumulado.,323539,424153,no

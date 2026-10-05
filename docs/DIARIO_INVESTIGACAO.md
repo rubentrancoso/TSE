@@ -554,3 +554,146 @@ A documentação técnica do TSE informa que os campos `da` e `ha` do EA16 regis
 - `phase3_arrivals_by_uf.csv`
 
 **Critério de decisão:** os timestamps somente serão usados como eixo temporal se apresentarem progressão compatível com a apuração. Uma concentração artificial posterior ou regeneração em massa impedirá seu uso como substituto de snapshots históricos.
+
+
+---
+
+## 2026-10-05 — E0016 — Resultado da Fase 3A: EA16 atual não preserva uma cronologia fina da chegada das urnas
+
+**Evento:** análise dos artefatos produzidos por `analyze_phase3_arrivals.py`.
+
+**Commit dos resultados:** `ef212f2`
+
+**Cobertura:**
+- 27 UFs brasileiras;
+- **497.897** seções principais;
+- **497.897/497.897 (100%)** com `da/ha`;
+- exterior não incluído nesta execução; 497.897 + 1.351 seções do exterior = 499.248 seções nacionais finais.
+
+**Distribuição temporal observada:**
+- apenas **50 minutos distintos** para 497.897 seções;
+- primeiro minuto: **04/10/2026 20:23**;
+- último minuto: **05/10/2026 06:00**;
+- maiores concentrações:
+  - 00:52: **69.438** seções;
+  - 22:59: **40.750**;
+  - 23:01: **36.249**;
+  - 22:23: **35.499**;
+  - 22:44: **27.142**;
+  - 23:00: **25.107**;
+  - 23:11: **23.765**.
+
+**Padrão por UF:** várias UFs têm praticamente todas as suas seções marcadas dentro de poucos segundos ou poucos minutos. Exemplos:
+- AC: 2.270 seções entre 21:08:15 e 21:08:18;
+- AP: 1.914 entre 21:04:25 e 21:04:27;
+- BA: 35.476 entre 00:51:40 e 00:52:33;
+- MG: 52.062 entre 00:51:54 e 00:52:52;
+- SP: 103.656 entre 22:58:58 e 23:01:49;
+- AM: 8.157 entre 06:00:31 e 06:00:37.
+
+**Interpretação:** embora a documentação técnica do TSE diga que `da/ha` do EA16 informam a geração do arquivo auxiliar e podem ser usados para identificar a chegada dos arquivos de urna, **a versão atual recuperada após a eleição apresenta geração fortemente agrupada por UF**. Ela não será tratada como substituto de uma sequência histórica fina, seção por seção, da noite eleitoral.
+
+**Decisão metodológica:** rejeitar, para esta investigação, o uso ingênuo do EA16 atual como relógio individual de chegada das urnas. EA16 continua útil para estrutura UF→município→zona→seção e localização dos artefatos EA18.
+
+---
+
+## 2026-10-05 — E0017 — Descoberta e confronto de duas capturas independentes da defasagem presidencial
+
+**Evento:** busca por séries contemporâneas públicas capazes de preencher a lacuna temporal que o EA16 atual não preserva.
+
+### Fonte independente A — ArvorCo/PNAD
+
+O repositório público descreve um coletor que gravou em SQLite:
+- corpo original dos arquivos;
+- horário de geração no TSE;
+- horário de totalização;
+- horário da leitura;
+- hash;
+- toda requisição, inclusive respostas 304;
+- tratamento de versões/regressões de CDN.
+
+O arquivo derivado `analysis/apuracao_2026/dados/linha_do_tempo.json` registra:
+
+**Travamento 1 relevante**
+- 18:48:59 → 19:14:08;
+- nacional: 235.931 → 323.539 seções;
+- salto ao voltar: **87.608 seções**;
+- **21.016.324 votos válidos** no lote.
+
+**Travamento principal**
+- 19:14:08 → 20:04:39;
+- nacional: 323.539 → 424.153;
+- duração: **50,52 min**;
+- 101 leituras do arquivo nacional no intervalo;
+- 100 respostas 304 e 1 nova versão;
+- lote de destravamento: **100.614 seções** e **24.728.306 válidos**;
+- composição do lote:
+  - candidato 22: **45,0389%**;
+  - candidato 13: **47,3057%**.
+
+**Maior defasagem visível nacional × soma das UFs**
+- 19:14;
+- nacional visível: **235.931** seções;
+- soma das UFs: **345.942**;
+- diferença: **110.011 seções**, ou **22,04%** do total nacional.
+
+A série minuto a minuto mostra que o nacional ficou atrás enquanto a soma das UFs continuava avançando. Após a atualização nacional de 19:14, a diferença volta a crescer e alcança cerca de 100 mil seções novamente.
+
+### Fonte independente B — vitoropereira/eleicoes2026
+
+O repositório preservou snapshots durante a noite e um arquivo específico `marcos/75pct/comparacao_fontes.json`.
+
+Ele registra:
+- nacional travado com conteúdo de 19:06:33: **323.539 seções**, 64,81%, **75.762.826 válidos**;
+- soma das UFs no patamar 84,93%: **423.988 seções**, **100.448.357 válidos**;
+- nacional destravado: **424.153 seções**, 84,96%, **100.491.132 válidos**.
+
+Os landmarks nacionais de 323.539/75.762.826 e 424.153/100.491.132 coincidem exatamente com a captura ArvorCo.
+
+### Achado que altera a formulação inicial
+
+A captura ArvorCo registra também uma **lacuna geral de geração de arquivos de resultado EA20 (-u)**:
+
+- início: **19:32:47**;
+- fim: **20:01:55**;
+- duração: **29,13 min**;
+- nenhum EA20 novo de Presidente, Governador, Senado ou deputados, em nível nacional/UF/município/zona, possui horário de geração dentro dessa lacuna;
+- o coletor realizou **82.573 requisições** nesse intervalo;
+- 57.337 foram 304;
+- respostas com corpo novo correspondiam a versões geradas antes da lacuna;
+- arquivos de acompanhamento EA14/EA15 (`-ab`) tiveram uma rodada nova por volta de 19:45.
+
+**Implicação:** a hipótese “Governador continuou normalmente durante toda a pausa presidencial” não deve ser usada como premissa indivisível. A janela precisa ser segmentada:
+
+1. **18:48:59–19:14:08:** nacional de Presidente parado/defasado enquanto camadas inferiores avançam;
+2. **19:14:08–19:32:47:** nacional de Presidente continua parado e a soma das UFs/monitoramento continua avançando;
+3. **19:32:47–20:01:55:** pausa mais ampla na geração dos EA20 de todos os cargos/níveis, embora o acompanhamento `-ab` ainda seja atualizado;
+4. **20:01:55–20:04:39:** geração dos resultados volta; logo depois o nacional presidencial publica o grande lote acumulado.
+
+**Status:** a defasagem nacional presidencial é reproduzida por duas capturas independentes. A causa não é inferida por esse fato. A comparação Presidente × Governador deve agora ser feita separadamente por fase.
+
+---
+
+## 2026-10-05 — E0018 — Implementação da Fase 3B: timeline externa reproduzível
+
+**Evento:** criação do `analyze_phase3b_external_timeline.py`.
+
+**Commit:** `739dbd970fe0e9228aff0303aa20a2cbdf94c60d`
+
+**Objetivo:** tornar os achados da E0017 reprodutíveis no nosso próprio pipeline.
+
+**Procedimento:**
+- baixar versões fixadas por commit das duas capturas independentes;
+- preservar os arquivos brutos localmente com SHA-256;
+- extrair a defasagem nacional × soma das UFs minuto a minuto;
+- segmentar a janela nas quatro fases acima;
+- medir o grande lote nacional de destravamento;
+- fazer cross-check numérico entre os dois coletores.
+
+**Saídas:**
+- `phase3b_summary.json`
+- `phase3b_lag_by_minute.csv`
+- `phase3b_phases.csv`
+- `phase3b_crosscheck.csv`
+
+**Próxima ação:** executar a Fase 3B, versionar os quatro derivados e, em seguida, iniciar a comparação histórica específica Presidente × Governador na parte da janela anterior à pausa geral.

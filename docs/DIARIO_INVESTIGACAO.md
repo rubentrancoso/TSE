@@ -1163,3 +1163,25 @@ Para cada janela de tamanho comparável serão calculados:
 - percentil descritivo dos catch-ups dentro dessas janelas.
 
 **Importante:** as janelas se sobrepõem, portanto os percentis serão tratados como benchmark empírico descritivo, não como p-valores ou amostras independentes.
+
+
+---
+
+## 2026-10-05 — E0029 — Implementação da Fase 3F: janelas agregadas comparáveis
+
+**Evento:** criação do `analyze_phase3f_matched_windows.py`.
+
+**Commit:** `e3518b48f47d97a99c0612781a496acb87416693`
+
+**Objetivo:** controlar o efeito do tamanho excepcional dos dois catch-ups.
+
+**Método:**
+- construir janelas de lotes normais consecutivos;
+- excluir os dois catch-ups das janelas de referência;
+- acumular entre 80% e 120% dos votos válidos do catch-up alvo;
+- encerrar uma janela se houver lacuna interna superior a 15 minutos;
+- comparar RMS dos menores, RMS do top 2 e razão top2/menores.
+
+**Importante:** as janelas podem se sobrepor. Portanto os percentis resultantes serão usados apenas como benchmark empírico descritivo, não como p-valores.
+
+**Próxima ação:** executar a Fase 3F, versionar os três artefatos derivados e então decidir se o comportamento top 2 continua incomum mesmo após controlar aproximadamente o tamanho da janela.

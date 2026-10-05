@@ -2,6 +2,11 @@
 
 Painel local para acompanhar a apuração presidencial de 2026 diretamente do JSON oficial do TSE e construir uma série temporal.
 
+## Leitura pública
+
+- [O gráfico travou. O que os dados realmente mostram até agora](docs/ARTIGO_PUBLICO.md) — artigo de uma página, em linguagem acessível, com o que foi feito, os resultados atuais e os próximos passos.
+- [Estado executivo da investigação](docs/ONE_PAGE_INVESTIGACAO.md) — resumo técnico dos achados e das fases.
+
 ## Rodar no Windows
 
 1. Baixe/clone este repositório.

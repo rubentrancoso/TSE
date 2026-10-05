@@ -1,0 +1,109 @@
+﻿scenario,scenario_description,uf,gov_fields,pres_fields,governor_block_votes,president_block_votes,lula_votes,president_turnout,governor_turnout,turnout_difference_gov_minus_pres,min_alignment_violation,min_alignment_violation_pct_of_governor_block,min_overlap_governor_block_x_lula,min_overlap_lula_pct_of_governor_block
+strict_symmetric,direita em ambos os cargos,AC,direita,direita,141859,311614,134770,488330,487971,-359,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,AL,direita,direita,880,764619,995459,1938428,1935820,-2608,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,AM,direita,direita,507335,1015176,1046996,2234549,2232271,-2278,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,AP,direita,direita,376,224239,212503,476562,476019,-543,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,BA,direita,direita,2845,2568901,5664771,9053601,9046179,-7422,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,CE,direita,direita,24663,1870299,3555263,5910471,5905522,-4949,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,DF,direita,direita,72148,962285,675627,1831396,1817921,-13475,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,ES,direita,direita,1066621,1293588,850028,2352282,2348612,-3670,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,GO,direita,direita,797141,2109570,1188880,3971587,3966488,-5099,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,MA,direita,direita,7905,1305213,2566301,4160343,4158395,-1948,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,MG,direita,direita,7197091,6128307,5188936,12637274,12627167,-10107,1068784,14.850222124466677,0,0.0
+strict_symmetric,direita em ambos os cargos,MS,direita,direita,104266,908825,516855,1541220,1539009,-2211,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,MT,direita,direita,1568841,1336216,581681,2052133,2049718,-2415,232625,14.827825126956778,98389,6.271444971160238
+strict_symmetric,direita em ambos os cargos,PA,direita,direita,0,2252921,2427237,5066504,5062750,-3754,0,,0,
+strict_symmetric,direita em ambos os cargos,PB,direita,direita,552836,876437,1541127,2683988,2677904,-6084,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,PE,direita,direita,18340,1831294,3553971,5911062,5905236,-5826,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,PI,direita,direita,5141,551356,1523710,2240883,2239386,-1497,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,PR,direita,direita,3172492,4143358,2054597,6841457,6829615,-11842,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,RJ,direita,direita,4401447,5206606,3693021,9859802,9845867,-13935,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,RN,direita,direita,531044,757869,1237963,2171013,2167714,-3299,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,RO,direita,direita,537370,673946,250667,991080,990313,-767,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,RR,direita,direita,314243,238491,74420,332772,331959,-813,75752,24.106185340644025,55891,17.78591726784686
+strict_symmetric,direita em ambos os cargos,RS,direita,direita,3516048,3763318,2294759,6702903,6697424,-5479,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,SC,direita,direita,2989010,3151522,1127168,4648159,4634550,-13609,0,0.0,0,0.0
+strict_symmetric,direita em ambos os cargos,SE,direita,direita,462636,440997,856019,1439082,1436609,-2473,21639,4.6773273156434,0,0.0
+strict_symmetric,direita em ambos os cargos,SP,direita,direita,14491874,13836691,9505413,26431992,26394256,-37736,655183,4.521037099825737,0,0.0
+strict_symmetric,direita em ambos os cargos,TO,direita,direita,14445,483137,404009,965196,963810,-1386,0,0.0,0,0.0
+broad_symmetric,direita + centro-direita em ambos,AC,centro-direita+direita,centro-direita+direita,361023,311614,134770,488330,487971,-359,49409,13.685831650615057,7463,2.0671813153178604
+broad_symmetric,direita + centro-direita em ambos,AL,centro-direita+direita,centro-direita+direita,893364,764619,995459,1938428,1935820,-2608,128745,14.411259016481523,0,0.0
+broad_symmetric,direita + centro-direita em ambos,AM,centro-direita+direita,centro-direita+direita,997407,1015176,1046996,2234549,2232271,-2278,0,0.0,0,0.0
+broad_symmetric,direita + centro-direita em ambos,AP,centro-direita+direita,centro-direita+direita,166276,224239,212503,476562,476019,-543,0,0.0,0,0.0
+broad_symmetric,direita + centro-direita em ambos,BA,centro-direita+direita,centro-direita+direita,3628072,2568901,5664771,9053601,9046179,-7422,1059171,29.193770134661055,239242,6.594191074488048
+broad_symmetric,direita + centro-direita em ambos,CE,centro-direita+direita,centro-direita+direita,24663,1870299,3555263,5910471,5905522,-4949,0,0.0,0,0.0
+broad_symmetric,direita + centro-direita em ambos,DF,centro-direita+direita,centro-direita+direita,897678,962285,675627,1831396,1817921,-13475,0,0.0,0,0.0
+broad_symmetric,direita + centro-direita em ambos,ES,centro-direita+direita,centro-direita+direita,1066621,1293588,850028,2352282,2348612,-3670,0,0.0,0,0.0
+broad_symmetric,direita + centro-direita em ambos,GO,centro-direita+direita,centro-direita+direita,797141,2109570,1188880,3971587,3966488,-5099,0,0.0,0,0.0
+broad_symmetric,direita + centro-direita em ambos,MA,centro-direita+direita,centro-direita+direita,7905,1305213,2566301,4160343,4158395,-1948,0,0.0,0,0.0
+broad_symmetric,direita + centro-direita em ambos,MG,centro-direita+direita,centro-direita+direita,7197091,6128307,5188936,12637274,12627167,-10107,1068784,14.850222124466677,0,0.0
+broad_symmetric,direita + centro-direita em ambos,MS,centro-direita+direita,centro-direita+direita,1033932,908825,516855,1541220,1539009,-2211,125107,12.100118769899762,9567,0.9253026311208087
+broad_symmetric,direita + centro-direita em ambos,MT,centro-direita+direita,centro-direita+direita,1574745,1336216,581681,2052133,2049718,-2415,238529,15.147150808543605,104293,6.62285004873805
+broad_symmetric,direita + centro-direita em ambos,PA,centro-direita+direita,centro-direita+direita,2345721,2252921,2427237,5066504,5062750,-3754,92800,3.9561397114149552,0,0.0
+broad_symmetric,direita + centro-direita em ambos,PB,centro-direita+direita,centro-direita+direita,2023088,876437,1541127,2683988,2677904,-6084,1146651,56.6782562103082,880227,43.509081167008056
+broad_symmetric,direita + centro-direita em ambos,PE,centro-direita+direita,centro-direita+direita,18340,1831294,3553971,5911062,5905236,-5826,0,0.0,0,0.0
+broad_symmetric,direita + centro-direita em ambos,PI,centro-direita+direita,centro-direita+direita,563113,551356,1523710,2240883,2239386,-1497,11757,2.087858032046854,0,0.0
+broad_symmetric,direita + centro-direita em ambos,PR,centro-direita+direita,centro-direita+direita,3176636,4143358,2054597,6841457,6829615,-11842,0,0.0,0,0.0
+broad_symmetric,direita + centro-direita em ambos,RJ,centro-direita+direita,centro-direita+direita,4401447,5206606,3693021,9859802,9845867,-13935,0,0.0,0,0.0
+broad_symmetric,direita + centro-direita em ambos,RN,centro-direita+direita,centro-direita+direita,1265287,757869,1237963,2171013,2167714,-3299,507418,40.10299639528423,332237,26.257837154732485
+broad_symmetric,direita + centro-direita em ambos,RO,centro-direita+direita,centro-direita+direita,671725,673946,250667,991080,990313,-767,0,0.0,0,0.0
+broad_symmetric,direita + centro-direita em ambos,RR,centro-direita+direita,centro-direita+direita,314243,238491,74420,332772,331959,-813,75752,24.106185340644025,55891,17.78591726784686
+broad_symmetric,direita + centro-direita em ambos,RS,centro-direita+direita,centro-direita+direita,3516048,3763318,2294759,6702903,6697424,-5479,0,0.0,0,0.0
+broad_symmetric,direita + centro-direita em ambos,SC,centro-direita+direita,centro-direita+direita,2998010,3151522,1127168,4648159,4634550,-13609,0,0.0,0,0.0
+broad_symmetric,direita + centro-direita em ambos,SE,centro-direita+direita,centro-direita+direita,462636,440997,856019,1439082,1436609,-2473,21639,4.6773273156434,0,0.0
+broad_symmetric,direita + centro-direita em ambos,SP,centro-direita+direita,centro-direita+direita,14491874,13836691,9505413,26431992,26394256,-37736,655183,4.521037099825737,0,0.0
+broad_symmetric,direita + centro-direita em ambos,TO,centro-direita+direita,centro-direita+direita,400705,483137,404009,965196,963810,-1386,0,0.0,0,0.0
+nonleft_symmetric,direita + centro-direita + centro em ambos,AC,centro+centro-direita+direita,centro+centro-direita+direita,361023,333731,134770,488330,487971,-359,27292,7.559629164900851,7463,2.0671813153178604
+nonleft_symmetric,direita + centro-direita + centro em ambos,AL,centro+centro-direita+direita,centro+centro-direita+direita,1703160,821244,995459,1938428,1935820,-2608,881916,51.7811597266258,760191,44.63415063763827
+nonleft_symmetric,direita + centro-direita + centro em ambos,AM,centro+centro-direita+direita,centro+centro-direita+direita,2057743,1121017,1046996,2234549,2232271,-2278,936726,45.522011252134014,870190,42.28856567608297
+nonleft_symmetric,direita + centro-direita + centro em ambos,AP,centro+centro-direita+direita,centro+centro-direita+direita,447871,251600,212503,476562,476019,-543,196271,43.823109779378434,183812,41.04128197628335
+nonleft_symmetric,direita + centro-direita + centro em ambos,BA,centro+centro-direita+direita,centro+centro-direita+direita,3628072,2887057,5664771,9053601,9046179,-7422,741015,20.4244844093502,239242,6.594191074488048
+nonleft_symmetric,direita + centro-direita + centro em ambos,CE,centro+centro-direita+direita,centro+centro-direita+direita,24663,2056427,3555263,5910471,5905522,-4949,0,0.0,0,0.0
+nonleft_symmetric,direita + centro-direita + centro em ambos,DF,centro+centro-direita+direita,centro+centro-direita+direita,897678,1093340,675627,1831396,1817921,-13475,0,0.0,0,0.0
+nonleft_symmetric,direita + centro-direita + centro em ambos,ES,centro+centro-direita+direita,centro+centro-direita+direita,1786018,1397806,850028,2352282,2348612,-3670,388212,21.736175111337065,283764,15.8880817550551
+nonleft_symmetric,direita + centro-direita + centro em ambos,GO,centro+centro-direita+direita,centro+centro-direita+direita,2945359,2635460,1188880,3971587,3966488,-5099,309899,10.521603648315876,162652,5.522314936820944
+nonleft_symmetric,direita + centro-direita + centro em ambos,MA,centro+centro-direita+direita,centro+centro-direita+direita,3466071,1440198,2566301,4160343,4158395,-1948,2025873,58.44868728886396,1872029,54.01011693066876
+nonleft_symmetric,direita + centro-direita + centro em ambos,MG,centro+centro-direita+direita,centro+centro-direita+direita,7964434,6768467,5188936,12637274,12627167,-10107,1195967,15.016346422106079,516096,6.480008497779001
+nonleft_symmetric,direita + centro-direita + centro em ambos,MS,centro+centro-direita+direita,centro+centro-direita+direita,1033932,971264,516855,1541220,1539009,-2211,62668,6.061133614202868,9567,0.9253026311208087
+nonleft_symmetric,direita + centro-direita + centro em ambos,MT,centro+centro-direita+direita,centro+centro-direita+direita,1856293,1409314,581681,2052133,2049718,-2415,446979,24.079118975291077,385841,20.785565640768993
+nonleft_symmetric,direita + centro-direita + centro em ambos,PA,centro+centro-direita+direita,centro+centro-direita+direita,4470805,2430084,2427237,5066504,5062750,-3754,2040721,45.64549337311737,1831538,40.96662681552875
+nonleft_symmetric,direita + centro-direita + centro em ambos,PB,centro+centro-direita+direita,centro+centro-direita+direita,2275972,969779,1541127,2683988,2677904,-6084,1306193,57.39055665008181,1133111,49.78580580077435
+nonleft_symmetric,direita + centro-direita + centro em ambos,PE,centro+centro-direita+direita,centro+centro-direita+direita,2823778,2042430,3553971,5911062,5905236,-5826,781348,27.670305526850907,466687,16.527042848269232
+nonleft_symmetric,direita + centro-direita + centro em ambos,PI,centro+centro-direita+direita,centro+centro-direita+direita,563113,620677,1523710,2240883,2239386,-1497,0,0.0,0,0.0
+nonleft_symmetric,direita + centro-direita + centro em ambos,PR,centro+centro-direita+direita,centro+centro-direita+direita,4760400,4519747,2054597,6841457,6829615,-11842,240653,5.055310478111083,0,0.0
+nonleft_symmetric,direita + centro-direita + centro em ambos,RJ,centro+centro-direita+direita,centro+centro-direita+direita,8108431,5653847,3693021,9859802,9845867,-13935,2454584,30.271997134834102,1941650,23.94606305461562
+nonleft_symmetric,direita + centro-direita + centro em ambos,RN,centro+centro-direita+direita,centro+centro-direita+direita,1265287,831643,1237963,2171013,2167714,-3299,433644,34.27238247132864,332237,26.257837154732485
+nonleft_symmetric,direita + centro-direita + centro em ambos,RO,centro+centro-direita+direita,centro+centro-direita+direita,867863,716155,250667,991080,990313,-767,151708,17.480639225315517,127450,14.685497595818696
+nonleft_symmetric,direita + centro-direita + centro em ambos,RR,centro+centro-direita+direita,centro+centro-direita+direita,314243,250709,74420,332772,331959,-813,63534,20.21811146151227,55891,17.78591726784686
+nonleft_symmetric,direita + centro-direita + centro em ambos,RS,centro+centro-direita+direita,centro+centro-direita+direita,4026746,4117435,2294759,6702903,6697424,-5479,0,0.0,0,0.0
+nonleft_symmetric,direita + centro-direita + centro em ambos,SC,centro+centro-direita+direita,centro+centro-direita+direita,3567273,3365706,1127168,4648159,4634550,-13609,201567,5.650450638344752,46282,1.2974056092707231
+nonleft_symmetric,direita + centro-direita + centro em ambos,SE,centro+centro-direita+direita,centro+centro-direita+direita,1189927,506543,856019,1439082,1436609,-2473,683384,57.43074995356858,606864,51.00010336768558
+nonleft_symmetric,direita + centro-direita + centro em ambos,SP,centro+centro-direita+direita,centro+centro-direita+direita,14491874,15308630,9505413,26431992,26394256,-37736,0,0.0,0,0.0
+nonleft_symmetric,direita + centro-direita + centro em ambos,TO,centro+centro-direita+direita,centro+centro-direita+direita,470672,525760,404009,965196,963810,-1386,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,AC,direita,centro+centro-direita+direita,141859,333731,134770,488330,487971,-359,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,AL,direita,centro+centro-direita+direita,880,821244,995459,1938428,1935820,-2608,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,AM,direita,centro+centro-direita+direita,507335,1121017,1046996,2234549,2232271,-2278,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,AP,direita,centro+centro-direita+direita,376,251600,212503,476562,476019,-543,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,BA,direita,centro+centro-direita+direita,2845,2887057,5664771,9053601,9046179,-7422,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,CE,direita,centro+centro-direita+direita,24663,2056427,3555263,5910471,5905522,-4949,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,DF,direita,centro+centro-direita+direita,72148,1093340,675627,1831396,1817921,-13475,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,ES,direita,centro+centro-direita+direita,1066621,1397806,850028,2352282,2348612,-3670,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,GO,direita,centro+centro-direita+direita,797141,2635460,1188880,3971587,3966488,-5099,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,MA,direita,centro+centro-direita+direita,7905,1440198,2566301,4160343,4158395,-1948,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,MG,direita,centro+centro-direita+direita,7197091,6768467,5188936,12637274,12627167,-10107,428624,5.955517305533583,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,MS,direita,centro+centro-direita+direita,104266,971264,516855,1541220,1539009,-2211,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,MT,direita,centro+centro-direita+direita,1568841,1409314,581681,2052133,2049718,-2415,159527,10.168461941012506,98389,6.271444971160238
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,PA,direita,centro+centro-direita+direita,0,2430084,2427237,5066504,5062750,-3754,0,,0,
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,PB,direita,centro+centro-direita+direita,552836,969779,1541127,2683988,2677904,-6084,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,PE,direita,centro+centro-direita+direita,18340,2042430,3553971,5911062,5905236,-5826,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,PI,direita,centro+centro-direita+direita,5141,620677,1523710,2240883,2239386,-1497,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,PR,direita,centro+centro-direita+direita,3172492,4519747,2054597,6841457,6829615,-11842,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,RJ,direita,centro+centro-direita+direita,4401447,5653847,3693021,9859802,9845867,-13935,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,RN,direita,centro+centro-direita+direita,531044,831643,1237963,2171013,2167714,-3299,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,RO,direita,centro+centro-direita+direita,537370,716155,250667,991080,990313,-767,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,RR,direita,centro+centro-direita+direita,314243,250709,74420,332772,331959,-813,63534,20.21811146151227,55891,17.78591726784686
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,RS,direita,centro+centro-direita+direita,3516048,4117435,2294759,6702903,6697424,-5479,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,SC,direita,centro+centro-direita+direita,2989010,3365706,1127168,4648159,4634550,-13609,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,SE,direita,centro+centro-direita+direita,462636,506543,856019,1439082,1436609,-2473,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,SP,direita,centro+centro-direita+direita,14491874,15308630,9505413,26431992,26394256,-37736,0,0.0,0,0.0
+stress_min_violation,teste conservador: Governador somente direita; Presidente inclui direita + centro-direita + centro,TO,direita,centro+centro-direita+direita,14445,525760,404009,965196,963810,-1386,0,0.0,0,0.0

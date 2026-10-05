@@ -286,6 +286,11 @@ def main():
     br_flavio = presidential_votes(br_rows, "22")
     br_lula = presidential_votes(br_rows, "13")
 
+    domestic_flavio = sum(r["flavio_votes"] for r in uf_rows)
+    domestic_lula = sum(r["lula_votes"] for r in uf_rows)
+    exterior_flavio = br_flavio - domestic_flavio
+    exterior_lula = br_lula - domestic_lula
+
     total_pl_candidate_votes = sum(
         r["pl_senate_candidate_votes"] for r in uf_rows
     )
@@ -323,10 +328,17 @@ def main():
         },
         "national": {
             "pl_senate_candidate_votes": total_pl_candidate_votes,
-            "flavio_official_final_votes": br_flavio,
-            "lula_official_final_votes": br_lula,
-            "raw_candidate_vote_difference_pl_senate_minus_flavio": (
+            "flavio_official_final_votes_br_including_exterior": br_flavio,
+            "lula_official_final_votes_br_including_exterior": br_lula,
+            "flavio_domestic_27_ufs": domestic_flavio,
+            "lula_domestic_27_ufs": domestic_lula,
+            "flavio_exterior_implied": exterior_flavio,
+            "lula_exterior_implied": exterior_lula,
+            "raw_candidate_vote_difference_pl_senate_minus_flavio_br": (
                 total_pl_candidate_votes - br_flavio
+            ),
+            "raw_candidate_vote_difference_pl_senate_minus_flavio_domestic": (
+                total_pl_candidate_votes - domestic_flavio
             ),
             "unique_pl_senate_voters_lower_bound": total_unique_lb,
             "unique_pl_senate_voters_upper_bound": total_unique_ub,
@@ -358,10 +370,13 @@ def main():
                 r["senate_total_vote_slots"] == 2 * r["senate_turnout"]
                 for r in uf_rows
             ),
-            "sum_uf_flavio": sum(r["flavio_votes"] for r in uf_rows),
-            "br_flavio": br_flavio,
-            "flavio_reconciliation_difference": (
-                sum(r["flavio_votes"] for r in uf_rows) - br_flavio
+            "sum_27_ufs_flavio": domestic_flavio,
+            "br_flavio_including_exterior": br_flavio,
+            "implied_exterior_flavio": exterior_flavio,
+            "note": (
+                "A diferença BR - soma das 27 UFs é o exterior (ZZ). "
+                "Não é erro de reconciliação. Como não há Senado no exterior, "
+                "a comparação eleitoral homogênea para Senado usa as 27 UFs."
             ),
         },
         "top_raw_candidate_vote_excess": sorted(
@@ -447,10 +462,18 @@ def main():
     print(
         f"- votos-candidato PL Senado: {total_pl_candidate_votes:,}"
     )
-    print(f"- Flávio final oficial: {br_flavio:,}")
     print(
-        "- diferença bruta (UNIDADES NÃO COMPARÁVEIS): "
+        f"- Flávio final BR (inclui exterior): {br_flavio:,} · "
+        f"27 UFs: {domestic_flavio:,} · exterior: {exterior_flavio:,}"
+    )
+    print(
+        "- diferença bruta vs Flávio BR (UNIDADES NÃO COMPARÁVEIS): "
         f"{total_pl_candidate_votes - br_flavio:+,}"
+    )
+    print(
+        "- diferença bruta vs Flávio 27 UFs (mesma abrangência territorial, "
+        "mas ainda UNIDADES NÃO COMPARÁVEIS): "
+        f"{total_pl_candidate_votes - domestic_flavio:+,}"
     )
     print(
         "- eleitores únicos PL-Senado possíveis: "

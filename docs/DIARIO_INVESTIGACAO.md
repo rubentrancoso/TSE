@@ -1817,3 +1817,129 @@ A hora de conclusão de uma zona é a hora em que entrou sua última seção. El
 Portanto a Fase 3J testa **ordenação geográfica do término da apuração**, não a composição exata dos lotes nacionais de 19:14 e 20:04.
 
 **Próxima ação:** executar a Fase 3J e versionar os três artefatos.
+
+
+---
+
+## 2026-10-05 — E0041 — Resultado da Fase 3J: zonas tardias eram mais Lula também em 2022
+
+**Evento:** análise dos resultados versionados da Fase 3J.
+
+**Commit dos resultados:** \`6bcf701\`
+
+### Cobertura
+
+- zonas reportadas na fonte: **6.106**
+- zonas incompletas: **12**
+- zonas completas utilizáveis: **6.094**
+- zonas sem comparação 2022: **24**
+
+### Resultado nacional por quartis definidos dentro de cada UF
+
+Em 2026:
+- quartil mais cedo: margem Lula−direita **−0,85 pp**
+- quartil mais tarde: **+0,19 pp**
+- diferença late−early: **+1,04 pp**
+
+Nas mesmas posições de conclusão, usando o resultado de 2022:
+- quartil mais cedo: margem Lula−Bolsonaro **+5,87 pp**
+- quartil mais tarde: **+7,41 pp**
+- diferença late−early: **+1,54 pp**
+
+Portanto o gradiente "zonas mais tardias são mais Lula" **já existia em 2022** e, no agregado ponderado por votos, era inclusive maior que em 2026.
+
+### Spearman por UF
+
+2026:
+- UFs com correlação positiva entre horário de conclusão e margem Lula: **17/27**
+- negativas: **10/27**
+- mediana rho: **+0,073**
+
+2022, usando as mesmas zonas ordenadas pelo horário de conclusão de 2026:
+- positivas: **17/27**
+- negativas: **10/27**
+- mediana rho: **+0,024**
+
+### Estados importantes para a Fase 3I
+
+Gradiente late−early de margem Lula−direita, 2026 versus 2022:
+
+- AM: **+50,32 pp** vs **+56,55 pp**
+- BA: **+9,87 pp** vs **+11,51 pp**
+- CE: **+17,08 pp** vs **+21,55 pp**
+- PE: **+13,60 pp** vs **+19,35 pp**
+- PA: **+23,66 pp** vs **+26,93 pp**
+- MG: **+12,28 pp** vs **+12,94 pp**
+- MA: **+4,08 pp** vs **+4,02 pp**
+- SP: **+23,15 pp** vs **+20,52 pp**
+
+Nos principais estados que explicaram o movimento posterior pró-Lula na Fase 3I, a maior parte mostra gradiente tardio semelhante ou **mais forte em 2022**.
+
+### Conclusão limitada
+
+A Fase 3J sustenta fortemente uma explicação de **ordenação geográfica estrutural** para uma parte relevante do fato de resultados tardios tenderem a favorecer Lula.
+
+O padrão:
+- não apareceu apenas em 2026;
+- aparece nas mesmas zonas quando se substitui o voto de 2026 pelo voto presidencial de 2022;
+- em agregado, o gradiente tardio era maior em 2022.
+
+Isso reduz a plausibilidade da interpretação de que o simples fato de o voto tardio ser mais Lula seja, por si só, uma anomalia exclusiva de 2026.
+
+Ainda resta uma pergunta:
+> depois de controlar explicitamente a inclinação política da mesma zona em 2022, existe um componente temporal residual em 2026?
+
+---
+
+## 2026-10-05 — E0042 — Implementação da Fase 3K: efeito temporal residual controlado por 2022
+
+**Evento:** criação do \`analyze_phase3k_residual_timing.py\`.
+
+**Commit:** \`cc4f5d6f1b96e80d962d761de3bda562360b86ab\`
+
+### Método
+
+Para cada zona com dados comparáveis:
+
+\[
+\Delta margem = (Lula-Flávio)_{2026} - (Lula-Bolsonaro)_{2022}
+\]
+
+Dentro de cada UF serão calculados:
+- Spearman entre horário de conclusão e \(\Delta margem\);
+- diferença late−early em 2026;
+- diferença late−early em 2022;
+- **delta-do-gradiente**:
+  \[
+  (late-early)_{2026} - (late-early)_{2022}
+  \]
+
+Também será produzido um agregado nacional com quartis definidos separadamente dentro de cada UF.
+
+### Leitura esperada
+
+- delta-do-gradiente > 0:
+  o viés pró-Lula das zonas tardias ficou mais forte em 2026;
+- delta-do-gradiente < 0:
+  o viés já existia e ficou mais fraco em 2026.
+
+### Inspeção exploratória antes da automação
+
+Usando os artefatos já versionados da Fase 3J, a conta preliminar do agregado produz aproximadamente:
+- late−early 2026: **+1,10 pp**
+- late−early 2022: **+1,46 pp**
+- delta-do-gradiente: **−0,36 pp**
+
+Nos estados-chave:
+- AM: delta do gradiente **−6,23 pp**
+- BA: **−1,64 pp**
+- CE: **−4,47 pp**
+- PE: **−5,75 pp**
+- PA: aproximadamente **−3,18 pp**
+- MG: **−0,66 pp**
+- MA: aproximadamente **−0,11 pp**
+- SP: aproximadamente **+2,81 pp**
+
+Essa é apenas inspeção preliminar; a conclusão ficará condicionada à execução reproduzível da Fase 3K.
+
+**Próxima ação:** executar a Fase 3K, versionar os três artefatos e então encerrar esta sublinha temporal/geográfica ou identificar UFs residuais específicas para aprofundamento.

@@ -1359,3 +1359,68 @@ Produzir, para as 27 UFs:
 - identificação de padrões extremos que mereçam inspeção de BU/seção.
 
 **Importante:** esta etapa não presume que o desvio seja normal, anormal, legítimo ou ilegítimo. Ela mede o fenômeno a partir da hipótese de alinhamento definida acima.
+
+
+---
+
+## 2026-10-05 — E0033 — Hipótese externa: vantagem de Lula/PT x atraso por UF e swing após retomada
+
+**Evento:** incorporação de uma observação externa como questionamento formal da investigação.
+
+**Hipótese levantada:**
+
+> Os estados em que Lula/PT tinha vantagem teriam sido justamente os que apresentaram maior atraso/pausa de atualização; quando esses dados voltaram, Lula teria ganho participação relativa enquanto Flávio/oposição teria caído.
+
+**Status:** hipótese exploratória, a ser medida. Não é tratada como fato nem descartada previamente.
+
+### Operacionalização
+
+Para evitar julgamento visual ou seleção manual de estados, a hipótese será dividida em duas perguntas independentes:
+
+1. **Vantagem prévia × atraso**
+   - classificar cada UF pelo líder presidencial no snapshot contemporâneo de ~19:06;
+   - medir minutos de sobreposição entre eventos de travamento da UF e as janelas críticas:
+     - W1: 18:48:59–19:14:08;
+     - W2: 19:14:08–19:32:47;
+   - comparar distribuição de atrasos entre UFs Lula-led e Flávio-led;
+   - calcular correlação de Spearman entre margem Lula−Flávio e atraso.
+
+2. **Atraso × swing após/ao longo da retomada**
+   - calcular, por UF:
+     `swing = Δ[(Lula %) − (Flávio %)]`
+   - medir esse swing em:
+     - 18:32→19:06;
+     - 19:06→19:32;
+     - 19:32→20:47;
+   - testar se UFs mais atrasadas apresentam swing sistematicamente mais favorável a Lula.
+
+### Fontes
+
+- `ArvorCo/PNAD`: eventos de travamento por UF detectados na série histórica;
+- `vitoropereira/eleicoes2026`: snapshots contemporâneos por UF em ~18:32, 19:06, 19:32 e 20:47.
+
+### Inspeção exploratória antes da automação
+
+Uma leitura preliminar das duas fontes mostrou:
+
+- na W1, quase nenhuma UF possui evento de travamento detectado pela fonte; apenas SP tem pequena sobreposição (~0,32 min);
+- na W2, as medianas preliminares de atraso detectado foram aproximadamente:
+  - UFs com Lula na frente: **9,85 min**;
+  - UFs com Flávio na frente: **10,32 min**;
+- entre as maiores sobreposições W2 aparecem AM, AC, SP, PR e RS, todos com Flávio à frente no snapshot-base;
+- o swing mediano 19:06→19:32 foi aproximadamente igual nos dois grupos (~+0,3 pp para Lula relativo a Flávio);
+- no trecho 19:32→20:47, a mediana preliminar foi mais favorável a Lula nas UFs em que ele já liderava.
+
+**Interpretação:** essa inspeção preliminar não confirma a forma forte da hipótese "estados pró-Lula atrasaram mais". Porém isso ainda precisa ser reproduzido pelo script e documentado em artefatos derivados antes de qualquer conclusão.
+
+### Implementação
+
+Criado `analyze_phase3g_uf_delay_bias.py`.
+
+**Commit:** `e2b97f294bd6e28591fd9ef6e5cc791c78e36282`
+
+**Saídas previstas:**
+- `phase3g_uf_delay_bias.csv`
+- `phase3g_summary.json`
+
+**Próxima ação:** executar a Fase 3G, versionar os resultados e só então aceitar, rejeitar ou reformular essa hipótese.

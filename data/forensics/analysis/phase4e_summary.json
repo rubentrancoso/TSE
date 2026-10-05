@@ -8,9 +8,14 @@
   },
   "national": {
     "pl_senate_candidate_votes": 58307861,
-    "flavio_official_final_votes": 56104503,
-    "lula_official_final_votes": 53879538,
-    "raw_candidate_vote_difference_pl_senate_minus_flavio": 2203358,
+    "flavio_official_final_votes_br_including_exterior": 56104503,
+    "lula_official_final_votes_br_including_exterior": 53879538,
+    "flavio_domestic_27_ufs": 55960603,
+    "lula_domestic_27_ufs": 53722151,
+    "flavio_exterior_implied": 143900,
+    "lula_exterior_implied": 157387,
+    "raw_candidate_vote_difference_pl_senate_minus_flavio_br": 2203358,
+    "raw_candidate_vote_difference_pl_senate_minus_flavio_domestic": 2347258,
     "unique_pl_senate_voters_lower_bound": 49340389,
     "unique_pl_senate_voters_upper_bound": 57923160,
     "min_unique_pl_senate_voters_not_flavio_by_uf_sum": 515873,
@@ -24,9 +29,10 @@
     "ufs_with_two_valid_pl_senate_candidates": 8,
     "ufs_with_more_than_two_valid_pl_senate_candidates": 0,
     "senate_tv_equals_2x_turnout_all_ufs": true,
-    "sum_uf_flavio": 55960603,
-    "br_flavio": 56104503,
-    "flavio_reconciliation_difference": -143900
+    "sum_27_ufs_flavio": 55960603,
+    "br_flavio_including_exterior": 56104503,
+    "implied_exterior_flavio": 143900,
+    "note": "A diferença BR - soma das 27 UFs é o exterior (ZZ). Não é erro de reconciliação. Como não há Senado no exterior, a comparação eleitoral homogênea para Senado usa as 27 UFs."
   },
   "top_raw_candidate_vote_excess": [
     {
@@ -412,7 +418,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\ac.json",
       "sha256": "5fb86b8f924fe38a921b6c21fb912926257647065415d9c4ccebbb3fd84fff61",
       "bytes": 8309,
-      "reused": false,
+      "reused": true,
       "scope": "AC",
       "office": "Senate"
     },
@@ -421,7 +427,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\ac.json",
       "sha256": "747ebb507da613f6f8c53f0fef736167e2bb3444b13a52cfc78810c74ec1fdb2",
       "bytes": 9148,
-      "reused": false,
+      "reused": true,
       "scope": "AC",
       "office": "President"
     },
@@ -430,7 +436,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\al.json",
       "sha256": "526a0311940cd81aa9d73733efda81728811d596338ad7a318152804079bd9f6",
       "bytes": 7022,
-      "reused": false,
+      "reused": true,
       "scope": "AL",
       "office": "Senate"
     },
@@ -439,7 +445,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\al.json",
       "sha256": "f9fcddee182ffa5a3af9d08a2e9bd5b9a4e987e8f74012f164c9d1bfa8d7f8c2",
       "bytes": 9179,
-      "reused": false,
+      "reused": true,
       "scope": "AL",
       "office": "President"
     },
@@ -448,7 +454,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\am.json",
       "sha256": "4c2f04a28260489ec837b00e5bde625aa90f3c79a99efb032b4795a18b49da89",
       "bytes": 8372,
-      "reused": false,
+      "reused": true,
       "scope": "AM",
       "office": "Senate"
     },
@@ -457,7 +463,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\am.json",
       "sha256": "f32174b99041d331678e567342097b8a6cd041068e4676f30e53b6a1149b04e2",
       "bytes": 9184,
-      "reused": false,
+      "reused": true,
       "scope": "AM",
       "office": "President"
     },
@@ -466,7 +472,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\ap.json",
       "sha256": "114f5908adff6a3e1360fcceaf6f6450add3dc6e3d21c8a3f4d61affbadc7bc4",
       "bytes": 8317,
-      "reused": false,
+      "reused": true,
       "scope": "AP",
       "office": "Senate"
     },
@@ -475,7 +481,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\ap.json",
       "sha256": "dd3caed51433ed5d2bbfb0c2a2ef64ff71e96a816c724026b61ac04a8312b5c4",
       "bytes": 9149,
-      "reused": false,
+      "reused": true,
       "scope": "AP",
       "office": "President"
     },
@@ -484,7 +490,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\ba.json",
       "sha256": "c913d9124780c835a1c921c15402a761a25c9fddd6e0581b260ca95a99e66f9a",
       "bytes": 9194,
-      "reused": false,
+      "reused": true,
       "scope": "BA",
       "office": "Senate"
     },
@@ -493,7 +499,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\ba.json",
       "sha256": "37c4b609b2ce2f824e1b2eb90ac97bdb102f23ae21eec289f0660d13e7de4176",
       "bytes": 9220,
-      "reused": false,
+      "reused": true,
       "scope": "BA",
       "office": "President"
     },
@@ -502,7 +508,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\ce.json",
       "sha256": "3b2ecb567a5bab25c49b3621d8c80e8801db834ecd01993c65acb5546a5cce4c",
       "bytes": 7937,
-      "reused": false,
+      "reused": true,
       "scope": "CE",
       "office": "Senate"
     },
@@ -511,7 +517,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\ce.json",
       "sha256": "dc6506aedebbb80e9b24d3ac3277834ebf9c25009df352cd405d786dcee08792",
       "bytes": 9210,
-      "reused": false,
+      "reused": true,
       "scope": "CE",
       "office": "President"
     },
@@ -520,7 +526,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\df.json",
       "sha256": "65cd4102657ea7db3c17df431fd392ba4ad33d6bbcffafe302acafa73458433a",
       "bytes": 9988,
-      "reused": false,
+      "reused": true,
       "scope": "DF",
       "office": "Senate"
     },
@@ -529,7 +535,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\df.json",
       "sha256": "a018a22ca00b3328c7cc1f38c0b8767a269e3e82906f0f58caec403240f9c7e6",
       "bytes": 9179,
-      "reused": false,
+      "reused": true,
       "scope": "DF",
       "office": "President"
     },
@@ -538,7 +544,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\es.json",
       "sha256": "e655423fa0dcf84e44de3316315a16aa9f5496a07a501c60ff15bfe8805f96ef",
       "bytes": 10150,
-      "reused": false,
+      "reused": true,
       "scope": "ES",
       "office": "Senate"
     },
@@ -547,7 +553,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\es.json",
       "sha256": "6c5048253a3cd4a71469c7169119136faf93b34609961f04ed615021470733c6",
       "bytes": 9183,
-      "reused": false,
+      "reused": true,
       "scope": "ES",
       "office": "President"
     },
@@ -556,7 +562,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\go.json",
       "sha256": "ec3105d5d828123486f1c637c0d92e8981614a674b703474fb4324492c15ef96",
       "bytes": 10206,
-      "reused": false,
+      "reused": true,
       "scope": "GO",
       "office": "Senate"
     },
@@ -565,7 +571,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\go.json",
       "sha256": "fed608e3f0d9a0bad16ad905237272bb68841a5471d0016d7a9a8862cba5dcfb",
       "bytes": 9198,
-      "reused": false,
+      "reused": true,
       "scope": "GO",
       "office": "President"
     },
@@ -574,7 +580,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\ma.json",
       "sha256": "1954d81eb32b651350c9ebb720b6f2d89c056e2ab87de411467ff880cd8cadbb",
       "bytes": 10508,
-      "reused": false,
+      "reused": true,
       "scope": "MA",
       "office": "Senate"
     },
@@ -583,7 +589,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\ma.json",
       "sha256": "f8c3baad98abfaf2e12e1d439df9f01482ffa606e3c81f0eb3445e876a5e95f7",
       "bytes": 9198,
-      "reused": false,
+      "reused": true,
       "scope": "MA",
       "office": "President"
     },
@@ -592,7 +598,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\mg.json",
       "sha256": "5239b0872679cf14c7657ab62e80dfd739b9dbafc1607094e9113664886be9ac",
       "bytes": 13700,
-      "reused": false,
+      "reused": true,
       "scope": "MG",
       "office": "Senate"
     },
@@ -601,7 +607,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\mg.json",
       "sha256": "f4b28fc677d95a820c6dc8d7cc613b9e59aa8f2805f477bb92e00b1e6a57fafd",
       "bytes": 9237,
-      "reused": false,
+      "reused": true,
       "scope": "MG",
       "office": "President"
     },
@@ -610,7 +616,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\ms.json",
       "sha256": "0b8875ec33e18d3c339db7c408d9c56022dfbccbb628379aa2869c04a815d33e",
       "bytes": 8758,
-      "reused": false,
+      "reused": true,
       "scope": "MS",
       "office": "Senate"
     },
@@ -619,7 +625,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\ms.json",
       "sha256": "12a3c5ead408215222fdce0b15885cf9438bbfdcdc66ac5c94184797c492c5b7",
       "bytes": 9179,
-      "reused": false,
+      "reused": true,
       "scope": "MS",
       "office": "President"
     },
@@ -628,7 +634,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\mt.json",
       "sha256": "baab57c5c9aa9ee1d19982fa2f24741c372f0bfe4268d22ede7584417475009a",
       "bytes": 8859,
-      "reused": false,
+      "reused": true,
       "scope": "MT",
       "office": "Senate"
     },
@@ -637,7 +643,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\mt.json",
       "sha256": "b00ef357c81050671bf51dafb509015423d5b0e98bfa3e95711afc45dcd1ac13",
       "bytes": 9185,
-      "reused": false,
+      "reused": true,
       "scope": "MT",
       "office": "President"
     },
@@ -646,7 +652,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\pa.json",
       "sha256": "28d22a3d6d47203fddb6b51beb261296478533fb630a3ab46c9f2bbb2c3b5440",
       "bytes": 10953,
-      "reused": false,
+      "reused": true,
       "scope": "PA",
       "office": "Senate"
     },
@@ -655,7 +661,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\pa.json",
       "sha256": "e33d366f219bd05afbe3c37366ae3531e86b4a037eb27ec116abfe8dd3bb71bf",
       "bytes": 9206,
-      "reused": false,
+      "reused": true,
       "scope": "PA",
       "office": "President"
     },
@@ -664,7 +670,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\pb.json",
       "sha256": "0de9ca745a3b583018b723f59dbef4f8d276af3ddbebb8a02738549dfd3ade7d",
       "bytes": 8841,
-      "reused": false,
+      "reused": true,
       "scope": "PB",
       "office": "Senate"
     },
@@ -673,7 +679,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\pb.json",
       "sha256": "feb19497b6dd9185fef8457f01d0c7b79d45651146e603f183fc04dbf6ddaf63",
       "bytes": 9190,
-      "reused": false,
+      "reused": true,
       "scope": "PB",
       "office": "President"
     },
@@ -682,7 +688,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\pe.json",
       "sha256": "fe28cd7614c19a26b8d64fdc82418f57717d3bbd16572e685e95b1c53ee2c933",
       "bytes": 11039,
-      "reused": false,
+      "reused": true,
       "scope": "PE",
       "office": "Senate"
     },
@@ -691,7 +697,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\pe.json",
       "sha256": "ec564f140cf0afa663ef884ddfc747e85fb821195d4ad48545972545c22211bb",
       "bytes": 9204,
-      "reused": false,
+      "reused": true,
       "scope": "PE",
       "office": "President"
     },
@@ -700,7 +706,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\pi.json",
       "sha256": "3aad42ba47d25abaf9b84e84e99dfd93f87d306e5a2956bd04de755d8f92f697",
       "bytes": 13534,
-      "reused": false,
+      "reused": true,
       "scope": "PI",
       "office": "Senate"
     },
@@ -709,7 +715,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\pi.json",
       "sha256": "7da88982de01400e9deb097c53e6814655e1c9250d380c0f245999b4b523e9e2",
       "bytes": 9188,
-      "reused": false,
+      "reused": true,
       "scope": "PI",
       "office": "President"
     },
@@ -718,7 +724,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\pr.json",
       "sha256": "360057504b254af7d185d4ec0e335f4e00e3775c9855ec5bb5e1f2927be5c227",
       "bytes": 8332,
-      "reused": false,
+      "reused": true,
       "scope": "PR",
       "office": "Senate"
     },
@@ -727,7 +733,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\pr.json",
       "sha256": "c45f39623fefad07312b06713c01471997ee678d38b8bf8734e0732aba891656",
       "bytes": 9219,
-      "reused": false,
+      "reused": true,
       "scope": "PR",
       "office": "President"
     },
@@ -736,7 +742,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\rj.json",
       "sha256": "457c321e1847afd4957c2df4ebd2614928b836cb9c91d4a3386ce4802684d507",
       "bytes": 12752,
-      "reused": false,
+      "reused": true,
       "scope": "RJ",
       "office": "Senate"
     },
@@ -745,7 +751,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\rj.json",
       "sha256": "eead1f048e862d1c9883bb2de786e5722011c3b666782ec84a70fa20a331ea1b",
       "bytes": 9232,
-      "reused": false,
+      "reused": true,
       "scope": "RJ",
       "office": "President"
     },
@@ -754,7 +760,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\rn.json",
       "sha256": "849592454a1f0d7916710dc2b76a9855ddbec8c1c72b83ba381b9e8ff8b0293f",
       "bytes": 11071,
-      "reused": false,
+      "reused": true,
       "scope": "RN",
       "office": "Senate"
     },
@@ -763,7 +769,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\rn.json",
       "sha256": "a535cf2a15dd342fc1d5c2ea0637f04ddf65edeb7848aababc59bae3206d01cb",
       "bytes": 9184,
-      "reused": false,
+      "reused": true,
       "scope": "RN",
       "office": "President"
     },
@@ -772,7 +778,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\ro.json",
       "sha256": "c7886eaf7b2b6cc8b6d1d6c63cb94320a771aa3f40df735881fcf5f2fcb2059d",
       "bytes": 9338,
-      "reused": false,
+      "reused": true,
       "scope": "RO",
       "office": "Senate"
     },
@@ -781,7 +787,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\ro.json",
       "sha256": "45293b0abcfd1bdba7b543ba8a4dd8b7961430d882cbbbefd906b02966ad575c",
       "bytes": 9164,
-      "reused": false,
+      "reused": true,
       "scope": "RO",
       "office": "President"
     },
@@ -790,7 +796,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\rr.json",
       "sha256": "543385651f38754dc989c4f953ff30de60985946405c0c5a4cb19227a1b5d75a",
       "bytes": 11544,
-      "reused": false,
+      "reused": true,
       "scope": "RR",
       "office": "Senate"
     },
@@ -799,7 +805,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\rr.json",
       "sha256": "3fd10f10af1dfb50f7ec9ae081b304e184006e4501ddce2d22cc9d534d738fbd",
       "bytes": 9132,
-      "reused": false,
+      "reused": true,
       "scope": "RR",
       "office": "President"
     },
@@ -808,7 +814,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\rs.json",
       "sha256": "c2667f90d2e1a75c35bafe27de4ba24c6441b659c382acf2353df25729b917a5",
       "bytes": 11205,
-      "reused": false,
+      "reused": true,
       "scope": "RS",
       "office": "Senate"
     },
@@ -817,7 +823,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\rs.json",
       "sha256": "04fb57e5840bc9213b76538abd0beb519cba3d6a0c74f61db4076146c0c30608",
       "bytes": 9222,
-      "reused": false,
+      "reused": true,
       "scope": "RS",
       "office": "President"
     },
@@ -826,7 +832,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\sc.json",
       "sha256": "4316649187e6c90ab83e505115c6973097addae62a88e52ec1f29e5b37bcdc1f",
       "bytes": 11273,
-      "reused": false,
+      "reused": true,
       "scope": "SC",
       "office": "Senate"
     },
@@ -835,7 +841,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\sc.json",
       "sha256": "23fb5e461f0a768b63deff0cd5e08226f79c4c61f2dab54ec4785b1a0620bda7",
       "bytes": 9210,
-      "reused": false,
+      "reused": true,
       "scope": "SC",
       "office": "President"
     },
@@ -844,7 +850,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\se.json",
       "sha256": "e0c4b1c67fbe21f81568913d7fedb9f8dab73a76a5ea15e5e8578a25f9e0e1f9",
       "bytes": 9256,
-      "reused": false,
+      "reused": true,
       "scope": "SE",
       "office": "Senate"
     },
@@ -853,7 +859,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\se.json",
       "sha256": "3a17980a70143b76a7da3687d4ddbada58e6c6d49cc831d1d2a3922f849f4ddc",
       "bytes": 9176,
-      "reused": false,
+      "reused": true,
       "scope": "SE",
       "office": "President"
     },
@@ -862,7 +868,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\sp.json",
       "sha256": "9321cf4c12932412d1678d87280895e3a54d43247b0053840949d514d9bb14e8",
       "bytes": 11328,
-      "reused": false,
+      "reused": true,
       "scope": "SP",
       "office": "Senate"
     },
@@ -871,7 +877,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\sp.json",
       "sha256": "fbec4cc12e4cf99b2e3ecc6a877c4cabfcbf1bcd25f2c22ef54f020725c73107",
       "bytes": 9251,
-      "reused": false,
+      "reused": true,
       "scope": "SP",
       "office": "President"
     },
@@ -880,7 +886,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\senate\\to.json",
       "sha256": "0764a9b9eb3124e377796660415acdefb2d3e9acf67b8e244012ddcaa39cfe5a",
       "bytes": 11418,
-      "reused": false,
+      "reused": true,
       "scope": "TO",
       "office": "Senate"
     },
@@ -889,7 +895,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\to.json",
       "sha256": "010beca1f89bb480569e809384a717fb194ffee0024372a176404931549910a3",
       "bytes": 9161,
-      "reused": false,
+      "reused": true,
       "scope": "TO",
       "office": "President"
     },
@@ -898,7 +904,7 @@
       "path": "data\\forensics\\external\\tse-final\\phase4e\\president\\br.json",
       "sha256": "07c3cc03e99e317ea0b551e3fe548b9b9cbd38210fb44630dc1c84cdbc68ebde",
       "bytes": 9204,
-      "reused": false,
+      "reused": true,
       "scope": "BR",
       "office": "President"
     }

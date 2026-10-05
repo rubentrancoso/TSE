@@ -24,9 +24,21 @@
       "snapshot": "20261005T104314Z",
       "uf": "BA",
       "municipalities": 417,
+      "uf_sections": 35476,
+      "sum_municipal_sections": 35470,
+      "diff_sections": 6,
       "uf_valid_votes": 8560291,
       "sum_municipal_valid_votes": 8559047,
       "diff_valid_votes": 1244,
+      "uf_blank_votes": 154936,
+      "sum_municipal_blank_votes": 154907,
+      "diff_blank_votes": 29,
+      "uf_null_votes": 338374,
+      "sum_municipal_null_votes": 338325,
+      "diff_null_votes": 49,
+      "uf_turnout": 9053601,
+      "sum_municipal_turnout": 9052279,
+      "diff_turnout": 1322,
       "max_candidate_abs_diff": 967,
       "status": "divergencia"
     },
@@ -34,11 +46,187 @@
       "snapshot": "20261005T104314Z",
       "uf": "MG",
       "municipalities": 853,
+      "uf_sections": 52062,
+      "sum_municipal_sections": 52026,
+      "diff_sections": 36,
       "uf_valid_votes": 11976235,
       "sum_municipal_valid_votes": 11968327,
       "diff_valid_votes": 7908,
+      "uf_blank_votes": 268302,
+      "sum_municipal_blank_votes": 268164,
+      "diff_blank_votes": 138,
+      "uf_null_votes": 392737,
+      "sum_municipal_null_votes": 392370,
+      "diff_null_votes": 367,
+      "uf_turnout": 12637274,
+      "sum_municipal_turnout": 12628861,
+      "diff_turnout": 8413,
       "max_candidate_abs_diff": 4898,
       "status": "divergencia"
+    }
+  ],
+  "uf_candidate_differences": [
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "BA",
+      "candidate": "13",
+      "uf_votes": 5664771,
+      "sum_municipal_votes": 5663804,
+      "difference": 967,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "BA",
+      "candidate": "14",
+      "uf_votes": 117518,
+      "sum_municipal_votes": 117509,
+      "difference": 9,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "BA",
+      "candidate": "21",
+      "uf_votes": 1299,
+      "sum_municipal_votes": 1298,
+      "difference": 1,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "BA",
+      "candidate": "22",
+      "uf_votes": 2442585,
+      "sum_municipal_votes": 2442349,
+      "difference": 236,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "BA",
+      "candidate": "55",
+      "uf_votes": 122705,
+      "sum_municipal_votes": 122692,
+      "difference": 13,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "BA",
+      "candidate": "70",
+      "uf_votes": 195451,
+      "sum_municipal_votes": 195434,
+      "difference": 17,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "BA",
+      "candidate": "80",
+      "uf_votes": 4649,
+      "sum_municipal_votes": 4648,
+      "difference": 1,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "MG",
+      "candidate": "13",
+      "uf_votes": 5188936,
+      "sum_municipal_votes": 5184038,
+      "difference": 4898,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "MG",
+      "candidate": "14",
+      "uf_votes": 247209,
+      "sum_municipal_votes": 247112,
+      "difference": 97,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "MG",
+      "candidate": "16",
+      "uf_votes": 4085,
+      "sum_municipal_votes": 4082,
+      "difference": 3,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "MG",
+      "candidate": "21",
+      "uf_votes": 2300,
+      "sum_municipal_votes": 2296,
+      "difference": 4,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "MG",
+      "candidate": "22",
+      "uf_votes": 5777548,
+      "sum_municipal_votes": 5774948,
+      "difference": 2600,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "MG",
+      "candidate": "27",
+      "uf_votes": 3411,
+      "sum_municipal_votes": 3408,
+      "difference": 3,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "MG",
+      "candidate": "30",
+      "uf_votes": 98407,
+      "sum_municipal_votes": 98376,
+      "difference": 31,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "MG",
+      "candidate": "35",
+      "uf_votes": 1732,
+      "sum_municipal_votes": 1730,
+      "difference": 2,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "MG",
+      "candidate": "55",
+      "uf_votes": 230423,
+      "sum_municipal_votes": 230332,
+      "difference": 91,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "MG",
+      "candidate": "70",
+      "uf_votes": 409737,
+      "sum_municipal_votes": 409560,
+      "difference": 177,
+      "uf_status": "divergencia"
+    },
+    {
+      "snapshot": "20261005T104314Z",
+      "uf": "MG",
+      "candidate": "80",
+      "uf_votes": 11026,
+      "sum_municipal_votes": 11024,
+      "difference": 2,
+      "uf_status": "divergencia"
     }
   ],
   "accounting_error_count": 0,

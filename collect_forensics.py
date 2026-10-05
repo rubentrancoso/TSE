@@ -91,10 +91,14 @@ def json_record(kind, url, path, data, **extra):
 
 def fetch_json_file(kind, url, path, **extra):
     try:
+        if path.exists() and path.stat().st_size:
+            data = path.read_bytes()
+            json.loads(data.decode("utf-8-sig"))
+            return json_record(kind, url, path, data, reused=True, **extra)
         data = fetch_bytes(url)
         json.loads(data.decode("utf-8-sig"))
         atomic_write(path, data)
-        return json_record(kind, url, path, data, **extra)
+        return json_record(kind, url, path, data, reused=False, **extra)
     except Exception as exc:
         return {"kind": kind, "url": url, "path": str(path), "error": str(exc), **extra}
 
@@ -154,17 +158,56 @@ def print_urn_availability(status, download_files):
         print("- Ação: o catálogo oficial foi consultado, mas ainda não há arquivo urna por urna para baixar.", flush=True)
 
 
+def result_percent(run_dir):
+    try:
+        data = json.loads((run_dir / "live" / "br.json").read_text(encoding="utf-8-sig"))
+        value = data.get("s", {}).get("pstn") or data.get("s", {}).get("pst") or "0"
+        return float(str(value).replace(",", "."))
+    except Exception:
+        return 0.0
+
+
+def choose_live_run(output):
+    runs_dir = output / "runs"
+    runs = sorted((item for item in runs_dir.glob("*") if item.is_dir()), reverse=True)
+    if not runs:
+        return "new", runs_dir / utc_stamp(), None
+    latest = runs[0]
+    summary_path = latest / "summary.json"
+    if not summary_path.exists():
+        return "resume", latest, None
+    try:
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    except Exception:
+        return "resume", latest, None
+    if summary.get("files_error", 0):
+        return "resume", latest, summary
+    if result_percent(latest) >= 100:
+        return "final", latest, summary
+    return "new", runs_dir / utc_stamp(), None
+
+
 def collect_live(output, workers):
-    run_dir = output / "runs" / utc_stamp()
+    mode, run_dir, previous_summary = choose_live_run(output)
+    if mode == "final":
+        print(f"Snapshot oficial final já existe em {run_dir}; 5.785 JSONs não serão baixados novamente.", flush=True)
+        return {**previous_summary, "reused": True, "reuse_reason": "final_snapshot_already_complete"}
+    if mode == "resume":
+        print(f"Retomando snapshot incompleto em {run_dir}; arquivos concluídos serão reutilizados.", flush=True)
     run_dir.mkdir(parents=True, exist_ok=True)
     records = []
 
     config_url = f"{RESULTS_BASE}/config/mun-e{ELECTION_CODE}-cm.json"
-    config_data = fetch_bytes(config_url)
-    config = json.loads(config_data.decode("utf-8-sig"))
     config_path = run_dir / "config" / "municipios.json"
-    atomic_write(config_path, config_data)
-    records.append(json_record("config", config_url, config_path, config_data))
+    if config_path.exists() and config_path.stat().st_size:
+        config_data = config_path.read_bytes()
+        config = json.loads(config_data.decode("utf-8-sig"))
+        records.append(json_record("config", config_url, config_path, config_data, reused=True))
+    else:
+        config_data = fetch_bytes(config_url)
+        config = json.loads(config_data.decode("utf-8-sig"))
+        atomic_write(config_path, config_data)
+        records.append(json_record("config", config_url, config_path, config_data, reused=False))
 
     national_url = f"{RESULTS_BASE}/dados/br/br-c{OFFICE_CODE}-e{ELECTION_CODE}-u.json"
     records.append(fetch_json_file("national", national_url, run_dir / "live" / "br.json"))
@@ -200,6 +243,7 @@ def collect_live(output, workers):
 
     write_manifest(run_dir / "manifest.jsonl", records)
     errors = [row for row in records if row.get("error")]
+    percent = result_percent(run_dir)
     summary = {
         "format": "tse-forensics-live-v1",
         "created_at_utc": iso_utc(),
@@ -207,6 +251,9 @@ def collect_live(output, workers):
         "run_directory": str(run_dir),
         "files_ok": len(records) - len(errors),
         "files_error": len(errors),
+        "sections_percent": percent,
+        "final_snapshot": percent >= 100,
+        "resumed": mode == "resume",
         "errors": errors,
     }
     atomic_write(run_dir / "summary.json", json.dumps(summary, ensure_ascii=False, indent=2).encode("utf-8"))
@@ -301,7 +348,8 @@ def collect_portal(output, download_files):
                     "reused": reused,
                     "captured_at_utc": iso_utc(),
                 })
-                print(f"Portal: {slug} / {resource.get('name')}", flush=True)
+                suffix = " (já baixado; reutilizado)" if reused else ""
+                print(f"Portal: {slug} / {resource.get('name')}{suffix}", flush=True)
             except Exception as exc:
                 records.append({"kind": "portal-resource", "dataset": slug, "url": url, "path": str(path), "error": str(exc)})
 

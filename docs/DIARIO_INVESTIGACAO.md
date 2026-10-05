@@ -383,3 +383,67 @@ Isso restringe a investigação a duas classes principais de explicação, ainda
 **Commit da correção:** `4e4387563c744595a154e70f732e5574c4fba1a6`
 
 **Impacto sobre entradas anteriores:** E0002 continua válido como registro do que o coletor reportou naquele momento, mas a interpretação correta é limitada ao catálogo consultado. Não se deve usar E0002 para afirmar indisponibilidade global de BU/RDV/log no ambiente Resultados.
+
+
+---
+
+## 2026-10-05 — E0012 — Correção de foco: a anomalia principal é temporal e entre cargos
+
+**Evento:** esclarecimento do escopo central da investigação.
+
+**Correção de foco:** as diferenças de **1.244 votos na BA** e **7.908 em MG** são uma investigação auxiliar de consistência hierárquica. Elas não representam a anomalia principal que motivou este trabalho.
+
+**Anomalia principal a testar:** durante uma janela da totalização, a divulgação/totalização de **Presidente** ficou defasada enquanto resultados de **Governador e outros cargos estaduais** continuaram avançando. Como os votos desses cargos são produzidos pelas mesmas seções eleitorais e constam dos artefatos da mesma urna, a investigação deve comparar o **mesmo conjunto de seções** entre cargos, e não apenas agregados nacionais isolados.
+
+**Escala relevante:** a janela envolve potencialmente **milhões de votos**, não milhares. Portanto a análise central passa a ser multivariada e seção a seção.
+
+### Pergunta principal
+
+Para uma mesma seção eleitoral (s) e um mesmo conjunto temporal (S(t)):
+
+- os dados de Governador/Senado/Deputados dessa seção já estavam presentes?
+- os votos de Presidente da mesma seção estavam presentes no BU/EA18?
+- o agregado presidencial já os incorporava?
+
+### Testes prioritários
+
+1. **Presença cruzada por seção**
+   - seção aparece no cargo estadual, mas não no agregado presidencial?
+   - quantas seções?
+   - quantos eleitores/votos representam?
+
+2. **Reconstrução presidencial do conjunto já observado nos cargos estaduais**
+   - somar Presidente diretamente dos BUs/arquivos de seção das urnas cujos cargos estaduais já haviam sido incorporados;
+   - comparar com o agregado presidencial publicado naquele instante.
+
+3. **Análise estatística multivariada**
+   - modelar a votação presidencial por seção condicionada a município, zona, comparecimento, brancos/nulos e padrões dos cargos estaduais;
+   - comparar resíduos antes, durante e depois da janela;
+   - procurar mudança estrutural que não seja explicada pela composição geográfica das seções que chegaram.
+
+4. **Teste de lote/backlog**
+   - identificar o conjunto de seções acumulado durante a paralisação;
+   - calcular a composição presidencial real desse conjunto;
+   - verificar se o salto posterior no agregado presidencial é exatamente a soma dessas seções.
+
+5. **Teste de distribuição conjunta, não apenas marginal**
+   - comparar relações entre Presidente, Governador, comparecimento e localização;
+   - usar resíduos condicionais, mudança de regime e distância multivariada;
+   - não usar apenas distribuição nacional agregada ou testes univariados simples.
+
+### Limitação lógica importante
+
+Uma distribuição artificial pode, em princípio, ser construída para preservar algumas estatísticas marginais. Portanto, nenhuma regra estatística isolada garante detectar toda manipulação possível. O poder da investigação vem de exigir simultaneamente consistência entre:
+- seção;
+- município;
+- UF;
+- Brasil;
+- cargos diferentes;
+- comparecimento;
+- brancos/nulos;
+- timestamps;
+- hashes e BUs.
+
+Quanto mais dimensões independentes precisam fechar ao mesmo tempo, mais restritiva se torna qualquer hipótese de alteração.
+
+**Próxima fase prioritária:** após concluir a localização das 42 seções auxiliares de BA/MG, iniciar a Fase 3 — reconstrução temporal e cruzada entre cargos durante a janela da paralisação presidencial.

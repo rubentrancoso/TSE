@@ -2553,3 +2553,217 @@ O script:
 - \`phase4d_summary.json\`
 
 **Próxima ação:** executar a Fase 4D e, com base no ranking municipal, selecionar os municípios que justificam descida para zona/seção.
+
+
+---
+
+## 2026-10-05 — E0052 — Resultado da Fase 4D: decomposição municipal de MG, MT e RR
+
+**Evento:** análise dos resultados versionados da Fase 4D.
+
+**Commit dos resultados:** \`2f37c6f\`
+
+### Cobertura
+
+- municípios processados: **1.010**
+- MG: **853**
+- MT: **142**
+- RR: **15**
+- erros de download/processamento: **0**
+- reconciliação interna candidato→votos válidos em cada arquivo:
+  - Presidente: **0 erros**
+  - Governador: **0 erros**
+
+### Stress test municipal
+
+Cenário:
+- Governador = somente \`direita\`
+- Presidente = \`direita + centro-direita + centro\`
+
+#### MG
+
+A partir das somas municipais disponíveis:
+- mínimo estadual agregado: **431.625**
+- soma dos mínimos municipais: **642.836**
+- ganho de localização: **+211.211**
+
+Sobreposição mínima Governador-direita × Lula:
+- no agregado municipal do estado: **0**
+- soma dos mínimos municipais: **330.138**
+
+Municípios:
+- com violação mínima positiva: **766/853**
+- com overlap mínimo Gov-direita × Lula positivo: **582/853**
+
+#### MT
+
+- mínimo estadual agregado: **159.527**
+- soma dos mínimos municipais: **159.527**
+- overlap mínimo Gov-direita × Lula por soma municipal: **99.030**
+
+Municípios:
+- violação positiva: **142/142**
+- overlap mínimo com Lula: **141/142**
+
+#### RR
+
+- mínimo estadual agregado: **63.534**
+- soma dos mínimos municipais: **63.534**
+- overlap mínimo Gov-direita × Lula: **55.891**
+
+Municípios:
+- violação positiva: **15/15**
+- overlap mínimo com Lula: **15/15**
+
+### Maiores municípios no stress test
+
+Entre os maiores mínimos aparecem:
+- Boa Vista/RR: violação >= **30.487**, overlap Gov-direita×Lula >= **25.786**
+- Cuiabá/MT: violação >= **17.323**, overlap >= **4.855**
+- Divinópolis/MG: violação >= **16.077**, overlap >= **8.589**
+- Várzea Grande/MT: violação >= **10.697**, overlap >= **5.409**
+- Patos de Minas/MG: violação >= **9.861**, overlap >= **5.889**
+- Rondonópolis/MT: violação >= **7.379**, overlap >= **2.888**
+- Minas Novas/MG: violação >= **5.959**, overlap >= **4.860**
+- Cáceres/MT: violação >= **5.948**, overlap >= **4.445**
+
+### Interpretação limitada
+
+A descida municipal aumenta materialmente o limite inferior em MG, como esperado quando se impede compensação entre municípios.
+
+Em MT e RR, a violação é praticamente estrutural em toda a malha municipal do cenário adotado.
+
+---
+
+## 2026-10-05 — E0053 — Correção de qualidade: MG municipal continua com EA20 presidencial defasado em 8 municípios
+
+**Evento:** comparação dos totais municipais da Fase 4D com os totais estaduais da Fase 4C e com a anomalia auxiliar já identificada na Fase 2.
+
+### Diferenças MG — stress test
+
+Fase 4C, arquivo estadual oficial:
+- Governador-direita: **7.197.091**
+- Presidente não-esquerda do cenário: **6.768.467**
+- Lula: **5.188.936**
+- comparecimento Presidente: **12.637.274**
+- violação mínima estadual: **428.624**
+
+Soma dos arquivos municipais usada na Fase 4D:
+- Governador-direita: **7.197.091**
+- Presidente não-esquerda: **6.765.466**
+- Lula: **5.184.038**
+- comparecimento: **12.628.861**
+- violação mínima calculada das somas municipais: **431.625**
+
+Diferenças municipal−estadual:
+- Governador-direita: **0**
+- Presidente não-esquerda: **−3.001**
+- Lula: **−4.898**
+- comparecimento: **−8.413**
+
+Essas diferenças coincidem com a anomalia auxiliar já documentada na Fase 2: **36 seções** ausentes em 8 EA20 municipais de MG.
+
+Municípios já identificados:
+- 40622
+- 41556
+- 41696
+- 42005
+- 46078
+- 47198
+- 51977
+- 53171
+
+### Impacto
+
+- MT e RR reconciliam exatamente entre soma municipal e estado.
+- MG **não pode ainda ter seus limites municipais finais tratados como fechados**.
+- O valor estadual robusto de MG continua sendo o da Fase 4C: **428.624**.
+- Os rankings municipais de MG são úteis como triagem, mas a soma de mínimos (**642.836**) e o overlap mínimo com Lula (**330.138**) ficam provisórios até substituir os 8 arquivos municipais defasados por dados de zona/seção completos.
+
+---
+
+## 2026-10-05 — E0054 — Evidência externa: alegação "58,1 milhões no PL Senado > 56 milhões de Flávio"
+
+**Evento:** recebida captura de postagem pública que afirma:
+
+> se candidatos do PL ao Senado somaram 58.123.987 votos e Flávio teve cerca de 56 milhões, então pelo menos ~2 milhões de votos teriam sido "roubados".
+
+### Problema lógico da comparação
+
+Nas Eleições 2026 cada eleitor faz **duas escolhas para Senador**, em candidatos diferentes.
+
+Portanto:
+- total de votos dos candidatos do PL ao Senado = **votos-candidato**;
+- votos de Flávio para Presidente = **um voto presidencial por eleitor**.
+
+Essas grandezas não são diretamente comparáveis como número de pessoas únicas.
+
+Se, apenas como ilustração extrema, todos os 58.123.987 votos-candidato do PL fossem distribuídos em pares entre dois candidatos PL pelos mesmos eleitores, o total corresponderia a apenas cerca de **29,1 milhões de eleitores únicos**.
+
+O limite correto, porém, deve ser calculado **UF por UF**:
+- para uma UF com dois candidatos PL ao Senado, o menor número possível de eleitores únicos do PL é o maior dos dois totais individuais, não metade arredondada do total nacional;
+- com um único candidato PL, votos-candidato = eleitores únicos daquele candidato.
+
+### Outro detalhe
+
+A postagem usa **56.076.888** para Flávio. O resultado final oficial preservado nesta investigação é **56.104.503**. Portanto o número da imagem parece ser snapshot anterior ou valor não final.
+
+### Status
+
+A conclusão "pelo menos 2 milhões foram roubados" **não decorre dessa aritmética**.
+
+Ainda assim, a pergunta substantiva será investigada:
+- quantos eleitores únicos no mínimo votaram em pelo menos um candidato PL ao Senado?
+- quantos desses, por simples limite de conjuntos por UF, necessariamente não cabem no conjunto de votos de Flávio?
+- existe overlap mínimo matemático PL-Senado × Lula?
+
+---
+
+## 2026-10-05 — E0055 — Implementação da Fase 4E: PL Senado × Flávio
+
+**Evento:** criação do \`analyze_phase4e_pl_senate_claim.py\`.
+
+**Commit:** \`9ae3419493e4c69b0a54039ea214faaf4675b1bb\`
+
+### Método
+
+Para cada UF:
+- baixar resultado oficial final de Senado (cargo 5);
+- identificar todos os candidatos válidos do PL;
+- calcular:
+  - soma de votos-candidato PL;
+  - limite inferior de eleitores únicos PL = maior votação individual entre candidatos PL;
+  - limite superior = min(comparecimento ao Senado, soma dos votos PL);
+- comparar os limites com Flávio e Lula no resultado presidencial oficial.
+
+### Limites calculados
+
+\[
+U_{PL,min}=\max(votos\ dos\ candidatos\ PL\ na\ UF)
+\]
+
+\[
+min(PL\text{-}Senado\ fora\ de\ Flávio)=\max(0,U_{PL,min}-F)
+\]
+
+\[
+min(PL\text{-}Senado\cap Lula)=\max(0,U_{PL,min}+L-N_{Pres})
+\]
+
+### Controle adicional
+
+O script verifica se, em cada UF:
+
+\[
+v.tv = 2 \times comparecimento
+\]
+
+no arquivo do Senado, evidenciando diretamente que o total de oportunidades de voto ao Senado é duas vezes o número de votantes.
+
+### Saídas previstas
+
+- \`phase4e_pl_senate_by_uf.csv\`
+- \`phase4e_pl_senate_candidates.csv\`
+- \`phase4e_summary.json\`
+
+**Próxima ação:** executar a Fase 4E e, em paralelo, preparar reparo dos 8 municípios defasados de MG antes de descer para zona/seção.

@@ -2411,3 +2411,145 @@ Se \`G > P\` persistir mesmo nesse cenário, a conclusão é robusta à fronteir
 - \`phase4c_summary.json\`
 
 **Próxima ação:** executar a Fase 4C e somente depois selecionar UFs para aprofundamento por município/zona/seção.
+
+
+---
+
+## 2026-10-05 — E0050 — Resultado da Fase 4C: três UFs permanecem positivas no stress test
+
+**Evento:** análise dos resultados versionados da Fase 4C.
+
+**Commit dos resultados:** \`d99d664\`
+
+### Cenários
+
+- \`strict_symmetric\`: direita em ambos os cargos
+- \`broad_symmetric\`: direita + centro-direita em ambos
+- \`nonleft_symmetric\`: direita + centro-direita + centro em ambos
+- \`stress_min_violation\`: Governador somente direita; Presidente direita + centro-direita + centro
+
+### Resultado
+
+Número de UFs com violação mínima \`max(0, G-P) > 0\`:
+
+- strict: **5**
+- broad: **13**
+- nonleft: **21**
+- stress: **3**
+
+UFs positivas nos três cenários simétricos:
+- **MG**
+- **MT**
+- **RR**
+- **SE**
+
+UFs que permanecem positivas mesmo no stress test:
+- **MG**
+- **MT**
+- **RR**
+
+### Stress test — magnitudes
+
+MG:
+- Governador-direita: **7.197.091**
+- Presidente direita+centro-direita+centro: **6.768.467**
+- violação mínima: **428.624**
+- **5,96%** do bloco estadual estrito
+
+MT:
+- Governador-direita: **1.568.841**
+- Presidente não-esquerda do cenário: **1.409.314**
+- violação mínima: **159.527**
+- **10,17%**
+
+RR:
+- Governador-direita: **314.243**
+- Presidente não-esquerda do cenário: **250.709**
+- violação mínima: **63.534**
+- **20,22%**
+
+### Sobreposição mínima Governador-direita × Lula no stress test
+
+MT:
+- **98.389**
+- **6,27%** do bloco Governador-direita
+
+RR:
+- **55.891**
+- **17,79%**
+
+MG:
+- limite estadual agregado = **0**
+
+Importante: limite estadual zero em MG não significa ausência de voto cruzado; apenas significa que os totais estaduais permitem, em princípio, uma alocação sem interseção obrigatória. Ao descer para municípios, déficits e superávits locais deixam de se compensar entre si e o limite pode se tornar positivo.
+
+### Conclusão limitada
+
+MG, MT e RR são os três estados mais robustos ao problema de classificação, porque o resultado \`G>P\` sobrevive a um cenário propositalmente favorável ao alinhamento:
+- bloco estadual reduzido a somente "direita";
+- bloco presidencial ampliado para direita + centro-direita + centro.
+
+Esse resultado continua sendo um teste de conjuntos agregados, não prova de transferência individual para Lula.
+
+**Próxima etapa:** decompor MG, MT e RR por município, com o mesmo stress test e controles de qualidade.
+
+---
+
+## 2026-10-05 — E0051 — Implementação da Fase 4D: decomposição municipal em MG, MT e RR
+
+**Evento:** criação do \`analyze_phase4d_municipality_bounds.py\`.
+
+**Commit:** \`1fb714eb2567b825981705eb7ff204b438e0dbf5\`
+
+### Objetivo
+
+Descer um nível geográfico nos três estados robustos da Fase 4C e medir:
+
+\[
+\max(0,G-P)
+\]
+
+e
+
+\[
+\max(0,G+L-N)
+\]
+
+por município.
+
+### Propriedade importante
+
+Municípios são universos de votação disjuntos.
+
+Por isso:
+
+\[
+\sum_m \max(0,G_m-P_m)
+\ge
+\max(0,\sum_m G_m-\sum_m P_m)
+\]
+
+O mesmo raciocínio vale para o limite de sobreposição com Lula.
+
+Assim, a decomposição municipal pode revelar um limite inferior total maior que o limite estadual, porque um excesso de voto presidencial alinhado em um município não pode "compensar" eleitores de outro município.
+
+### Cobertura
+
+- MG
+- MT
+- RR
+
+O script:
+- baixa de forma idempotente os EA20 municipais finais de Presidente e Governador;
+- executa os quatro cenários da Fase 4C;
+- reconcilia votos válidos por arquivo;
+- compara as somas municipais com os totais estaduais;
+- produz ranking dos municípios com maiores mínimos no stress test.
+
+### Saídas previstas
+
+- \`phase4d_municipality_bounds.csv\`
+- \`phase4d_state_summary.csv\`
+- \`phase4d_summary.json\`
+
+**Próxima ação:** executar a Fase 4D e, com base no ranking municipal, selecionar os municípios que justificam descida para zona/seção.

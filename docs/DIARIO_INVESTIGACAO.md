@@ -1042,3 +1042,57 @@ O script passou a:
 **Commit da correção:** `8ce589d0b5d1894d85a8e502c3295feb3a997579`
 
 **Próxima ação:** atualizar o branch local, executar novamente a Fase 3E, versionar os três artefatos derivados e só então interpretar os percentis empíricos.
+
+
+---
+
+## 2026-10-05 — E0026 — Segunda falha da Fase 3E: CSV parcial e correção atômica
+
+**Evento:** segunda execução da Fase 3E avançou além do primeiro erro, mas falhou ao escrever o arquivo de percentis.
+
+**Erro observado:**
+
+`ValueError: dict contains fields not in fieldnames: 'minutes_since_previous'`
+
+### Causa
+
+Cada linha de `targets` é construída a partir da linha completa do lote e, portanto, contém o campo `minutes_since_previous`. A lista de colunas usada por `csv.DictWriter` para `phase3e_target_percentiles.csv` não incluía esse campo.
+
+### Impacto
+
+Antes da exceção:
+- `phase3e_batch_benchmark.csv` foi gerado;
+- `phase3e_target_percentiles.csv` foi criado parcialmente;
+- `phase3e_summary.json` **não foi gerado**.
+
+Esses dois CSVs parciais/completos foram posteriormente versionados no commit local:
+
+`76e53d60c2b57de897f72b5749a6a0f381f8867e`
+
+Portanto, esse commit deve ser tratado como **execução incompleta da Fase 3E**, e não como resultado final.
+
+### Correção
+
+O script foi alterado para:
+- incluir `minutes_since_previous` nas colunas do CSV de alvos;
+- escrever todos os CSVs de forma **atômica** usando arquivo `.part` + `os.replace`;
+- remover o arquivo temporário em caso de falha.
+
+Isso evita que futuras exceções deixem relatórios parcialmente escritos que possam ser confundidos com resultados completos.
+
+**Commit da correção:** `13fe6fb58df1acf110dd8fb990445b3f47e644dd`
+
+### Observação preliminar a partir do CSV de benchmark que foi escrito integralmente
+
+Embora a execução tenha sido incompleta, o `phase3e_batch_benchmark.csv` contém a população de referência e permite uma leitura preliminar:
+
+- catch-up 1:
+  - RMS dos candidatos menores: **0,0792 pp**;
+  - razão movimento top2 / menores: **28,07**;
+- catch-up 2:
+  - RMS dos candidatos menores: **0,1601 pp**;
+  - razão movimento top2 / menores: **30,04**.
+
+Esses números ainda não serão promovidos a conclusão final até a execução completa gerar o resumo e os percentis de forma reproduzível.
+
+**Próxima ação:** atualizar o branch local, executar novamente a Fase 3E, verificar que os três artefatos são gerados e versioná-los.

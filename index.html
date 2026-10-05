@@ -68,7 +68,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
  .selected-candidates{grid-template-columns:repeat(2,minmax(0,1fr))}
  #chart{height:228px}
 }
-</style></head><body><div class="app-shell"><div class="countdown-strip"><div class="countdown-row"><span class="brasilia-label">Brasília</span><span class="countdown-right"><span class="countdown-now" id="clockNow">--:--:--</span><button class="sound-btn" id="soundToggle" type="button" aria-label="Ativar ou desativar aviso sonoro">🔈</button></span></div><div class="width-control"><span id="stageModeLabel">Largura</span><input id="stageWidth" type="range" min="360" max="1400" step="10" value="520"><span class="width-value" id="stageWidthValue">520 px</span></div><div class="countdown-track"><div class="countdown-fill" id="countdownFill"></div></div></div><div class="wrap">
+</style></head><body><div class="app-shell"><div class="countdown-strip"><div class="countdown-row"><span class="brasilia-label">Brasília</span><span class="countdown-right"><span class="countdown-now" id="clockNow">--:--:--</span><button class="sound-btn" id="soundToggle" type="button" aria-label="Ativar ou desativar aviso sonoro">🔈</button><button class="sound-btn" id="pollToggle" type="button" aria-label="Pausar consultas automáticas ao TSE">⏸</button></span></div><div class="width-control"><span id="stageModeLabel">Largura</span><input id="stageWidth" type="range" min="360" max="1400" step="10" value="520"><span class="width-value" id="stageWidthValue">520 px</span></div><div class="countdown-track"><div class="countdown-fill" id="countdownFill"></div></div></div><div class="wrap">
 <header><div><div class="live">DADOS DO TSE</div><h1>Apuração presidencial · 2026</h1><div class="dev-live">Programa sendo desenvolvido ao vivo</div><div class="sub" id="status">Carregando…</div>
 <div class="pulsebar"><span class="pulse-dot" id="pulseDot"></span><span id="pulseText">Aguardando leitura…</span><span class="pulse-extra" id="changeText"></span></div></div>
 <div class="toolbar"><select id="xmode"><option value="time">Eixo: horário</option><option value="pst">Eixo: % seções</option></select>
@@ -413,7 +413,23 @@ function resizeLayout(){syncStageMode();draw()}
 const POLL_SECONDS=10;
 let lastPulseStamp="";
 let lastPollSeenAt=performance.now();
+let pollingEnabled=true;
 let soundEnabled=localStorage.getItem("tse-sound")!=="off",audioCtx=null;
+function updatePollingButton(){
+ const b=document.querySelector("#pollToggle");
+ b.textContent=pollingEnabled?"⏸":"▶";
+ b.title=pollingEnabled?"Pausar consultas automáticas ao TSE":"Retomar consultas automáticas ao TSE";
+ b.setAttribute("aria-label",b.title);
+}
+async function togglePolling(){
+ try{
+  const r=await fetch("/api/polling/toggle",{method:"POST"}),j=await r.json();
+  if(!r.ok)throw new Error(j.error||"Falha ao alterar consultas");
+  pollingEnabled=!!j.polling_enabled;
+  lastPollSeenAt=performance.now();
+  updatePollingButton();updateCountdown();await pulseStatus();
+ }catch(e){alert("Não foi possível alterar as consultas: "+e.message)}
+}
 function updateSoundButton(){
  const b=document.querySelector("#soundToggle"),ready=audioCtx?.state==="running";
  b.textContent=!soundEnabled?"🔇":ready?"🔊":"🔈";
@@ -449,6 +465,13 @@ async function pulseStatus(){
  try{
   const r=await fetch("/api/status",{cache:"no-store"}), s=await r.json();
   const dot=document.querySelector("#pulseDot"), txt=document.querySelector("#pulseText"), ch=document.querySelector("#changeText");
+  pollingEnabled=s.polling_enabled!==false;updatePollingButton();
+  if(!pollingEnabled){
+   txt.textContent="Consultas automáticas ao TSE pausadas";
+   ch.textContent=s.last_changed?"Última mudança: "+s.last_changed.slice(11,19):"";
+   dot.classList.toggle("ok",!!s.ok);
+   return;
+  }
   if(s.last_success){
    const hh=s.last_success.slice(11,19);
    txt.textContent="Última consulta ao TSE: "+hh+(s.last_was_new?" · NOVO DADO":" · sem mudança");
@@ -466,7 +489,7 @@ async function pulseStatus(){
 function updateCountdown(){
  const elapsed=(performance.now()-lastPollSeenAt)/1000;
  const remain=Math.max(0,POLL_SECONDS-elapsed);
- document.querySelector("#countdownFill").style.width=(Math.max(0,Math.min(1,remain/POLL_SECONDS))*100)+"%";
+ document.querySelector("#countdownFill").style.width=pollingEnabled?(Math.max(0,Math.min(1,remain/POLL_SECONDS))*100)+"%":"0%";
  document.querySelector("#clockNow").textContent=new Intl.DateTimeFormat("pt-BR",{
    timeZone:"America/Sao_Paulo",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false
  }).format(new Date());
@@ -474,9 +497,10 @@ function updateCountdown(){
 async function refreshNow(){lastPollSeenAt=performance.now()-POLL_SECONDS*1000;updateCountdown();await fetch("/api/refresh",{method:"POST"});await Promise.all([load(),pulseStatus()])}
 async function backfill(){let r=await fetch("/api/backfill/community",{method:"POST"});let j=await r.json();alert("Pontos importados: "+(j.imported||0));await load()}
 document.querySelector("#soundToggle").addEventListener("click",toggleSound);
+document.querySelector("#pollToggle").addEventListener("click",togglePolling);
 document.addEventListener("pointerdown",e=>{if(e.target?.id!=="soundToggle")unlockSound()});
 document.addEventListener("keydown",unlockSound);
-updateSoundButton();
+updateSoundButton();updatePollingButton();
 document.querySelector("#chart").addEventListener("pointermove",moveChartCursor);
 document.querySelector("#chart").addEventListener("pointerleave",()=>{chartHoverIndex=null;draw()});
 document.querySelector("#xmode").onchange=draw;document.querySelector("#ymode").onchange=draw;addEventListener("resize",resizeLayout);initStageWidth();load();pulseStatus();updateCountdown();setInterval(load,10000);setInterval(pulseStatus,500);setInterval(updateCountdown,100);

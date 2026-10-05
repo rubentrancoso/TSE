@@ -364,3 +364,22 @@ Isso restringe a investigação a duas classes principais de explicação, ainda
 - `section_candidates.csv`
 
 **Próxima ação:** executar localmente a Fase 1 atualizada e a Fase 2, versionar somente os relatórios derivados e analisar os resultados antes de avançar para a reconstrução temporal da paralisação presidencial.
+
+
+---
+
+## 2026-10-05 — E0011 — Correção metodológica sobre disponibilidade de BU/EA18
+
+**Evento:** revisão da mensagem de disponibilidade de dados urna por urna no `collect_forensics.py`.
+
+**Problema identificado:** a verificação original consultava o **Portal de Dados Abertos/CKAN** e imprimia “AINDA NÃO DISPONÍVEL”. Essa frase podia ser interpretada de forma mais ampla do que o teste realmente demonstrava.
+
+**Correção:** ausência de dataset urna por urna no catálogo de Dados Abertos **não implica** ausência dos arquivos no CDN utilizado pelo aplicativo Resultados.
+
+**Ação tomada:**
+- a mensagem do coletor passou a dizer explicitamente “NÃO ENCONTRADO NO CATÁLOGO DE DADOS ABERTOS”;
+- a Fase 2 passa a consultar diretamente EA16/EA18 na estrutura oficial `arquivo-urna`.
+
+**Commit da correção:** `4e4387563c744595a154e70f732e5574c4fba1a6`
+
+**Impacto sobre entradas anteriores:** E0002 continua válido como registro do que o coletor reportou naquele momento, mas a interpretação correta é limitada ao catálogo consultado. Não se deve usar E0002 para afirmar indisponibilidade global de BU/RDV/log no ambiente Resultados.

@@ -97,11 +97,20 @@ def table_rows(table):
 
 
 def write_csv(path, rows, fields):
+    """Grava CSV atomicamente para não deixar relatório parcial após erro."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", newline="", encoding="utf-8-sig") as f:
-        w = csv.DictWriter(f, fieldnames=fields)
-        w.writeheader()
-        w.writerows(rows)
+    tmp = path.with_name(path.name + ".part")
+    try:
+        with tmp.open("w", newline="", encoding="utf-8-sig") as f:
+            w = csv.DictWriter(f, fieldnames=fields)
+            w.writeheader()
+            w.writerows(rows)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, path)
+    finally:
+        if tmp.exists():
+            tmp.unlink()
 
 
 def percentile_le(values, x):
@@ -226,6 +235,7 @@ def main():
         targets,
         [
             "target","generated_brt","d_sections","d_valid_votes",
+            "minutes_since_previous",
             "minor_rms_pp","minor_max_abs_pp","top2_rms_pp",
             "top2_to_minor_rms_ratio",
             "minor_rms_percentile_all","minor_rms_percentile_large",

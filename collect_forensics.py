@@ -148,14 +148,14 @@ def print_urn_availability(status, download_files):
     print("\nVerificação de dados urna por urna:", flush=True)
     for key, label in labels.items():
         item = status[key]
-        situation = "DISPONÍVEL" if item["available"] else "AINDA NÃO DISPONÍVEL"
+        situation = "ENCONTRADO NO CATÁLOGO" if item["available"] else "NÃO ENCONTRADO NO CATÁLOGO DE DADOS ABERTOS"
         suffix = f" ({item['resources']} recursos)" if item["available"] else ""
         print(f"- {label}: {situation}{suffix}", flush=True)
     if status["any_urn_level_source_available"]:
         action = "download solicitado nesta execução" if download_files else "somente disponibilidade verificada"
         print(f"- Ação: {action}.", flush=True)
     else:
-        print("- Ação: o catálogo oficial foi consultado, mas ainda não há arquivo urna por urna para baixar.", flush=True)
+        print("- Ação: o catálogo de Dados Abertos não lista fonte urna por urna. Isso NÃO determina a disponibilidade no CDN do aplicativo Resultados; a Fase 2 verifica EA16/EA18 diretamente.", flush=True)
 
 
 def result_percent(run_dir):

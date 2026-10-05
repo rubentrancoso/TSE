@@ -1185,3 +1185,90 @@ Para cada janela de tamanho comparável serão calculados:
 **Importante:** as janelas podem se sobrepor. Portanto os percentis resultantes serão usados apenas como benchmark empírico descritivo, não como p-valores.
 
 **Próxima ação:** executar a Fase 3F, versionar os três artefatos derivados e então decidir se o comportamento top 2 continua incomum mesmo após controlar aproximadamente o tamanho da janela.
+
+
+---
+
+## 2026-10-05 — E0030 — Resultado da Fase 3F: janelas de tamanho comparável
+
+**Evento:** análise dos resultados versionados da Fase 3F.
+
+**Commit dos resultados:** `5b09203`
+
+### Catch-up 1 — 19:14:08
+
+Comparado com **36 janelas agregadas** contendo entre 80% e 120% do mesmo volume de votos válidos:
+
+- movimento RMS dos candidatos fora do top 2: percentil **30,6**;
+- movimento RMS dos dois primeiros: percentil **100,0**;
+- razão movimento top2 / menores: percentil **91,7**.
+
+### Catch-up 2 — 20:04:39
+
+Comparado com **35 janelas agregadas** de tamanho semelhante:
+
+- movimento RMS dos candidatos fora do top 2: percentil **100,0**;
+- movimento RMS dos dois primeiros: percentil **100,0**;
+- razão movimento top2 / menores: percentil **91,4**.
+
+### Conclusão limitada
+
+A hipótese “os candidatos menores ficaram congelados” continua rejeitada.
+
+Por outro lado, nos dois catch-ups o movimento percentual conjunto dos dois primeiros foi maior do que em **todas as janelas de referência de tamanho comparável** construídas por este método.
+
+Isso é uma característica empírica relevante dos dois lotes e deve ser preservada como alvo de investigação, mas **não é um p-valor nem prova de manipulação**, porque:
+- as janelas se sobrepõem;
+- a composição geográfica dos lotes não foi controlada;
+- seções não chegam como uma amostra aleatória nacional.
+
+**Próxima ação analítica:** condicionar a redistribuição top 2 à geografia efetiva das UFs/municípios/seções que compõem os lotes.
+
+---
+
+## 2026-10-05 — E0031 — Hipótese futura: coerência eleitoral entre Presidente, Governador e Senado
+
+**Evento:** foi proposta a investigação, em todas as UFs, da aparente combinação entre votos em candidaturas estaduais identificadas como de direita e voto presidencial em Lula.
+
+### Correção metodológica necessária
+
+Não é possível inferir diretamente do resultado agregado que **a mesma pessoa** votou em determinado Governador, determinado Senador e em Lula.
+
+O voto é secreto e o RDV embaralha os votos **cargo a cargo**, justamente para impedir associação entre as escolhas de uma mesma eleitora ou eleitor. Assim:
+- BU/RDV permitem recontar cada cargo por seção;
+- não permitem reconstruir o “ticket” individual de uma pessoa através dos cargos.
+
+Portanto, qualquer afirmação do tipo “X pessoas votaram em Governador A + Senador B + Presidente C” seria inválida sem uma fonte individual independente.
+
+### O que é possível testar rigorosamente
+
+A investigação será feita em camadas:
+
+1. **Presidente × Governador por seção**
+   - comparar participação de Lula e dos candidatos/blocos a Governador;
+   - medir correlação, resíduos e padrões espaciais;
+   - comparar municípios e zonas semelhantes.
+
+2. **Limites matemáticos de voto cruzado**
+   - para uma seção com comparecimento `N`, votos `G` em um bloco/candidato a Governador e `L` em Lula:
+     - mínimo possível de eleitores que votaram em ambos: `max(0, G + L - N)`;
+     - máximo possível: `min(G, L)`.
+   - esses limites não identificam pessoas, mas podem demonstrar quando algum nível mínimo de cruzamento é matematicamente inevitável.
+
+3. **Benchmark histórico**
+   - comparar padrões equivalentes com eleições anteriores quando dados compatíveis estiverem disponíveis;
+   - isso permite distinguir split-ticket rotineiro de um padrão realmente incomum.
+
+4. **Senado tratado separadamente**
+   - em 2026 cada eleitor pode votar em **dois candidatos ao Senado**;
+   - portanto a aritmética Presidente × Senado não pode reutilizar diretamente o modelo 1-voto-por-cargo do Governador.
+
+5. **Classificação política auditável**
+   - “direita”, “esquerda” ou “alinhado a candidato presidencial” não será inferido automaticamente pelo script;
+   - será necessário um mapeamento explícito por UF/candidato, com fonte e justificativa, porque alianças estaduais podem atravessar blocos nacionais.
+
+### Status
+
+Hipótese registrada para uma fase posterior, em todas as UFs.
+
+**Prioridade:** começar por Presidente × Governador, onde há um voto por cargo e os limites matemáticos são mais limpos. Depois incorporar Senado com modelo específico para duas escolhas por eleitor.

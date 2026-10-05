@@ -1096,3 +1096,70 @@ Embora a execução tenha sido incompleta, o `phase3e_batch_benchmark.csv` cont�
 Esses números ainda não serão promovidos a conclusão final até a execução completa gerar o resumo e os percentis de forma reproduzível.
 
 **Próxima ação:** atualizar o branch local, executar novamente a Fase 3E, verificar que os três artefatos são gerados e versioná-los.
+
+
+---
+
+## 2026-10-05 — E0027 — Resultado completo da Fase 3E
+
+**Evento:** execução bem-sucedida de `analyze_phase3e_batch_benchmark.py`.
+
+**Commit dos resultados:** `03546c1`
+
+**População de referência:**
+- linhas históricas: **331**
+- linhas regressivas ignoradas: **133**
+- linhas sem delta completo: **6**
+- lotes genuínos comparáveis: **192**
+- lotes grandes (>= 1.000.000 válidos adicionados): **16**
+
+### Catch-up 1 — 19:14:08
+
+- RMS da mudança percentual dos candidatos fora do top 2: **0,0792 pp**
+- percentil entre todos os lotes: **6,25**
+- percentil entre lotes grandes: **62,5**
+- RMS dos dois primeiros: **2,2241 pp**
+- razão movimento top2 / movimento menores: **28,07**
+- percentil dessa razão entre lotes grandes: **62,5**
+
+**Leitura:** entre lotes grandes, os candidatos menores não foram excepcionalmente estáveis. O catch-up 1 fica perto do meio-superior da distribuição de movimento dos menores.
+
+### Catch-up 2 — 20:04:39
+
+- RMS da mudança percentual dos candidatos fora do top 2: **0,1601 pp**
+- percentil entre todos os lotes: **18,23**
+- percentil entre lotes grandes: **93,75**
+- RMS dos dois primeiros: **4,8090 pp**
+- razão movimento top2 / movimento menores: **30,04**
+- percentil dessa razão entre lotes grandes: **87,5**
+
+**Leitura:** entre os 16 lotes grandes, o segundo catch-up está no extremo alto do **movimento dos candidatos menores**, não no extremo baixo. Portanto a hipótese de que os menores estariam estatisticamente “congelados” não é sustentada por este benchmark.
+
+O que aparece como incomum é outra característica: a redistribuição entre os dois primeiros é muito maior que a dos demais. A razão top2/menores do catch-up 2 está no percentil **87,5** entre lotes grandes — alta, mas não única.
+
+### Conclusão limitada
+
+A observação visual “somente os dois primeiros mudaram” deve ser reformulada:
+
+- em votos absolutos, todos os candidatos/grupos se moveram;
+- em participação percentual, os menores se moveram pouco em termos visuais;
+- porém, quando comparados apenas a lotes grandes, o catch-up 2 mostra **mais** movimento percentual dos menores que 15 dos 16 lotes, não menos;
+- a característica mais marcante é a grande troca relativa entre os dois primeiros.
+
+Este resultado não prova normalidade nem fraude. Ele rejeita uma formulação específica da anomalia e desloca o foco para a magnitude e a origem geográfica da redistribuição top 2.
+
+---
+
+## 2026-10-05 — E0028 — Próximo controle: janelas agregadas de tamanho comparável
+
+**Problema metodológico identificado:** comparar um catch-up de 21–25 milhões de votos com lotes individuais menores pode ser enviesado, porque agregações grandes tendem a suavizar oscilações percentuais.
+
+**Teste definido:** construir janelas móveis de lotes normais consecutivos, sem incluir os dois catch-ups, até atingir entre **80% e 120%** do tamanho em votos válidos de cada catch-up.
+
+Para cada janela de tamanho comparável serão calculados:
+- RMS dos candidatos menores;
+- RMS do top 2;
+- razão top2/menores;
+- percentil descritivo dos catch-ups dentro dessas janelas.
+
+**Importante:** as janelas se sobrepõem, portanto os percentis serão tratados como benchmark empírico descritivo, não como p-valores ou amostras independentes.

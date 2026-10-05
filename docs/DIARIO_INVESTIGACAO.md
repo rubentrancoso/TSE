@@ -2767,3 +2767,192 @@ no arquivo do Senado, evidenciando diretamente que o total de oportunidades de v
 - \`phase4e_summary.json\`
 
 **Próxima ação:** executar a Fase 4E e, em paralelo, preparar reparo dos 8 municípios defasados de MG antes de descer para zona/seção.
+
+
+---
+
+## 2026-10-05 — E0056 — Resultado da Fase 4E: alegação PL Senado x Flávio
+
+**Evento:** análise dos resultados versionados da Fase 4E.
+
+**Commit dos resultados:** \`5e1116f\`
+
+### Totais observados
+
+- votos-candidato de todos os candidatos válidos do PL ao Senado nas 27 UFs:
+  **58.307.861**
+- Flávio no resultado final nacional, incluindo exterior:
+  **56.104.503**
+- diferença bruta:
+  **+2.203.358**
+
+Essa diferença bruta continua **não sendo uma diferença de eleitores**, porque o Senado oferece duas escolhas por votante.
+
+### Intervalo de eleitores únicos PL-Senado
+
+Somando os limites por UF:
+
+- limite inferior: **49.340.389**
+- limite superior: **57.923.160**
+
+Portanto os 58,3 milhões de votos-candidato do PL podem corresponder a qualquer quantidade de eleitores únicos dentro desse intervalo; não se pode deduzir diretamente "58,3 milhões de pessoas votaram PL para Senado".
+
+### Limite PL-Senado fora do conjunto Flávio
+
+Somando os limites inferiores UF por UF:
+
+- mínimo obrigatório de eleitores PL-Senado que não cabem no conjunto de votos de Flávio:
+  **515.873**
+
+Concentração:
+- BA: **436.858**
+- MS: **30.203**
+- DF: **28.880**
+- CE: **19.932**
+
+Isso significa apenas "não podem todos ser eleitores de Flávio". Esses eleitores podem ter votado em outro candidato presidencial, branco/nulo ou Lula; o conjunto agregado não identifica qual opção.
+
+### Sobreposição obrigatória PL-Senado × Lula
+
+- mínimo agregado por UF:
+  **0**
+
+Logo, os totais não obrigam matematicamente nenhuma interseção PL-Senado × Lula.
+
+### Evidência estrutural do voto duplo para Senado
+
+Em **27/27 UFs**:
+
+\[
+v.tv = 2 \times comparecimento
+\]
+
+confirmando no próprio arquivo oficial que o cargo Senado contabiliza duas oportunidades de voto por eleitor.
+
+### Conclusão limitada
+
+A inferência pública "58,3 milhões no PL Senado menos 56,1 milhões em Flávio = pelo menos 2,2 milhões roubados" é aritmeticamente inválida.
+
+Existe, porém, um resultado legítimo diferente:
+- pelo menos **515.873** eleitores do limite inferior PL-Senado não podem estar todos dentro do conjunto Flávio, quando o cálculo é feito UF por UF.
+
+Isso é voto cruzado/abstenção/branco-nulo/terceira candidatura em aberto; não é evidência automática de fraude.
+
+---
+
+## 2026-10-05 — E0057 — Correção territorial da Fase 4E: exterior não participa do Senado
+
+**Evento:** revisão do controle de qualidade da Fase 4E.
+
+O relatório gerado mostrou:
+- soma Flávio nas 27 UFs: **55.960.603**
+- Flávio BR: **56.104.503**
+- diferença: **143.900**
+
+Essa diferença é o **exterior (ZZ)**, não erro de reconciliação.
+
+Como não há eleição de Senador no exterior, existem duas comparações brutas possíveis:
+
+1. PL-Senado 27 UFs vs Flávio BR:
+   - 58.307.861 − 56.104.503 = **+2.203.358**
+
+2. PL-Senado 27 UFs vs Flávio 27 UFs:
+   - 58.307.861 − 55.960.603 = **+2.347.258**
+
+Ambas continuam misturando votos-candidato de Senado com voto presidencial individual e, portanto, nenhuma delas fornece número de eleitores "faltantes".
+
+O script \`analyze_phase4e_pl_senate_claim.py\` foi corrigido para rotular explicitamente:
+- Flávio BR;
+- Flávio 27 UFs;
+- exterior implícito;
+- e retirar a expressão "erro de reconciliação".
+
+**Commit da correção:** \`8c8b09e8e628486561d5d4ec515d8193b099a3f3\`
+
+A correção de rotulagem **não altera** o limite principal de **515.873**, porque ele já era calculado UF por UF.
+
+---
+
+## 2026-10-05 — E0058 — Evidência externa: "após o travamento Lula nunca desce, Flávio nunca sobe"
+
+**Evento:** recebida nova captura pública com a alegação:
+
+> depois que o site saiu do travamento, Lula subiria continuamente e Flávio cairia continuamente; a postagem também afirma passos de 0,01% a cada 15 segundos e associa o padrão a 2022.
+
+### Inspeção direta da série preservada
+
+Na série nacional de versões genuínas já preservada, a parte **direcional** da alegação é verdadeira.
+
+Janela aproximada da imagem, de 20:04:39 a 20:30:35:
+- versões: **26**
+- transições: **25**
+- Lula subiu em **25/25**
+- Lula caiu em **0/25**
+- Flávio caiu em **25/25**
+- Flávio subiu em **0/25**
+
+Da retomada de 20:04:39 até a última versão, 02:59:31:
+- transições: **152**
+- Lula: **150 altas, 2 estáveis, 0 quedas**
+- Flávio: **150 quedas, 2 estáveis, 0 altas**
+
+Movimento acumulado pós-retomada:
+- Lula: **+1,6706 pp**
+- Flávio: **−1,4384 pp**
+
+Portanto a sequência monotônica não termina às 20:30; ela persiste até 100% na série nacional observada.
+
+### Partes da postagem que não conferem literalmente
+
+Na janela 20:04→20:30:
+- passos Lula exatamente +0,01 pp em duas casas: **9/25**
+- passos Flávio exatamente −0,01 pp: **14/25**
+- mediana entre novas versões nacionais: **41 s**
+- mínimo: **21 s**
+- máximo: **377 s**
+- nenhuma transição exatamente em **15 s**
+
+Assim:
+- "Lula nunca desce / Flávio nunca sobe": sustentado pela série;
+- "sempre exatamente ±0,01": não sustentado;
+- "nova versão exatamente a cada 15 s": não sustentado pelas horas de geração do arquivo nacional.
+
+A interface pode consultar o servidor em outra cadência, mas isso não é o mesmo que o TSE gerar nova versão a cada 15 s.
+
+### Relação com a geografia já medida
+
+A monotonicidade significa matematicamente que quase todos os lotes posteriores tinham:
+- share de Lula acima de sua participação acumulada anterior;
+- share de Flávio abaixo de sua participação acumulada anterior.
+
+As Fases 3J/3K mostraram que zonas tardias já eram estruturalmente mais pró-Lula também em 2022, o que oferece um controle histórico relevante.
+
+A afirmação específica "como em 2022" da nova captura **ainda não foi testada com uma série temporal nacional de 2022 equivalente**.
+
+---
+
+## 2026-10-05 — E0059 — Implementação da Fase 4F: monotonicidade pós-retomada
+
+**Evento:** criação do \`analyze_phase4f_post_resume_monotonicity.py\`.
+
+**Commit:** \`2c7753021316acf9f2f9a8a6ab8b19660f56076d\`
+
+### Objetivo
+
+Separar e testar formalmente:
+1. direção monotônica;
+2. tamanho dos passos exibidos em duas casas;
+3. cadência real entre versões;
+4. duração/comprimento da sequência;
+5. composição marginal dos lotes.
+
+### Saídas previstas
+
+- \`phase4f_post_resume_transitions.csv\`
+- \`phase4f_summary.json\`
+
+### Próxima ação
+
+Executar a Fase 4F e versionar os artefatos. Depois:
+- procurar uma série temporal equivalente de 2022 para testar a frase "como em 2022";
+- retomar o reparo dos 8 municípios defasados de MG antes de descer para zona/seção na linha Governador×Presidente.

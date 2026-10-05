@@ -1,0 +1,54 @@
+O GRÁFICO TRAVOU. O QUE OS DADOS REALMENTE MOSTRAM?
+
+Na noite da eleição presidencial de 2026, o resultado nacional ficou para trás enquanto números estaduais avançavam. Quando voltou, milhões de votos apareceram em pouco tempo.
+
+Foi apenas divulgação ou aconteceu algo com os votos?
+
+Para investigar sem presumir fraude — e sem aceitar explicações sem teste — construí um painel que registra mudanças nos dados do TSE e preserva os arquivos brutos.
+
+Transformei o painel em uma investigação reproduzível, com coletor retomável, hashes SHA-256, manifestos, scripts por hipótese, diário e replay.
+
+A regra é simples: dado bruto não é relatório; observação não é hipótese; anomalia não é prova de fraude.
+
+O QUE JÁ FOI PRESERVADO
+
+São 8 snapshots, 5.785 de 5.785 JSONs no snapshot final e 224 arquivos oficiais, somando 372,13 MB — sem erros reportados.
+
+O resultado final contém 499.248 seções e 119.300.788 votos válidos. A soma das 27 UFs mais o exterior coincide exatamente com o total nacional. Não encontrei falhas no fechamento contábil analisado.
+
+A JANELA CRÍTICA
+
+Entre 19h14min08s e 20h04min39s, o agregado nacional incorporou de uma vez 100.614 seções e 24.728.306 votos válidos.
+
+Depois das 20h04min39s, restavam 18.809.656 votos válidos: Lula recebeu 54,0881% e Flávio, 39,3429%.
+
+Em 152 atualizações, Lula subiu e Flávio caiu no acumulado. Isso parece improvável se cada lote for tratado como moeda ao acaso. Mas os lotes seguem uma ordem geográfica e operacional; não são eventos independentes.
+
+As zonas tardias eram mais favoráveis a Lula, padrão também visto nas mesmas zonas em 2022. A diferença entre zonas tardias e adiantadas foi de 24,39 pontos em 2026 e 23,64 em 2022.
+
+O QUE É POSSÍVEL CONCLUIR
+
+Há evidência sólida de defasagem operacional ou de publicação.
+
+Até agora, não encontrei discrepância material no total final nem quebra contábil que sustente uma afirmação de fraude. Mas o fechamento final não explica por que a divulgação atrasou nem em qual camada ocorreu o problema.
+
+Uma captura das 20h05min57s permite reconstruir 18.480.901 votos, ou 98,25% do período pós-retomada. Ficam sem localização exata 328.755 votos dos 78 segundos iniciais.
+
+UM PROBLEMA CRÍTICO DE TRANSPARÊNCIA
+
+Os dados primários granulares necessários para uma auditoria urna por urna — como BUs, RDVs e votação por seção — ainda não foram disponibilizados no catálogo oficial consultado.
+
+Essa ausência compromete a transparência, desrespeita a possibilidade de controle público do processo e não se justifica sem explicação clara, prazo e acesso efetivo aos arquivos.
+
+O QUE AINDA FALTA
+
+• concluir a reconstrução por UF;
+• recuperar versões históricas e dados por seção/urna;
+• publicar o relatório final reproduzível.
+
+Dados, códigos e documentos:
+https://github.com/rubentrancoso/TSE
+
+Perguntas, críticas e colaborações são bem-vindas.
+
+#Dados #Eleições2026 #Transparência

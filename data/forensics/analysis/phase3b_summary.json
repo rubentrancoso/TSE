@@ -7,7 +7,7 @@
       "path": "data\\forensics\\external\\ArvorCo-PNAD\\beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415\\linha_do_tempo.json",
       "sha256": "3e29b16d2827f88e407096d6fa494a3d1b862f8156633f1a7f905e799f70af73",
       "bytes": 178854,
-      "reused": false
+      "reused": true
     },
     {
       "name": "vitor_comparacao_fontes",
@@ -15,7 +15,7 @@
       "path": "data\\forensics\\external\\vitoropereira-eleicoes2026\\3f4d7442dd601eb1b11afb8e9510d1373c495e7c\\comparacao_fontes.json",
       "sha256": "08f3cef0fc683f2bc0a5148ab8bc65262b5c5ee5df2f35fd0ea5e1d029bec753",
       "bytes": 8443,
-      "reused": false
+      "reused": true
     },
     {
       "name": "vitor_historico",
@@ -23,7 +23,7 @@
       "path": "data\\forensics\\external\\vitoropereira-eleicoes2026\\3f4d7442dd601eb1b11afb8e9510d1373c495e7c\\historico.json",
       "sha256": "212dd884a25d9a2b1452d09dd778d375920cff8c9ae50e261f6ca3812b77ab93",
       "bytes": 351,
-      "reused": false
+      "reused": true
     }
   ],
   "source_status": "capturas independentes/derivadas de respostas públicas do TSE; evidência temporal secundária, não artefato oficial assinado",

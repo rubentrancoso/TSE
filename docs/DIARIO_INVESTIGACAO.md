@@ -1670,3 +1670,150 @@ Quanto do movimento posterior a favor de Lula já era previsível apenas pela ge
 E quanto do movimento veio de mudança adicional da composição do voto tardio **dentro das próprias UFs**?
 
 **Próxima ação:** executar a Fase 3I, versionar os três artefatos derivados e analisar a decomposição.
+
+
+---
+
+## 2026-10-05 — E0039 — Resultado da Fase 3I: geografia explica parte, mas não toda, da recuperação de Lula
+
+**Evento:** análise dos resultados versionados da Fase 3I.
+
+**Commit dos resultados:** `65f3f9c`
+
+### Fechamento final
+
+Resultado oficial final:
+- Flávio: **56.104.503**
+- Lula: **53.879.538**
+- margem Flávio−Lula: **+2.224.965**
+
+A soma das margens das 28 abrangências fecha exatamente com o nacional:
+- diferença: **0**
+
+### Snapshot de 19:06
+
+Margem nacional naquele instante:
+- **+5.559.042** para Flávio.
+
+Movimento líquido real até o resultado final:
+- **−3.334.077** na margem Flávio−Lula, portanto movimento líquido a favor de Lula.
+
+Se o restante de cada UF mantivesse exatamente a composição que aquela UF já apresentava às 19:06, a projeção era:
+- **−1.333.000**
+
+Isso corresponde a aproximadamente **40,0%** do movimento líquido realmente observado até o final.
+
+Diferença entre movimento real e projeção de composição constante:
+- **−2.001.077** adicionais a favor de Lula.
+
+Decomposição por grupo:
+- UFs Lula-led:
+  - movimento real restante: **−5.251.603**
+  - projetado: **−4.120.000**
+- UFs Flávio-led:
+  - movimento real restante: **+1.976.568**
+  - projetado: **+2.787.000**
+
+Portanto o desvio adicional em favor de Lula aparece nos dois lados:
+- estados já favoráveis a Lula entregaram saldo ainda mais pró-Lula do que sua composição observada previa;
+- estados favoráveis a Flávio entregaram saldo menos pró-Flávio do que sua composição observada previa.
+
+Maiores contribuições líquidas restantes pró-Lula desde 19:06:
+- BA: aproximadamente **−1.754.186**
+- CE: **−1.025.413**
+- PE: **−898.928**
+- MA: **−608.261**
+- PI: **−305.682**
+
+Entre UFs que naquele momento eram Flávio-led:
+- AM terminou contribuindo aproximadamente **−131.232** no restante, invertendo o sinal da projeção inicial.
+
+### Snapshot de 19:32
+
+Margem nacional:
+- **+5.005.947**
+
+Movimento real restante até o final:
+- **−2.780.982**
+
+Projeção mantendo a composição então observada em cada UF:
+- **−1.510.000**
+
+Parcela do movimento explicada por essa projeção:
+- **54,3%**
+
+Componente adicional:
+- aproximadamente **−1.270.982** a favor de Lula além da projeção de composição constante.
+
+### Snapshot de 20:47
+
+Margem nacional:
+- **+3.912.599**
+
+Movimento real restante:
+- **−1.687.634**
+
+Projeção mantendo composição por UF:
+- **−932.000**
+
+Parcela explicada:
+- **55,2%**
+
+Componente adicional:
+- aproximadamente **−755.634** a favor de Lula.
+
+### Conclusão limitada
+
+A composição geográfica entre UFs explica corretamente **o sentido** de uma parte importante da recuperação de Lula, mas não explica toda a magnitude.
+
+A partir de 19:06, somente cerca de **40%** do movimento líquido até o final seria obtido se cada UF simplesmente mantivesse a mesma proporção Lula/Flávio que já exibia naquele momento.
+
+O restante indica que o voto que entrou mais tarde **dentro das próprias UFs** foi, no agregado, mais favorável a Lula do que o voto que já havia sido contado.
+
+Isso não identifica causa. A próxima pergunta é geográfica e intraestadual:
+> zonas eleitorais que terminaram mais tarde eram estruturalmente mais favoráveis a Lula?
+
+A comparação com 2022 é necessária para verificar se essa ordenação temporal já existia antes de 2026.
+
+---
+
+## 2026-10-05 — E0040 — Implementação da Fase 3J: horário de conclusão das zonas x inclinação política
+
+**Evento:** criação do `analyze_phase3j_zone_completion_bias.py`.
+
+**Commit:** `b778e3a05b24a0803df1cecb9fecff9238b1a98d`
+
+### Fonte
+
+`ArvorCo/PNAD`, `zonas.json`, commit fixado:
+`beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415`
+
+O produto contém **6.106 pares município-zona**, com:
+- votos presidenciais finais de 2026;
+- hora em Brasília da primeira seção observada;
+- hora em Brasília em que a zona atingiu todas as seções;
+- resultado presidencial de 2022 quando disponível.
+
+### Método
+
+Dentro de cada UF, para reduzir o efeito de composição entre estados:
+
+1. ordenar as zonas por horário de conclusão;
+2. calcular Spearman entre horário de conclusão e margem Lula−Flávio de 2026;
+3. repetir para margem Lula−Bolsonaro no 1º turno de 2022;
+4. comparar o quartil que concluiu primeiro com o quartil que concluiu por último, somando votos;
+5. verificar se o mesmo gradiente temporal aparece em 2022.
+
+### Interpretação
+
+Se zonas mais tardias forem mais Lula em 2026 **e também já fossem mais Lula em 2022**, isso sustenta uma explicação de ordenação geográfica estrutural.
+
+Se o gradiente aparecer fortemente apenas em 2026, o padrão exigirá investigação adicional.
+
+### Limitação
+
+A hora de conclusão de uma zona é a hora em que entrou sua última seção. Ela não informa quando cada seção da zona entrou.
+
+Portanto a Fase 3J testa **ordenação geográfica do término da apuração**, não a composição exata dos lotes nacionais de 19:14 e 20:04.
+
+**Próxima ação:** executar a Fase 3J e versionar os três artefatos.

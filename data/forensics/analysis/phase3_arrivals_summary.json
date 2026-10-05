@@ -1,0 +1,544 @@
+{
+  "format": "tse-forensics-phase3-arrivals-v1",
+  "pleito": "3220",
+  "principal_sections": 497897,
+  "sections_with_timestamp": 497897,
+  "sections_without_timestamp": 0,
+  "timestamp_coverage_pct": 100.0,
+  "parse_failures": 0,
+  "earliest_minute": "2026-10-04 20:23",
+  "latest_minute": "2026-10-05 06:00",
+  "distinct_minutes": 50,
+  "peak_minutes": [
+    {
+      "minute": "2026-10-05 00:52",
+      "sections_generated": 69438
+    },
+    {
+      "minute": "2026-10-04 22:59",
+      "sections_generated": 40750
+    },
+    {
+      "minute": "2026-10-04 23:01",
+      "sections_generated": 36249
+    },
+    {
+      "minute": "2026-10-04 22:23",
+      "sections_generated": 35499
+    },
+    {
+      "minute": "2026-10-04 22:44",
+      "sections_generated": 27142
+    },
+    {
+      "minute": "2026-10-04 23:00",
+      "sections_generated": 25107
+    },
+    {
+      "minute": "2026-10-04 23:11",
+      "sections_generated": 23765
+    },
+    {
+      "minute": "2026-10-04 23:56",
+      "sections_generated": 20827
+    },
+    {
+      "minute": "2026-10-05 00:51",
+      "sections_generated": 18100
+    },
+    {
+      "minute": "2026-10-04 21:56",
+      "sections_generated": 17240
+    },
+    {
+      "minute": "2026-10-04 22:39",
+      "sections_generated": 15686
+    },
+    {
+      "minute": "2026-10-04 21:12",
+      "sections_generated": 13848
+    },
+    {
+      "minute": "2026-10-04 21:13",
+      "sections_generated": 13699
+    },
+    {
+      "minute": "2026-10-05 02:02",
+      "sections_generated": 12193
+    },
+    {
+      "minute": "2026-10-04 22:55",
+      "sections_generated": 11999
+    },
+    {
+      "minute": "2026-10-04 22:56",
+      "sections_generated": 11368
+    },
+    {
+      "minute": "2026-10-04 23:23",
+      "sections_generated": 10712
+    },
+    {
+      "minute": "2026-10-04 23:37",
+      "sections_generated": 10225
+    },
+    {
+      "minute": "2026-10-04 20:57",
+      "sections_generated": 9844
+    },
+    {
+      "minute": "2026-10-04 21:32",
+      "sections_generated": 8287
+    },
+    {
+      "minute": "2026-10-05 06:00",
+      "sections_generated": 8157
+    },
+    {
+      "minute": "2026-10-04 23:02",
+      "sections_generated": 8015
+    },
+    {
+      "minute": "2026-10-04 21:06",
+      "sections_generated": 7106
+    },
+    {
+      "minute": "2026-10-04 22:08",
+      "sections_generated": 5923
+    },
+    {
+      "minute": "2026-10-05 02:01",
+      "sections_generated": 5900
+    },
+    {
+      "minute": "2026-10-04 22:54",
+      "sections_generated": 5152
+    },
+    {
+      "minute": "2026-10-04 20:51",
+      "sections_generated": 4697
+    },
+    {
+      "minute": "2026-10-04 20:24",
+      "sections_generated": 3770
+    },
+    {
+      "minute": "2026-10-04 20:23",
+      "sections_generated": 3199
+    },
+    {
+      "minute": "2026-10-04 21:18",
+      "sections_generated": 2949
+    }
+  ],
+  "ufs": {
+    "AC": {
+      "sections": 2270,
+      "with_timestamp": 2270,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T21:08:15",
+      "latest": "2026-10-04T21:08:18"
+    },
+    "AL": {
+      "sections": 7101,
+      "with_timestamp": 7101,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T22:54:48",
+      "latest": "2026-10-04T22:55:08"
+    },
+    "AM": {
+      "sections": 8157,
+      "with_timestamp": 8157,
+      "without_timestamp": 0,
+      "earliest": "2026-10-05T06:00:31",
+      "latest": "2026-10-05T06:00:37"
+    },
+    "AP": {
+      "sections": 1914,
+      "with_timestamp": 1914,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T21:04:25",
+      "latest": "2026-10-04T21:04:27"
+    },
+    "BA": {
+      "sections": 35476,
+      "with_timestamp": 35476,
+      "without_timestamp": 0,
+      "earliest": "2026-10-05T00:51:40",
+      "latest": "2026-10-05T00:52:33"
+    },
+    "CE": {
+      "sections": 23765,
+      "with_timestamp": 23765,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T23:11:19",
+      "latest": "2026-10-04T23:11:51"
+    },
+    "DF": {
+      "sections": 6969,
+      "with_timestamp": 6969,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T20:23:54",
+      "latest": "2026-10-04T20:24:07"
+    },
+    "ES": {
+      "sections": 9844,
+      "with_timestamp": 9844,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T20:57:00",
+      "latest": "2026-10-04T20:57:18"
+    },
+    "GO": {
+      "sections": 15686,
+      "with_timestamp": 15686,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T22:39:08",
+      "latest": "2026-10-04T22:39:51"
+    },
+    "MA": {
+      "sections": 18093,
+      "with_timestamp": 18093,
+      "without_timestamp": 0,
+      "earliest": "2026-10-05T02:01:54",
+      "latest": "2026-10-05T02:02:06"
+    },
+    "MG": {
+      "sections": 52062,
+      "with_timestamp": 52062,
+      "without_timestamp": 0,
+      "earliest": "2026-10-05T00:51:54",
+      "latest": "2026-10-05T00:52:52"
+    },
+    "MS": {
+      "sections": 7106,
+      "with_timestamp": 7106,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T21:06:27",
+      "latest": "2026-10-04T21:06:45"
+    },
+    "MT": {
+      "sections": 8287,
+      "with_timestamp": 8287,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T21:32:07",
+      "latest": "2026-10-04T21:32:37"
+    },
+    "PA": {
+      "sections": 20827,
+      "with_timestamp": 20827,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T23:56:48",
+      "latest": "2026-10-04T23:56:59"
+    },
+    "PB": {
+      "sections": 10712,
+      "with_timestamp": 10712,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T23:23:16",
+      "latest": "2026-10-04T23:23:27"
+    },
+    "PE": {
+      "sections": 21418,
+      "with_timestamp": 21418,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T22:55:38",
+      "latest": "2026-10-04T22:56:27"
+    },
+    "PI": {
+      "sections": 10225,
+      "with_timestamp": 10225,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T23:37:20",
+      "latest": "2026-10-04T23:37:42"
+    },
+    "PR": {
+      "sections": 27142,
+      "with_timestamp": 27142,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T22:44:08",
+      "latest": "2026-10-04T22:44:59"
+    },
+    "RJ": {
+      "sections": 37675,
+      "with_timestamp": 37675,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T22:23:06",
+      "latest": "2026-10-04T22:24:02"
+    },
+    "RN": {
+      "sections": 8115,
+      "with_timestamp": 8115,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T23:01:59",
+      "latest": "2026-10-04T23:02:22"
+    },
+    "RO": {
+      "sections": 4698,
+      "with_timestamp": 4698,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T20:51:41",
+      "latest": "2026-10-04T20:56:59"
+    },
+    "RR": {
+      "sections": 1519,
+      "with_timestamp": 1519,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T21:09:53",
+      "latest": "2026-10-04T21:09:55"
+    },
+    "RS": {
+      "sections": 27547,
+      "with_timestamp": 27547,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T21:12:27",
+      "latest": "2026-10-04T21:13:27"
+    },
+    "SC": {
+      "sections": 17326,
+      "with_timestamp": 17326,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T21:56:17",
+      "latest": "2026-10-04T22:21:12"
+    },
+    "SE": {
+      "sections": 5923,
+      "with_timestamp": 5923,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T22:08:08",
+      "latest": "2026-10-04T22:08:27"
+    },
+    "SP": {
+      "sections": 103656,
+      "with_timestamp": 103656,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T22:58:58",
+      "latest": "2026-10-04T23:01:49"
+    },
+    "TO": {
+      "sections": 4384,
+      "with_timestamp": 4384,
+      "without_timestamp": 0,
+      "earliest": "2026-10-04T21:18:54",
+      "latest": "2026-10-04T21:19:02"
+    }
+  },
+  "sources": [
+    {
+      "uf": "AC",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/ac/ac-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\ac-p003220-cs.json",
+      "sha256": "2c7e2a6758f1e7c8aa5de5743261b4628f6300dc733df00d3d7d17f4ac2e1682",
+      "bytes": 146065,
+      "reused": false
+    },
+    {
+      "uf": "AL",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/al/al-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\al-p003220-cs.json",
+      "sha256": "9fa1b182595596a1b1519ae7fe8062edfec8b37a2714836e86680d063df9d28a",
+      "bytes": 443359,
+      "reused": false
+    },
+    {
+      "uf": "AM",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/am/am-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\am-p003220-cs.json",
+      "sha256": "cdac468efb710c0fa0f987eee5e525a5065ce876affc74188bc504a9803fe8e6",
+      "bytes": 518324,
+      "reused": false
+    },
+    {
+      "uf": "AP",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/ap/ap-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\ap-p003220-cs.json",
+      "sha256": "054ca4939924fcd5e154473ee63516c94122a9263059699c6a633dde812d7a6f",
+      "bytes": 119576,
+      "reused": false
+    },
+    {
+      "uf": "BA",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/ba/ba-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\ba-p003220-cs.json",
+      "sha256": "2273a95a7a98034d5ffe6880fc8d6b5546c9679e899359c3951c2b909fdb20bc",
+      "bytes": 2301232,
+      "reused": false
+    },
+    {
+      "uf": "CE",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/ce/ce-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\ce-p003220-cs.json",
+      "sha256": "caf2958af38d9b080f2f350a1b5b0b4b8938e252dde7f1a94af390dee170184e",
+      "bytes": 1545233,
+      "reused": false
+    },
+    {
+      "uf": "DF",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/df/df-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\df-p003220-cs.json",
+      "sha256": "0799defe1b90a16a02cc20fde56b29067a592444f18b654c26361fa426862cda",
+      "bytes": 423458,
+      "reused": false
+    },
+    {
+      "uf": "ES",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/es/es-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\es-p003220-cs.json",
+      "sha256": "47f7e6a26050cf291398c943932aa1e7104e4424aaccae5dc17fe583bbab5fc7",
+      "bytes": 613285,
+      "reused": false
+    },
+    {
+      "uf": "GO",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/go/go-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\go-p003220-cs.json",
+      "sha256": "08eae672584e5f34851b08f115694099ca60b97640c5671f16b6c781490e774f",
+      "bytes": 993169,
+      "reused": false
+    },
+    {
+      "uf": "MA",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/ma/ma-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\ma-p003220-cs.json",
+      "sha256": "8850900642622c7e8947dc61b67d889d4107976e13c054b89a8ffbf8926630d4",
+      "bytes": 1198237,
+      "reused": false
+    },
+    {
+      "uf": "MG",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/mg/mg-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\mg-p003220-cs.json",
+      "sha256": "754433800c560314386b7b4483bb5d9a722513412724c3de2082fcbac92d8b48",
+      "bytes": 3317038,
+      "reused": false
+    },
+    {
+      "uf": "MS",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/ms/ms-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\ms-p003220-cs.json",
+      "sha256": "d7a5a782a5d86850bcb1f3ba7782aa55a5a021c8264712e2872c9f952e136e3a",
+      "bytes": 443405,
+      "reused": false
+    },
+    {
+      "uf": "MT",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/mt/mt-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\mt-p003220-cs.json",
+      "sha256": "4c23396b8e57c1bade83831863537f2e262931308f8c2ad4c021e90b2ebcbc0c",
+      "bytes": 547644,
+      "reused": false
+    },
+    {
+      "uf": "PA",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/pa/pa-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\pa-p003220-cs.json",
+      "sha256": "bc8922d8098449649bc68c2669c9325b24a7f2d79743de67a357e8409f0e9252",
+      "bytes": 1331338,
+      "reused": false
+    },
+    {
+      "uf": "PB",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/pb/pb-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\pb-p003220-cs.json",
+      "sha256": "07b0ba2c568a61179f9b1e23a18a2b86d44106e5141f82aea80110f0ac201878",
+      "bytes": 670012,
+      "reused": false
+    },
+    {
+      "uf": "PE",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/pe/pe-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\pe-p003220-cs.json",
+      "sha256": "5eba1f50ce9eaec1ae0c2290f05c29dd382921e7f4b1d7b3ade17307aeb85ab6",
+      "bytes": 1339133,
+      "reused": false
+    },
+    {
+      "uf": "PI",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/pi/pi-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\pi-p003220-cs.json",
+      "sha256": "9bfb67d448ab560a4246477827b8a84df73ee151d629e6e2b2c1fac4f1caee9e",
+      "bytes": 691328,
+      "reused": false
+    },
+    {
+      "uf": "PR",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/pr/pr-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\pr-p003220-cs.json",
+      "sha256": "5751131152d34dfcdf281e1f9ab72d0702f7bcfd62ec0690f318e5d1a5310095",
+      "bytes": 1675517,
+      "reused": false
+    },
+    {
+      "uf": "RJ",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/rj/rj-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\rj-p003220-cs.json",
+      "sha256": "f5f2b4141fc3dd340202335ba29af2e50c7855baf35fad5097efbbcb36495d11",
+      "bytes": 2330540,
+      "reused": false
+    },
+    {
+      "uf": "RN",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/rn/rn-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\rn-p003220-cs.json",
+      "sha256": "7bef8bc5ae42f708741e54ac01beb9c9e706bebd24ac9ca4ea037f3aa2d088ae",
+      "bytes": 514126,
+      "reused": false
+    },
+    {
+      "uf": "RO",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/ro/ro-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\ro-p003220-cs.json",
+      "sha256": "fdde72122d7a254fbf63d611b8206f0423b22aafb57ab53ccd50c98837b39ac3",
+      "bytes": 300207,
+      "reused": false
+    },
+    {
+      "uf": "RR",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/rr/rr-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\rr-p003220-cs.json",
+      "sha256": "d02f76b3c957b411a5504dd66cecaefa6593bca584911a88b2c046c03152d1e3",
+      "bytes": 98600,
+      "reused": false
+    },
+    {
+      "uf": "RS",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/rs/rs-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\rs-p003220-cs.json",
+      "sha256": "b42078b0a7c837dc252b69626bfc2f2ca2e4afab8390c474b78cb7113028266e",
+      "bytes": 1708354,
+      "reused": false
+    },
+    {
+      "uf": "SC",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/sc/sc-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\sc-p003220-cs.json",
+      "sha256": "dff135f9109e3bac158ea9c8a47271004df90e631037ee4f24996c4be1a86d41",
+      "bytes": 1079039,
+      "reused": false
+    },
+    {
+      "uf": "SE",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/se/se-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\se-p003220-cs.json",
+      "sha256": "eda8caf769814d81ac6a6f923445693df5826abafa5b0bcb31e26dce4e048bba",
+      "bytes": 370298,
+      "reused": false
+    },
+    {
+      "uf": "SP",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/sp/sp-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\sp-p003220-cs.json",
+      "sha256": "429de146ddcb99c37d0c817becc365c2dbac401aae4abcba6b9c369720c969c0",
+      "bytes": 6293803,
+      "reused": false
+    },
+    {
+      "uf": "TO",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/arquivo-urna/3220/config/to/to-p003220-cs.json",
+      "path": "data\\forensics\\phase3\\raw\\ea16\\to-p003220-cs.json",
+      "sha256": "f85cceadfeeac582f70e2a0ee60d34b8f38764d3590e8e2641e25f018ab89b63",
+      "bytes": 281658,
+      "reused": false
+    }
+  ],
+  "interpretation_rule": "EA16 será considerado temporalmente útil apenas se a distribuição de da/ha mostrar progressão compatível com a noite eleitoral. Se houver concentração artificial em poucos minutos posteriores, esses campos não serão usados como substituto de snapshots históricos."
+}

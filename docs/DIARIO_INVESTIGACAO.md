@@ -3352,3 +3352,82 @@ Depois versionar:
 - `data/forensics/analysis/phase4i_summary.json`
 
 e registrar o resultado antes de decidir a Fase 4J.
+
+---
+
+## 2026-10-05 — E0067 — Resultado da Fase 4I: snapshots locais cobrem apenas 5,31% do pool pós-20:04
+
+**Evento:** execução local de `analyze_phase4i_local_tail_coverage.py`.
+
+### Resultado
+
+- snapshots locais utilizáveis: **8**;
+- primeiro snapshot local útil: **21:19:37 BRT**;
+- corte alvo: **20:04:39 BRT**;
+- lacuna temporal: **74,97 min**;
+- cauda coberta localmente: **999.110 votos válidos**;
+- cobertura do pool pós-20:04: **5,31%**;
+- composição da cauda local:
+  - Lula: **67,19%**;
+  - Flávio: **28,37%**.
+
+Reconciliação da cauda por UF contra o nacional:
+- válidos: **+16.436** BR−somaUF;
+- Lula: **+12.382**;
+- Flávio: **+3.399**.
+
+Essa diferença é compatível com a limitação já documentada de snapshots não atômicos: BR e UFs foram capturados ao longo de uma janela de minutos.
+
+### Conclusão
+
+Os snapshots locais são insuficientes para reconstruir geograficamente o pool de **18.809.656** votos iniciado às 20:04:39.
+
+A maior parte do intervalo crítico não foi preservada localmente e não deve ser inferida a partir dos 5,31% finais.
+
+---
+
+## 2026-10-05 — E0068 — Descoberta de corte independente às 20:05:57 e implementação da Fase 4J
+
+**Evento:** revisão das fontes contemporâneas já preservadas pela Fase 3B.
+
+Foi identificado que `vitoropereira/eleicoes2026`, no commit fixado
+`3f4d7442dd601eb1b11afb8e9510d1373c495e7c`, preserva em
+`marcos/75pct/comparacao_fontes.json` os **28 agregados exatos por UF/ZZ**
+capturados às **20:05:57 BRT**.
+
+A captura contém por abrangência:
+- seções totalizadas;
+- votos válidos;
+- votos de Flávio;
+- votos de Lula.
+
+Soma declarada das UFs no corte:
+- **100.819.887 votos válidos**;
+- **425.421 seções**.
+
+Comparando com o resultado final de **119.300.788 válidos**, o trecho
+20:05:57→final contém **18.480.901 votos válidos**, o que representa
+**98,25%** do pool pós-20:04 da Fase 4G.
+
+A parcela não coberta cai para apenas:
+- **328.755 votos válidos**;
+- **1,75%** do pool;
+- janela de **78 segundos**, 20:04:39→20:05:57.
+
+### Implementação
+
+Criado:
+- `analyze_phase4j_post_resume_geography.py`
+
+**Commit:** `d56686119a357353e1c728336503e5aad9facb8b`
+
+### Objetivo
+
+Reconstruir deterministicamente por UF a cauda 20:05:57→final, reconciliar o
+corte independente, reconciliar o final UF↔BR e medir a composição política e
+as maiores contribuições geográficas do trecho que representa 98,25% do pool
+pós-retomada.
+
+### Próxima ação
+
+Executar a Fase 4J e versionar seus dois artefatos antes de definir a Fase 4K.

@@ -12,7 +12,7 @@ Requer apenas Python 3. Não há `pip install`.
 
 ## O que ele faz
 
-- consulta o EA20 nacional do TSE a cada 10 s;
+- consulta o EA20 nacional do TSE a cada 10 s e permite pausar/retomar as consultas;
 - grava cada estado novo em SQLite;
 - preserva o histórico entre reinicializações;
 - permite baixar um backup JSON completo para simulações futuras;
@@ -47,7 +47,6 @@ Para executar **toda a coleta de uma vez** — snapshot nacional/UF/municípios 
 python collect_forensics.py
 ```
 
-No Windows, também é possível dar duplo clique em `COLETAR_TUDO_WINDOWS.bat`.
 
 Os comandos abaixo são opcionais, apenas para executar partes isoladas:
 
@@ -66,7 +65,7 @@ python collect_forensics.py portal --download-portal-files
 python collect_forensics.py all --download-portal-files
 ```
 
-Os arquivos ficam em `data/forensics/`. Cada snapshot recebe um diretório com timestamp UTC; downloads interrompidos usam arquivo temporário e podem ser retomados. Execute novamente o comando `portal` quando o TSE publicar novos conjuntos, como boletins de urna, votação por seção e arquivos transmitidos para totalização.
+Os arquivos ficam em `data/forensics/`. Cada snapshot recebe um diretório com timestamp UTC; downloads interrompidos usam arquivo temporário e podem ser retomados. Em toda execução, o próprio script informa se boletins de urna, arquivos `.bu/.imgbu/.rdv` e votação por seção estão disponíveis, e registra a tentativa em `urn_availability_history.jsonl`. Execute novamente o coletor quando o TSE publicar novos conjuntos.
 
 ## Opções
 

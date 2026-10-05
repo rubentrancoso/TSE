@@ -3076,3 +3076,188 @@ Depois:
 1. interpretar se a sequência é ordem-invariante;
 2. investigar a composição geográfica do conjunto remanescente;
 3. continuar busca por série temporal nacional preservada de 2022.
+
+
+---
+
+## 2026-10-05 — E0062 — Resultado da Fase 4G: monotonicidade é invariante à ordem dos 152 lotes
+
+**Evento:** análise dos resultados versionados da Fase 4G.
+
+**Commit dos resultados:** \`1b9c3f7\`
+
+### Resultado exato
+
+Janela:
+- início: **20:04:39**
+- fim: **02:59:31**
+- lotes: **152**
+- votos válidos restantes: **18.809.656**
+
+Nos totais inteiros:
+- Lula sobe em **152/152** transições;
+- Flávio desce em **152/152**.
+
+Composição do pool inteiro restante:
+- Lula: **54,0881%**
+- Flávio: **39,3429%**
+- margem Lula−Flávio: **+14,7452 pp**
+
+Distribuição dos 152 lotes:
+- menor share Lula: **47,6753%**
+- maior share Flávio: **46,2185%**
+- Lula > Flávio em **152/152**
+- menor margem Lula−Flávio de qualquer lote: **+2,8307 pp**
+
+### Certificado adversarial de ordem
+
+Para Lula:
+- lotes reordenados por share Lula decrescente;
+- falhas: **0**
+- headroom mínimo ainda positivo: **+2,513611 pp**
+
+Para Flávio:
+- lotes reordenados por share Flávio crescente;
+- falhas: **0**
+- headroom mínimo ainda positivo: **+0,809287 pp**
+
+Resultado:
+
+\[
+\boxed{\text{qualquer permutação dos mesmos 152 lotes continua monotônica}}
+\]
+
+### Consequência metodológica
+
+A sequência 152/152 não deve ser tratada como 152 lançamentos independentes de moeda.
+
+Condicionado ao conjunto de lotes que restava depois de 20:04:39:
+- a ordem observada não é necessária para produzir a monotonicidade;
+- o fenômeno está na **composição do conjunto remanescente**.
+
+Portanto a pergunta passa de:
+> "por que a ordem das atualizações sempre favoreceu Lula?"
+
+para:
+> "por que todos os lotes remanescentes tinham composição mais Lula que Flávio?"
+
+Isso não resolve a causa. Localiza a causa a investigar:
+- composição geográfica;
+- perfil das zonas/seções que concluem tarde;
+- comparação histórica com as mesmas regiões.
+
+---
+
+## 2026-10-05 — E0063 — Inspeção preliminar: zonas que concluem tarde são fortemente mais Lula, também em 2022
+
+**Evento:** cruzamento exploratório entre o horário de conclusão das zonas e a composição final das mesmas zonas.
+
+Fonte:
+- \`ArvorCo/PNAD zonas.json\`
+- 6.094 zonas completas.
+
+### Corte 20:04:39
+
+Zonas que só concluíram depois:
+- **2.732 zonas**
+- votos válidos finais dessas zonas: **65.132.802**
+- Lula 2026: **50,98%**
+- Flávio 2026: **41,87%**
+- margem Lula−Flávio: **+9,11 pp**
+
+As mesmas zonas em 2022:
+- Lula: **54,10%**
+- Bolsonaro: **38,06%**
+- margem: **+16,04 pp**
+
+Zonas já concluídas até 20:04:
+- Lula 2026: **38,06%**
+- Flávio: **53,34%**
+- margem Lula−Flávio: **−15,28 pp**
+
+### Cortes progressivamente mais tardios
+
+Zonas que concluíram depois de 20:30:
+- Lula 2026: **52,90%**
+- Flávio: **40,23%**
+- margem: **+12,67 pp**
+- mesmas zonas em 2022: **+19,63 pp** Lula−Bolsonaro
+
+Depois de 21:00:
+- Lula: **56,63%**
+- Flávio: **37,05%**
+- margem: **+19,58 pp**
+- mesmas zonas em 2022: **+26,65 pp**
+
+Depois de 22:00:
+- Lula: **65,00%**
+- Flávio: **30,29%**
+- margem: **+34,71 pp**
+- mesmas zonas em 2022: **+42,89 pp**
+
+Depois de 00:00:
+- Lula: **71,92%**
+- Flávio: **24,46%**
+- margem: **+47,46 pp**
+- mesmas zonas em 2022: **+57,34 pp**
+
+### Limitação crítica
+
+Os **65,1 milhões** de votos finais das zonas que terminaram após 20:04 não são os **18,8 milhões** de votos que entraram depois de 20:04.
+
+Uma zona pode:
+- já ter publicado grande parte de suas seções;
+- continuar marcada como "não concluída";
+- completar apenas quando chega sua última seção.
+
+Logo o horário de conclusão serve para caracterizar a **geografia do conjunto tardio**, não para atribuir todos os votos daquela zona ao período pós-corte.
+
+Mesmo com essa limitação, o padrão histórico é forte:
+- quanto mais tarde o corte, mais pró-Lula é o conjunto de zonas que ainda falta concluir;
+- as mesmas zonas eram ainda mais pró-Lula em 2022.
+
+---
+
+## 2026-10-05 — E0064 — Implementação da Fase 4H: composição das zonas de conclusão tardia
+
+**Evento:** criação do \`analyze_phase4h_late_zone_composition.py\`.
+
+**Commit:** \`8e7486e125ad8f5453b2ed69977d0c00dbcb5227\`
+
+### Objetivo
+
+Formalizar a inspeção do E0063 e comparar os seguintes cortes:
+- 20:04:39
+- 20:30:35
+- 21:00
+- 22:00
+- 00:00
+
+Para cada corte:
+- grupo EARLY = zonas já concluídas;
+- grupo LATE = zonas ainda não concluídas;
+- composição ponderada por votos em 2026;
+- composição das mesmas zonas em 2022;
+- gradiente LATE−EARLY;
+- delta do gradiente 2026−2022.
+
+### Relação com a Fase 4G
+
+O relatório também importa o pool real da 4G para deixar explícito que:
+- pool real pós-20:04 = **18,8 milhões**;
+- votos finais das zonas LATE às 20:04 são muito maiores;
+- portanto 4H é análise composicional, não reconstrução histórica exata.
+
+### Busca por série fina de 2022
+
+A busca no GitHub encontrou vários projetos de 2022 que consultavam o endpoint do TSE em tempo real, mas até este ponto **não foi localizada uma série nacional preservada de snapshots com resolução comparável à série 2026**.
+
+Também foi localizado material de 2022 com microdados/horários de recebimento de BU, útil para reconstrução estrutural, mas isso não equivale ao histórico do painel nacional.
+
+A busca permanece aberta; nenhuma afirmação "igual a 2022" será feita sem uma fonte temporal equivalente.
+
+### Próxima ação
+
+Executar a Fase 4H e versionar:
+- \`phase4h_late_zone_thresholds.csv\`
+- \`phase4h_summary.json\`

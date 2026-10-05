@@ -1,0 +1,44 @@
+{
+  "format": "tse-forensics-phase3d-candidate-motion-v1",
+  "source": {
+    "url": "https://raw.githubusercontent.com/ArvorCo/PNAD/beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415/analysis/apuracao_2026/dados/linha_do_tempo.json",
+    "path": "data\\forensics\\external\\ArvorCo-PNAD\\beb3bec9ae5c25e2868ee2f2cefb9e6dccd91415\\linha_do_tempo.json",
+    "sha256": "3e29b16d2827f88e407096d6fa494a3d1b862f8156633f1a7f905e799f70af73",
+    "bytes": 178854,
+    "reused": true
+  },
+  "batches": [
+    {
+      "batch": "catchup_1",
+      "generated_brt": "2026-10-04 19:14:08",
+      "sections_added": 87608,
+      "valid_votes_added": 21016324,
+      "top2_votes_added": 19298672,
+      "non_top2_votes_added": 1717652,
+      "top2_share_of_batch_pct": 91.82705786225984,
+      "non_top2_share_of_batch_pct": 8.172942137740169,
+      "non_top2_groups_with_zero_delta": 0,
+      "smallest_non_top2_delta": 112445,
+      "largest_non_top2_delta": 629674
+    },
+    {
+      "batch": "catchup_2",
+      "generated_brt": "2026-10-04 20:04:39",
+      "sections_added": 100614,
+      "valid_votes_added": 24728306,
+      "top2_votes_added": 22835252,
+      "non_top2_votes_added": 1893054,
+      "top2_share_of_batch_pct": 92.34458680671455,
+      "non_top2_share_of_batch_pct": 7.65541319328546,
+      "non_top2_groups_with_zero_delta": 0,
+      "smallest_non_top2_delta": 120805,
+      "largest_non_top2_delta": 710669
+    }
+  ],
+  "interpretation_rules": [
+    "Delta absoluto pequeno em candidato pequeno não implica ausência de movimento; comparar também a participação no lote.",
+    "Estabilidade percentual dos candidatos menores pode coexistir com centenas de milhares de votos adicionais se sua participação no lote for parecida com a participação acumulada anterior.",
+    "A comparação 'esperado se mantivesse a participação anterior' é descritiva, não um teste probabilístico válido, porque os lotes têm composição geográfica não aleatória.",
+    "Qualquer alegação de anomalia estatística forte deve depois ser condicionada por UF/município/seção."
+  ]
+}

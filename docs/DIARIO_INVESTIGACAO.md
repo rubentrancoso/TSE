@@ -2095,3 +2095,155 @@ Depois:
 - identificar UFs onde a sobreposição Governador-direita × Lula é matematicamente inevitável;
 - aprofundar essas UFs em município/zona/seção;
 - em seguida construir a versão específica para Senado, respeitando dois votos por eleitor.
+
+
+---
+
+## 2026-10-05 — E0045 — Resultado da Fase 4A: uma sobreposição Governador-direita × Lula é matematicamente inevitável
+
+**Evento:** análise dos resultados versionados da Fase 4A.
+
+**Commit dos resultados:** \`5d9017a\`
+
+### Cobertura
+
+- UFs com candidaturas principais de direita/centro-direita triadas: **19**
+- candidaturas triadas: **20**
+- linhas marcadas como fonte provisória no produto externo: **2**
+- candidaturas com sobreposição mínima obrigatória Governador×Lula > 0: **1**
+- candidaturas com mínimo obrigatório de eleitores fora do conjunto Flávio > 0: **7**
+
+### Caso matematicamente mais forte: Paraíba
+
+Lucas Ribeiro (PP, classificado como centro-direita):
+- votos para Governador: **1.470.252**
+- comparecimento presidencial: **2.683.988**
+- votos em Lula: **1.541.127**
+- votos em Flávio: **831.377**
+
+Limite inferior Governador×Lula:
+
+\[
+\max(0, 1.470.252 + 1.541.127 - 2.683.988)
+= 327.391
+\]
+
+Portanto, sob esses totais agregados, **pelo menos 327.391 eleitores** necessariamente pertencem ao conjunto de votantes de Lucas Ribeiro e ao conjunto de votantes de Lula.
+
+Isso corresponde a **22,27%** dos votos de Lucas Ribeiro.
+
+O limite máximo é 1.470.252; portanto o intervalo matematicamente possível para a sobreposição é:
+
+\[
+[327.391,\ 1.470.252]
+\]
+
+Esse resultado não identifica indivíduos, mas o limite inferior positivo é uma consequência combinatória inevitável dos totais.
+
+### Candidaturas com mais votos que Flávio na mesma UF
+
+Número mínimo de eleitores daquela candidatura a Governador que não podem estar contidos no conjunto de votos de Flávio:
+
+- SP, Tarcísio: **1.569.851** (**10,83%** dos votos de Tarcísio)
+- PB, Lucas Ribeiro: **638.875** (**43,45%**)
+- MG, Cleitinho Azevedo: **544.042** (**8,61%**)
+- PA, Dr. Daniel: **181.764** (**7,75%**)
+- AL, JHC: **156.139** (**17,51%**) — fonte de Governador marcada como provisória no produto externo
+- MS, Eduardo Riedel: **40.972** (**4,48%**)
+- RN, Allyson: **13.316** (**1,81%**)
+
+Esses limites são específicos ao conjunto de votos de Flávio. Eles **não** significam ainda que todos esses eleitores deixaram de votar em um presidenciável de direita, pois existem outras candidaturas presidenciais classificáveis como direita/centro-direita.
+
+### Conclusão limitada
+
+A Fase 4A já mostra que a hipótese de alinhamento perfeito Governador-direita → Flávio é incompatível com os totais em pelo menos sete candidaturas triadas.
+
+No caso da Paraíba, há um resultado mais forte: mesmo sem escolher como distribuir todos os demais votos, a sobreposição Lucas Ribeiro × Lula precisa ser de pelo menos **327.391 eleitores**.
+
+A Fase 4A, porém, não cobre:
+- todas as candidaturas a Governador;
+- todas as UFs;
+- o bloco presidencial completo de direita.
+
+Por isso o próximo teste deve substituir candidatura isolada por **blocos ideológicos completos**.
+
+---
+
+## 2026-10-05 — E0046 — Implementação da Fase 4B: blocos completos de direita em todas as UFs
+
+**Evento:** criação do \`analyze_phase4b_full_right_blocks.py\`.
+
+**Commit:** \`7584bc32031d1fc35ce6ef92dd15148ebc04a0d7\`
+
+### Objetivo
+
+Repetir o teste da Fase 4A nas 27 UFs usando:
+- todos os candidatos válidos a Governador;
+- todos os candidatos válidos a Presidente;
+- a mesma classificação explícita de partidos;
+- bloco ampliado \`direita + centro-direita\`.
+
+### Fontes oficiais
+
+Para cada UF:
+- Governador:
+  \`/oficial/ele2026/6259/dados/{uf}/{uf}-c0003-e006259-u.json\`
+- Presidente:
+  \`/oficial/ele2026/6257/dados/{uf}/{uf}-c0001-e006257-u.json\`
+
+A estrutura do endpoint de Governador foi confirmada em captura contemporânea preservada do TSE.
+
+### Classificação
+
+Fonte:
+\`ArvorCo/PNAD apuracao/public/campos.json\`
+
+A tabela de classificação é versionada e explícita:
+- direita
+- centro-direita
+- centro
+- centro-esquerda
+- esquerda
+- indefinido
+
+Exceções por \`sqcand\` têm precedência sobre a classificação partidária.
+
+### Métricas por UF
+
+Definições:
+- \`G_R\`: todos os votos válidos para Governador em candidaturas direita/centro-direita;
+- \`P_R\`: todos os votos válidos para Presidente em candidaturas direita/centro-direita;
+- \`L\`: Lula;
+- \`N\`: comparecimento.
+
+Violação mínima da hipótese de alinhamento:
+
+\[
+\max(0, G_R - P_R)
+\]
+
+Sobreposição mínima Governador-direita × Lula:
+
+\[
+\max(0, G_R + L - N)
+\]
+
+Também serão calculados os intervalos completos de sobreposição entre:
+- Governador-direita × Presidente-direita;
+- Governador-direita × Lula.
+
+### Auditoria de qualidade embutida
+
+O script também verifica:
+- comparecimento Governador vs Presidente por UF;
+- soma dos votos válidos dos candidatos vs \`v.vv\` para Presidente;
+- soma dos votos válidos dos candidatos vs \`v.vv\` para Governador;
+- votos válidos de candidatos que permaneceram sem classificação.
+
+### Saídas previstas
+
+- \`phase4b_uf_blocks.csv\`
+- \`phase4b_candidate_inventory.csv\`
+- \`phase4b_summary.json\`
+
+**Próxima ação:** executar a Fase 4B. Se a violação mínima continuar positiva depois de agregar **todo** o bloco presidencial de direita, então teremos um resultado substancialmente mais forte do que o teste Flávio-isolado da Fase 4A.

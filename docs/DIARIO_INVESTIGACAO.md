@@ -2956,3 +2956,123 @@ Separar e testar formalmente:
 Executar a Fase 4F e versionar os artefatos. Depois:
 - procurar uma série temporal equivalente de 2022 para testar a frase "como em 2022";
 - retomar o reparo dos 8 municípios defasados de MG antes de descer para zona/seção na linha Governador×Presidente.
+
+
+---
+
+## 2026-10-05 — E0060 — Resultado confirmado da Fase 4F e correção de arredondamento
+
+**Evento:** análise dos resultados versionados da Fase 4F.
+
+**Commit dos resultados:** \`09db62b\`
+
+### Resultado observado
+
+Janela 20:04:39 → 20:30:35:
+- transições: **25**
+- Lula: 25 altas, 0 quedas
+- Flávio: 25 quedas, 0 altas
+
+Da retomada 20:04:39 até 100%:
+- transições: **152**
+- no campo percentual arredondado a 4 casas:
+  - Lula: 150 altas, 2 empates, 0 quedas
+  - Flávio: 150 quedas, 2 empates, 0 altas
+
+Movimento acumulado:
+- Lula: **+1,6706 pp**
+- Flávio: **−1,4384 pp**
+
+### Correção importante
+
+Recalculando as participações diretamente dos totais inteiros \`lula/vv\` e
+\`flavio/vv\`, os dois aparentes empates desaparecem.
+
+Resultado exato:
+- Lula aumenta em **152/152** transições;
+- Flávio diminui em **152/152** transições.
+
+Logo a sequência pós-retomada é estritamente monotônica nos totais inteiros;
+os dois empates da Fase 4F eram apenas efeito de arredondamento do campo
+percentual publicado.
+
+### Partes da alegação pública
+
+Confirmada:
+- direção: Lula nunca cai e Flávio nunca sobe após 20:04:39.
+
+Não confirmadas:
+- exatamente ±0,01 pp em cada atualização;
+- geração de nova versão a cada 15 segundos.
+
+---
+
+## 2026-10-05 — E0061 — Implementação da Fase 4G: monotonicidade depende da ordem ou do conteúdo dos lotes?
+
+**Evento:** criação do \`analyze_phase4g_order_invariance.py\`.
+
+**Commit:** \`402da79ca41f82208f4c3e7fa8f39e683fa10245\`
+
+### Pergunta
+
+Uma sequência de 152 movimentos consecutivos no mesmo sentido parece, à
+primeira vista, estatisticamente extrema.
+
+Mas o teste correto precisa distinguir:
+- acaso na **ordem** dos lotes;
+- composição sistematicamente diferente dos **lotes que restavam**.
+
+### Achado exploratório antes da execução formal
+
+Derivando os 152 lotes diretamente das diferenças entre totais cumulativos
+consecutivos:
+
+- participação inicial às 20:04:39:
+  - Lula: **43,49215%**
+  - Flávio: **48,46621%**
+
+- participação final:
+  - Lula: **45,16277%**
+  - Flávio: **47,02777%**
+
+- conjunto inteiro de votos restantes após 20:04:39:
+  - válidos: **18.809.656**
+  - Lula: **54,08809%**
+  - Flávio: **39,34286%**
+
+Entre os 152 lotes:
+- menor share de Lula: **47,67532%**
+- maior share de Flávio: **46,21849%**
+- Lula supera Flávio em **152/152** lotes
+- menor margem Lula−Flávio em qualquer lote: **+2,83073 pp**
+
+### Teste determinístico de ordem
+
+Para Lula:
+- ordenar os lotes por share Lula **decrescente** é o caso mais adverso para
+  os lotes de share menor, pois maximiza o acumulado antes de eles entrarem.
+
+Para Flávio:
+- ordenar por share Flávio **crescente** é o caso mais adverso para lotes de
+  share maior, pois minimiza o acumulado antes de eles entrarem.
+
+Se mesmo nessas ordens adversariais:
+- Lula nunca cair;
+- Flávio nunca subir;
+
+então a monotonicidade é **invariante à permutação** dos 152 lotes.
+
+Nesse caso, uma conta como \((1/2)^{152}\) seria conceitualmente inadequada:
+a sequência não seria resultado de 152 eventos independentes equiprováveis;
+seria consequência do conteúdo do conjunto remanescente.
+
+### Próxima ação
+
+Executar a Fase 4G e versionar:
+- \`phase4g_post_resume_batches.csv\`
+- \`phase4g_summary.json\`
+
+Depois:
+1. interpretar se a sequência é ordem-invariante;
+2. investigar a composição geográfica do conjunto remanescente;
+3. continuar busca por série temporal nacional preservada de 2022.

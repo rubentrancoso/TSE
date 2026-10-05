@@ -51,3 +51,7 @@ Depois, a prioridade é obter versões oficiais antigas dos arquivos do TSE para
 Por fim, precisamos localizar uma série temporal de 2022 com resolução comparável e produzir o relatório final com fontes, hashes, código, limitações e hipóteses alternativas.
 
 A investigação ainda não terminou. Mas ela já mudou a pergunta. Não estamos mais diante de uma curva estranha na tela. Estamos diante de um evento mensurável, com milhões de votos preservados, totais reconciliados, uma lacuna temporal delimitada e próximos testes definidos. É assim que uma suspeita pública pode ser transformada em uma investigação verificável.
+
+## Dados disponíveis e contato
+
+Todos os dados preservados, scripts de coleta e análise, resultados derivados e documentos metodológicos deste trabalho estão disponíveis publicamente no GitHub: [github.com/rubentrancoso/TSE](https://github.com/rubentrancoso/TSE). Se você tiver qualquer pergunta, dúvida, crítica, informação adicional ou interesse em acompanhar e colaborar com a investigação, pode entrar em contato pelo próprio repositório.

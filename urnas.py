@@ -715,6 +715,13 @@ def main():
     if args.action == "fetch" and (args.municipio or args.zona or args.secao):
         parser.error("O catalogo distribui ZIP por UF. Baixe com --uf e depois use export --municipio/--zona/--secao")
     root = root_path(args.root)
+    if args.action in ("fetch", "stats", "reconcile", "import"):
+        # Antes de qualquer substituicao, arquivar os relatorios da ultima
+        # execucao. Se arquivar falhar, nao sobrescrever analises anteriores.
+        from history_forensics import snapshot as history_snapshot
+        history_snapshot(root, "antes-" + args.action,
+                         context={"tipos": args.kind or [], "ufs": args.uf,
+                                  "turno": args.turn})
     if os.name == "nt":
         temporary = root / "tmp"
         temporary.mkdir(parents=True, exist_ok=True)
@@ -818,6 +825,15 @@ def main():
         finally:
             if db:
                 db.close()
+        # Preservacao do resultado concluido ou parcial, antes de qualquer
+        # codigo de saida diferente de zero.
+        from history_forensics import snapshot as history_snapshot
+        history_snapshot(root, "apos-coleta" if not errors else "apos-coleta-com-erros",
+                         context={"recursos_selecionados": len(selected),
+                                  "processados": len(results),
+                                  "reutilizados": reused, "novos": downloaded,
+                                  "linhas_indexadas": indexed,
+                                  "erros": len(errors)})
         print(f"RESUMO: {len(selected)} recursos, {reused} reutilizados, "
               f"{downloaded} novos, {indexed:,} registros indexados, "
               f"{len(errors)} erros.", flush=True)
@@ -862,6 +878,9 @@ def main():
                         raise
         finally:
             db.close()
+        from history_forensics import snapshot as history_snapshot
+        history_snapshot(root, "apos-" + args.action,
+                         context={"ufs": args.uf, "turno": args.turn})
         return
     if args.action == "verify":
         total = 0

@@ -365,6 +365,23 @@ def import_file(db, path, kind, key, digest):
         raise
 
 
+
+def normalized_cargo(row):
+    """Identificador estavel mesmo se a fonte usa nome ou codigo do cargo."""
+    raw = field(row, "CD_CARGO_PERGUNTA", "CD_CARGO")
+    if raw:
+        n = numeric(raw)
+        if n is not None:
+            return str(n)
+    label = field(row, "DS_CARGO_PERGUNTA", "DS_CARGO").casefold().strip()
+    known = {
+        "presidente": "1", "governador": "3", "senador": "5",
+        "deputado federal": "6", "deputado estadual": "7",
+        "deputado distrital": "8",
+    }
+    return known.get(label, label)
+
+
 def import_csv_stream(db, stream, key, member, kind):
     reader = open_csv(stream)
     if not reader.fieldnames:
@@ -382,7 +399,7 @@ def import_csv_stream(db, stream, key, member, kind):
         zona = field(obj, "NR_ZONA")
         secao = field(obj, "NR_SECAO")
         turno = field(obj, "NR_TURNO")
-        cargo = field(obj, "DS_CARGO_PERGUNTA", "DS_CARGO")
+        cargo = normalized_cargo(obj)
         votavel = field(obj, "NR_VOTAVEL")
         votos = numeric(field(obj, "QT_VOTOS"))
         batch.append((key, member, line, kind, uf, municipio, zona, secao,

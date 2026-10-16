@@ -480,4 +480,11 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    # Compatibilidade: os comandos antigos continuam iguais.
+    # Nova coleta granulada de urnas no H: passa pelo gerenciador urnas.py.
+    if len(sys.argv) > 1 and sys.argv[1] == "urnas":
+        from urnas import main as urnas_main
+        sys.argv = [sys.argv[0]] + sys.argv[2:]
+        urnas_main()
+    else:
+        sys.exit(main())

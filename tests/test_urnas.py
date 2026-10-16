@@ -66,6 +66,34 @@ class UrnasTests(unittest.TestCase):
             urnas.export_rows(db, exp, ["BA"], "33693", "177", "111", 1, "bu", "13")
             self.assertIn("Presidente", exp.read_text(encoding="utf-8-sig"))
 
+    def test_separate_national_section_source_and_preserve_details(self):
+        sample = {
+            "secao": {"resources": [
+                {"id": "n", "name": "Presidente - Votação por seção eleitoral - 2026",
+                 "url": "https://cdn.tse.jus.br/presidente.zip"},
+                {"id": "a", "name": "AC - Votação por seção eleitoral - 2026",
+                 "url": "https://cdn.tse.jus.br/votacao_secao_2026_AC.zip"},
+                {"id": "d", "name": "Detalhe da apuração por seção eleitoral",
+                 "url": "https://cdn.tse.jus.br/detalhe_secao.zip"}]},
+            "bu": {"resources": []}, "artefatos": {"resources": []}}
+        rows = urnas.select_resources(sample, ["secao"], [], None)
+        self.assertEqual({r[0] for r in rows},
+                         {"secao", "secao_nacional", "secao_detalhe"})
+
+    def test_filename_parsing_and_sqlite_reports(self):
+        self.assertEqual(
+            urnas.section_from_name("p003220-ba-m33693-z0177-s0111.bu"),
+            ("BA", "33693", "177", "111"))
+        with tempfile.TemporaryDirectory() as tmp:
+            db = sqlite3.connect(":memory:")
+            urnas.schema(db)
+            db.execute("""INSERT INTO archive_entries
+                (resource_key,member,bytes,extensao,uf,municipio,zona,secao,sha256)
+                VALUES('x','test.bu',100,'.bu','BA','33693','177','111','abc')""")
+            urnas.write_analysis_reports(db, Path(tmp))
+            self.assertIn("BA;.bu;1;100;1;1",
+                          (Path(tmp) / "arquivos_por_uf.csv").read_text(encoding="utf-8-sig"))
+
     def test_binary_archives_are_catalogued_without_claiming_decoding(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "artefatos.zip"

@@ -9,9 +9,12 @@ Painel local para acompanhar a apuração presidencial de 2026 diretamente do JS
 
 ## Rodar no Windows
 
-1. Baixe/clone este repositório.
-2. Dê duplo clique em `start_windows.bat`.
-3. O navegador abre em `http://127.0.0.1:8765/`.
+1. Abra a pasta do repositório.
+2. Dê duplo clique em `start_windows.bat`, o menu principal.
+3. **Opção 1: COLETA COMPLETA** — descobre os arquivos oficiais, baixa tudo o que falta, valida SHA-256/ZIP, reutiliza recursos já presentes, indexa os CSVs para análise, cataloga arquivos transmitidos e gera relatórios de reconciliação. **Não é preciso executar outros comandos**.
+4. A opção 2 abre o painel em `http://127.0.0.1:8765/`.
+
+Arquivos novos e volumosos ficam no drive H:. Um arquivo já baixado e válido é reutilizado. Um download interrompido pode continuar de onde parou, quando o servidor permite. O banco SQLite e os relatórios ficam em `H:\\TSE\\forensics\\urnas\\analysis`. Há registro persistente de erros e arquivos ainda pendentes.
 
 Requer apenas Python 3. Não há `pip install`.
 
@@ -94,6 +97,14 @@ Comandos principais:
 As dependências por fase estão em provenance/PHASES.json e as fontes, com classificação primária/captura/derivado e gaps de substituição, em provenance/SOURCES.json.
 
 
+## Coleta integral em uma só execução (opção 1 do menu)
+
+**Este é o fluxo principal.** A opção 1 de `start_windows.bat` executa `collect_forensics.py all --download-portal-files`. A rotina descobre todos os recursos da eleição 2026 publicados até o momento, preserva/reutiliza os snapshots históricos, baixa os dados do catálogo oficial sem repetir arquivos válidos e passa automaticamente os CSVs de boletim e votação por seção para `urnas.py`. A coleta inclui arquivos binários originais; a indexação faz o inventário de seus tipos e SHA-256 por arquivo de urna. Ao final produz `votos_por_cargo_candidato.csv`, `arquivos_por_uf.csv`, `reconciliacao_bu_secao.csv`, SQLite e manifesto de downloads.
+
+O TSE publica arquivos de votação por seção estaduais e um arquivo nacional específico de Presidente. Essas fontes são preservadas separadamente no SQLite para **não duplicar votos** na comparação. Reexecutar a opção 1 consulta a disponibilidade e reutiliza arquivos íntegros. Arquivos revisados pelo TSE são armazenados com preservação da versão anterior; não se descartam evidências. Se um item falhar, a rotina registra o erro e continua com os demais. Na próxima execução, ela tenta concluir o que ficou faltando.
+
+**Limite técnico explícito:** `.bu`, `.rdv` e `.log` têm SHA-256, nomes e identificação de seção indexados quando disponíveis. Eles ainda **não** são convertidos de seu formato binário para todos os campos de conteúdo. A reconciliação matemática automatizada utiliza os CSVs oficiais de BU e seção. Não se deve apresentar o inventário dos binários como se fosse uma decodificação integral.
+
 ## Gestao dos boletins de urna (2026) — unidade H:
 
 O novo `urnas.py` busca dados oficiais nos tres conjuntos do TSE:
@@ -103,8 +114,7 @@ O novo `urnas.py` busca dados oficiais nos tres conjuntos do TSE:
 Nao exige `pip install`. No Windows, grava exclusivamente em `H:/TSE/forensics/urnas` por padrao.
 Se H: nao existir, aborta em vez de cair silenciosamente no C:.
 
-**Uso facil:** execute `urnas_windows.bat`, que oferece menu de disponibilidade,
-download por UF, download completo, verificacao, exportacao e conciliacao.
+**Uso principal:** execute `start_windows.bat` e selecione a opção 1 para baixar e analisar tudo. `urnas_windows.bat` abre o mesmo menu por compatibilidade. Os comandos abaixo são opcionais.
 
 ```bat
 :: Apenas consulta os recursos no catalogo; nao baixa
@@ -153,9 +163,8 @@ A analise por votos usa os CSVs oficiais publicados. Diferencas entre
 fontes podem incluir secoes agregadas, atualizacoes e divergencias de esquema;
 nao indicam automaticamente fraude. A integracao de um decodificador
 validado dos arquivos binarios permanece etapa independente.
-O programa nao foi validado ainda com um download completo de todas as UFs;
-recomenda-se comecar por uma UF pequena e conferir o resumo antes de usar
-resultados na investigacao.
+O programa ainda não foi validado em uma coleta real completa de todas as UFs.
+Os arquivos disponíveis no computador do usuário não são acessíveis a partir do GitHub; a execução integral e os relatórios precisam ser confirmados no ambiente Windows antes de publicação de conclusões.
 
 
 O mesmo modulo tambem pode ser acionado pelo coletor existente, sem alterar

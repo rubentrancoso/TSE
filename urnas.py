@@ -175,90 +175,165 @@ def find_legacy(resource, legacy):
     return None
 
 
+def resource_revision(resource):
+    return str(resource.get("last_modified") or resource.get("metadata_modified") or "")
+
+
+def validate_archived_file(path, expected_size=0, expected_hash=None):
+    if not path.exists() or not path.is_file() or path.stat().st_size == 0:
+        return None
+    if expected_size and path.stat().st_size != expected_size:
+        return None
+    digest = sha256_file(path)
+    if expected_hash and expected_hash != digest:
+        return None
+    if path.suffix.lower() == ".zip" or zipfile.is_zipfile(path):
+        try:
+            with zipfile.ZipFile(path) as archive:
+                bad = archive.testzip()
+                if bad is not None:
+                    return None
+        except (OSError, zipfile.BadZipFile):
+            return None
+    return digest
+
+
 def download(root, kind, uf, resource, reserve, legacy=None):
+    """Baixa uma vez, valida, continua .part e preserva revisoes de fonte."""
     dest = resource_path(root, kind, uf, resource)
     state_file = Path(str(dest) + ".meta.json")
-    url = resource["url"]
+    url = str(resource["url"])
     expected_size = int(resource.get("size") or 0)
-    state = {}
+    official_hash = str(resource.get("hash") or "").strip().lower()
+    # O CKAN nem sempre declara o algoritmo; só validar quando e SHA-256.
+    official_sha = official_hash if re.fullmatch("[0-9a-f]{64}", official_hash) else None
+    revision = resource_revision(resource)
+    old_state = {}
     if state_file.exists():
         try:
-            state = json.loads(state_file.read_text(encoding="utf-8"))
+            old_state = json.loads(state_file.read_text(encoding="utf-8"))
         except (ValueError, OSError):
             pass
 
-    if dest.exists() and dest.stat().st_size:
-        size = dest.stat().st_size
-        digest = sha256_file(dest)
-        if size == expected_size or not expected_size:
-            if not state.get("sha256") or state["sha256"] == digest:
-                if not state:
-                    atomic_json(state_file, {"source_url": url, "sha256": digest, "bytes": size,
-                                             "verified_at_utc": now(), "adopted_existing": True})
-                print(f"REUTILIZADO {kind}/{uf} {dest.name} ({size:,} bytes)")
-                return dest, digest
-        raise RuntimeError("Arquivo local diverge do esperado; revisao manual necessaria: " + str(dest))
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    if dest.exists():
+        old_sha = str(old_state.get("sha256") or "")
+        same_revision = not (old_state.get("resource_revision") and revision and
+                             old_state["resource_revision"] != revision)
+        sha = validate_archived_file(dest, expected_size,
+                                    official_sha or old_sha or None)
+        if sha and same_revision:
+            if not old_state:
+                atomic_json(state_file, {
+                    "source_url": url, "sha256": sha, "bytes": dest.stat().st_size,
+                    "resource_revision": revision, "verified_at_utc": now(),
+                    "adopted_existing": True})
+            print(f"REUTILIZADO {kind}/{uf} {dest.name} ({dest.stat().st_size:,} bytes)")
+            return dest, sha
+        # Nunca apagar evidencia: uma revisao mais nova fica no destino anterior,
+        # enquanto a versao velha fica identificada pelo seu SHA local.
+        prior_sha = sha256_file(dest)
+        old_dir = root / "previous-versions" / kind / uf
+        old_dir.mkdir(parents=True, exist_ok=True)
+        preserved = old_dir / (dest.name + "." + prior_sha[:16])
+        if preserved.exists():
+            if sha256_file(preserved) != prior_sha:
+                raise RuntimeError("Colisao de nome na preservacao do arquivo anterior")
+            dest.unlink()
+        else:
+            os.replace(dest, preserved)
+        print(f"REVISAO/ARQUIVO INVALIDO: anterior preservado em {preserved}")
 
     legacy_source = find_legacy(resource, legacy)
     if legacy_source:
-        free_enough(root, reserve, legacy_source.stat().st_size)
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(legacy_source, dest)
-        digest = sha256_file(dest)
-        atomic_json(state_file, {"source_url": url, "sha256": digest,
-                                 "bytes": dest.stat().st_size, "migrated_from": str(legacy_source), "checked_at_utc": now()})
-        print(f"COPIADO DO ACERVO ANTERIOR: {dest.name}")
-        return dest, digest
+        digest = validate_archived_file(legacy_source, expected_size, official_sha)
+        if digest:
+            # Nao baixar da internet de novo; o dado antigo e copiado para H.
+            free_enough(root, reserve, legacy_source.stat().st_size)
+            shutil.copy2(legacy_source, dest)
+            atomic_json(state_file, {"source_url": url, "sha256": digest,
+                                     "bytes": dest.stat().st_size,
+                                     "resource_revision": revision,
+                                     "migrated_from": str(legacy_source),
+                                     "checked_at_utc": now()})
+            print(f"REUTILIZADO DO ACERVO ANTERIOR: {dest.name}")
+            return dest, digest
 
-    dest.parent.mkdir(parents=True, exist_ok=True)
     part = Path(str(dest) + ".part")
     offset = part.stat().st_size if part.exists() else 0
+    if expected_size and offset == expected_size:
+        digest = validate_archived_file(part, expected_size, official_sha)
+        if digest:
+            os.replace(part, dest)
+            atomic_json(state_file, {"source_url": url, "sha256": digest,
+                                     "bytes": expected_size, "resource_revision": revision,
+                                     "recovered_partial": True, "checked_at_utc": now()})
+            print(f"RETOMADO COMPLETO {kind}/{uf}: {dest.name}")
+            return dest, digest
+    if expected_size and offset > expected_size:
+        part.unlink()
+        offset = 0
     free_enough(root, reserve, max(0, expected_size - offset))
     headers = {"Range": f"bytes={offset}-"} if offset else {}
-    response = urllib.request.urlopen(request(url, headers), timeout=120)
-    code = response.status
-    if offset and code == 206:
+    try:
+        response = urllib.request.urlopen(request(url, headers), timeout=120)
+    except urllib.error.HTTPError as exc:
+        if exc.code == 416 and offset:
+            # Servidor considera o parcial completo: validar, ou recomecar uma vez.
+            digest = validate_archived_file(part, expected_size, official_sha)
+            if digest:
+                os.replace(part, dest)
+                atomic_json(state_file, {"source_url": url, "sha256": digest,
+                                         "bytes": dest.stat().st_size,
+                                         "resource_revision": revision,
+                                         "recovered_partial": True, "checked_at_utc": now()})
+                return dest, digest
+            part.unlink()
+            return download(root, kind, uf, resource, reserve, legacy=None)
+        raise
+    if offset and response.status == 206:
         content_range = response.headers.get("Content-Range", "")
         if not content_range.startswith(f"bytes {offset}-"):
             response.close()
-            raise RuntimeError("Content-Range inesperado; download interrompido")
+            raise RuntimeError("Content-Range incorreto: download preservado para diagnostico")
         mode = "ab"
     else:
-        # Um servidor que ignora Range devolve 200. Nunca concatenar o arquivo inteiro.
+        # 200 em resposta a Range exige reescrever, nunca concatenar.
         mode = "wb"
         offset = 0
-    counter = offset
     digest = hashlib.sha256()
     if offset:
         with part.open("rb") as previous:
             for b in iter(lambda: previous.read(4 * 1024 * 1024), b""):
                 digest.update(b)
+    size = offset
     try:
-        with response, part.open(mode) as out:
+        with response, part.open(mode) as output:
             for block in iter(lambda: response.read(1024 * 1024), b""):
                 free_enough(root, reserve)
-                out.write(block)
+                output.write(block)
                 digest.update(block)
-                counter += len(block)
-            out.flush()
-            os.fsync(out.fileno())
+                size += len(block)
+            output.flush()
+            os.fsync(output.fileno())
     except Exception:
-        print(f"PARCIAL preservado: {part} ({counter:,} bytes)")
+        print(f"PARCIAL preservado: {part} ({size:,} bytes)")
         raise
-    if expected_size and counter != expected_size:
-        raise RuntimeError(f"Tamanho divergente (recebido {counter}, esperado {expected_size})")
-    if zipfile.is_zipfile(part):
-        with zipfile.ZipFile(part) as z:
-            bad = z.testzip()
-            if bad:
-                raise RuntimeError("ZIP corrompido em " + bad)
-    os.replace(part, dest)
+    if expected_size and size != expected_size:
+        raise RuntimeError(f"Arquivo parcial preservado: {size:,} de {expected_size:,} bytes")
     digest_hex = digest.hexdigest()
+    if official_sha and official_sha != digest_hex:
+        raise RuntimeError("SHA-256 oficial nao corresponde ao arquivo recebido: " + str(part))
+    valid = validate_archived_file(part, expected_size, digest_hex)
+    if not valid:
+        raise RuntimeError("Arquivo incompleto, corrompido ou ZIP com CRC invalido: " + str(part))
+    os.replace(part, dest)
     atomic_json(state_file, {"source_url": url, "resource_id": resource.get("id"),
                              "resource_name": resource.get("name"),
-                             "bytes": counter, "sha256": digest_hex,
+                             "resource_revision": revision, "bytes": size,
+                             "sha256": digest_hex, "official_sha256": official_sha,
                              "downloaded_at_utc": now()})
-    print(f"BAIXADO {kind}/{uf}: {dest.name} ({counter:,} bytes) SHA256={digest_hex}")
+    print(f"BAIXADO {kind}/{uf}: {dest.name} ({size:,} bytes) SHA256={digest_hex}")
     return dest, digest_hex
 
 

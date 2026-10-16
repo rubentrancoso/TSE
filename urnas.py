@@ -141,7 +141,15 @@ def select_resources(datasets, kinds, ufs, turn):
             url = str(r.get("url") or "")
             if not url:
                 continue
-            selected.append((kind, uf or "BR", r))
+            actual_kind = kind
+            if kind == "secao":
+                if "detalhe" in name and ("seção" in name or "secao" in name):
+                    actual_kind = "secao_detalhe"
+                elif uf is None and "presidente" in name:
+                    # O CSV nacional de Presidente repete secoes presentes
+                    # nos CSVs estaduais; nunca somar ambas as fontes.
+                    actual_kind = "secao_nacional"
+            selected.append((actual_kind, uf or "BR", r))
     return selected
 
 
@@ -421,11 +429,11 @@ def import_file(db, path, kind, key, digest):
                     ext = Path(info.filename).suffix.lower()
                     db.execute("INSERT INTO archive_entries VALUES(?,?,?,?)",
                                (key, info.filename, info.file_size, ext))
-                    if kind in ("bu", "secao") and ext == ".csv":
+                    if kind in ("bu", "secao", "secao_nacional", "secao_detalhe") and ext == ".csv":
                         with archive.open(info) as stream:
                             count += import_csv_stream(db, stream, key, info.filename, kind)
                         csv_count += 1
-        elif path.suffix.lower() == ".csv" and kind in ("bu", "secao"):
+        elif path.suffix.lower() == ".csv" and kind in ("bu", "secao", "secao_nacional", "secao_detalhe"):
             with path.open("rb") as stream:
                 count += import_csv_stream(db, stream, key, path.name, kind)
             csv_count = 1
@@ -746,7 +754,7 @@ def main():
                         continue
                     try:
                         kind = path.relative_to(root / "raw").parts[0]
-                        if kind not in DATASETS or (args.kind and kind not in args.kind):
+                        if kind not in (*DATASETS, "secao_nacional", "secao_detalhe") or (args.kind and kind not in args.kind):
                             continue
                         digest = sha256_file(path)
                         import_file(db, path, kind, kind + ":" + path.name.split("--")[0], digest)

@@ -1,0 +1,25 @@
+name: Testes offline do gerenciador de urnas
+
+on:
+  push:
+    paths:
+      - urnas.py
+      - tests/test_urnas.py
+      - .github/workflows/urnas-tests.yml
+  pull_request:
+    paths:
+      - urnas.py
+      - tests/test_urnas.py
+
+jobs:
+  urnas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar sintaxe
+        run: python -m py_compile urnas.py
+      - name: Testes com arquivos sinteticos
+        run: python -m unittest discover -s tests -p 'test_urnas.py' -v

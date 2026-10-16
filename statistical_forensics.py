@@ -303,6 +303,7 @@ def analyze(db, output):
     total_rows = 0
     flagged = 0
     detected_dup = 0
+    sections_by_uf_turn = collections.Counter()
     cities = 0
     city_rows = []
     current_city = None
@@ -341,6 +342,7 @@ def analyze(db, output):
             return
         section = build_section(key, records)
         total_sections += 1
+        sections_by_uf_turn[(section["uf"], section["turno"])] += 1
         state_key = (section["uf"], section["turno"])
         city_key = (section["uf"], section["turno"], section["municipio"])
         if current_city is not None and current_city != city_key:
@@ -403,10 +405,25 @@ def analyze(db, output):
     finally:
         for name in paths:
             finish_csv(handles[name], parts[name], paths[name])
+    try:
+        source_hashes = [
+            {"resource_key": key, "sha256": sha, "linhas_importadas": rows}
+            for key, sha, rows in db.execute(
+                "SELECT resource_key,sha256,rows FROM imports "
+                "WHERE resource_key LIKE 'bu:%' ORDER BY resource_key")
+        ]
+    except Exception:
+        source_hashes = []  # Bancos de teste podem nao manter manifestos.
     result = {
         "version": VERSION, "produzido_em_utc": timestamp(),
         "fonte": "CSV oficial do Boletim de Urna importado na tabela votes, source_kind=bu, cargo Presidente",
         "linhas_processadas": total_rows, "secoes": total_sections, "municipios_grupos": cities,
+        "cobertura_por_uf_e_turno": [
+            {"uf": uf, "turno": turno, "secoes": n}
+            for (uf, turno), n in sorted(sections_by_uf_turn.items())
+        ],
+        "fontes_importadas_sha256": source_hashes,
+        "cobertura_completa_confirmada": False,
         "desvios_locais_sinalizados": flagged, "secoes_com_candidato_duplicado": detected_dup,
         "registros_sem_identificador_secao": unsupported,
         "status": "analise_concluida" if total_sections else "SEM_DADOS_BU_PRESIDENTE",
@@ -426,7 +443,8 @@ def analyze(db, output):
             "Nao usa RDV/log binarios; dependera de um decodificador e dados temporais confiaveis.",
             "Usa somente cargos Presidente; extensao aos demais cargos depende de tratamento de votos de legenda.",
             "Se houver multiplos arquivos com mesmo BU, checar as duplicacoes antes de confiar nas frequencias.",
-            "Nenhum p-valor ou taxa de falso positivo foi calibrado; niveis de anomalia sao exploratorios."
+            "Nenhum p-valor ou taxa de falso positivo foi calibrado; niveis de anomalia sao exploratorios.",
+            "Cobranca da cobertura nacional exige conferir UFs/secoes presentes contra inventario independente."
         ]
     }
     tmp = output / "estatistica_resumo.json.tmp"

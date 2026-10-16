@@ -185,7 +185,20 @@ def build_section(key, rows):
     }
 
 
-def calculate_city(rows, writer_outliers, writer_correlations):
+def distribution_shape(values):
+    """Assimetria e curtose EXPLORATORIAS; nenhuma suposicao de normalidade."""
+    if len(values) < MIN_LOCAL_N:
+        return None
+    avg = statistics.fmean(values)
+    moments2 = statistics.fmean([(v - avg) ** 2 for v in values])
+    if moments2 < 1e-12:
+        return None
+    moments3 = statistics.fmean([(v - avg) ** 3 for v in values])
+    moments4 = statistics.fmean([(v - avg) ** 4 for v in values])
+    return moments3 / moments2 ** 1.5, moments4 / moments2 ** 2 - 3
+
+
+def calculate_city(rows, writer_outliers, writer_correlations, writer_shape):
     if not rows:
         return 0
     totals = collections.Counter()
@@ -214,6 +227,14 @@ def calculate_city(rows, writer_outliers, writer_correlations):
             "candidato": candidate, "n_secoes_com_participacao": len(pairs),
             "correlacao_pearson": round(r, 6) if r is not None else "",
             "interpretacao": "descritivo, nao causal; demografia e geografia confundem relacoes"
+        })
+        shape = distribution_shape([p for _, p in shares])
+        writer_shape.writerow({
+            "uf": uf, "municipio": municipality, "turno": turn,
+            "candidato": candidate, "secoes": len(shares),
+            "assimetria": round(shape[0], 6) if shape else "",
+            "curtose_excesso": round(shape[1], 6) if shape else "",
+            "nota": "Distribuicoes eleitorais nao precisam seguir curva normal; resultado descritivo."
         })
         if len(shares) < MIN_LOCAL_N:
             continue
@@ -252,6 +273,7 @@ def analyze(db, output):
         "participacao_correlacao": output / "participacao_correlacao.csv",
         "consistencia": output / "consistencia_por_secao.csv",
         "perfil_2d": output / "perfil_participacao_voto.csv",
+        "forma_distribuicao": output / "forma_distribuicao_municipal.csv",
     }
     specs = {
         "benford": ["uf","turno","candidato","teste","observacoes","valores_distintos",
@@ -271,6 +293,8 @@ def analyze(db, output):
                          "validos","observacao"],
         "perfil_2d": ["uf","turno","candidato","bin_participacao",
                      "bin_votos","secoes"],
+        "forma_distribuicao": ["uf","municipio","turno","candidato","secoes",
+                               "assimetria","curtose_excesso","nota"],
     }
     handles, writers, parts = {}, {}, {}
     for name, columns in specs.items():
@@ -321,7 +345,7 @@ def analyze(db, output):
         city_key = (section["uf"], section["turno"], section["municipio"])
         if current_city is not None and current_city != city_key:
             flagged += calculate_city(city_rows, writers["desvios_municipais"],
-                                      writers["participacao_correlacao"])
+                                      writers["participacao_correlacao"], writers["forma_distribuicao"])
             city_rows = []
             cities += 1
         if current_state is not None and current_state != state_key:
@@ -372,7 +396,7 @@ def analyze(db, output):
             add_section(section_key, section_records)
         if city_rows:
             flagged += calculate_city(city_rows, writers["desvios_municipais"],
-                                      writers["participacao_correlacao"])
+                                      writers["participacao_correlacao"], writers["forma_distribuicao"])
             cities += 1
         if state_rows:
             finish_state(state_rows)
@@ -392,11 +416,12 @@ def analyze(db, output):
                     "Mediana/MAD local (escore robusto, limiar 5)",
                     "Correlacao Pearson participacao x apoio por municipio",
                     "Mapa 10x10 participacao x apoio",
+                    "Assimetria e curtose por municipio (forma da distribuicao)",
                     "Consistencia de totais e registros duplicados"],
         "limites": [
             "Nao e um detector de fraude nem um teste causal; ocorrencias exigem investigacao documental.",
             "Benford e digitos finais podem ser inadequados para contagens pequenas ou com faixa restrita.",
-            "Resultados por municipio sao afetados por heterogeneidade demografica e contexto geologico.",
+            "Resultados por municipio sao afetados por heterogeneidade demografica e contexto geografico.",
             "Sem comparacao com cedulas verificaveis independentemente, nao e auditoria de limite de risco.",
             "Nao usa RDV/log binarios; dependera de um decodificador e dados temporais confiaveis.",
             "Usa somente cargos Presidente; extensao aos demais cargos depende de tratamento de votos de legenda.",

@@ -456,3 +456,20 @@ Cada entrada deve, quando aplicável, registrar:
 12. commit que preservou a etapa.
 
 Dessa forma, o histórico do Git e o diário formam conjuntamente uma trilha de auditoria temporal e reproduzível.
+
+
+## Bateria estatistica para a Fase BU por secao
+
+A coleta forense completa (`start_windows.bat`, opcao 1) executa,
+apos a importacao dos CSVs oficiais, o modulo `statistical_forensics.py`.
+A bateria integra Benford (primeiro/segundo digitos), digitos finais,
+assimetria e curtose, desvios locais por mediana/MAD, correlacao entre
+comparecimento e apoio eleitoral, grade 2D e testes de consistencia.
+
+Metodologia, restricoes e novos metodos a validar:
+[docs/METODOS_ESTATISTICOS_2026.md](METODOS_ESTATISTICOS_2026.md).
+
+**Regra:** indicadores estatisticos guiam a selecao de secoes e lotes
+para verificacao documental. Nao definem fraude por si sós.
+Todos os relatorios incluem o numero de observacoes, referencia geográfica,
+condicoes de aplicabilidade e cobertura; nao se presume coleta completa.

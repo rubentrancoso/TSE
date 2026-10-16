@@ -377,8 +377,12 @@ def numeric(value):
 def schema(db):
     db.execute("""CREATE TABLE IF NOT EXISTS imports (
         resource_key TEXT PRIMARY KEY, sha256 TEXT NOT NULL,
-        imported_utc TEXT NOT NULL, rows INTEGER NOT NULL, files INTEGER NOT NULL
+        imported_utc TEXT NOT NULL, rows INTEGER NOT NULL, files INTEGER NOT NULL,
+        parser_version INTEGER NOT NULL DEFAULT 1
     )""")
+    cols = {row[1] for row in db.execute("PRAGMA table_info(imports)")}
+    if "parser_version" not in cols:
+        db.execute("ALTER TABLE imports ADD COLUMN parser_version INTEGER NOT NULL DEFAULT 1")
     db.execute("""CREATE TABLE IF NOT EXISTS votes (
         resource_key TEXT NOT NULL, member TEXT NOT NULL, line INTEGER NOT NULL,
         source_kind TEXT NOT NULL, uf TEXT, municipio TEXT,
@@ -433,8 +437,8 @@ def section_from_name(filename, fallback_uf=""):
 
 
 def import_file(db, path, kind, key, digest):
-    previous = db.execute("SELECT sha256 FROM imports WHERE resource_key=?", (key,)).fetchone()
-    if previous and previous[0] == digest:
+    previous = db.execute("SELECT sha256,parser_version FROM imports WHERE resource_key=?", (key,)).fetchone()
+    if previous and previous[0] == digest and previous[1] >= 2:
         print(f"INDEXADO ANTERIORMENTE: {path.name}")
         return 0
     db.execute("BEGIN")
@@ -471,8 +475,9 @@ def import_file(db, path, kind, key, digest):
             with path.open("rb") as stream:
                 count += import_csv_stream(db, stream, key, path.name, kind)
             csv_count = 1
-        db.execute("INSERT OR REPLACE INTO imports VALUES (?,?,?,?,?)",
-                   (key, digest, now(), count, csv_count))
+        db.execute("""INSERT OR REPLACE INTO imports
+            (resource_key,sha256,imported_utc,rows,files,parser_version)
+            VALUES (?,?,?,?,?,?)""", (key, digest, now(), count, csv_count, 2))
         db.commit()
         print(f"INDEXADO {kind} {path.name}: {count:,} linhas / {csv_count} CSV; "
               "binarios mantidos no arquivo original")
@@ -710,6 +715,12 @@ def main():
     if args.action == "fetch" and (args.municipio or args.zona or args.secao):
         parser.error("O catalogo distribui ZIP por UF. Baixe com --uf e depois use export --municipio/--zona/--secao")
     root = root_path(args.root)
+    if os.name == "nt":
+        temporary = root / "tmp"
+        temporary.mkdir(parents=True, exist_ok=True)
+        os.environ["TMP"] = str(temporary.resolve())
+        os.environ["TEMP"] = str(temporary.resolve())
+        os.environ["TMPDIR"] = str(temporary.resolve())
     kinds = args.kind or (["bu", "secao"] if args.action != "verify" else list(DATASETS))
     kinds = list(dict.fromkeys(kinds))
     if args.action in ("status", "fetch"):

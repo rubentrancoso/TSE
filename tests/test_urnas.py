@@ -94,6 +94,40 @@ class UrnasTests(unittest.TestCase):
             self.assertIn("BA;.bu;1;100;1;1",
                           (Path(tmp) / "arquivos_por_uf.csv").read_text(encoding="utf-8-sig"))
 
+    def test_download_cache_prevents_second_network_request(self):
+        from unittest.mock import patch
+
+        class Response(io.BytesIO):
+            status = 200
+            headers = {}
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            stream = io.BytesIO()
+            with zipfile.ZipFile(stream, "w") as archive:
+                archive.writestr("data.csv", b"A;B\\n1;2\\n")
+            data = stream.getvalue()
+            resource = {"id": "urn01", "name": "Teste BO",
+                        "url": "https://cdn.tse.jus.br/test-download.zip",
+                        "size": len(data), "last_modified": "2026-10-06"}
+            with patch("urllib.request.urlopen", return_value=Response(data)) as fetch:
+                path, digest = urnas.download(root, "bu", "BA", resource, 0)
+                self.assertEqual(fetch.call_count, 1)
+                self.assertEqual(urnas.sha256_file(path), digest)
+            with patch("urllib.request.urlopen", side_effect=AssertionError("re-download")):
+                reused, digest_again = urnas.download(root, "bu", "BA", resource, 0)
+                self.assertEqual(reused, path)
+                self.assertEqual(digest_again, digest)
+
+    def test_all_turns_are_selected_by_default(self):
+        datasets = {"bu": {"resources": [
+            {"id": "one", "name": "AC - Boletim de Urna - Primeiro turno",
+             "url": "https://cdn.tse.jus.br/bweb_1t_AC.zip"},
+            {"id": "two", "name": "AC - Boletim de Urna - Segundo turno",
+             "url": "https://cdn.tse.jus.br/bweb_2t_AC.zip"}]}}
+        self.assertEqual(len(urnas.select_resources(datasets, ["bu"], [], None)), 2)
+        self.assertEqual(len(urnas.select_resources(datasets, ["bu"], [], 1)), 1)
+
     def test_binary_archives_are_catalogued_without_claiming_decoding(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "artefatos.zip"

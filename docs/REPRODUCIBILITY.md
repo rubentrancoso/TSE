@@ -108,3 +108,64 @@ A meta final é preservar os dois lados e obter, sempre que possível:
 **fonte primária + captura independente + mesma conclusão reproduzida**.
 
 Esse é o padrão desejado para o dossiê final.
+
+
+## Histórico automático da análise por urna — a partir de 16/10/2026
+
+O módulo `history_forensics.py` estende a cadeia de proveniência com
+**snapshots antes e depois** das operações `fetch`, `stats`,
+`reconcile` e `import` de `urnas.py`.
+
+O fluxo completo de `start_windows.bat` (opção 1) executa o histórico
+automaticamente. O registro histórico é independente dos arquivos
+de saída `latest` que cada rotina recria.
+
+Local dos dados na unidade H:
+
+```text
+H:/TSE/forensics/urnas/
+  raw/                       # originais, NAO duplicados no historico
+  analysis/
+    urna_2026.sqlite3        # banco vivo, NAO duplicado no historico
+    history/
+      ledger.jsonl           # registro cronologico append-only
+      runs/<run-id>.json     # manifesto por execucao
+      objects/<sha256>.gz    # conteudo imutavel dos relatorios, deduplicado
+```
+
+Cada manifesto guarda hora UTC, etapa, commit do Git (quando
+disponível), hashes dos arquivos do código, nomes, tamanhos e SHA-256 dos
+relatórios, além dos recursos oficiais importados segundo a tabela
+`imports` do SQLite. Um relatório idêntico, ainda que gerado dezenas de
+vezes, usa um único objeto compactado por hash. Há um registro por
+execução, mesmo quando os relatórios não mudaram.
+
+Para verificar a história ou recuperar uma versão antiga em uma
+pasta *separada*, sem tocar nos resultados atuais:
+
+```bat
+python history_forensics.py list
+python history_forensics.py restore --run-id IDENTIFICADOR_DO_MANIFESTO --output H:/TSE/forensics/restaurados/
+```
+
+Os comandos são **opcionais**: a preservação ocorre na coleta completa
+sem intervenção. Para recuperar uma versão antiga, o programa verifica
+o SHA-256 após a extração.
+
+### Limite de preservação
+
+O snapshot armazena relatórios e referências verificáveis aos dados,
+**não** uma cópia transacional de todas as linhas do banco SQLite.
+Um replay de uma versão passada depende de manter os arquivos brutos
+originais e de executar o parser correspondente à versão do código.
+Não é possível recuperar automaticamente um relatório que já havia sido
+sobrescrito antes da instalação do mecanismo de histórico.
+
+A construção de um artigo exige conferir: manifestos, cobertura real,
+hashes, parâmetros de comparação e eventuais exclusões. A presença de
+um relatório no diretório histórico não valida por si só uma conclusão
+científica ou a integridade independente da urna física.
+
+A continuidade editorial está documentada em
+[ARTIGO_02_PLANO.md](ARTIGO_02_PLANO.md); não alterar retroativamente
+o [primeiro artigo](ARTIGO_PUBLICO.md).

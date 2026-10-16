@@ -156,3 +156,16 @@ validado dos arquivos binarios permanece etapa independente.
 O programa nao foi validado ainda com um download completo de todas as UFs;
 recomenda-se comecar por uma UF pequena e conferir o resumo antes de usar
 resultados na investigacao.
+
+
+O mesmo modulo tambem pode ser acionado pelo coletor existente, sem alterar
+os comandos anteriores:
+
+```bat
+python collect_forensics.py urnas status
+python collect_forensics.py urnas fetch --uf BA --kind bu --kind secao
+python collect_forensics.py urnas reconcile --uf BA
+```
+
+Teste offline com dados sinteticos:
+`python -m unittest discover -s tests -p test_urnas.py -v`.

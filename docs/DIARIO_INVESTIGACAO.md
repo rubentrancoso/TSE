@@ -3473,3 +3473,108 @@ O trabalho futuro de recuperação das fontes primárias deve alimentar a camada
 A maior lacuna atual é o histórico oficial de versões EA20 durante a noite da apuração, especialmente nacional/UF e depois município/zona no entorno de 20:04.
 
 As capturas ArvorCo e Vitor permanecem como controles independentes, mesmo depois de eventual substituição por fonte primária.
+
+
+---
+
+## 2026-10-16 — E0070 — Retomada da coleta primária por seção e correção do diagnóstico de disponibilidade
+
+**Evento:** migração da investigação para análise de Boletins de Urna, votação por
+seção e arquivos de urna transmitidos (BU/RDV/log/vota).
+
+**Contexto:** a primeira coleta, iniciada em 05/10, pesquisava sobretudo o
+catálogo de Dados Abertos (CKAN). A ausência de recursos identificados por esse
+mecanismo não estabelecia indisponibilidade geral dos documentos no sistema
+Resultados. O próprio diário já registrara essa correção em E0011.
+
+**Alteração da metodologia:** os arquivos do portal e os produtos de votação
+por seção passam a ser procurados por recursos de catálogo específicos e pela
+estrutura `arquivo-urna` descoberta na Fase 2.
+
+**Código:** `urnas.py`, integrado a `collect_forensics.py` e ao
+`start_windows.bat`; arquivos volumosos no drive H:, uso de cache,
+downloads retomáveis e SHA-256.
+
+**Cuidado histórico:** nesta entrada não são atribuídas datas novas de
+disponibilidade a todos os tipos de arquivos, nem se presume que a coleta
+integral tenha terminado. A disponibilidade de recursos deve ser comprovada
+pelos metadados efetivamente preservados e pelo manifesto de download local.
+
+**Próxima ação:** conciliar BUs e votação por seção; documentar cobertura e
+quais tipos de arquivo foram de fato baixados e interpretados.
+
+---
+
+## 2026-10-16 — E0071 — Bateria estatística incorporada à coleta completa
+
+**Evento:** criação de `statistical_forensics.py` e da documentação
+`docs/METODOS_ESTATISTICOS_2026.md`.
+
+**Testes exploratórios implementados:**
+- Benford (primeiro e segundo dígitos), quando as contagens passam por
+  condições mínimas de tamanho e dispersão;
+- dígitos finais e frequências de 0/5;
+- assimetria e curtose por município;
+- desvios robustos por mediana e MAD;
+- correlação entre participação e fração de votos;
+- histograma bivariado participação × voto;
+- testes contábeis preliminares por seção.
+
+**Regra:** são indicadores de triagem. Desvios estatísticos não constituem
+automaticamente prova de fraude. As métricas devem ser confrontadas com
+seções semelhantes, fontes independentes e hipótese nula plausível.
+
+**Limitação:** a implementação atual trabalha principalmente com CSVs de
+BU para Presidente; RDV e log binários ainda carecem de interpretação de
+seu conteúdo. Testes temporais e inferências com modelos simulados seguem
+como etapas futuras.
+
+**Saída prevista:** `H:/TSE/forensics/urnas/analysis/estatistica/`.
+
+**Status neste evento:** implementação e testes no repositório; nenhum
+resultado estatístico da coleta integral real foi validado nesta entrada.
+
+---
+
+## 2026-10-16 — E0072 — Histórico permanente de resultados e preparação do segundo artigo
+
+**Motivação:** a execução anterior gerava arquivos de saída nomeados como
+`latest`, que poderiam ser substituídos por execuções posteriores. O
+histórico do código no Git não é suficiente para preservar os resultados
+analíticos calculados a partir de cada versão do banco.
+
+**Mudança:** criado `history_forensics.py`. A coleta de urnas e os
+comandos de análise agora executam preservação **antes e depois**
+dos cálculos. Cada etapa cria um manifesto separado em
+`H:/TSE/forensics/urnas/analysis/history/runs/` com:
+- ID exclusivo e hora UTC da captura;
+- nomes, tamanhos e SHA-256 de cada relatório preservado;
+- versão Git e SHA-256 dos scripts principais;
+- SHA-256 das fontes já registradas na tabela de importações;
+- etapa e parâmetros resumidos da execução.
+
+**Armazenamento:** o conteúdo dos relatórios é guardado em objetos
+compactados identificados por SHA-256 sob `history/objects/`.
+Relatórios idênticos entre execuções reutilizam o mesmo objeto e
+recebem apenas novos manifestos. O `history/ledger.jsonl` é append-only.
+Não são duplicados os ZIPs brutos e nem o banco SQLite vivo.
+
+**Limite:** conservar hashes da tabela de importações não constitui uma
+fotografia transacional de todo o banco SQLite. Para replay integral,
+permanecem indispensáveis os dados brutos preservados e a versão do parser.
+O mecanismo começa a operar nas execuções feitas **depois** da atualização
+do código; não recupera automaticamente relatórios substituídos antes dela.
+
+**Artigo:** preservado sem alterações o primeiro
+`docs/ARTIGO_PUBLICO.md`; criado
+`docs/ARTIGO_02_PLANO.md` como roteiro ainda não publicável,
+com questões, evidências pendentes e limites explícitos.
+
+**Regra:** alterações e análises continuam diretamente na `main`;
+resultados locais verificáveis serão registrados aqui em eventos
+posteriores. Não serão inventadas conclusões sobre os BUs sem ler o
+resultado da coleta concluída.
+
+**Próxima entrada esperada:** confirmação da conclusão do download com
+quantidade de seções, arquivos, erros, hashes e primeiro resultado de
+reconciliação BU ↔ seção, vinculados ao ID do snapshot histórico.

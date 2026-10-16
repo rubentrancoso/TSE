@@ -92,3 +92,67 @@ Comandos principais:
     python replay_investigation.py --all --dry-run
 
 As dependências por fase estão em provenance/PHASES.json e as fontes, com classificação primária/captura/derivado e gaps de substituição, em provenance/SOURCES.json.
+
+
+## Gestao dos boletins de urna (2026) — unidade H:
+
+O novo `urnas.py` busca dados oficiais nos tres conjuntos do TSE:
+[BU por UF](https://dadosabertos.tse.jus.br/dataset/resultados-2026-boletim-de-urna),
+[Resultados e votacao por secao](https://dadosabertos.tse.jus.br/dataset/resultados-2026) e
+[arquivos de urna transmitidos](https://dadosabertos.tse.jus.br/dataset/resultados-2026-arquivos-transmitidos-para-totalizacao).
+Nao exige `pip install`. No Windows, grava exclusivamente em `H:/TSE/forensics/urnas` por padrao.
+Se H: nao existir, aborta em vez de cair silenciosamente no C:.
+
+**Uso facil:** execute `urnas_windows.bat`, que oferece menu de disponibilidade,
+download por UF, download completo, verificacao, exportacao e conciliacao.
+
+```bat
+:: Apenas consulta os recursos no catalogo; nao baixa
+python urnas.py status
+
+:: Baixa e indexa BU e votacao por secao de BA, primeiro turno
+python urnas.py fetch --uf BA --kind bu --kind secao
+
+:: Outra UF, sem baixar novamente o que ja existe
+python urnas.py fetch --uf MG --kind bu --kind secao
+
+:: Baixa arquivos originais transmitidos: BU, RDV, log etc. (ZIP por UF)
+python urnas.py fetch --uf BA --kind artefatos
+
+:: Faz coleta completa de todos os tipos por UF (necessita muito espaco)
+python urnas.py fetch --all --kind bu --kind secao --kind artefatos
+
+:: Apenas reprocessa os arquivos locais, sem rede
+python urnas.py import
+
+:: Consulta uma secao individual depois de baixar a UF respectiva
+python urnas.py export --uf BA --municipio 33693 --zona 177 --secao 111
+
+:: Compara por candidato/cargo/secao as duas fontes oficiais disponiveis
+python urnas.py reconcile --uf BA
+
+:: Recalcula SHA-256 dos arquivos gravados
+python urnas.py verify
+```
+
+**Arquivos locais:** `H:/TSE/forensics/urnas/raw/` preserva os ZIPs/CSVs
+originais e metadados com SHA-256; `H:/TSE/forensics/urnas/analysis/urna_2026.sqlite3`
+guarda linhas de CSV de BU e de votacao por secao, com todos os campos originais
+em `dados_json` e colunas indexadas (`uf`, `municipio`, `zona`,
+`secao`, `turno`, `cargo`, `votavel`, `votos`).
+`reconcile` produz `reconciliacao_bu_secao.csv` somente com chaves
+divergentes ou ausentes, mais resumo JSON.
+Nao confundir o hash SHA-256 local com a verificacao de assinatura
+criptografica da urna: sao controles distintos.
+
+**Limites atuais importantes:** O catalogo oferece ZIPs por UF, nao entrega
+necessariamente cada secao isoladamente. O parametro de secao filtra a analise
+depois do download da UF. Os formatos binarios `.bu`, `.rdv` e `.log`
+sao preservados e catalogados, mas nao decodificados nesta versao.
+A analise por votos usa os CSVs oficiais publicados. Diferencas entre
+fontes podem incluir secoes agregadas, atualizacoes e divergencias de esquema;
+nao indicam automaticamente fraude. A integracao de um decodificador
+validado dos arquivos binarios permanece etapa independente.
+O programa nao foi validado ainda com um download completo de todas as UFs;
+recomenda-se comecar por uma UF pequena e conferir o resumo antes de usar
+resultados na investigacao.

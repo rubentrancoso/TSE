@@ -373,10 +373,25 @@ def collect_urnas_h():
     previous = sys.argv[:]
     try:
         sys.argv = [previous[0], "fetch", "--all", "--kind", "bu",
-                    "--kind", "secao", "--kind", "artefatos", "--turn", "1"]
+                    "--kind", "secao", "--kind", "artefatos"]
         urnas_main()
     finally:
         sys.argv = previous
+
+
+
+def portal_file_path(output, slug, filename):
+    """Reusa arquivos antigos sem copiá-los e grava novos arquivos grandes em H:."""
+    old = output / "portal" / "files" / slug / filename
+    if old.is_file() and old.stat().st_size:
+        return old
+    if os.name == "nt":
+        base = Path("H:/TSE/forensics/portal/files")
+        if not Path("H:/").is_dir():
+            raise OSError("H: indisponivel; a coleta nao gravara arquivos grandes no C:")
+    else:
+        base = Path(os.environ.get("TSE_PORTAL_DIR", str(output / "portal" / "files")))
+    return base / slug / filename
 
 
 def collect_portal(output, download_files):
@@ -413,7 +428,7 @@ def collect_portal(output, download_files):
                 url = resource.get("url") or ""
                 basename = safe_filename(Path(urllib.parse.urlparse(url).path).name)
                 resource_id = safe_filename(str(resource.get("id", "")))[:12]
-                path = portal_dir / "files" / slug / f"{resource_id}--{basename}"
+                path = portal_file_path(output, slug, f"{resource_id}--{basename}")
                 portal_total += 1
                 if path.exists() and path.stat().st_size:
                     portal_local += 1
@@ -439,7 +454,7 @@ def collect_portal(output, download_files):
             url = resource.get("url") or ""
             basename = safe_filename(Path(urllib.parse.urlparse(url).path).name)
             resource_id = safe_filename(str(resource.get("id", "")))[:12]
-            path = portal_dir / "files" / slug / f"{resource_id}--{basename}"
+            path = portal_file_path(output, slug, f"{resource_id}--{basename}")
             try:
                 size, digest, reused = download_resource(url, path)
                 records.append({

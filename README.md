@@ -97,6 +97,34 @@ Comandos principais:
 As dependências por fase estão em provenance/PHASES.json e as fontes, com classificação primária/captura/derivado e gaps de substituição, em provenance/SOURCES.json.
 
 
+## Histórico de análises e continuação do artigo
+
+A **opção 1 — COLETA COMPLETA** preserva automaticamente uma versão dos
+relatórios anteriores **antes** dos novos cálculos e outra **depois**
+da análise. O mesmo ocorre ao executar estatísticas ou reconciliação
+separadamente. Não é necessário executar nenhum comando extra.
+
+`history_forensics.py` produz manifestos por execução com ID, UTC,
+versão Git, hashes dos scripts e arquivos de relatório, além do
+inventário de entradas importadas. Os conteúdos ficam compactados
+e deduplicados em
+`H:/TSE/forensics/urnas/analysis/history/objects/`. O registro
+cronológico de cada execução fica em `history/ledger.jsonl`.
+
+O primeiro artigo está preservado:
+[O gráfico travou](docs/ARTIGO_PUBLICO.md).
+O [roteiro do artigo 2](docs/ARTIGO_02_PLANO.md) explica o que será
+exigido antes de publicar novos resultados por urna. O
+[diário cronológico](docs/DIARIO_INVESTIGACAO.md) agora registra a
+transição para os novos dados, os métodos estatísticos e a política
+de preservação. Nenhuma conclusão de BU foi acrescentada sem
+resultado real validado.
+
+Os dados brutos originais e o SQLite vivo não são duplicados por
+esse mecanismo. A versão histórica de um relatório pode ser
+restaurada sem alterar o arquivo atual; detalhes em
+[Reprodutibilidade](docs/REPRODUCIBILITY.md).
+
 ## Bateria estatística automática por seção
 
 A **opção 1 do menu** agora executa a análise estatística ao final de cada

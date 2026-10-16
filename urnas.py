@@ -689,7 +689,7 @@ def reconcile(db, output, ufs, turn):
 def main():
     parser = argparse.ArgumentParser(
         description="Gerenciador TSE: consultar, baixar sob demanda, validar e tornar BU/sections consultaveis")
-    parser.add_argument("action", choices=("status", "fetch", "import", "export", "reconcile", "verify"),
+    parser.add_argument("action", choices=("status", "fetch", "import", "export", "reconcile", "stats", "verify"),
                         help="status=apenas consultar; fetch=baixar e importar; import=processar arquivos locais")
     parser.add_argument("--root", help="Diretorio de dados (padrao no Windows: H:/TSE/forensics/urnas)")
     parser.add_argument("--kind", choices=("bu", "secao", "artefatos"), action="append",
@@ -798,6 +798,17 @@ def main():
                     errors.append({"status": "error", "stage": "reconcile",
                                    "time_utc": now(), "error": str(exc)})
                     print(f"ERRO na reconciliacao: {exc}", file=sys.stderr)
+            if db is not None and "bu" in kinds:
+                try:
+                    from statistical_forensics import analyze as analyze_statistical
+                    stats = analyze_statistical(db, root / "analysis" / "estatistica")
+                    if stats["status"] != "analise_concluida":
+                        errors.append({"status": "warning", "stage": "statistics",
+                                       "error": "Sem dados BU de Presidente: analise estatistica nao executada"})
+                except Exception as exc:
+                    errors.append({"status": "error", "stage": "statistics",
+                                   "time_utc": now(), "error": str(exc)})
+                    print(f"ERRO na analise estatistica: {exc}", file=sys.stderr)
             atomic_json(manifest_path, {"updated_at_utc": now(),
                         "selected": len(selected), "processed": len(results),
                         "reused": reused, "downloaded": downloaded,
@@ -816,13 +827,18 @@ def main():
         return
 
     db_path = root / "analysis" / "urna_2026.sqlite3"
-    if args.action in ("export", "import", "reconcile"):
+    if args.action in ("export", "import", "reconcile", "stats"):
         db_path.parent.mkdir(parents=True, exist_ok=True)
         db = sqlite3.connect(db_path)
         schema(db)
         db.commit()
         try:
-            if args.action == "reconcile":
+            if args.action == "stats":
+                from statistical_forensics import analyze as analyze_statistical
+                result = analyze_statistical(db, Path(args.output) if args.output else root / "analysis" / "estatistica")
+                if result["status"] != "analise_concluida":
+                    raise SystemExit("Sem dados BU de Presidente. A analise nao foi executada.")
+            elif args.action == "reconcile":
                 output = Path(args.output or root / "analysis" / "reconciliacao_bu_secao.csv")
                 reconcile(db, output, args.uf, args.turn)
             elif args.action == "export":

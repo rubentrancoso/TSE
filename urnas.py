@@ -427,10 +427,94 @@ def export_rows(db, output, ufs, municipio, zona, secao, turn, kind, candidate):
     print(f"EXPORTADO {counter:,} registros: {output}")
 
 
+
+def reconcile(db, output, ufs, turn):
+    """Compara votos por chave UF/municipio/zona/secao/turno/cargo/votavel.
+
+    Diferencas sao candidatas a investigacao, nao evidencia automatica de fraude.
+    Sao excluidas linhas sem QT_VOTOS, numero de votavel ou identificacao da secao.
+    """
+    where = ["turno = ?", "votos IS NOT NULL", "TRIM(votavel) != ''",
+             "TRIM(secao) != ''", "TRIM(cargo) != ''"]
+    values = [str(turn)]
+    if ufs:
+        where.append("uf IN (" + ",".join("?" for _ in ufs) + ")")
+        values.extend(ufs)
+    cond = " AND ".join(where)
+    sql = """
+    WITH grouped AS (
+        SELECT source_kind AS origem, UPPER(uf) AS uf,
+               CAST(municipio AS INTEGER) AS municipio,
+               CAST(zona AS INTEGER) AS zona, CAST(secao AS INTEGER) AS secao,
+               turno, LOWER(TRIM(cargo)) AS cargo,
+               CASE WHEN votavel GLOB '[0-9]*' THEN CAST(votavel AS TEXT)
+                    ELSE UPPER(TRIM(votavel)) END AS votavel,
+               SUM(votos) AS votos
+        FROM votes WHERE """ + cond + """
+        GROUP BY origem,uf,municipio,zona,secao,turno,cargo,votavel
+    ),
+    bu AS (SELECT * FROM grouped WHERE origem='bu'),
+    sec AS (SELECT * FROM grouped WHERE origem='secao'),
+    joined AS (
+        SELECT b.uf,b.municipio,b.zona,b.secao,b.turno,b.cargo,b.votavel,
+               b.votos AS bu_votos,s.votos AS secao_votos
+        FROM bu b LEFT JOIN sec s ON
+          b.uf=s.uf AND b.municipio=s.municipio AND b.zona=s.zona AND
+          b.secao=s.secao AND b.turno=s.turno AND
+          b.cargo=s.cargo AND b.votavel=s.votavel
+        UNION ALL
+        SELECT s.uf,s.municipio,s.zona,s.secao,s.turno,s.cargo,s.votavel,
+               NULL,s.votos
+        FROM sec s LEFT JOIN bu b ON
+          b.uf=s.uf AND b.municipio=s.municipio AND b.zona=s.zona AND
+          b.secao=s.secao AND b.turno=s.turno AND
+          b.cargo=s.cargo AND b.votavel=s.votavel
+        WHERE b.uf IS NULL
+    )
+    SELECT * FROM joined
+    """
+    output.parent.mkdir(parents=True, exist_ok=True)
+    checked = differences = 0
+    missing_bu = missing_sec = 0
+    with output.open("w", newline="", encoding="utf-8-sig") as out:
+        writer = csv.writer(out, delimiter=";")
+        writer.writerow(["UF","municipio","zona","secao","turno","cargo","votavel",
+                         "votos_BU","votos_secao","diferenca","situacao"])
+        for row in db.execute(sql, values):
+            checked += 1
+            uf, mu, zo, se, tu, ca, vo, b, v = row
+            if b is None:
+                status = "SEM_BU"
+                missing_bu += 1
+            elif v is None:
+                status = "SEM_SECAO"
+                missing_sec += 1
+            elif b != v:
+                status = "DIFERENTE"
+            else:
+                continue
+            differences += 1
+            writer.writerow([uf,mu,zo,se,tu,ca,vo,b,v,
+                             (b-v) if b is not None and v is not None else "",status])
+    summary = {
+        "created_at_utc": now(), "turn": turn, "ufs": ufs or "todas",
+        "keys_compared": checked, "different_or_missing": differences,
+        "missing_bu": missing_bu, "missing_section": missing_sec,
+        "matches": checked - differences, "csv": str(output),
+        "limitations": "Comparacao apenas nas chaves com votos e identificadores presentes nas duas fontes. "
+        "Se zero chaves forem comparadas, a analise nao foi feita. "
+        "Se houver secoes agregadas ou codificacoes diferentes, investigar antes de atribuir causa."
+    }
+    atomic_json(output.with_suffix(".summary.json"), summary)
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
+    if checked == 0 or checked == missing_bu + missing_sec:
+        print("ATENCAO: sem intersecao validada de registros BU x secao.", file=sys.stderr)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Gerenciador TSE: consultar, baixar sob demanda, validar e tornar BU/sections consultaveis")
-    parser.add_argument("action", choices=("status", "fetch", "import", "export", "verify"),
+    parser.add_argument("action", choices=("status", "fetch", "import", "export", "reconcile", "verify"),
                         help="status=apenas consultar; fetch=baixar e importar; import=processar arquivos locais")
     parser.add_argument("--root", help="Diretorio de dados (padrao no Windows: H:/TSE/forensics/urnas)")
     parser.add_argument("--kind", choices=("bu", "secao", "artefatos"), action="append",
@@ -500,13 +584,16 @@ def main():
         return
 
     db_path = root / "analysis" / "urna_2026.sqlite3"
-    if args.action in ("export", "import"):
+    if args.action in ("export", "import", "reconcile"):
         db_path.parent.mkdir(parents=True, exist_ok=True)
         db = sqlite3.connect(db_path)
         schema(db)
         db.commit()
         try:
-            if args.action == "export":
+            if args.action == "reconcile":
+                output = Path(args.output or root / "analysis" / "reconciliacao_bu_secao.csv")
+                reconcile(db, output, args.uf, args.turn)
+            elif args.action == "export":
                 if not db.execute("SELECT 1 FROM imports LIMIT 1").fetchone():
                     raise SystemExit("Base vazia. Execute fetch primeiro.")
                 output = Path(args.output or root / "analysis" / "consulta_urnas.csv")

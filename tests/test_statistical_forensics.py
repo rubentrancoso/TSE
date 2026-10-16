@@ -73,12 +73,15 @@ class BasicStatistics(unittest.TestCase):
             self.assertEqual(result["linhas_processadas"], 130)
             self.assertEqual(result["municipios_grupos"], 1)
             self.assertEqual(result["status"], "analise_concluida")
+            self.assertFalse(result["cobertura_completa_confirmada"])
+            self.assertEqual(result["cobertura_por_uf_e_turno"][0]["secoes"], 65)
             self.assertGreaterEqual(result["desvios_locais_sinalizados"], 1)
             self.assertIn("nao", " ".join(result["limites"]).lower())
             folder = Path(tmp) / "out"
             for name in ("benford.csv", "digitos_finais.csv", "desvios_municipais.csv",
                          "participacao_correlacao.csv", "consistencia_por_secao.csv",
-                         "perfil_participacao_voto.csv", "estatistica_resumo.json"):
+                         "perfil_participacao_voto.csv", "forma_distribuicao_municipal.csv",
+                         "estatistica_resumo.json"):
                 self.assertTrue((folder / name).exists(), name)
             with (folder / "consistencia_por_secao.csv").open(encoding="utf-8-sig") as stream:
                 data = stream.read()

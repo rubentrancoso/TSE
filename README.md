@@ -97,6 +97,25 @@ Comandos principais:
 As dependências por fase estão em provenance/PHASES.json e as fontes, com classificação primária/captura/derivado e gaps de substituição, em provenance/SOURCES.json.
 
 
+## Bateria estatística automática por seção
+
+A **opção 1 do menu** agora executa a análise estatística ao final de cada
+coleta: Benford (primeiro e segundo dígitos), testes de dígitos finais,
+assimetria, curtose, desvios robustos de votação por município, correlação
+entre comparecimento e votação, histogramas 2D e testes contábeis.
+
+Os relatórios são gerados em `H:/TSE/forensics/urnas/analysis/estatistica/`
+e o status/cobertura está em `estatistica_resumo.json`.
+
+Para reanalisar os dados já baixados, **sem fazer novo download**, use a
+**opção 8** do `start_windows.bat`. Não há etapa manual obrigatória para
+a análise estatística quando se escolhe a coleta completa.
+
+Esses métodos produzem indicadores exploratórios, e não um veredito
+de fraude. A documentação detalha pré-condições, limites e os métodos
+ainda dependentes de outras fontes:
+[Metodologia estatística 2026](docs/METODOS_ESTATISTICOS_2026.md).
+
 ## Coleta integral em uma só execução (opção 1 do menu)
 
 **Este é o fluxo principal.** A opção 1 de `start_windows.bat` executa `collect_forensics.py all --download-portal-files`. A rotina descobre todos os recursos da eleição 2026 publicados até o momento, preserva/reutiliza os snapshots históricos, baixa os dados do catálogo oficial sem repetir arquivos válidos e passa automaticamente os CSVs de boletim e votação por seção para `urnas.py`. A coleta inclui arquivos binários originais; a indexação faz o inventário de seus tipos e SHA-256 por arquivo de urna. Ao final produz `votos_por_cargo_candidato.csv`, `arquivos_por_uf.csv`, `reconciliacao_bu_secao.csv`, SQLite e manifesto de downloads.

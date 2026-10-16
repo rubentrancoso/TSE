@@ -169,3 +169,12 @@ python collect_forensics.py urnas reconcile --uf BA
 
 Teste offline com dados sinteticos:
 `python -m unittest discover -s tests -p test_urnas.py -v`.
+
+
+**Integracao da coleta completa:** `python collect_forensics.py` e
+`python collect_forensics.py all --download-portal-files` continuam
+preservando snapshots e outros recursos do portal no diretorio anterior, mas
+agora encaminham BU, arquivos transmitidos e votacao por secao de 2026
+automaticamente para `H:/TSE/forensics/urnas`. Nunca duplicam esses
+recursos novos no antigo diretorio do portal. Para consultar sem downloads,
+use `python urnas.py status`.

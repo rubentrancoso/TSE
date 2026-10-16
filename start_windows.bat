@@ -27,10 +27,12 @@ echo [4] Coleta opcional por UF (BU, votacao e arquivos de urna)
 echo [5] Exportar registros de uma secao
 echo [6] Reconciliar fontes locais novamente
 echo [7] Verificar integridade dos downloads
+echo [8] Executar novamente a bateria estatistica (sem baixar arquivos)
 echo [0] Sair
 echo.
-choice /C 12345670 /N /M "Selecione: "
-if errorlevel 8 exit /b 0
+choice /C 123456780 /N /M "Selecione: "
+if errorlevel 9 exit /b 0
+if errorlevel 8 goto stats
 if errorlevel 7 goto verify
 if errorlevel 6 goto reconcile
 if errorlevel 5 goto export
@@ -79,6 +81,10 @@ goto done
 
 :verify
 %PY% urnas.py verify
+goto done
+
+:stats
+%PY% urnas.py stats
 goto done
 
 :done

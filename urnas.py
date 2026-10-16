@@ -421,9 +421,9 @@ def open_csv(stream):
 def section_from_name(filename, fallback_uf=""):
     """Extrai identificadores do nome do arquivo transmitido pelo TSE."""
     x = str(filename).replace("\\", "/").lower()
-    match = re.search(r"[-_/]([a-z]{2})[-_/]m?(\\d{4,6})[-_/]z?(\\d{1,4})[-_/]s?(\\d{1,4})(?:[^0-9]|$)", x)
+    match = re.search(r"[-_/]([a-z]{2})[-_/]m?(\d{4,6})[-_/]z?(\d{1,4})[-_/]s?(\d{1,4})(?:[^0-9]|$)", x)
     if not match:
-        match = re.search(r"p\\d+-([a-z]{2})-m(\\d+)-z(\\d+)-s(\\d+)", x)
+        match = re.search(r"p\d+-([a-z]{2})-m(\d+)-z(\d+)-s(\d+)", x)
     if match:
         uf, mu, zo, se = match.groups()
         if uf.upper() in UF_SET:

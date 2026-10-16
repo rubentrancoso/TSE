@@ -355,6 +355,30 @@ def download_resource(url, path):
         raise
 
 
+def is_urn_resource(dataset, resource):
+    """Recursos de urna sao armazenados e analisados pelo gerenciador no H:."""
+    slug = str(dataset.get("name", "")).lower()
+    if slug in ("resultados-2026-boletim-de-urna",
+                "resultados-2026-arquivos-transmitidos-para-totalizacao"):
+        return True
+    title = (str(resource.get("name", "")) + " " + str(resource.get("url", ""))).lower()
+    return slug == "resultados-2026" and any(
+        x in title for x in ("seção eleitoral", "secao eleitoral", "votacao_secao", "votação por seção")
+    )
+
+
+def collect_urnas_h():
+    """Executa downloads e indexacao no H: preservando a CLI principal."""
+    from urnas import main as urnas_main
+    previous = sys.argv[:]
+    try:
+        sys.argv = [previous[0], "fetch", "--all", "--kind", "bu",
+                    "--kind", "secao", "--kind", "artefatos", "--turn", "1"]
+        urnas_main()
+    finally:
+        sys.argv = previous
+
+
 def collect_portal(output, download_files):
     portal_dir = output / "portal"
     portal_dir.mkdir(parents=True, exist_ok=True)
@@ -384,6 +408,8 @@ def collect_portal(output, download_files):
         for dataset in datasets:
             slug = safe_filename(dataset.get("name", "dataset"))
             for resource in dataset.get("resources", []):
+                if is_urn_resource(dataset, resource):
+                    continue
                 url = resource.get("url") or ""
                 basename = safe_filename(Path(urllib.parse.urlparse(url).path).name)
                 resource_id = safe_filename(str(resource.get("id", "")))[:12]
@@ -408,6 +434,8 @@ def collect_portal(output, download_files):
         if not download_files:
             continue
         for resource in dataset.get("resources", []):
+            if is_urn_resource(dataset, resource):
+                continue
             url = resource.get("url") or ""
             basename = safe_filename(Path(urllib.parse.urlparse(url).path).name)
             resource_id = safe_filename(str(resource.get("id", "")))[:12]
@@ -475,6 +503,9 @@ def main():
         summaries.append(collect_live(output, args.workers))
     if args.command in ("portal", "all"):
         summaries.append(collect_portal(output, download_portal_files))
+        if download_portal_files:
+            print("Arquivos de urna 2026: baixando e indexando no H: (gerenciador urnas.py).")
+            collect_urnas_h()
     print(json.dumps(summaries, ensure_ascii=False, indent=2))
     return 1 if any(item.get("files_error", 0) or item.get("records_error", 0) for item in summaries) else 0
 

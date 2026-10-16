@@ -15,6 +15,7 @@ import sys
 import time
 import urllib.parse
 import urllib.request
+import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -326,33 +327,74 @@ def safe_filename(value):
     return value or "arquivo"
 
 
-def download_resource(url, path):
+def download_resource(url, path, expected_size=0):
+    """Valida o cache, retoma arquivos parciais e preserva SHA-256."""
     parsed = urllib.parse.urlparse(url)
     if parsed.scheme != "https" or not (parsed.hostname or "").endswith("tse.jus.br"):
-        raise ValueError("recurso fora de domínio oficial do TSE")
-    if path.exists() and path.stat().st_size:
-        return path.stat().st_size, sha256_file(path), True
+        raise ValueError("recurso fora de dominio oficial do TSE")
+    expected_size = int(expected_size or 0)
     path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists() and path.stat().st_size:
+        size = path.stat().st_size
+        if not expected_size or size == expected_size:
+            try:
+                if not zipfile.is_zipfile(path):
+                    return size, sha256_file(path), True
+                with zipfile.ZipFile(path) as z:
+                    bad = z.testzip()
+                    if bad is None:
+                        return size, sha256_file(path), True
+            except (OSError, zipfile.BadZipFile):
+                pass
+        old_sha = sha256_file(path)
+        backup = path.with_name(path.name + ".damaged." + old_sha[:16])
+        if backup.exists():
+            if sha256_file(backup) != old_sha:
+                raise OSError("colisao de hash em arquivo antigo")
+            path.unlink()
+        else:
+            os.replace(path, backup)
+        print("Versao anterior preservada: " + str(backup), flush=True)
+
     temporary = path.with_name(path.name + ".part")
+    offset = temporary.stat().st_size if temporary.exists() else 0
+    if expected_size and offset > expected_size:
+        temporary.unlink()
+        offset = 0
+    req = urllib.request.Request(
+        url, headers={"User-Agent": USER_AGENT, **({"Range": f"bytes={offset}-"} if offset else {})})
+    response = urllib.request.urlopen(req, timeout=180)
+    if offset and response.status == 206:
+        if not response.headers.get("Content-Range", "").startswith(f"bytes {offset}-"):
+            response.close()
+            raise OSError("Content-Range invalido na retomada")
+        mode = "ab"
+    else:
+        offset = 0
+        mode = "wb"
     digest = hashlib.sha256()
-    size = 0
-    try:
-        with urllib.request.urlopen(request(url, 180), timeout=180) as response, temporary.open("wb") as stream:
-            while True:
-                chunk = response.read(1024 * 1024)
-                if not chunk:
-                    break
-                stream.write(chunk)
-                digest.update(chunk)
-                size += len(chunk)
-            stream.flush()
-            os.fsync(stream.fileno())
-        os.replace(temporary, path)
-        return size, digest.hexdigest(), False
-    except Exception:
-        if temporary.exists():
-            temporary.unlink()
-        raise
+    if offset:
+        with temporary.open("rb") as old:
+            for block in iter(lambda: old.read(1024 * 1024), b""):
+                digest.update(block)
+    size = offset
+    with response, temporary.open(mode) as stream:
+        for block in iter(lambda: response.read(1024 * 1024), b""):
+            stream.write(block)
+            digest.update(block)
+            size += len(block)
+        stream.flush()
+        os.fsync(stream.fileno())
+    if expected_size and size != expected_size:
+        raise OSError(f"recurso incompleto: {size} de {expected_size} bytes")
+    if zipfile.is_zipfile(temporary):
+        with zipfile.ZipFile(temporary) as z:
+            bad = z.testzip()
+            if bad:
+                raise OSError("arquivo ZIP corrompido: " + bad)
+    os.replace(temporary, path)
+    return size, digest.hexdigest(), False
+
 
 
 def is_urn_resource(dataset, resource):
@@ -456,7 +498,7 @@ def collect_portal(output, download_files):
             resource_id = safe_filename(str(resource.get("id", "")))[:12]
             path = portal_file_path(output, slug, f"{resource_id}--{basename}")
             try:
-                size, digest, reused = download_resource(url, path)
+                size, digest, reused = download_resource(url, path, resource.get("size"))
                 records.append({
                     "kind": "portal-resource",
                     "dataset": slug,

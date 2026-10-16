@@ -388,8 +388,16 @@ def schema(db):
     )""")
     db.execute("""CREATE TABLE IF NOT EXISTS archive_entries (
         resource_key TEXT NOT NULL, member TEXT NOT NULL,
-        bytes INTEGER, extensao TEXT, PRIMARY KEY(resource_key,member)
+        bytes INTEGER, extensao TEXT, uf TEXT, municipio TEXT,
+        zona TEXT, secao TEXT, sha256 TEXT,
+        PRIMARY KEY(resource_key,member)
     )""")
+    existing = {row[1] for row in db.execute("PRAGMA table_info(archive_entries)")}
+    for col in ("uf", "municipio", "zona", "secao", "sha256"):
+        if col not in existing:
+            db.execute("ALTER TABLE archive_entries ADD COLUMN " + col + " TEXT")
+    db.execute("CREATE INDEX IF NOT EXISTS idx_archives_secao "
+               "ON archive_entries(uf,municipio,zona,secao,extensao)")
     db.execute("CREATE INDEX IF NOT EXISTS idx_votes_lookup ON votes(uf,municipio,zona,secao,turno,cargo,votavel)")
     db.execute("CREATE INDEX IF NOT EXISTS idx_votes_kind ON votes(source_kind,uf,turno)")
 
@@ -407,6 +415,21 @@ def open_csv(stream):
     text = io.TextIOWrapper(stream, encoding=enc, errors="replace", newline="")
     # CSV oficial do TSE: delimiter=';' e campos entre aspas.
     return csv.DictReader(text, delimiter=";", quotechar='"')
+
+
+
+def section_from_name(filename, fallback_uf=""):
+    """Extrai identificadores do nome do arquivo transmitido pelo TSE."""
+    x = str(filename).replace("\\", "/").lower()
+    match = re.search(r"[-_/]([a-z]{2})[-_/]m?(\\d{4,6})[-_/]z?(\\d{1,4})[-_/]s?(\\d{1,4})(?:[^0-9]|$)", x)
+    if not match:
+        match = re.search(r"p\\d+-([a-z]{2})-m(\\d+)-z(\\d+)-s(\\d+)", x)
+    if match:
+        uf, mu, zo, se = match.groups()
+        if uf.upper() in UF_SET:
+            return uf.upper(), str(int(mu)), str(int(zo)), str(int(se))
+    return fallback_uf, "", "", ""
+
 
 
 def import_file(db, path, kind, key, digest):
@@ -427,8 +450,19 @@ def import_file(db, path, kind, key, digest):
                     if info.is_dir():
                         continue
                     ext = Path(info.filename).suffix.lower()
-                    db.execute("INSERT INTO archive_entries VALUES(?,?,?,?)",
-                               (key, info.filename, info.file_size, ext))
+                    row_uf, mu, zo, se = section_from_name(info.filename, path.parent.name.upper())
+                    member_sha = None
+                    if kind == "artefatos" and ext in (".bu", ".rdv", ".log", ".vota", ".imgbu"):
+                        digest_member = hashlib.sha256()
+                        with archive.open(info) as data_file:
+                            for part in iter(lambda: data_file.read(1024 * 1024), b""):
+                                digest_member.update(part)
+                        member_sha = digest_member.hexdigest()
+                    db.execute("""INSERT INTO archive_entries
+                        (resource_key,member,bytes,extensao,uf,municipio,zona,secao,sha256)
+                        VALUES(?,?,?,?,?,?,?,?,?)""",
+                        (key, info.filename, info.file_size, ext,
+                         row_uf, mu, zo, se, member_sha))
                     if kind in ("bu", "secao", "secao_nacional", "secao_detalhe") and ext == ".csv":
                         with archive.open(info) as stream:
                             count += import_csv_stream(db, stream, key, info.filename, kind)
@@ -526,6 +560,38 @@ def export_rows(db, output, ufs, municipio, zona, secao, turn, kind, candidate):
             writer.writerow(row)
             counter += 1
     print(f"EXPORTADO {counter:,} registros: {output}")
+
+
+
+
+def write_analysis_reports(db, directory):
+    """Relatorios compactos automaticos, sem exigir comandos separados."""
+    directory.mkdir(parents=True, exist_ok=True)
+    definitions = {
+        "arquivos_por_uf.csv": (
+            ["uf", "extensao", "quantidade", "bytes_descompactados",
+             "arquivos_com_secao_identificada", "com_sha256"],
+            """SELECT uf,extensao,COUNT(*),SUM(bytes),
+                      SUM(CASE WHEN secao != '' THEN 1 ELSE 0 END),
+                      SUM(CASE WHEN sha256 IS NOT NULL THEN 1 ELSE 0 END)
+               FROM archive_entries GROUP BY uf,extensao ORDER BY uf,extensao"""),
+        "votos_por_cargo_candidato.csv": (
+            ["fonte", "uf", "turno", "cargo", "votavel", "votos", "registros"],
+            """SELECT source_kind,uf,turno,cargo,votavel,SUM(votos),COUNT(*)
+               FROM votes WHERE votos IS NOT NULL AND votavel != ''
+               GROUP BY source_kind,uf,turno,cargo,votavel
+               ORDER BY source_kind,uf,turno,cargo,votavel"""),
+    }
+    for filename, (columns, sql) in definitions.items():
+        dest = directory / filename
+        temp = dest.with_suffix(dest.suffix + ".part")
+        with temp.open("w", newline="", encoding="utf-8-sig") as stream:
+            out = csv.writer(stream, delimiter=";")
+            out.writerow(columns)
+            for row in db.execute(sql):
+                out.writerow(row)
+        os.replace(temp, dest)
+        print("RELATORIO PRONTO:", dest)
 
 
 
@@ -706,6 +772,12 @@ def main():
                             "reused": reused, "downloaded": downloaded,
                             "indexed_rows_new": indexed, "errors": errors,
                             "resources": results})
+            if db is not None:
+                try:
+                    write_analysis_reports(db, root / "analysis")
+                except Exception as exc:
+                    errors.append({"status": "error", "stage": "reports", "error": str(exc)})
+                    print(f"ERRO gerando relatorios: {exc}", file=sys.stderr)
             if db is not None and "bu" in kinds and "secao" in kinds:
                 try:
                     output = root / "analysis" / "reconciliacao_bu_secao.csv"

@@ -422,7 +422,8 @@ def export_rows(db, output, ufs, municipio, zona, secao, turn, kind, candidate):
                           ("turno", str(turn) if turn else None), ("source_kind", kind),
                           ("votavel", candidate)):
         if value:
-            conditions.append(column + " = ?")
+            conditions.append(("CAST(" + column + " AS INTEGER) = CAST(? AS INTEGER)")
+                              if column in ("municipio", "zona", "secao") else column + " = ?")
             args.append(str(value))
     if len(ufs) > 1:
         conditions.append("uf IN (" + ",".join("?" for _ in ufs) + ")")
@@ -451,9 +452,12 @@ def reconcile(db, output, ufs, turn):
     Diferencas sao candidatas a investigacao, nao evidencia automatica de fraude.
     Sao excluidas linhas sem QT_VOTOS, numero de votavel ou identificacao da secao.
     """
-    where = ["turno = ?", "votos IS NOT NULL", "TRIM(votavel) != ''",
+    where = ["votos IS NOT NULL", "TRIM(votavel) != ''",
              "TRIM(secao) != ''", "TRIM(cargo) != ''"]
-    values = [str(turn)]
+    values = []
+    if turn:
+        where.append("turno = ?")
+        values.append(str(turn))
     if ufs:
         where.append("uf IN (" + ",".join("?" for _ in ufs) + ")")
         values.extend(ufs)
@@ -539,7 +543,7 @@ def main():
     parser.add_argument("--uf", action="append", type=str.upper, default=[],
                         help="UF; pode repetir. Obrigatoria para fetch sem --all.")
     parser.add_argument("--all", action="store_true", help="Baixar para todas UFs (operacao volumosa)")
-    parser.add_argument("--turn", type=int, choices=(1,2), default=1)
+    parser.add_argument("--turn", type=int, choices=(1,2), default=None, help="Por padrao coleta todos os turnos publicados")
     parser.add_argument("--municipio", help="Codigo TSE para exportacao por secao")
     parser.add_argument("--zona", help="Zona eleitoral para exportacao")
     parser.add_argument("--secao", help="Secao eleitoral para exportacao")
@@ -584,20 +588,65 @@ def main():
             db = sqlite3.connect(root / "analysis" / "urna_2026.sqlite3", timeout=90)
             schema(db)
             db.commit()
+        manifest_path = root / "download_manifest_latest.json"
+        results = []
+        errors = []
+        reused = downloaded = indexed = 0
         try:
-            for kind, uf, resource in selected:
+            for pos, (kind, uf, resource) in enumerate(selected, 1):
+                entry = {"time_utc": now(), "kind": kind, "uf": uf,
+                         "id": resource.get("id"), "name": resource.get("name"),
+                         "url": resource.get("url")}
+                print(f"[{pos}/{len(selected)}] {kind}/{uf} {resource.get('name')}", flush=True)
                 try:
+                    dest = resource_path(root, kind, uf, resource)
+                    existed = dest.exists() and dest.stat().st_size > 0
                     path, digest = download(root, kind, uf, resource, minimum_bytes, legacy)
-                    if db is not None and kind in ("bu", "secao", "artefatos"):
+                    entry.update({"status": "reused" if existed else "downloaded",
+                                  "sha256": digest, "path": str(path)})
+                    if existed:
+                        reused += 1
+                    else:
+                        downloaded += 1
+                    if db is not None:
                         key = kind + ":" + str(resource.get("id") or path.name)
-                        import_file(db, path, kind, key, digest)
+                        num = import_file(db, path, kind, key, digest)
+                        indexed += num
+                        entry["imported_rows"] = num
                 except Exception as exc:
+                    entry.update({"status": "error", "error": str(exc)})
+                    errors.append(entry)
                     print(f"ERRO em {kind}/{uf} {resource.get('name')}: {exc}", file=sys.stderr)
-                    raise
+                results.append(entry)
+                atomic_json(manifest_path, {"updated_at_utc": now(),
+                            "selected": len(selected), "processed": len(results),
+                            "reused": reused, "downloaded": downloaded,
+                            "indexed_rows_new": indexed, "errors": errors,
+                            "resources": results})
+            if db is not None and "bu" in kinds and "secao" in kinds:
+                try:
+                    output = root / "analysis" / "reconciliacao_bu_secao.csv"
+                    print("Reconciliacao automatica BU x votacao por secao...", flush=True)
+                    reconcile(db, output, args.uf if not args.all else [], args.turn)
+                except Exception as exc:
+                    errors.append({"status": "error", "stage": "reconcile",
+                                   "time_utc": now(), "error": str(exc)})
+                    print(f"ERRO na reconciliacao: {exc}", file=sys.stderr)
+            atomic_json(manifest_path, {"updated_at_utc": now(),
+                        "selected": len(selected), "processed": len(results),
+                        "reused": reused, "downloaded": downloaded,
+                        "indexed_rows_new": indexed, "errors": errors,
+                        "resources": results,
+                        "finished": True})
         finally:
             if db:
                 db.close()
-        print(f"Concluido. Originais: {root / 'raw'}; consulta: {root / 'analysis' / 'urna_2026.sqlite3'}")
+        print(f"RESUMO: {len(selected)} recursos, {reused} reutilizados, "
+              f"{downloaded} novos, {indexed:,} registros indexados, "
+              f"{len(errors)} erros.", flush=True)
+        print(f"Originais: {root / 'raw'}; banco e relatorios: {root / 'analysis'}", flush=True)
+        if errors:
+            raise SystemExit(1)
         return
 
     db_path = root / "analysis" / "urna_2026.sqlite3"

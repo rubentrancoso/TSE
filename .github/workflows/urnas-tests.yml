@@ -5,15 +5,19 @@ on:
     paths:
       - urnas.py
       - statistical_forensics.py
+      - history_forensics.py
       - tests/test_urnas.py
       - tests/test_statistical_forensics.py
+      - tests/test_history_forensics.py
       - .github/workflows/urnas-tests.yml
   pull_request:
     paths:
       - urnas.py
       - statistical_forensics.py
+      - history_forensics.py
       - tests/test_urnas.py
       - tests/test_statistical_forensics.py
+      - tests/test_history_forensics.py
 
 jobs:
   urnas:
@@ -24,6 +28,6 @@ jobs:
         with:
           python-version: '3.12'
       - name: Validar sintaxe
-        run: python -m py_compile urnas.py statistical_forensics.py
+        run: python -m py_compile urnas.py statistical_forensics.py history_forensics.py
       - name: Testes com arquivos sinteticos
         run: python -m unittest discover -s tests -p 'test_*.py' -v

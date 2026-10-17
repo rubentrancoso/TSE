@@ -876,6 +876,8 @@ def main():
         reused = downloaded = indexed = 0
         try:
             for pos, (kind, uf, resource) in enumerate(selected, 1):
+                if run_control.cancelled():
+                    raise KeyboardInterrupt
                 run_control.stage(f"recurso {pos}/{len(selected)}: {kind}/{uf} - "
                                   f"{resource.get('name')}")
                 entry = {"time_utc": now(), "kind": kind, "uf": uf,
@@ -900,6 +902,8 @@ def main():
                         indexed += num
                         entry["imported_rows"] = num
                 except Exception as exc:
+                    if run_control.cancelled():
+                        raise KeyboardInterrupt from exc
                     entry.update({"status": "error", "error": str(exc)})
                     errors.append(entry)
                     print(f"ERRO em {kind}/{uf} {resource.get('name')}: {exc}", file=sys.stderr)

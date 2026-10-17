@@ -823,6 +823,8 @@ def main():
     if args.action == "fetch" and (args.municipio or args.zona or args.secao):
         parser.error("O catalogo distribui ZIP por UF. Baixe com --uf e depois use export --municipio/--zona/--secao")
     root = root_path(args.root)
+    run_control.configure_log(root)
+    run_control.stage("registro persistente ativado em analysis/logs")
     if args.action in ("fetch", "stats", "reconcile", "import"):
         run_control.stage("preservando historico ANTES de substituir relatorios")
         # Antes de qualquer substituicao, arquivar os relatorios da ultima

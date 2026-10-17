@@ -45,6 +45,7 @@ if errorlevel 1 goto full
 echo.
 echo COLETA INTEGRAL DE 2026 - sem repetir arquivos ja validos.
 echo Dados volumosos em H:\TSE\forensics\.
+echo Interromper: Ctrl+C ou tecla Q. O programa preservara o que estiver concluido.
 %PY% collect_forensics.py all --download-portal-files
 goto done
 
@@ -89,6 +90,11 @@ goto done
 
 :done
 echo.
+if errorlevel 130 (
+  echo [CANCELADO] Coleta interrompida a pedido. Execute 1 para continuar.
+  pause
+  goto menu
+)
 if errorlevel 1 (
   echo [AVISO] A rotina encerrou com erro; escolha 1 para continuar de onde parou.
 ) else (

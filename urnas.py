@@ -473,7 +473,7 @@ def import_file(db, path, kind, key, digest):
     previous = db.execute(
         "SELECT sha256,parser_version FROM imports WHERE resource_key=?", (key,)
     ).fetchone()
-    if previous and previous[0] == digest and previous[1] >= 3:
+    if previous and previous[0] == digest and previous[1] >= 2:
         print(f"INDEXADO ANTERIORMENTE: {path.name}", flush=True)
         return 0
 
@@ -587,6 +587,7 @@ def import_csv_stream(db, stream, key, member, kind):
     batch = []
     count = 0
     last_saved_line = resume_line
+    last_line_seen = resume_line
 
     def save_batch(current_line):
         nonlocal count, last_saved_line
@@ -607,6 +608,7 @@ def import_csv_stream(db, stream, key, member, kind):
                   f" ({count:,} novas)", flush=True)
 
     for line, values in enumerate(reader, start=2):
+        last_line_seen = line
         if line <= resume_line:
             continue
         if None in values:
@@ -632,7 +634,7 @@ def import_csv_stream(db, stream, key, member, kind):
     db.execute("""INSERT OR REPLACE INTO import_checkpoints
         (resource_key,member,last_line,rows,updated_utc)
         VALUES(?,?,?,?,?)""", (key, member,
-                              max(last_saved_line, reader.line_num + 1),
+                              max(last_saved_line, last_line_seen),
                               previous_rows + count, now()))
     db.commit()
     return count

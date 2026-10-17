@@ -55,6 +55,8 @@ def install():
         return
     _started = True
     signal.signal(signal.SIGINT, _on_sigint)
+    if hasattr(signal, "SIGBREAK"):
+        signal.signal(signal.SIGBREAK, _on_sigint)
     thread = threading.Thread(target=_heartbeat, name="tse-progress",
                               daemon=True)
     thread.start()

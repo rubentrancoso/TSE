@@ -540,6 +540,9 @@ def collect_portal(output, download_files):
 
 
 def main():
+    from run_control import install, stage
+    install()
+    stage("preparando a coleta completa")
     run_everything = len(sys.argv) == 1
     parser = argparse.ArgumentParser(description="Coleta dados públicos oficiais do TSE com hashes e manifestos.")
     parser.add_argument("command", nargs="?", default="all", choices=("snapshot", "portal", "all"))
@@ -557,22 +560,33 @@ def main():
     print("", flush=True)
     summaries = []
     if args.command in ("snapshot", "all"):
+        stage("conferindo snapshots nacionais e municipais")
         summaries.append(collect_live(output, args.workers))
     if args.command in ("portal", "all"):
+        stage("conferindo acervo do portal de dados abertos")
         summaries.append(collect_portal(output, download_portal_files))
         if download_portal_files:
-            print("Arquivos de urna 2026: baixando e indexando no H: (gerenciador urnas.py).")
+            stage("gerenciador de urnas: conferindo arquivos, preparando SQLite, importando dados")
+            print("Arquivos de urna 2026: baixando e indexando no H: (gerenciador urnas.py).", flush=True)
             collect_urnas_h()
     print(json.dumps(summaries, ensure_ascii=False, indent=2))
     return 1 if any(item.get("files_error", 0) or item.get("records_error", 0) for item in summaries) else 0
 
 
 if __name__ == "__main__":
-    # Compatibilidade: os comandos antigos continuam iguais.
+    from run_control import install, shutdown
+    install()
+    try:
+        # Compatibilidade: os comandos antigos continuam iguais.
     # Nova coleta granulada de urnas no H: passa pelo gerenciador urnas.py.
-    if len(sys.argv) > 1 and sys.argv[1] == "urnas":
-        from urnas import main as urnas_main
-        sys.argv = [sys.argv[0]] + sys.argv[2:]
-        urnas_main()
-    else:
-        sys.exit(main())
+        if len(sys.argv) > 1 and sys.argv[1] == "urnas":
+            from urnas import main as urnas_main
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            urnas_main()
+        else:
+            sys.exit(main())
+    except KeyboardInterrupt:
+        print("\nCOLETA INTERROMPIDA PELO USUARIO. Arquivos completos e partes .part preservados.", flush=True)
+        sys.exit(130)
+    finally:
+        shutdown()

@@ -37,8 +37,8 @@ class UrnasTests(unittest.TestCase):
             base = Path(folder)
             path = base / "massivo.zip"
             header = ("SG_UF;CD_MUNICIPIO;NR_ZONA;NR_SECAO;NR_TURNO;"
-                      "CD_CARGO_PERGUNTA;NR_VOTAVEL;QT_VOTOS\\n")
-            rows = [f"BA;33693;177;{i};1;1;13;{i % 97}\\n"
+                      "CD_CARGO_PERGUNTA;NR_VOTAVEL;QT_VOTOS\n")
+            rows = [f"BA;33693;177;{i};1;1;13;{i % 97}\n"
                     for i in range(1, 25001)]
             with zipfile.ZipFile(path, "w") as archive:
                 archive.writestr("votos.csv", (header + "".join(rows)).encode("latin-1"))

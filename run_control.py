@@ -58,7 +58,7 @@ def _heartbeat():
                 if msvcrt.kbhit():
                     key = msvcrt.getwch()
                     if key.casefold() == "q":
-                        print("\\n[CANCELAMENTO] Tecla Q recebida.", flush=True)
+                        print("\n[CANCELAMENTO] Tecla Q recebida.", flush=True)
                         _stop.set()
                         db = _db
                         if db is not None:

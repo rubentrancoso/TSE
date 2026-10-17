@@ -228,14 +228,36 @@ def download(root, kind, uf, resource, reserve, legacy=None):
         old_sha = str(old_state.get("sha256") or "")
         same_revision = not (old_state.get("resource_revision") and revision and
                              old_state["resource_revision"] != revision)
+        file_stat = dest.stat()
+        # Cache de verificacao anterior: quando o manifesto foi criado depois
+        # do arquivo e o tamanho nao mudou, nao reabrir ZIPs enormes.
+        # Um 'verify' explicito continua conferindo todos os SHA256.
+        source_matches = str(old_state.get("source_url") or "") == url
+        prior_verified = any(old_state.get(k) for k in (
+            "downloaded_at_utc", "checked_at_utc", "verified_at_utc",
+            "recovered_partial", "migrated_from", "adopted_existing"))
+        cached = (source_matches and prior_verified and
+                  re.fullmatch(r"[0-9a-f]{64}", old_sha) and
+                  int(old_state.get("bytes") or -1) == file_stat.st_size and
+                  (not expected_size or file_stat.st_size == expected_size) and
+                  (not official_sha or official_sha == old_sha) and
+                  state_file.exists() and
+                  file_stat.st_mtime_ns <= state_file.stat().st_mtime_ns and
+                  same_revision)
+        if cached:
+            print(f"REUTILIZADO (cache verificado) {kind}/{uf}: {dest.name} "
+                  f"({file_stat.st_size:,} bytes)", flush=True)
+            return dest, old_sha
+        print(f"VERIFICANDO SHA-256/ZIP {kind}/{uf}: {dest.name}; "
+              "pode demorar em arquivos grandes", flush=True)
         sha = validate_archived_file(dest, expected_size,
                                     official_sha or old_sha or None)
         if sha and same_revision:
-            if not old_state:
-                atomic_json(state_file, {
-                    "source_url": url, "sha256": sha, "bytes": dest.stat().st_size,
-                    "resource_revision": revision, "verified_at_utc": now(),
-                    "adopted_existing": True})
+            atomic_json(state_file, {
+                **old_state, "source_url": url, "sha256": sha,
+                "bytes": dest.stat().st_size,
+                "resource_revision": revision, "verified_at_utc": now(),
+                "adopted_existing": bool(not old_state)})
             print(f"REUTILIZADO {kind}/{uf} {dest.name} ({dest.stat().st_size:,} bytes)")
             return dest, sha
         # Nunca apagar evidencia: uma revisao mais nova fica no destino anterior,

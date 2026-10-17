@@ -424,6 +424,16 @@ def schema(db):
             db.execute("ALTER TABLE archive_entries ADD COLUMN " + col + " TEXT")
     db.execute("CREATE INDEX IF NOT EXISTS idx_archives_secao "
                "ON archive_entries(uf,municipio,zona,secao,extensao)")
+    db.execute("""CREATE TABLE IF NOT EXISTS import_progress (
+        resource_key TEXT PRIMARY KEY, sha256 TEXT NOT NULL,
+        started_utc TEXT NOT NULL, updated_utc TEXT NOT NULL
+    )""")
+    db.execute("""CREATE TABLE IF NOT EXISTS import_checkpoints (
+        resource_key TEXT NOT NULL, member TEXT NOT NULL,
+        last_line INTEGER NOT NULL, rows INTEGER NOT NULL,
+        updated_utc TEXT NOT NULL,
+        PRIMARY KEY(resource_key, member)
+    )""")
     db.execute("CREATE INDEX IF NOT EXISTS idx_votes_lookup ON votes(uf,municipio,zona,secao,turno,cargo,votavel)")
     db.execute("CREATE INDEX IF NOT EXISTS idx_votes_kind ON votes(source_kind,uf,turno)")
 
@@ -459,53 +469,87 @@ def section_from_name(filename, fallback_uf=""):
 
 
 def import_file(db, path, kind, key, digest):
-    previous = db.execute("SELECT sha256,parser_version FROM imports WHERE resource_key=?", (key,)).fetchone()
-    if previous and previous[0] == digest and previous[1] >= 2:
-        print(f"INDEXADO ANTERIORMENTE: {path.name}")
+    """Importacao em blocos, com checkpoints duraveis e retomada sem duplicar."""
+    previous = db.execute(
+        "SELECT sha256,parser_version FROM imports WHERE resource_key=?", (key,)
+    ).fetchone()
+    if previous and previous[0] == digest and previous[1] >= 3:
+        print(f"INDEXADO ANTERIORMENTE: {path.name}", flush=True)
         return 0
-    db.execute("BEGIN")
-    count = 0
-    csv_count = 0
-    try:
+
+    state = db.execute("SELECT sha256 FROM import_progress WHERE resource_key=?",
+                       (key,)).fetchone()
+    if not state or state[0] != digest:
+        # Outra revisao ou nenhum checkpoint: reiniciar apenas este recurso.
+        print("PREPARANDO importacao nova/revisada: " + path.name, flush=True)
         db.execute("DELETE FROM votes WHERE resource_key=?", (key,))
         db.execute("DELETE FROM archive_entries WHERE resource_key=?", (key,))
-        files = []
+        db.execute("DELETE FROM import_checkpoints WHERE resource_key=?", (key,))
+        db.execute("INSERT OR REPLACE INTO import_progress VALUES(?,?,?,?)",
+                   (key, digest, now(), now()))
+        db.commit()
+    else:
+        print("RETOMANDO importacao parcial: " + path.name, flush=True)
+
+    count_new = 0
+    csv_count = 0
+    entries = 0
+    try:
         if zipfile.is_zipfile(path):
             with zipfile.ZipFile(path) as archive:
                 for info in archive.infolist():
                     if info.is_dir():
                         continue
                     ext = Path(info.filename).suffix.lower()
-                    row_uf, mu, zo, se = section_from_name(info.filename, path.parent.name.upper())
+                    row_uf, mu, zo, se = section_from_name(
+                        info.filename, path.parent.name.upper())
                     member_sha = None
-                    if kind == "artefatos" and ext in (".bu", ".rdv", ".log", ".vota", ".imgbu"):
+                    if kind == "artefatos" and ext in (
+                            ".bu", ".rdv", ".log", ".vota", ".imgbu"):
                         digest_member = hashlib.sha256()
                         with archive.open(info) as data_file:
-                            for part in iter(lambda: data_file.read(1024 * 1024), b""):
-                                digest_member.update(part)
+                            for block in iter(lambda: data_file.read(1024 * 1024), b""):
+                                digest_member.update(block)
                         member_sha = digest_member.hexdigest()
-                    db.execute("""INSERT INTO archive_entries
+                    db.execute("""INSERT OR REPLACE INTO archive_entries
                         (resource_key,member,bytes,extensao,uf,municipio,zona,secao,sha256)
                         VALUES(?,?,?,?,?,?,?,?,?)""",
                         (key, info.filename, info.file_size, ext,
                          row_uf, mu, zo, se, member_sha))
+                    entries += 1
+                    if entries % 10000 == 0:
+                        db.commit()
+                        print(f"  ZIP: {entries:,} arquivos internos catalogados",
+                              flush=True)
                     if kind in ("bu", "secao", "secao_nacional", "secao_detalhe") and ext == ".csv":
                         with archive.open(info) as stream:
-                            count += import_csv_stream(db, stream, key, info.filename, kind)
+                            count_new += import_csv_stream(
+                                db, stream, key, info.filename, kind)
                         csv_count += 1
-        elif path.suffix.lower() == ".csv" and kind in ("bu", "secao", "secao_nacional", "secao_detalhe"):
+        elif path.suffix.lower() == ".csv" and kind in (
+                "bu", "secao", "secao_nacional", "secao_detalhe"):
             with path.open("rb") as stream:
-                count += import_csv_stream(db, stream, key, path.name, kind)
+                count_new += import_csv_stream(db, stream, key, path.name, kind)
             csv_count = 1
+        # A ausencia de checkpoint final seria resolvida na proxima execucao.
+        total = db.execute("SELECT COUNT(*) FROM votes WHERE resource_key=?",
+                           (key,)).fetchone()[0]
         db.execute("""INSERT OR REPLACE INTO imports
             (resource_key,sha256,imported_utc,rows,files,parser_version)
-            VALUES (?,?,?,?,?,?)""", (key, digest, now(), count, csv_count, 2))
+            VALUES (?,?,?,?,?,?)""", (key, digest, now(), total, csv_count, 3))
+        db.execute("DELETE FROM import_progress WHERE resource_key=?", (key,))
+        db.execute("DELETE FROM import_checkpoints WHERE resource_key=?", (key,))
         db.commit()
-        print(f"INDEXADO {kind} {path.name}: {count:,} linhas / {csv_count} CSV; "
-              "binarios mantidos no arquivo original")
-        return count
-    except Exception:
+        print(f"INDEXADO {kind} {path.name}: {total:,} linhas, "
+              f"{count_new:,} novas nesta execucao; {csv_count} CSV.",
+              flush=True)
+        return count_new
+    except BaseException:
+        # Somente o bloco ainda nao confirmado e desfeito. Os blocos
+        # confirmados conservam checkpoints e voltam na proxima execucao.
         db.rollback()
+        print("IMPORTACAO INTERROMPIDA/COM ERRO: blocos ja confirmados preservados: "
+              + path.name, flush=True)
         raise
 
 
@@ -531,12 +575,42 @@ def import_csv_stream(db, stream, key, member, kind):
     if not reader.fieldnames:
         return 0
     headers = normalize_headers(reader.fieldnames)
-    # Restaurar o mapeamento original mesmo com colunas repetidas.
+    # O checkpoint so e usado depois de o SHA256 do recurso ser conferido.
+    checkpoint = db.execute(
+        "SELECT last_line, rows FROM import_checkpoints WHERE resource_key=? AND member=?",
+        (key, member)).fetchone()
+    resume_line = checkpoint[0] if checkpoint else 1
+    previous_rows = checkpoint[1] if checkpoint else 0
+    if resume_line > 1:
+        print(f"  RETOMADA CSV {member}: pulando ate linha {resume_line:,} "
+              "ja confirmada no banco", flush=True)
     batch = []
     count = 0
+    last_saved_line = resume_line
+
+    def save_batch(current_line):
+        nonlocal count, last_saved_line
+        if batch:
+            db.executemany("INSERT INTO votes VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)", batch)
+            count += len(batch)
+            batch.clear()
+            last_saved_line = current_line
+        if count and count % 20000 == 0 and last_saved_line > resume_line:
+            db.execute("""INSERT OR REPLACE INTO import_checkpoints
+                (resource_key,member,last_line,rows,updated_utc)
+                VALUES(?,?,?,?,?)""",
+                (key, member, last_saved_line, previous_rows + count, now()))
+            db.execute("UPDATE import_progress SET updated_utc=? WHERE resource_key=?",
+                       (now(), key))
+            db.commit()
+            print(f"  CSV {member}: {previous_rows + count:,} linhas ja confirmadas"
+                  f" ({count:,} novas)", flush=True)
+
     for line, values in enumerate(reader, start=2):
+        if line <= resume_line:
+            continue
         if None in values:
-            raise ValueError(f"CSV inconsistente {member} na linha {line}: numero excessivo de colunas")
+            raise ValueError(f"CSV inconsistente {member} na linha {line}: colunas excessivas")
         obj = {headers[i]: values.get(name, "") for i, name in enumerate(reader.fieldnames)}
         uf = field(obj, "SG_UF")
         municipio = field(obj, "CD_MUNICIPIO")
@@ -549,13 +623,20 @@ def import_csv_stream(db, stream, key, member, kind):
         batch.append((key, member, line, kind, uf, municipio, zona, secao,
                       turno, cargo, votavel, votos, json.dumps(obj, ensure_ascii=False)))
         if len(batch) >= 2000:
-            db.executemany("INSERT INTO votes VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)", batch)
-            count += len(batch)
-            batch.clear()
+            save_batch(line)
     if batch:
+        # Ao encerrar um CSV, registrar inclusive o ultimo bloco parcial.
         db.executemany("INSERT INTO votes VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)", batch)
         count += len(batch)
+        batch.clear()
+    db.execute("""INSERT OR REPLACE INTO import_checkpoints
+        (resource_key,member,last_line,rows,updated_utc)
+        VALUES(?,?,?,?,?)""", (key, member,
+                              max(last_saved_line, reader.line_num + 1),
+                              previous_rows + count, now()))
+    db.commit()
     return count
+
 
 
 def export_rows(db, output, ufs, municipio, zona, secao, turn, kind, candidate):

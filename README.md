@@ -97,6 +97,39 @@ Comandos principais:
 As dependências por fase estão em provenance/PHASES.json e as fontes, com classificação primária/captura/derivado e gaps de substituição, em provenance/SOURCES.json.
 
 
+## Coleta longa: progresso, interrupção e retomada (17/10/2026)
+
+A coleta completa da opção **1** anuncia cada etapa, inclusive o preparo
+dos índices SQLite **antes de começar a percorrer os arquivos**. A cada
+15 segundos, o programa confirma qual etapa continua executando.
+
+Se a importação de um CSV grande demorar, aparecem checkpoints a cada
+20 mil linhas. Esses blocos são gravados em SQLite e reutilizados na
+próxima execução caso o computador pare, sem duplicação de linhas.
+Os arquivos completos e as partes `.part` já baixadas também são
+reutilizados, quando ainda válidos.
+
+Para interromper a execução no Windows, use **Ctrl+C** ou, como
+alternativa, **a tecla Q** com foco na janela do terminal. Também há
+suporte a Ctrl+Break. A saída por cancelamento é identificada com
+código 130, diferente de um erro comum. Caso o terminal esteja no modo
+de seleção de texto, pressione **Esc** antes de tentar interromper;
+nesse modo o Windows pode usar Ctrl+C para copiar em vez de cancelar.
+
+Um registro persistente de cada etapa fica em:
+
+`H:/TSE/forensics/urnas/analysis/logs/<run-id>.jsonl`
+
+Não execute `git pull` dentro da pasta durante uma coleta ativa.
+Se já tiver encerrado o programa anterior, `git pull` seguido
+da **opção 1** usa as correções e reaproveita os dados locais.
+
+O incidente da listagem de 113 recursos e do relato de parada em
+recurso 58 está no evento E0073 do diário cronológico. O recurso 58
+naquele catálogo era o CSV nacional de votos por seção de Presidente.
+Sua importação pesada é hipótese plausível, **não causa comprovada**
+da ausência de saída no terminal.
+
 ## Histórico de análises e continuação do artigo
 
 A **opção 1 — COLETA COMPLETA** preserva automaticamente uma versão dos

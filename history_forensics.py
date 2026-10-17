@@ -132,7 +132,10 @@ def snapshot(root, stage, *, context=None, allow_empty=False):
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + "-" + uuid.uuid4().hex[:10]
     records = []
     objects = archive_root / "objects"
-    for path, relative in reports:
+    print(f"HISTORICO {stage}: preservando {len(reports)} relatorios.", flush=True)
+    for index, (path, relative) in enumerate(reports, 1):
+        print(f"  HISTORICO [{index}/{len(reports)}] {relative} "
+              f"({path.stat().st_size:,} bytes)", flush=True)
         checksum = digest_file(path)
         stored = store_object(path, objects, checksum)
         records.append({

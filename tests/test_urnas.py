@@ -31,6 +31,53 @@ class UrnasTests(unittest.TestCase):
         self.assertEqual({x[0] for x in picked}, {"bu", "secao"})
         self.assertEqual({x[1] for x in picked}, {"BA"})
 
+    def test_import_interrupted_after_checkpoint_resumes_without_duplicates(self):
+        import hashlib
+        with tempfile.TemporaryDirectory() as folder:
+            base = Path(folder)
+            path = base / "massivo.zip"
+            header = ("SG_UF;CD_MUNICIPIO;NR_ZONA;NR_SECAO;NR_TURNO;"
+                      "CD_CARGO_PERGUNTA;NR_VOTAVEL;QT_VOTOS\\n")
+            rows = [f"BA;33693;177;{i};1;1;13;{i % 97}\\n"
+                    for i in range(1, 25001)]
+            with zipfile.ZipFile(path, "w") as archive:
+                archive.writestr("votos.csv", (header + "".join(rows)).encode("latin-1"))
+            db = sqlite3.connect(":memory:")
+            urnas.schema(db)
+            db.commit()
+            key = "bu:test-large"
+            sha = urnas.sha256_file(path)
+            self.assertEqual(urnas.import_file(db, path, "bu", key, sha), 25000)
+            self.assertEqual(db.execute("SELECT COUNT(*) FROM votes").fetchone()[0], 25000)
+
+            # Simula uma interrupcao apos confirmar o bloco de 20 mil
+            # linhas, mas antes de registrar importacao concluida.
+            db.execute("DELETE FROM imports WHERE resource_key=?", (key,))
+            db.execute("DELETE FROM votes WHERE line > 20001 AND resource_key=?", (key,))
+            db.execute("INSERT INTO import_progress VALUES(?,?,?,?)",
+                       (key, sha, "2026-10-17", "2026-10-17"))
+            db.execute("INSERT INTO import_checkpoints VALUES(?,?,?,?,?)",
+                       (key, "votos.csv", 20001, 20000, "2026-10-17"))
+            db.commit()
+
+            self.assertEqual(urnas.import_file(db, path, "bu", key, sha), 5000)
+            self.assertEqual(db.execute("SELECT COUNT(*) FROM votes").fetchone()[0], 25000)
+            self.assertEqual(db.execute("SELECT COUNT(*) FROM import_progress").fetchone()[0], 0)
+            self.assertEqual(urnas.import_file(db, path, "bu", key, sha), 0)
+
+    def test_legacy_import_v2_is_reused(self):
+        with tempfile.TemporaryDirectory() as folder:
+            base = Path(folder)
+            db = sqlite3.connect(":memory:")
+            urnas.schema(db)
+            db.execute("""INSERT INTO imports
+                (resource_key,sha256,imported_utc,rows,files,parser_version)
+                VALUES('bu:old','abc','2026-10-16',22,1,2)""")
+            db.commit()
+            # O arquivo nem precisa ser aberto quando importado e validado.
+            self.assertEqual(urnas.import_file(db, base / "old.zip", "bu",
+                                               "bu:old", "abc"), 0)
+
     def test_sqlite_import_reconcile_export_idempotence(self):
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)

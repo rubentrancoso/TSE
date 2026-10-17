@@ -3578,3 +3578,71 @@ resultado da coleta concluída.
 **Próxima entrada esperada:** confirmação da conclusão do download com
 quantidade de seções, arquivos, erros, hashes e primeiro resultado de
 reconciliação BU ↔ seção, vinculados ao ID do snapshot histórico.
+
+
+---
+
+## 2026-10-17 — E0073 — Execucao incompleta em arquivo nacional e interrupcao de terminal
+
+**Fonte da observacao:** copia do texto do terminal, entregue pelo
+investigador em 17/10/2026. O arquivo de log recebido termina antes de
+`[1/113]` (na lista de recursos disponiveis), logo nao comprova o
+ponto exato de bloqueio da tentativa atual.
+
+**Constatado no registro:**
+- oito snapshots locais, 5.785/5.785 JSONs, 100% do resultado final;
+- portal: 312 arquivos reutilizados, nenhum download novo, zero erros;
+- catalogo de urna: 113 recursos selecionados;
+- entre esses recursos, 56 documentos BU/hash, 2 arquivos nacionais de
+  votacao/detalhe por secao, 27 arquivos estaduais de votacao por secao,
+  28 arquivos transmitidos por UF/ZZ;
+- na listagem, os 56 BU/hash e os dois arquivos nacionais aparecem
+  `LOCAL`, os 27 estaduais e 28 transmitidos aparecem `REMOTO`.
+  `LOCAL` significa que o destino existe, **nao confirma importacao**
+  em SQLite nem sua validacao nesta tentativa.
+
+**Relato independente do investigador:** numa execucao anterior, a
+progressao chegou ao recurso 58 de aproximadamente 113. O usuario
+precisou fechar a janela porque `Ctrl+C` nao produziu interrupcao
+visivel. O recurso 58 e, na ordem observada, o CSV nacional de
+votacao por secao de Presidente. Processar esse arquivo pode
+exigir muitos inserts SQLite. **Hipotese tecnica a testar:** a ausencia
+de progresso visivel e uma transacao unica de importacao ou
+(re)construcao de indices resultaram em longa espera. O log fornecido
+nao possui tempos/profiler para confirmar a causa.
+
+**Correcao do coletor, publicada diretamente na `main`:**
+- criado `run_control.py`, com etapa atual, relatorio periodico
+  durante tarefas longas (15 s) e tratamento de `Ctrl+C` e
+  `Ctrl+Break` no Windows;
+- `collect_forensics.py` e `urnas.py` propagam a interrupcao com
+  codigo de saida 130; dados integrais e parciais `.part` permanecem;
+- inicio e fim do preparo dos indices SQLite passam a ser anunciados,
+  para separar atraso de download e atraso de importacao;
+- cache de SHA/ZIP validado anteriormente pode ser reutilizado sem
+  recalcular todo o CRC se arquivo/tamanho/data de modificacao e
+  metadados permanecerem identicos; opcao `verify` recalcula SHA;
+- `import_file` passa a registrar checkpoints SQLite de 20.000
+  linhas por arquivo CSV, confirmando cada bloco; uma interrupcao
+  preserva as transacoes ja confirmadas;
+- na retomada, um checkpoint do mesmo recurso/SHA reaproveita linhas
+  ja importadas sem duplicacao; importacoes v2 completas tambem sao
+  reutilizadas, evitando reindexacao em massa;
+- `history_forensics.py` passa a indicar qual relatorio esta
+  arquivando antes de uma nova tentativa.
+
+**Testes previstos/implementados:** dados sinteticos de 25 mil linhas
+com checkpoint de 20 mil, retomada das 5 mil restantes e confirmacao
+de ausencia de duplicacao; reutilizacao de importacoes anteriores.
+A integracao com o volume real dos dados ainda exige a nova execucao
+no ambiente Windows/H:.
+
+**Limite:** nao existe aqui acesso ao drive H: do investigador,
+portanto nao afirmamos que os 113 recursos foram baixados ou que a
+causa exata de bloqueio foi comprovada.
+
+**Proxima verificacao:** observar qual etapa permanece visivel,
+quantidade indexada e manifestos em
+`H:/TSE/forensics/urnas/analysis/history/` e
+`H:/TSE/forensics/urnas/download_manifest_latest.json`
+durante a proxima execucao. Nenhum dado previo deve ser apagado.

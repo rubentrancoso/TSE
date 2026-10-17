@@ -7,12 +7,41 @@ import threading
 import time
 import os
 import _thread
+import json
+from datetime import datetime, timezone
+from pathlib import Path
 
 _label = "iniciando"
 _since = time.monotonic()
 _started = False
 _stop = threading.Event()
 _db = None
+_log_path = None
+_run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + f"-{os.getpid()}"
+
+
+def _record(event, detail):
+    if _log_path is None:
+        return
+    try:
+        with _log_path.open("a", encoding="utf-8") as output:
+            output.write(json.dumps({
+                "run_id": _run_id,
+                "utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                "event": event, "detail": detail
+            }, ensure_ascii=False) + "\n")
+            output.flush()
+    except OSError:
+        # Falha secundaria de log nao deve cancelar download de dados.
+        pass
+
+
+def configure_log(root):
+    global _log_path
+    folder = Path(root) / "analysis" / "logs"
+    folder.mkdir(parents=True, exist_ok=True)
+    _log_path = folder / (_run_id + ".jsonl")
+    _record("inicio", "Registro persistente da execucao")
 
 
 def stage(label):
@@ -20,6 +49,7 @@ def stage(label):
     _label = str(label)
     _since = time.monotonic()
     print("[ETAPA] " + _label, flush=True)
+    _record("etapa", _label)
 
 
 def attach_db(db):
@@ -33,6 +63,7 @@ def attach_db(db):
 
 def _on_sigint(signum, frame):
     _stop.set()
+    _record("cancelamento", "Ctrl+C ou Ctrl+Break")
     print("\n[INTERRUPCAO] Ctrl+C recebido. Encerrando sem apagar arquivos locais.",
           file=sys.stderr, flush=True)
     db = _db
@@ -60,6 +91,7 @@ def _heartbeat():
                     if key.casefold() == "q":
                         print("\n[CANCELAMENTO] Tecla Q recebida.", flush=True)
                         _stop.set()
+                        _record("cancelamento", "Tecla Q")
                         db = _db
                         if db is not None:
                             try:
@@ -94,6 +126,7 @@ def install():
 
 
 def shutdown():
+    _record("fim", "Controle de execucao encerrado")
     _stop.set()
 
 

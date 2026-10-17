@@ -5,6 +5,8 @@ import sqlite3
 import sys
 import threading
 import time
+import os
+import _thread
 
 _label = "iniciando"
 _since = time.monotonic()
@@ -43,10 +45,38 @@ def _on_sigint(signum, frame):
 
 
 def _heartbeat():
-    while not _stop.wait(15):
-        elapsed = int(time.monotonic() - _since)
-        print("[EM EXECUCAO] {} ({} s nesta etapa). Ctrl+C para interromper.".format(
-            _label, elapsed), flush=True)
+    # Opcao de cancelamento adicional no Windows quando a thread principal
+    # estiver ocupada no SQLite ou em uma descompactacao longa.
+    try:
+        import msvcrt
+    except ImportError:
+        msvcrt = None
+    next_message = time.monotonic() + 15
+    while not _stop.wait(0.2):
+        if msvcrt is not None:
+            try:
+                if msvcrt.kbhit():
+                    key = msvcrt.getwch()
+                    if key.casefold() == "q":
+                        print("\\n[CANCELAMENTO] Tecla Q recebida.", flush=True)
+                        _stop.set()
+                        db = _db
+                        if db is not None:
+                            try:
+                                db.interrupt()
+                            except sqlite3.Error:
+                                pass
+                        _thread.interrupt_main()
+                        return
+            except (OSError, ValueError):
+                msvcrt = None
+        moment = time.monotonic()
+        if moment >= next_message:
+            elapsed = int(moment - _since)
+            print("[EM EXECUCAO] {} ({} s nesta etapa). "
+                  "Ctrl+C ou Q para interromper.".format(_label, elapsed),
+                  flush=True)
+            next_message = moment + 15
 
 
 def install():
@@ -60,7 +90,7 @@ def install():
     thread = threading.Thread(target=_heartbeat, name="tse-progress",
                               daemon=True)
     thread.start()
-    stage("controle de execucao ativo")
+    stage("controle de execucao ativo (Ctrl+C ou Q para cancelar)")
 
 
 def shutdown():

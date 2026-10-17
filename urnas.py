@@ -687,6 +687,9 @@ def reconcile(db, output, ufs, turn):
 
 
 def main():
+    import run_control
+    run_control.install()
+    run_control.stage("analisando argumentos e preparando acesso ao drive de dados")
     parser = argparse.ArgumentParser(
         description="Gerenciador TSE: consultar, baixar sob demanda, validar e tornar BU/sections consultaveis")
     parser.add_argument("action", choices=("status", "fetch", "import", "export", "reconcile", "stats", "verify"),
@@ -716,6 +719,7 @@ def main():
         parser.error("O catalogo distribui ZIP por UF. Baixe com --uf e depois use export --municipio/--zona/--secao")
     root = root_path(args.root)
     if args.action in ("fetch", "stats", "reconcile", "import"):
+        run_control.stage("preservando historico ANTES de substituir relatorios")
         # Antes de qualquer substituicao, arquivar os relatorios da ultima
         # execucao. Se arquivar falhar, nao sobrescrever analises anteriores.
         from history_forensics import snapshot as history_snapshot
@@ -731,19 +735,22 @@ def main():
     kinds = args.kind or (["bu", "secao"] if args.action != "verify" else list(DATASETS))
     kinds = list(dict.fromkeys(kinds))
     if args.action in ("status", "fetch"):
+        run_control.stage("consultando recursos no catalogo oficial")
         datasets = catalog()
         atomic_json(root / "catalogo_latest.json", {
             "checked_at_utc": now(),
             "datasets": {k: {"title": v.get("title"), "resources": v.get("resources", [])}
                          for k, v in datasets.items()}})
         selected = select_resources(datasets, kinds, args.uf if not args.all else [], args.turn)
-        print(f"Catalogo: {len(selected)} recursos selecionados (tipos={','.join(kinds)}, UFs={args.uf or 'todas'})")
-        for kind, uf, resource in selected:
-            path = resource_path(root, kind, uf, resource)
-            print(f"  {kind:9s} {uf}: {resource.get('name')} "
-                  f"| bytes={resource.get('size') or '?'} "
-                  f"| {'LOCAL' if path.exists() else 'REMOTO'}")
+        local = sum(1 for kind, uf, resource in selected
+                    if resource_path(root, kind, uf, resource).is_file())
+        print(f"Catalogo: {len(selected)} recursos selecionados | locais={local} "
+              f"| ausentes={len(selected)-local} | tipos={','.join(kinds)}", flush=True)
         if args.action == "status":
+            for kind, uf, resource in selected:
+                path = resource_path(root, kind, uf, resource)
+                print(f"  {kind:15s} {uf}: {resource.get('name')} "
+                      f"| {'LOCAL' if path.is_file() else 'REMOTO'}", flush=True)
             return
         if not selected:
             raise SystemExit("Nenhum recurso localizado. Nenhum download foi realizado.")
@@ -752,15 +759,20 @@ def main():
         db = None
         if not args.no_import:
             (root / "analysis").mkdir(parents=True, exist_ok=True)
+            run_control.stage("abrindo banco SQLite e conferindo indices (pode levar tempo)")
             db = sqlite3.connect(root / "analysis" / "urna_2026.sqlite3", timeout=90)
+            run_control.attach_db(db)
             schema(db)
             db.commit()
+            run_control.stage("SQLite pronto; iniciando processamento dos arquivos")
         manifest_path = root / "download_manifest_latest.json"
         results = []
         errors = []
         reused = downloaded = indexed = 0
         try:
             for pos, (kind, uf, resource) in enumerate(selected, 1):
+                run_control.stage(f"recurso {pos}/{len(selected)}: {kind}/{uf} - "
+                                  f"{resource.get('name')}")
                 entry = {"time_utc": now(), "kind": kind, "uf": uf,
                          "id": resource.get("id"), "name": resource.get("name"),
                          "url": resource.get("url")}
@@ -776,6 +788,8 @@ def main():
                     else:
                         downloaded += 1
                     if db is not None:
+                        run_control.stage(f"importando ou conferindo indice {pos}/{len(selected)}: "
+                                          f"{kind}/{uf}, {path.name}")
                         key = kind + ":" + str(resource.get("id") or path.name)
                         num = import_file(db, path, kind, key, digest)
                         indexed += num
@@ -791,6 +805,7 @@ def main():
                             "indexed_rows_new": indexed, "errors": errors,
                             "resources": results})
             if db is not None:
+                run_control.stage("gerando relatorios da base de votos")
                 try:
                     write_analysis_reports(db, root / "analysis")
                 except Exception as exc:
@@ -799,6 +814,7 @@ def main():
             if db is not None and "bu" in kinds and "secao" in kinds:
                 try:
                     output = root / "analysis" / "reconciliacao_bu_secao.csv"
+                    run_control.stage("reconciliacao automatica BU x votacao por secao")
                     print("Reconciliacao automatica BU x votacao por secao...", flush=True)
                     reconcile(db, output, args.uf if not args.all else [], args.turn)
                 except Exception as exc:
@@ -808,6 +824,7 @@ def main():
             if db is not None and "bu" in kinds:
                 try:
                     from statistical_forensics import analyze as analyze_statistical
+                    run_control.stage("executando bateria estatistica de secoes")
                     stats = analyze_statistical(db, root / "analysis" / "estatistica")
                     if stats["status"] != "analise_concluida":
                         errors.append({"status": "warning", "stage": "statistics",
@@ -824,10 +841,12 @@ def main():
                         "finished": True})
         finally:
             if db:
+                run_control.attach_db(None)
                 db.close()
         # Preservacao do resultado concluido ou parcial, antes de qualquer
         # codigo de saida diferente de zero.
         from history_forensics import snapshot as history_snapshot
+        run_control.stage("salvando historico final dos relatorios")
         history_snapshot(root, "apos-coleta" if not errors else "apos-coleta-com-erros",
                          context={"recursos_selecionados": len(selected),
                                   "processados": len(results),
@@ -845,7 +864,9 @@ def main():
     db_path = root / "analysis" / "urna_2026.sqlite3"
     if args.action in ("export", "import", "reconcile", "stats"):
         db_path.parent.mkdir(parents=True, exist_ok=True)
-        db = sqlite3.connect(db_path)
+        run_control.stage("abrindo SQLite para tarefa local; conferindo indices")
+        db = sqlite3.connect(db_path, timeout=90)
+        run_control.attach_db(db)
         schema(db)
         db.commit()
         try:
@@ -877,8 +898,10 @@ def main():
                         print(f"ERRO indexando {path}: {exc}", file=sys.stderr)
                         raise
         finally:
+            run_control.attach_db(None)
             db.close()
         from history_forensics import snapshot as history_snapshot
+        run_control.stage("preservando historico da tarefa concluida")
         history_snapshot(root, "apos-" + args.action,
                          context={"ufs": args.uf, "turno": args.turn})
         return
@@ -900,6 +923,10 @@ def main():
 if __name__ == "__main__":
     try:
         main()
+    except KeyboardInterrupt:
+        print("\nINTERRUPCAO CONCLUIDA. Os ZIPs prontos, o banco e os .part existentes "
+              "permanecem no H:. A proxima coleta continua.", file=sys.stderr, flush=True)
+        sys.exit(130)
     except (OSError, ValueError, RuntimeError, urllib.error.URLError, zipfile.BadZipFile) as exc:
         print("FALHA: " + str(exc), file=sys.stderr)
         sys.exit(1)

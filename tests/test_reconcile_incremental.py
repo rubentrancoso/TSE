@@ -70,6 +70,27 @@ class ResumeReconcileTests(unittest.TestCase):
             self.assertEqual(report_repeat["reused_tasks"], 3)
             self.assertEqual(out.read_text(encoding="utf-8-sig"), text)
 
+    def test_corrupted_checkpoint_is_recomputed(self):
+        db = self.prepare()
+        with tempfile.TemporaryDirectory() as d:
+            out = Path(d) / "report.csv"
+            first = ri.reconcile_resumable(db, out)
+            folder = Path(first["checkpoint_folder"]) / "partes"
+            path = sorted(folder.glob("*.csv"))[0]
+            with path.open("a", encoding="utf-8") as stream:
+                stream.write("adulterado\n")
+            later = ri.reconcile_resumable(db, out)
+            self.assertEqual(later["reused_tasks"], 2)
+            self.assertEqual(later["different_or_missing"], 1)
+            self.assertNotIn("adulterado", out.read_text(encoding="utf-8-sig"))
+
+    def test_query_plan_uses_existing_locality_index(self):
+        db = self.prepare()
+        tasks, _ = ri.tasks_from_db(db, [], None)
+        sql, params = ri.sql_group_for_task(tasks[0])
+        plan = db.execute("EXPLAIN QUERY PLAN " + sql, params).fetchall()
+        self.assertTrue(any("idx_votes_lookup" in str(row) for row in plan))
+
     def test_changed_source_hash_invalidates_old_checkpoints(self):
         db = self.prepare()
         with tempfile.TemporaryDirectory() as d:

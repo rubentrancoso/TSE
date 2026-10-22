@@ -3646,3 +3646,55 @@ quantidade indexada e manifestos em
 `H:/TSE/forensics/urnas/analysis/history/` e
 `H:/TSE/forensics/urnas/download_manifest_latest.json`
 durante a proxima execucao. Nenhum dado previo deve ser apagado.
+
+
+---
+
+## 2026-10-22 — E0074 — Reconciliação nacional sem progresso: 9.335 segundos
+
+**Evidência fornecida pelo investigador:** a opção de coleta completa
+permaneceu pelo menos **9.335 segundos (2h35min35s)** na mensagem
+`reconciliacao automatica BU x votacao por secao`, com atualização de
+tempo decorrido a cada 15 segundos, sem previsão de conclusão.
+
+**Diagnóstico do código anterior:** `urnas.py:reconcile()` construía
+uma consulta SQLite única, com agregação nacional, junções e varredura
+dos registros entre BU e votação por seção. O resultado era gerado
+ao percorrer esse cursor e não havia checkpoints por UF/zona.
+**O tempo decorrido não permite afirmar quanto faltava.** Também não
+comprova, isoladamente, travamento do computador ou erro nos votos.
+
+**Limite decisivo da retomada:** interromper aquela versão preserva
+ZIPs, dados importados e relatórios anteriores, mas não possibilita
+retomar no meio da consulta única; não há como recuperar os passos
+intermediários não registrados. É indispensável uma versão
+nova para conservar trabalho de reconciliação a partir de agora.
+
+**Mudança implementada na `main`:**
+- criado `reconcile_incremental.py`, acionado tanto na coleta
+  completa quanto no comando `urnas.py reconcile`;
+- grupos de trabalho separados por UF/município/zona/turno;
+- cada grupo concluído é persistido em CSV com SHA-256 e
+  checkpoint SQLite, sem apagar os grupos de execuções anteriores;
+- a identidade das fontes é estabelecida por hash dos recursos
+  importados, versão da lógica, escopo e contagens elegíveis;
+- o programa informa fração dos grupos e das linhas, divergências,
+  partes reutilizadas e uma estimativa aproximada de tempo restante
+  baseada na velocidade dos grupos novos, após amostra inicial;
+- o CSV final só substitui a versão anterior quando **todas**
+  as zonas forem concluídas e consolidadas;
+- o menu opção 6 realiza apenas a reconciliação local, sem iniciar
+  downloads novamente, e serve para retomar checkpoints;
+- importações incompletas são declaradas nos metadados da análise;
+- testes com entradas sintéticas reproduzem cancelamento após uma
+  zona, retomada das demais e invalidação do cache se o SHA das
+  fontes for alterado.
+
+**Estado de verificação:** não há neste registro resultados calculados
+na base real do investigador após a atualização. A velocidade futura
+é desconhecida antes de processar os primeiros grupos reais. A
+estimativa é operacional, não previsão estatística de tempo garantida.
+
+**Evidência do próximo ensaio:** guardar do console as mensagens
+`PLANO PRONTO`, `PROGRESSO RECONCILIACAO` e
+`reconciliacao_bu_secao.summary.json`, assim como o hash das entradas.

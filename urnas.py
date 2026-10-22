@@ -927,7 +927,9 @@ def main():
                     output = root / "analysis" / "reconciliacao_bu_secao.csv"
                     run_control.stage("reconciliacao automatica BU x votacao por secao")
                     print("Reconciliacao automatica BU x votacao por secao...", flush=True)
-                    reconcile(db, output, args.uf if not args.all else [], args.turn)
+                    from reconcile_incremental import reconcile_resumable
+                    reconcile_resumable(db, output,
+                                        args.uf if not args.all else [], args.turn)
                 except Exception as exc:
                     errors.append({"status": "error", "stage": "reconcile",
                                    "time_utc": now(), "error": str(exc)})
@@ -988,7 +990,9 @@ def main():
                     raise SystemExit("Sem dados BU de Presidente. A analise nao foi executada.")
             elif args.action == "reconcile":
                 output = Path(args.output or root / "analysis" / "reconciliacao_bu_secao.csv")
-                reconcile(db, output, args.uf, args.turn)
+                from reconcile_incremental import reconcile_resumable
+                run_control.stage("reconciliando por zona com checkpoints e estimativa de tempo")
+                reconcile_resumable(db, output, args.uf, args.turn)
             elif args.action == "export":
                 if not db.execute("SELECT 1 FROM imports LIMIT 1").fetchone():
                     raise SystemExit("Base vazia. Execute fetch primeiro.")

@@ -69,7 +69,7 @@ def tasks_from_db(db, ufs, turn):
         where.append("CAST(turno AS INTEGER)=?")
         args.append(int(turn))
     sql = """SELECT uf,municipio,zona,turno,COUNT(*)
-             FROM votes INDEXED BY idx_votes_lookup WHERE """ + " AND ".join(where) + """
+             FROM votes WHERE """ + " AND ".join(where) + """
              GROUP BY uf,municipio,zona,turno
              ORDER BY uf,municipio,zona,turno"""
     groups = {}
@@ -144,7 +144,7 @@ def sql_group_for_task(task):
                     THEN CAST(CAST(votavel AS INTEGER) AS TEXT)
                     ELSE UPPER(TRIM(votavel)) END AS votavel,
                SUM(votos) AS votos
-        FROM votes WHERE """ + " AND ".join(where) + """
+        FROM votes INDEXED BY idx_votes_lookup WHERE """ + " AND ".join(where) + """
         GROUP BY origem,uf,municipio,zona,secao,turno,cargo,votavel
     ),
     bu AS (SELECT * FROM grouped WHERE origem='bu'),

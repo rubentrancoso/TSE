@@ -69,7 +69,7 @@ def tasks_from_db(db, ufs, turn):
         where.append("CAST(turno AS INTEGER)=?")
         args.append(int(turn))
     sql = """SELECT uf,municipio,zona,turno,COUNT(*)
-             FROM votes WHERE """ + " AND ".join(where) + """
+             FROM votes INDEXED BY idx_votes_lookup WHERE """ + " AND ".join(where) + """
              GROUP BY uf,municipio,zona,turno
              ORDER BY uf,municipio,zona,turno"""
     groups = {}
@@ -245,6 +245,7 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None):
     completed_rows = done = resumed = 0
     checked = different = missing_bu = missing_sec = 0
     elapsed_work = 0.0
+    new_work_rows = new_work_tasks = 0
     started = time.monotonic()
     total = len(tasks)
     try:
@@ -277,6 +278,8 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None):
                     if temp.exists():
                         temp.unlink()
                 elapsed_work += time.monotonic() - phase
+                new_work_rows += task["rows"]
+                new_work_tasks += 1
             done += 1
             completed_rows += task["rows"]
             checked += nchecked
@@ -286,10 +289,11 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None):
             percent = 100 * completed_rows / total_rows if total_rows else 100.
             if index <= 2 or index % 10 == 0 or index == total:
                 remaining = total_rows - completed_rows
-                rate = completed_rows / max(0.001, time.monotonic() - started)
-                eta = ("calculando apos mais grupos"
-                       if done < 5 or elapsed_work <= 0 else eta_text(
-                           remaining / max(rate, 0.001)))
+                eta = ("calculando apos 5 grupos novos"
+                       if new_work_tasks < 5 or new_work_rows <= 0 else eta_text(
+                           remaining * elapsed_work / new_work_rows))
+                if remaining == 0:
+                    eta = "0 min (consolidacao final pendente)"
                 print(f"PROGRESSO RECONCILIACAO: {done:,}/{total:,} zonas "
                       f"({percent:.1f}% das linhas); {resumed:,} ja concluidas "
                       f"reutilizadas; {different:,} divergencias; "

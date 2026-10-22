@@ -103,7 +103,17 @@ def source_fingerprint(db, tasks, ufs, turn):
                    ORDER BY resource_key""")]
     except sqlite3.OperationalError:
         source = []
-    info = {"algo": VERSION, "sources": source, "ufs": sorted(ufs),
+    try:
+        incomplete = [
+            {"resource": key, "sha256": sha}
+            for key, sha in db.execute(
+                "SELECT resource_key,sha256 FROM import_progress "
+                "ORDER BY resource_key")
+        ]
+    except sqlite3.OperationalError:
+        incomplete = []
+    info = {"algo": VERSION, "sources": source,
+            "imports_incomplete": incomplete, "ufs": sorted(ufs),
             "turn": turn, "rows": sum(t["rows"] for t in tasks),
             "groups": len(tasks)}
     return hashlib.sha256(json.dumps(
@@ -235,6 +245,12 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None):
     print(f"PLANO PRONTO: {len(tasks):,} grupos zona/turno; "
           f"{total_rows:,} linhas elegiveis; "
           f"planejamento em {time.monotonic()-clock:.1f}s.", flush=True)
+    print("ETAPAS RESTANTES: comparar grupos e gravar checkpoints -> "
+          "consolidar CSV -> gerar resumo -> analises estatisticas "
+          "(na coleta completa).", flush=True)
+    if provenance["imports_incomplete"]:
+        print("ATENCAO: existem importacoes parciais em andamento. "
+              "O resultado sera marcado como parcial.", flush=True)
     if not tasks:
         checkpoint.close()
         raise ValueError("Nao ha votos BU ou secao com chaves completas para comparar.")
@@ -322,7 +338,11 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None):
 
         summary = {
             "created_at_utc": utc(), "engine": VERSION,
-            "status": "concluido", "fingerprint": fingerprint,
+            "status": ("calculado_com_importacoes_incompletas"
+                       if provenance["imports_incomplete"] else "concluido"),
+            "cobertura_nacional_confirmada": False,
+            "importacoes_incompletas": provenance["imports_incomplete"],
+            "fingerprint": fingerprint,
             "turn": turn, "ufs": ufs or "todas",
             "tasks_completed": done, "tasks_total": total,
             "source_rows_planned": total_rows,

@@ -77,7 +77,9 @@ set /p "SE=Secao: "
 goto done
 
 :reconcile
-%PY% urnas.py reconcile --turn 1
+echo Comparacao dos BUs e votos por secao JA BAIXADOS.
+echo Sem download; checkpoints por zona e previsao aproximada de conclusao.
+%PY% urnas.py reconcile
 goto done
 
 :verify

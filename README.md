@@ -97,6 +97,55 @@ Comandos principais:
 As dependências por fase estão em provenance/PHASES.json e as fontes, com classificação primária/captura/derivado e gaps de substituição, em provenance/SOURCES.json.
 
 
+## Reconciliação retomável com estimativa de tempo (22/10/2026)
+
+A reconciliação anterior fazia uma única consulta SQLite nacional e não
+registrava avanço parcial. Interromper aquele processo perdia as horas
+**de cálculo da consulta**, mas não apagava ZIPs, importações SQLite
+confirmadas ou arquivos originais.
+
+A versão nova utiliza `reconcile_incremental.py`. A comparação
+BU × seção é dividida em unidades por **UF, município, zona e turno**.
+Depois de cada unidade, grava um arquivo CSV de divergências com
+SHA-256 e confirma a conclusão no SQLite dos checkpoints:
+
+```text
+H:/TSE/forensics/urnas/analysis/reconciliacao_checkpoints/
+  estado.sqlite3
+  <fingerprint-das-fontes>/
+    fontes_e_parametros.json
+    partes/<hash-da-zona>.csv
+```
+
+O identificador `fingerprint` inclui versão do método, filtros,
+SHA-256 dos recursos já importados, quantidade de linhas elegíveis e
+escopo. **Se os arquivos oficiais ou a importação mudarem**, checkpoints
+antigos não serão reutilizados. Eles continuam preservados para auditoria.
+
+A cada 10 grupos (e nos dois primeiros), o programa mostra
+grupos concluídos, percentual das linhas elegíveis cobertas,
+quantos grupos foram reutilizados, divergências encontradas e
+uma **estimativa aproximada do tempo restante**, calculada com base
+na velocidade real dos grupos novos processados. A estimativa
+é apresentada apenas depois de cinco grupos novos e não é uma promessa
+de horário exato.
+
+A coleta completa (opção **1**) usa esse mecanismo automaticamente.
+A opção **6** realiza **somente a reconciliação dos dados já existentes**,
+sem download nem importação. Interrompa com **Q ou Ctrl+C**; o processo
+reaproveita todas as zonas concluídas na próxima execução.
+
+O resultado final `reconciliacao_bu_secao.csv` só é substituído
+**depois** de consolidadas todas as zonas. Relatórios cancelados
+não são apresentados como análises completas. O resumo informa
+a cobertura conhecida e sinaliza importações de urna ainda incompletas.
+
+**Importante:** a versão nova não recupera o trabalho da consulta
+nacional longa executada pelo código antigo, pois ela não gravava
+checkpoints intermediários. Reaproveita, porém, os dados
+baixados e indexados existentes. O próximo processamento
+será retomável a partir dos novos checkpoints.
+
 ## Coleta longa: progresso, interrupção e retomada (17/10/2026)
 
 A coleta completa da opção **1** anuncia cada etapa, inclusive o preparo

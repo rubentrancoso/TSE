@@ -34,7 +34,9 @@ class Noronha6261Test(unittest.TestCase):
                                   {"170": 10, "95": 0})
         self.assertEqual(len(missing), 1)
         self.assertEqual(missing[0]["votavel"], "999")
-        self.assertEqual(rows[0]["situacao"], "DIFERENTE")
+        self.assertEqual(
+            next(row["situacao"] for row in rows if row["votavel"] == "170"),
+            "DIFERENTE")
 
     def test_reject_wrong_election(self):
         with self.assertRaises(RuntimeError):

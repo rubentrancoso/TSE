@@ -166,6 +166,56 @@ eleitores, votos individuais nem secoes unicas.** Nao sabemos o
 recurso com erro nem a distribuicao geografica ate executar o
 diagnostico no ambiente local.
 
+## Prova operacional de progresso real (23/10/2026)
+
+A execucao `python urnas.py reconcile --workers 5` criou o
+plano de 6.251 zonas/135.717.720 linhas em 3.639,6 segundos,
+reutilizou ao menos 160 checkpoints e depois passou mais
+de 55 minutos **sem comprovar uma nova zona concluida**.
+A linha de heartbeat `[EM EXECUCAO]` nao prova que o
+SQLite esteja trabalhando, nem que cinco processos tenham
+concluido uma comparacao.
+
+O software agora separa os indicadores:
+- `[FASE]` mostra a leitura unica do indice de checkpoints;
+- `[CHECKPOINTS] n/6251` mostra o andamento da validacao
+  dos arquivos com hash, sem repetir milhares de SELECTs;
+- `[ZONA SUBMETIDA]` e `[WORKER INICIADO]` mostram
+  enfileiramento e inicializacao real do processo com PID;
+- `[WORKER SQLITE OK]` e `[WORKER BUSCA]` identificam
+  abertura do banco e inicio da leitura indexada;
+- `[WORKER SQLITE ATIVO]` identifica atividade da maquina
+  virtual SQLite; `[WORKER LENDO]` mostra linhas efetivamente
+  recebidas durante uma consulta longa;
+- `[ZONA CONCLUIDA]` confirma resultado devolvido ao
+  processo principal, com quantidade de chaves, diferencas
+  e tempo; so nesse momento existe evidencia de progresso;
+- `[SEM RESULTADO]` aparece a cada 30 segundos sem zona
+  concluida e indica quais tarefas ainda estao pendentes.
+
+Antes de iniciar a carga nacional outra vez, **encerre a
+execucao anterior**, atualize a main e use o diagnostico
+de duas zonas reais:
+
+```bat
+git pull
+python reconcile_probe.py --budget 120
+```
+
+O teste reutiliza o plano cacheado, analisa EXPLAIN QUERY PLAN
+e mede uma zona pequena e outra mediana do banco no H:.
+E **somente leitura**, produz arquivos CSV temporarios apagados
+ao final, nao altera relatorios ou checkpoints. `--budget`
+limita a execucao ativa de instrucoes SQL por amostra, mas
+nao e um prazo rigido se a unidade H: bloquear no I/O.
+Esse teste **nao garante** quanto levara a reconciliacao inteira.
+
+Depois de constatar uma zona efetivamente concluida no
+diagnostico, execute `python urnas.py reconcile --workers 1`
+para conferir o novo log e o reuso de checkpoints, antes
+de experimentar `--workers 2` ou 4. Nao rode varios
+reconciliadores sobre o mesmo banco ao mesmo tempo.
+
 ## Aceleração da reconciliação: busca indexada e multiprocessamento (23/10/2026)
 
 A amostra do terminal mostrou avanço de ~150/6.251 zonas após

@@ -4408,3 +4408,48 @@ Objetivo investigativo: quantificar correlacoes e limites
 de voto cruzado entre cargos e selecionar casos para pericia
 de artefatos de urna/transmissao. Nenhuma diferenca de
 padrão agregada basta para concluir fraude.
+
+
+---
+
+## 2026-10-24 — E0090 — Matriz nacional entre cargos finalizada
+
+O investigador executou no H: `python cross_office_sections.py`,
+retomando o piloto de 2/256 particoes. O programa confirmou
+`MATRIZ ENTRE CARGOS CONCLUIDA`, sem mensagens de erro.
+
+**Dados da saida real:**
+
+- fingerprint preservado:
+  `8ab3ce83c8992b9a4be03587c0f2fc49e93d5d3247b76a182d4a2dac0a9ce6b2`;
+- `input_rows_eligible=135717720`;
+- `source_bu_rows_selected=67858746` (cargos 1,3,5,6,7,8;
+  cargo 25 especial fica fora desta matriz);
+- `candidate_keys=67858746`, `distinct_sections=499206`;
+- `sections_by_office`: Presidente 499206, Governador 497897,
+  Senado 497897, Dep. Federal 497897, Dep. Estadual 490928,
+  Dep. Distrital 6969;
+- `paired_president_governor_sections=497897`;
+- `president_governor_totals_unequal=17233` (3,461% das pareadas);
+- `partitions=256`;
+- matriz `analysis/entre_cargos/8ab3ce83c8992b9a-94fc637b4737c20d/secoes_por_cargo.csv`;
+- SHA-256 da matriz:
+  `9aefc6cf4591180a1f2edfdc2cdb7b9e44c19ae8caf2b5d23fa2d6c83f02dfad`.
+
+**Interpretacao:** as 17.233 ocorrencias sao **diferencas
+entre a soma de votos BU de dois cargos**, nao
+divergencias BU-vs-secao no mesmo cargo e nao
+prova de alteracao na totalizacao. 1.309 secoes
+contem Presidente mas nao Governador; origem
+geografica ainda nao classificada.
+
+**Proximo modulo:** `audit_cross_office_totals.py` e
+`tests/test_audit_cross_office_totals.py` publicados na
+main com workflow de testes atualizado. Le somente o CSV
+de matriz verificado por SHA-256, calcula
+distribuicao das magnitudes e direcoes dos deltas
+por UF, municipio, turno e seleciona ate 50
+secoes para verificacao posterior. **Ainda nao
+executado no H:** resultados precisam ser fornecidos
+pelo investigador. Nenhuma inferencia de voto
+cruzado foi feita.

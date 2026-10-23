@@ -4004,3 +4004,41 @@ sem rodar instancias simultaneas do reconciliador.
 ser observado antes de afirmar ganho. O saldo de 3.800.511
 chaves presidenciais segue em verificacao; nao foi calculado
 nenhum novo resultado nacional nessa execucao multiprocessada.
+
+
+---
+
+## 2026-10-23 — E0081 — Teste de execucao real por duas zonas e telemetria dos workers
+
+**Evidencia:** o log do investigador para `--workers 5` registrou
+plano criado apos 3.639,6 segundos, 6.251 zonas, 135.717.720
+linhas e pelo menos 160 checkpoints anteriores reconhecidos;
+depois disso, nenhum grupo novo foi confirmado ate 6.933
+segundos na etapa, cerca de 55 minutos apos o plano. A existencia
+de cinco processos anunciados nao e prova de trabalho completo.
+
+**Correcao de desempenho e observabilidade:** a versao agora
+consulta a tabela de checkpoints em uma unica consulta,
+conservando verificacao individual dos hashes; anuncia andamento
+a cada 500 zonas; imprime envio, PID, abertura SQLite,
+atividade de VM, linhas recebidas e conclusao por zona;
+detecta intervalos de 30 segundos sem resultado dos processos.
+No cancelamento da versao nova, encerra os trabalhadores
+paralelos de leitura para evitar processos antigos no H:.
+
+**Instrumento de confirmacao:** `reconcile_probe.py` usa o
+plano comprimido salvo no primeiro ensaio e escolhe duas
+zonas representativas de tamanhos diferentes. Executa
+`EXPLAIN QUERY PLAN` e a mesma rotina de comparação
+indexada, em SQLite read-only, com medicao de tempo,
+chaves comparadas e divergencias. CSVs do teste sao
+temporarios e nao alteram os relatorios nem os checkpoints.
+Limite padrao de 120 segundos de execucao da VM SQLite
+por zona (sujeito a bloqueio de I/O fora do controle da VM).
+
+**Teste ainda pendente:** rodar o probe no H: sem outra
+instancia ativa. Uma conclusao da zona com numeros e
+tempo demonstra que o algoritmo calcula uma zona real;
+somente medicao de varias zonas representativas permite
+estimar throughput nacional. Nao existe ainda evidencia
+de ganho de desempenho da consulta otimizada no H:.

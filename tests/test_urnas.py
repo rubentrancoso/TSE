@@ -154,7 +154,7 @@ class UrnasTests(unittest.TestCase):
             with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_STORED) as archive:
                 archive.writestr("dados.csv", b"secoes-teste-original")
             clean = buffer.getvalue()
-            corrupt = clean.replace(b"secoes-teste-original", b"secoes-teste-corromp")
+            corrupt = clean.replace(b"secoes-teste-original", b"secoes-teste-corrupto")
             self.assertNotEqual(clean, corrupt)
             self.assertTrue(zipfile.is_zipfile(io.BytesIO(corrupt)))
             resource = {"id": "sp-zip", "name": "SP - Arquivos transmitidos",

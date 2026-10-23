@@ -166,6 +166,55 @@ eleitores, votos individuais nem secoes unicas.** Nao sabemos o
 recurso com erro nem a distribuicao geografica ate executar o
 diagnostico no ambiente local.
 
+## Aceleração da reconciliação: busca indexada e multiprocessamento (23/10/2026)
+
+A amostra do terminal mostrou avanço de ~150/6.251 zonas após
+mais de 14.000 segundos e ETA instável de 156 a 189 horas.
+O gargalo estava na execução de SQL com
+`WITH grouped`, vários `JOIN` e antijunções por **zona**;
+simplesmente executar várias cópias dessa consulta seria
+desperdiçar ainda mais leituras do drive H:.
+
+O novo `reconcile_fast.py` realiza **uma única busca indexada
+por zona**, carrega apenas os registros da zona e agrega as
+fontes em memória antes de comparar. Mantém prioridade de
+`secao` estadual; usa `secao_nacional` somente na ausência da
+chave presidencial. O código antigo permanece disponível
+para testes de equivalência, não é usado na execução nova.
+
+O agendador em `reconcile_incremental.py` permite **1–8 processos
+independentes**, com limite de tarefas simultâneas para não
+sobrecarregar H:. O padrão é **4 processos**; em um HDD ou
+USB lento, reduzir para 2 pode ser mais rápido. O ETA agora mede
+o tempo de parede do trabalho paralelo, não soma tempos de
+tarefas executadas simultaneamente.
+
+A lista de zonas/linhas planejadas é compactada e identificada
+pelos hashes dos recursos e filtros; as próximas retomadas
+reutilizam o planejamento em vez de repetir o `GROUP BY`
+nacional. A regra de comparação e seu fingerprint v2 permanecem
+**idênticos**, então os checkpoints de zonas anteriores,
+validados por SHA-256, são reaproveitados.
+
+Para usar o código novo depois de encerrar o processo anterior:
+
+```bat
+git pull
+python urnas.py reconcile --workers 4
+```
+
+Se a unidade H: ficar em 100% de utilização, sem ganho de
+velocidade, interrompa com Q (checkpoints preservados) e tente
+`python urnas.py reconcile --workers 2` (ou `--workers 1`).
+O menu opção 6 também usa quatro processos por padrão.
+
+**Não há promessa de velocidade sem medição na máquina real.**
+O novo programa precisa medir o processamento dos primeiros
+grupos após a atualização para recalcular o ETA; o tempo de
+planejamento, consolidação final, limitações do HDD e Windows
+podem influenciar o tempo total. Não apague o SQLite, os ZIPs
+ou `analysis/reconciliacao_checkpoints`.
+
 ## Reconciliação retomável com estimativa de tempo (22/10/2026)
 
 A reconciliação anterior fazia uma única consulta SQLite nacional e não

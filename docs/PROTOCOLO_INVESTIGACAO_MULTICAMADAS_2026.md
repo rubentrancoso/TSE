@@ -325,3 +325,60 @@ Depois: averiguar as maiores diferencas com artefatos BU,
 regras de voto por cargo, votos brancos/nulos,
 comparecimento e identificador de eleicao, antes da
 analise de correlacao territorial de candidaturas.
+
+
+## Resultado de denominadores e hipotese de voto em transito (24/10/2026)
+
+Auditoria local `python audit_cross_office_totals.py` terminou com
+quatro testes unitarios OK e o mesmo SHA da matriz seccional
+`9aefc6cf4591180a1f2edfdc2cdb7b9e44c19ae8caf2b5d23fa2d6c83f02dfad`.
+
+**Resumo nacional observado:**
+- 499.206 secoes; 497.897 pares Presidente/Governador;
+- 480.664 com totais iguais; 17.233 diferentes;
+- em TODOS os 17.233, Presidente > Governador;
+  zero com Governador > Presidente;
+- soma dos votos P em pares = 124.934.069;
+  G em pares = 124.768.485; excedente P-G = **165.584**;
+- maior excedente em uma secao: 289;
+- 174 secoes com excedente superior a 100.
+
+**Explicacao concorrente forte, ainda por comprovar por secao:**
+as regras oficiais de 2026 permitem voto em transito
+fora da UF apenas para Presidente, e tambem aos inscritos
+no exterior em transito no Brasil. Portanto, P>G
+sem ocorrencias de G>P e compativel com habilitacao
+distinta por cargo; nao e, isoladamente, evidencia
+de alteracao pos-transmissao.
+
+Fonte primaria do TSE:
+https://www.tse.jus.br/eleicoes/eleicoes-2026-content/voto-em-transito-perguntas-e-respostas
+
+**Teste de controle novo, independente da comparacao BU×secao:**
+`audit_cross_office_eligibility.py`. Ele valida o SHA da
+mesma matriz, mede quantitativos de Presidente sem
+Governador por UF/turno, e confere:
+- P >= G em cada secao com ambos presentes;
+- Senado = 2×Governador na mesma secao, pois em 2026
+  havia duas escolhas ao Senado por eleitor elegivel;
+- se Governador e Senado compartilham exatamente
+  as mesmas secoes presentes;
+- identifica as secoes que contrariem invariantes.
+
+Fonte oficial da regra de duas vagas:
+https://www.tse.jus.br/comunicacao/noticias/2026/Setembro/manual-do-eleitor-veja-como-se-preparar-para-a-votacao
+
+Comandos de validacao no H::
+```bat
+git pull
+python -m unittest discover -s tests -p test_audit_cross_office_eligibility.py -v
+python audit_cross_office_eligibility.py
+```
+
+**Aviso:** Senado=2×Governador e P>=G sao testes contabeis
+de plausibilidade, nao prova de quem votou ou da elegibilidade
+de cada pessoa. A atribuicao causal de um excedente ao voto em
+transito depende de listas oficiais de secoes/habilitacoes ou
+de outros dados verificaveis de eleitores por cargo.
+Os novos scripts/testes estao publicados na main, mas nao
+foram executados no H: neste registro.

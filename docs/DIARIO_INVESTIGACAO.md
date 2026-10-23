@@ -4315,3 +4315,50 @@ https://www.tse.jus.br/eleicoes/informacoes-tecnicas-sobre-a-divulgacao-de-resul
 
 Relatorio tecnico completo e limites:
 `docs/RECONCILIACAO_NACIONAL_2026.md`.
+
+
+---
+
+## 2026-10-24 — E0088 — Objetivo permanente e cruzamento entre cargos
+
+O investigador reiterou que a reconciliacao contabil e
+**etapa, nao conclusao do projeto**. O objetivo permanente
+e testar com metodos estatisticos e provas independentes a
+possibilidade de alteracao de dados entre urna, transmissao,
+totalizacao e publicacao, alem de padroes eleitorais atipicos.
+Solicitou explicitamente comparacao entre apoio a Presidencia
+e candidaturas locais/estaduais/federais e controles historicos,
+inclusive alegacoes sobre 2022, sem assumir que a hipotese ja
+tenha ocorrido em 2026.
+
+**Protocolo versionado:** foi criado
+`docs/PROTOCOLO_INVESTIGACAO_MULTICAMADAS_2026.md`
+e vinculado ao README e aos metodos estatisticos. O
+programa agora especifica:
+- comparacao de BU impresso/QR e artefatos assinados contra
+  os votos publicados; hashes obtidos apenas apos download
+  nao provam a origem independente;
+- cotejos de series EA14, EA15, EA16, EA18, EA20 por
+  secao/candidato e separacao de recebimento, totalizacao,
+  publicacao e CDN;
+- base por secao para Presidente, Governador, Senado
+  (duas vagas em 2026) e deputados;
+- classificacoes ideologicas versionadas, com ambiguidade,
+  fonte, aliancas e teste de sensibilidade;
+- limites de inferencia ecologica, simulacoes/permutações
+  condicionadas por geografia e calibracao historica;
+- prefeito em 2024: controle historico, nao mesmo pleito;
+- quaisquer alegacoes de fraude em 2022 precisam de
+  evidencias especificas, sem transformacao em fato:
+  auditoria do TCU dos BUs em 2022 nao encontrou divergencias
+  no conjunto examinado;
+- uma anomalia estatistica nao autoriza atribuir causalidade
+  ou declarar adulteracao sem comparacao material independente.
+
+**Status:** protocolo implementado como documentacao;
+modulos especificos de cruzamento entre cargos,
+limites ecologicos, verificacao criptografica e modelos
+condicionais estao **planejados, nao executados**.
+Preservar os resultados negativos e verificacoes que
+contrariem as hipoteses; nao otimizar so em busca de
+um resultado preconcebido.

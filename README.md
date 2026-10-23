@@ -166,6 +166,93 @@ eleitores, votos individuais nem secoes unicas.** Nao sabemos o
 recurso com erro nem a distribuicao geografica ate executar o
 diagnostico no ambiente local.
 
+## Novo motor sequencial de reconciliacao (23/10/2026)
+
+A medicao real de `python reconcile_io_probe.py --rows 50000 --budget 45`
+confirmou que a leitura em ordem de `rowid` e muito mais rapida
+nas tres amostras do banco de 221,24 GiB:
+
+| Local | Linhas | Duracao | Linhas/s |
+| --- | ---: | ---: | ---: |
+| inicio | 50.000 | 1,09 s | 45.745,7 |
+| meio | 50.000 | 0,78 s | 63.938,6 |
+| fim | 50.000 | 0,09 s | 537.634,4 |
+
+O ultimo valor pode estar no cache do sistema e nao e um
+estimador confiavel do volume inteiro. A leitura indexada anterior
+mediu 68 a 117 linhas/s em duas zonas reais. Esta comparacao
+justifica tentar outra **arquitetura de acesso**, mas nao permite
+anunciar o tempo total de reconciliacao.
+
+### Arquitetura `reconcile_stream.py`
+
+1. Percorre `votes` por `rowid`, **sem consultar cada zona**
+   e sem ler `dados_json` na interface Python.
+2. Seleciona os campos de identificacao e votos, aplica a mesma
+   normalizacao de chaves e distribui por hash da localidade
+   em **256 arquivos TSV**. Todas as linhas de uma mesma zona
+   vao sempre para a mesma particao.
+3. A cada **1 milhao de linhas lidas**, sincroniza os arquivos
+   ao disco e salva os offsets e o ultimo `rowid`. Se for
+   interrompido, descarta bytes escritos depois do ultimo
+   checkpoint e continua sem duplicar registros.
+4. Ao finalizar, calcula SHA-256 de todas as particoes.
+5. Compara cada particao em memoria, somando duplicatas apenas
+   dentro da mesma fonte e respeitando a prioridade da fonte
+   `secao` estadual. A `secao_nacional` complementa
+   exclusivamente chaves de Presidente ausentes na estadual.
+6. Registra resultados por particao e consolida o CSV/JSON
+   nacional **somente depois de concluir todas**. Se uma
+   particao for alterada, a verificacao SHA-256 interrompe
+   o processo. Um lock impede dois processos stream simultaneos
+   no mesmo workspace.
+
+A base SQLite, os ZIPs e os checkpoints antigos por zona
+nao sao modificados ou apagados pelo motor stream. Os novos
+arquivos ficam em `analysis/reconciliacao_checkpoints/stream/<hash>`.
+O hash identifica a versao do algoritmo, os recursos importados
+e seus SHA-256, os filtros e o numero de particoes. Uma fonte
+revisada recebe outro workspace; nenhuma evidencia anterior
+e substituida dentro dele.
+
+### Primeiro executar os testes offline e um piloto curto
+
+Depois de garantir que **nenhuma outra reconciliacao** esta
+ativa no PC, dentro da pasta Git:
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_reconcile_stream.py -v
+python urnas.py reconcile --engine stream --pilot-rows 1000000 --chunk-rows 250000
+```
+
+O piloto executa **quatro checkpoints de 250 mil linhas**,
+exibe o `rowid` e a taxa efetiva incluindo gravacao e
+sincronizacao do TSV, e **nao substitui o CSV/JSON de
+reconciliacao**. Tambem nao cria snapshots historicos
+desnecessarios. Quando o piloto terminar, a retomada completa,
+caso aprovada pelos testes e pelo rendimento observado, sera:
+
+```bat
+python urnas.py reconcile --engine stream
+```
+
+O menu opcao **6** usa stream como novo padrao. Para
+executar deliberadamente o metodo antigo por zona:
+`python urnas.py reconcile --engine zones --workers 1`.
+Nao execute as duas estrategias simultaneamente.
+
+**Observacoes:** o modulo sequencial precisa percorrer a
+tabela inteira uma vez, mesmo ao tratar apenas um subconjunto
+de UFs. A duracao real depende do throughput do armazenamento,
+CPU Python e escrita de particoes. E um **motor novo que
+precisa passar nos testes sinteticos e no piloto do Windows**
+antes de ser considerado validado em producao. O arquivo
+SQLite original de 221,24 GiB e o espaco livre medido de
+1.711,45 GiB fornecem capacidade suficiente para um teste
+inicial, mas o consumo das particoes deve continuar sendo
+monitorado. Nao apague arquivos de checkpoint nem fontes.
+
 ## Prova operacional de progresso real (23/10/2026)
 
 A execucao `python urnas.py reconcile --workers 5` criou o

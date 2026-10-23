@@ -4077,3 +4077,62 @@ imediatamente; observar o fim (ou limite) da segunda zona do probe,
 medir uma solução de acesso sequencial/materialização reduzida
 ou índice cobridor para subconjunto antes de adotar uma migração
 nacional. Nenhum dado foi alterado pelo probe.
+
+
+---
+
+## 2026-10-23 — E0083 — Duas zonas reais concluidas; medida do gargalo de leitura
+
+**Evidencia recebida:** conclusao integral de
+`python reconcile_probe.py --budget 120` sobre o
+SQLite no volume H: do investigador.
+
+Resultados do motor de comparacao atual em amostras reais:
+
+| Zona | Linhas lidas | Chaves comparadas | Divergencias | Tempo |
+| --- | ---: | ---: | ---: | ---: |
+| SC/80446/83/1 | 1.958 | 979 | 0 | 16,8 s |
+| PR/79693/135/1 | 6.912 | 3.456 | 0 | 102,1 s |
+
+Em ambas `EXPLAIN QUERY PLAN` indicou
+`SEARCH votes USING INDEX idx_votes_lookup
+(uf=? AND municipio=? AND zona=?)`. Nao indicou
+`COVERING INDEX`; portanto os valores solicitados,
+como `votos` e `source_kind`, podem necessitar
+leituras adicionais na tabela. A hipotese de I/O
+aleatorio dispendioso em drive H: e plausivel,
+**mas ainda depende de contraste com leitura sequencial
+para ser confirmada**.
+
+As duas amostras somam 4.435 chaves, todas coincidentes.
+Amostras locais com divergencia zero nao permitem
+extrapolacao para o pleito inteiro. O teste comprovou
+a completude do calculo dessas zonas, nao que a
+execucao multiprocessada seja mais rapida.
+
+**Medicao seguinte adicionada a main:**
+`reconcile_io_probe.py`, teste somente leitura.
+Mede tres janelas representativas de `rowid`
+(inicio/meio/fim da tabela), utilizando
+`SELECT ... FROM votes NOT INDEXED
+WHERE rowid>=? LIMIT ?`, com o MESMO conjunto
+de colunas da consulta por zona. Exibe
+tamanho do arquivo SQLite, espaco livre em H:,
+`EXPLAIN QUERY PLAN`, velocidade de linhas/s
+e interrupcao por limite de tempo de instrucao
+SQL. Usa duas pesquisas de rowid com LIMIT 1,
+evitando um `MIN+MAX` que poderia varrer
+135 milhoes de linhas. Nao cria indices,
+nao regrava o banco e nao modifica checkpoints.
+
+**Criterio para escolher a proxima arquitetura:**
+se a leitura por `rowid` for substancialmente
+mais rapida nas tres partes do banco e houver
+espaco livre adequado para arquivos intermediarios,
+priorizar um pipeline de varredura unica com
+particionamento seguro e reconciliacao offline
+dos grupos; caso contrario investigar mais o
+hardware, a base SQLite, page cache e indices.
+Nao construir automaticamente indice cobridor
+nacional de dezenas de milhoes de registros,
+sem prever custo, espaco e verificação.

@@ -4453,3 +4453,44 @@ secoes para verificacao posterior. **Ainda nao
 executado no H:** resultados precisam ser fornecidos
 pelo investigador. Nenhuma inferencia de voto
 cruzado foi feita.
+
+
+---
+
+## 2026-10-24 — E0091 — Assimetria Presidente/Governador e teste de voto em transito
+
+**Execucao e testes apresentados pelo investigador:** 4 testes
+do `audit_cross_office_totals.py` concluiram OK.
+A execucao nacional verificou SHA-256 da matriz
+`9aefc6cf4591180a1f2edfdc2cdb7b9e44c19ae8caf2b5d23fa2d6c83f02dfad`
+e terminou `DIAGNOSTICO ENTRE CARGOS CONCLUIDO`.
+
+- 499.206 secoes na matriz; 497.897 pareadas P/G;
+- 480.664 pares iguais; 17.233 pares diferentes;
+- 17.233 com Presidente > Governador, nenhum com G>P;
+- soma P=124.934.069 e G=124.768.485 nos pares;
+  excedente de 165.584 votos; maximo local=289;
+- distribuicao de diferencas por magnitude:
+  1:5269, 2:2281, 3–5:3699, 6–10:2435,
+  11–50:2957, 51–100:418, >100:174;
+- maiores ocorrencias em numero por UF: SP 4603,
+  RJ 2725, MG 1520, PR 1347.
+
+**Fonte oficial TSE verificada:** em 2026, voto em transito
+entre UFs permite somente voto presidencial; dentro da
+UF, todos os cargos. Este mecanismo pode produzir
+P>G na mesma secao sem alteracao fraudulenta de
+dados. **Nao inferir automaticamente que os 165.584
+votos sao todos de transito** sem conferencia de
+eleitorado especial por secao.
+https://www.tse.jus.br/eleicoes/eleicoes-2026-content/voto-em-transito-perguntas-e-respostas
+
+**Proximo teste publicado no GitHub, ainda sem resultado
+real:** `audit_cross_office_eligibility.py` e testes.
+Verifica P≥G, Senado=2×G em cada secao com ambos presentes,
+casos P sem G, UF e 100 possiveis excecoes.
+Entradas sao apenas a matriz e o resumo anteriores
+com SHA-256, sem reabrir banco nem checkpoints originais.
+Depois, buscar dados oficiais de voto em transito para
+validar a causa por secao e seguir para modelos de
+compatibilidade politica entre cargos.

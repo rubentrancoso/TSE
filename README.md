@@ -97,6 +97,48 @@ Comandos principais:
 As dependências por fase estão em provenance/PHASES.json e as fontes, com classificação primária/captura/derivado e gaps de substituição, em provenance/SOURCES.json.
 
 
+## Correção da cobertura de Presidente e reparo de São Paulo (23/10/2026)
+
+O diagnóstico mostrou **3.800.511** chaves de Presidente sem
+correspondência na reconciliação anterior (espalhadas pelo país).
+A lógica antiga ignorava a fonte nacional `secao_nacional`
+de votação presidencial, mesmo após importá-la. O reconciliador
+incremental **v2** agora usa a fonte estadual `secao` com prioridade
+por chave e complementa as chaves presidenciais ausentes com
+`secao_nacional`; nunca soma ambas para a mesma chave.
+
+**Importante:** a causa de software foi demonstrada por inspeção
+do código, mas a redução das 3.800.511 ausências ainda precisa ser
+medida com a base real. Execute a opção **9** para conferir, na
+seção `IMPORTADO secao_nacional`, a presença de linhas nacionais
+antes de repetir a comparação (opção **6**).
+
+As outras **228** chaves são do cargo **25** somente em PE:
+**Conselheiro Distrital de Fernando de Noronha**, eleito em um
+pleito local simultâneo à eleição geral. Exigem a fonte adequada
+ao pleito municipal (documentação:
+[TSE](https://www.tse.jus.br/comunicacao/noticias/2026/Outubro/eleitores-de-fernando-de-noronha-elegem-7-conselheiros-distritais)).
+O diagnóstico registra o município, a zona e a seção desses casos.
+
+O único download com falha é o ZIP de **artefatos transmitidos
+de São Paulo** (`artefatos/SP/*.zip.part`), com erro de CRC.
+Isso não equivale a votos diferentes; trata-se de falha de integridade
+do arquivo baixado. O downloader agora preserva os bytes inválidos
+em `quarantine/artefatos/SP/`, com hash e motivo, e tenta uma nova
+cópia desde o início uma única vez.
+
+Após atualizar a `main`, use a nova **opção A — Reparar APENAS
+arquivos em erro**. Ela executa `python urnas.py repair` e
+**não reexecuta a conciliação ou os métodos estatísticos**.
+Reutiliza tudo o que estiver íntegro, indexa apenas o ZIP recuperado
+e preserva um novo registro histórico.
+
+Ordem para conferir o resultado atual:
+`git pull` → menu **9** (cobertura das fontes) →
+menu **A** (reparar SP) → menu **6** (nova reconciliação
+incremental com fonte nacional), apenas quando confirmada a
+presença do arquivo nacional de Presidente no banco.
+
 ## Diagnosticar recursos faltantes e divergencias (23/10/2026)
 
 A coleta pode produzir relatorios estatisticos e reconciliacao mesmo quando

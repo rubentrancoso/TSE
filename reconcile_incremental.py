@@ -243,50 +243,106 @@ def atomic_json(path, data):
     os.replace(temp, path)
 
 
-def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None):
-    """Retoma zonas concluídas em execuções anteriores, sem rebaixar os dados.
+def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None, workers=4):
+    """Compara com leitura indexada por zona; N processos em paralelo.
 
-    after_chunk é um callback opcional exclusivamente para testes.
+    Mantem o mesmo fingerprint v2 e aproveita checkpoints anteriores:
+    a mudanca e de desempenho, nao da regra de comparacao.
     """
+    from collections import deque
+    from concurrent.futures import ProcessPoolExecutor, wait, FIRST_COMPLETED
+    from reconcile_fast import compare_task_fast, process_task
+
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
     ufs = [str(x).upper() for x in (ufs or [])]
-    print("RECONCILIACAO: usando secao estadual e complemento nacional de "
-          "Presidente, sem duplicar chaves.", flush=True)
-    print("RECONCILIACAO: preparando o plano de trabalho por UF, zona e turno...",
-          flush=True)
-    clock = time.monotonic()
+    print("RECONCILIACAO RAPIDA: indice SQLite + agregacao local, sem "
+          "CTEs e JOINs pesados; prioridade estadual e complemento "
+          "nacional para Presidente.", flush=True)
+    begin_plan = time.monotonic()
     tasks, total_rows = tasks_from_db(db, ufs, turn)
     fingerprint, provenance = source_fingerprint(db, tasks, ufs, turn)
     checkpoint_dir = output.parent / "reconciliacao_checkpoints" / fingerprint
     checkpoint_dir.mkdir(parents=True, exist_ok=True)
-    checkpoint = sqlite3.connect(output.parent / "reconciliacao_checkpoints" /
-                                 "estado.sqlite3", timeout=60)
+    checkpoint = sqlite3.connect(
+        output.parent / "reconciliacao_checkpoints" / "estado.sqlite3",
+        timeout=60)
     state_schema(checkpoint)
     files_dir = checkpoint_dir / "partes"
     files_dir.mkdir(parents=True, exist_ok=True)
-    print(f"PLANO PRONTO: {len(tasks):,} grupos zona/turno; "
-          f"{total_rows:,} linhas elegiveis; "
-          f"planejamento em {time.monotonic()-clock:.1f}s.", flush=True)
-    print("ETAPAS RESTANTES: comparar grupos e gravar checkpoints -> "
-          "consolidar CSV -> gerar resumo -> analises estatisticas "
-          "(na coleta completa).", flush=True)
-    if provenance["imports_incomplete"]:
-        print("ATENCAO: existem importacoes parciais em andamento. "
-              "O resultado sera marcado como parcial.", flush=True)
+    print(f"PLANO PRONTO: {len(tasks):,} zonas/turnos; "
+          f"{total_rows:,} linhas; planejamento em "
+          f"{time.monotonic()-begin_plan:.1f}s.", flush=True)
     if not tasks:
         checkpoint.close()
-        raise ValueError("Nao ha votos BU ou secao com chaves completas para comparar.")
-
-    # Registro de total de itens e versão de fontes. Arquivos de outras
-    # versoes permanecem intactos em pastas com fingerprint distinto.
+        raise ValueError("Nao ha votos BU ou secao com chaves completas.")
     atomic_json(checkpoint_dir / "fontes_e_parametros.json", provenance)
-    completed_rows = done = resumed = 0
+    if provenance["imports_incomplete"]:
+        print("AVISO: importacoes parciais; resultado sera marcado como parcial.",
+              flush=True)
+
+    database = next((row[2] for row in db.execute("PRAGMA database_list")
+                     if row[1] == "main"), "")
+    requested_workers = max(1, min(8, int(workers)))
+    actual_workers = requested_workers if database and Path(database).is_file() else 1
+    print(f"PROCESSAMENTO: {actual_workers} processo(s); "
+          f"{'paralelo' if actual_workers > 1 else 'sequencial'}; "
+          "cada zona concluida gera um checkpoint. "
+          "O ganho depende da velocidade do disco.", flush=True)
+
     checked = different = missing_bu = missing_sec = 0
-    elapsed_work = 0.0
+    done = resumed = done_rows = 0
     new_work_rows = new_work_tasks = 0
-    started = time.monotonic()
+    new_work_seconds = 0.0
     total = len(tasks)
+    started = time.monotonic()
+    pending = deque()
+    executor = None
+
+    def update_progress():
+        nonlocal done
+        if done <= 2 or done % 20 == 0 or done == total:
+            pct = 100.0 * done_rows / total_rows if total_rows else 100.0
+            if new_work_tasks < 5 or new_work_rows == 0:
+                eta = "calculando com os primeiros grupos"
+            else:
+                eta = eta_text((total_rows-done_rows)
+                               * new_work_seconds / new_work_rows)
+            if done == total:
+                eta = "grupos completos; falta consolidar o relatorio"
+            print(f"PROGRESSO: {done:,}/{total:,} zonas, {pct:.1f}% das linhas; "
+                  f"{resumed:,} reutilizadas; {different:,} diferencas; "
+                  f"ETA {eta} (aproximada).", flush=True)
+
+    def save_completed(index, task, result, part, duration, was_cached=False):
+        nonlocal checked, different, missing_bu, missing_sec
+        nonlocal done, resumed, done_rows, new_work_rows, new_work_tasks
+        nonlocal new_work_seconds
+        nchecked, ndiff, nb, ns = result
+        if was_cached:
+            resumed += 1
+        else:
+            temp = part.with_suffix(".csv.part")
+            digest = sha256_file(temp)
+            os.replace(temp, part)
+            checkpoint.execute(
+                """INSERT OR REPLACE INTO completed VALUES (?,?,?,?,?,?,?,?)""",
+                (fingerprint, "|".join(task["key"]), nchecked, ndiff,
+                 nb, ns, digest, utc()))
+            checkpoint.commit()
+            new_work_rows += task["rows"]
+            new_work_tasks += 1
+            new_work_seconds += duration
+        checked += nchecked
+        different += ndiff
+        missing_bu += nb
+        missing_sec += ns
+        done += 1
+        done_rows += task["rows"]
+        update_progress()
+        if after_chunk:
+            after_chunk(index, task)
+
     try:
         for index, task in enumerate(tasks, 1):
             key = "|".join(task["key"])
@@ -297,59 +353,56 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None):
                    FROM completed WHERE fingerprint=? AND task_key=?""",
                 (fingerprint, key)).fetchone()
             if old and part.is_file() and sha256_file(part) == old[4]:
-                nchecked, ndiff, nb, ns = old[:4]
-                resumed += 1
+                save_completed(index, task, old[:4], part, 0.0, True)
             else:
-                phase = time.monotonic()
-                print(f"[RECONCILIACAO {index}/{total}] "
-                      f"{'/'.join(task['key'])}: {task['rows']:,} linhas; "
-                      "comparando...", flush=True)
+                pending.append((index, task, part))
+
+        if actual_workers == 1:
+            while pending:
+                index, task, part = pending.popleft()
                 temp = part.with_suffix(".csv.part")
+                clock = time.monotonic()
                 try:
-                    nchecked, ndiff, nb, ns = compare_task(db, task, temp)
-                    digest = sha256_file(temp)
-                    os.replace(temp, part)
-                    checkpoint.execute("""INSERT OR REPLACE INTO completed VALUES
-                        (?,?,?,?,?,?,?,?)""",
-                        (fingerprint, key, nchecked, ndiff, nb, ns, digest, utc()))
-                    checkpoint.commit()
+                    result = compare_task_fast(db, task, temp)
+                    save_completed(index, task, result, part,
+                                   time.monotonic()-clock)
                 finally:
                     if temp.exists():
                         temp.unlink()
-                elapsed_work += time.monotonic() - phase
-                new_work_rows += task["rows"]
-                new_work_tasks += 1
-            done += 1
-            completed_rows += task["rows"]
-            checked += nchecked
-            different += ndiff
-            missing_bu += nb
-            missing_sec += ns
-            percent = 100 * completed_rows / total_rows if total_rows else 100.
-            if index <= 2 or index % 10 == 0 or index == total:
-                remaining = total_rows - completed_rows
-                eta = ("calculando apos 5 grupos novos"
-                       if new_work_tasks < 5 or new_work_rows <= 0 else eta_text(
-                           remaining * elapsed_work / new_work_rows))
-                if remaining == 0:
-                    eta = "0 min (consolidacao final pendente)"
-                print(f"PROGRESSO RECONCILIACAO: {done:,}/{total:,} zonas "
-                      f"({percent:.1f}% das linhas); {resumed:,} ja concluidas "
-                      f"reutilizadas; {different:,} divergencias; "
-                      f"ETA {eta} (estimativa, nao prazo).", flush=True)
-            if after_chunk is not None:
-                after_chunk(index, task)
+        else:
+            executor = ProcessPoolExecutor(max_workers=actual_workers)
+            inflight = {}
+            # Fila limitada para nao sobrecarregar disco ou memoria.
+            while pending or inflight:
+                while pending and len(inflight) < actual_workers * 2:
+                    index, task, part = pending.popleft()
+                    temp = part.with_suffix(".csv.part")
+                    t0 = time.monotonic()
+                    future = executor.submit(process_task, database, task, str(temp))
+                    inflight[future] = (index, task, part, t0)
+                finished, _ = wait(tuple(inflight), return_when=FIRST_COMPLETED)
+                for future in finished:
+                    index, task, part, t0 = inflight.pop(future)
+                    temp = part.with_suffix(".csv.part")
+                    try:
+                        result = future.result()
+                        save_completed(index, task, result, part,
+                                       time.monotonic()-t0)
+                    finally:
+                        if temp.exists():
+                            temp.unlink()
+            executor.shutdown(wait=True)
+            executor = None
 
-        print("RECONCILIACAO: consolidando somente divergencias em CSV final...",
+        print("RECONCILIACAO: consolidando somente divergencias ...",
               flush=True)
         temp_final = output.with_suffix(output.suffix + ".part")
         try:
             with temp_final.open("w", encoding="utf-8-sig", newline="") as out:
-                writer = csv.writer(out, delimiter=";")
-                writer.writerow(HEADER)
+                out.write(";".join(HEADER) + "\n")
                 for task in tasks:
-                    key = "|".join(task["key"])
-                    slug = hashlib.sha256(key.encode("utf-8")).hexdigest()[:24]
+                    slug = hashlib.sha256(
+                        "|".join(task["key"]).encode("utf-8")).hexdigest()[:24]
                     with (files_dir / (slug + ".csv")).open(
                             "r", encoding="utf-8", newline="") as stream:
                         next(stream, None)
@@ -361,34 +414,33 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None):
 
         summary = {
             "created_at_utc": utc(), "engine": VERSION,
+            "execution_engine": "single-indexed-scan-per-zone",
+            "workers": actual_workers,
             "status": ("calculado_com_importacoes_incompletas"
                        if provenance["imports_incomplete"] else "concluido"),
             "cobertura_nacional_confirmada": False,
             "importacoes_incompletas": provenance["imports_incomplete"],
-            "fingerprint": fingerprint,
-            "turn": turn, "ufs": ufs or "todas",
+            "fingerprint": fingerprint, "turn": turn, "ufs": ufs or "todas",
             "tasks_completed": done, "tasks_total": total,
             "source_rows_planned": total_rows,
             "keys_compared": checked, "different_or_missing": different,
             "missing_bu": missing_bu, "missing_section": missing_sec,
-            "matches": checked-different, "reused_tasks": resumed,
+            "matches": checked - different, "reused_tasks": resumed,
             "csv": str(output), "checkpoint_folder": str(checkpoint_dir),
-            "section_source_priority": ("secao estadual por chave; "
-                "secao_nacional apenas para cargo Presidente e chave ausente "
-                "na secao estadual; nunca somar fontes duplicadas"),
-            "limitations": "Comparacao BU versus secao estadual ou nacional "
-            "de Presidente, somente com chaves preenchidas. As fontes sao "
-            "dados publicados pelo TSE, nao provas independentes da urna fisica."
+            "section_source_priority":
+                "secao estadual por chave; secao_nacional so cargo 1; sem somar",
+            "limitations": "Chaves existentes nas fontes oficiais; "
+                           "comparacao nao e auditoria independente da urna."
         }
         atomic_json(output.with_suffix(".summary.json"), summary)
         print(json.dumps(summary, ensure_ascii=False, indent=2), flush=True)
-        if checked == 0 or checked == missing_bu + missing_sec:
-            print("AVISO: nenhuma chave validada nas duas fontes.", file=sys.stderr)
         return summary
     except BaseException:
         checkpoint.rollback()
-        print(f"RECONCILIACAO INTERROMPIDA: {done}/{total} zonas completas "
-              "preservadas em checkpoints. Reexecutar retoma automaticamente.",
+        if executor is not None:
+            executor.shutdown(wait=False, cancel_futures=True)
+        print(f"RECONCILIACAO INTERROMPIDA: {done:,}/{total:,} zonas "
+              "preservadas; basta reexecutar para retomar.",
               file=sys.stderr, flush=True)
         raise
     finally:

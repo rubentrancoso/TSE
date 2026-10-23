@@ -129,4 +129,15 @@ def process_task(database_path, task, part_path):
         db.execute("PRAGMA query_only=ON")
         print(f"[WORKER SQLITE OK] pid={os.getpid()} "
               f"zona={'/'.join(task['key'])}.", flush=True)
+        vm_last = [time.monotonic()]
+        def sqlite_vm_activity():
+            moment = time.monotonic()
+            if moment - vm_last[0] >= 20:
+                vm_last[0] = moment
+                print(f"[WORKER SQLITE ATIVO] pid={os.getpid()} "
+                      f"zona={'/'.join(task['key'])}; "
+                      "SQLite executa instrucoes, ainda sem concluir a busca.",
+                      flush=True)
+            return 0
+        db.set_progress_handler(sqlite_vm_activity, 100000)
         return compare_task_fast(db, task, part_path)

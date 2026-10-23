@@ -60,6 +60,42 @@ anterior.
    quais divergem, sem inferir mecanismo de fraude a partir de
    padrões agregados.
 
+### Novo diagnóstico — 23/10/2026 (não publicar como discrepância de votos)
+
+O relatório local fornecido pelo investigador contém **3.800.739
+chaves SEM_SECAO** no primeiro turno, distribuídas entre:
+**3.800.511 chaves de Presidente (cargo 1)** e
+**228 chaves de Conselheiro Distrital (cargo 25), somente PE**.
+
+A investigação do código identificou que o reconciliador antigo
+não usava o CSV **nacional de votação por seção de Presidente**
+(`secao_nacional`), embora fosse uma fonte armazenada à parte.
+Esta é uma **falha de seleção de fonte pelo software**, não uma
+evidência de votação inexistente. O motor v2 inclui uma comparação
+deduplicada usando a fonte nacional como complemento dos dados
+estaduais, mas a eficácia quantitativa ainda **depende da execução
+real e da confirmação de importação da fonte**.
+
+Os 228 casos de cargo 25 são compatíveis com o escopo diferente
+da **eleição de Conselheiro Distrital em Fernando de Noronha**, que
+ocorreu com as eleições gerais e possui 10 seções segundo o TSE.
+Falta examinar os registros concretos por seção e localizar o
+conjunto adequado de votação do pleito local.
+
+O único recurso em erro foi o ZIP de arquivos **transmitidos** de SP,
+que falhou em CRC. O novo recuperador preserva o arquivo suspeito
+e tenta uma transferência limpa. Esse problema de integridade
+do ZIP é independente dos campos de votos CSV do conjunto
+estadual/nacional usados na reconciliação.
+
+**Condição para escrever a seção de resultados:** versão v2 executada
+e guardada, origem da informação nacional confirmada no SQLite,
+número de chaves faltantes antes/depois confrontado, arquivo SP
+validado e status dos casos especiais de Noronha declarado.
+
+Fonte oficial sobre Noronha:
+https://www.tse.jus.br/comunicacao/noticias/2026/Outubro/eleitores-de-fernando-de-noronha-elegem-7-conselheiros-distritais
+
 ### Evidências necessárias antes da publicação
 
 | Prova | Arquivo/controle | Estado |

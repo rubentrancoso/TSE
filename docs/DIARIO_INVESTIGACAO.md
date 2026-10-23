@@ -4042,3 +4042,38 @@ tempo demonstra que o algoritmo calcula uma zona real;
 somente medicao de varias zonas representativas permite
 estimar throughput nacional. Nao existe ainda evidencia
 de ganho de desempenho da consulta otimizada no H:.
+
+
+---
+
+## 2026-10-23 — E0082 — Probe comprova primeira zona
+
+**Evidência recebida:** saída parcial de `python reconcile_probe.py --budget 120`
+executado sobre o SQLite real do investigador no volume H:.
+
+- Plano de comparação já existente: 6.251 zonas, arquivo de plano SHA
+  `8633061accf908c836f25b61720cf06d0af2776f07d39a5d3faa1da63b9e29cd.json.gz`;
+- Primeira zona `SC/80446/83/1`: 1.958 linhas na consulta;
+  `EXPLAIN QUERY PLAN` indica `SEARCH votes USING INDEX idx_votes_lookup
+  (uf=? AND municipio=? AND zona=?)`, **não** `COVERING INDEX`;
+  979 chaves comparadas, zero divergências, 16,8 s de parede,
+  com confirmação `[WORKER OK]` e `ZONA REAL CONCLUIDA`;
+- Segunda zona `PR/79693/135/1`: 6.912 linhas estimadas no plano;
+  índice `idx_votes_lookup` confirmado; após 20 s,
+  1.198 linhas lidas; aos 29 s houve atividade do motor SQLite.
+  **O trecho recebido termina antes do resultado final da segunda zona.**
+
+**Conclusão delimitada:** o motor otimizado comprovadamente executa e
+termina uma consulta real, com validação das chaves da primeira zona.
+Ainda não foi demonstrada aceleração nacional, nem ganho da execução
+com cinco processos. A latência de cerca de 16,8 s para 1.958 linhas
+é alta. A ausência da palavra `COVERING` no plano é compatível com
+buscas adicionais na tabela principal; este é um gargalo **possível,
+não comprovado**. É necessário comparar planos de acesso e tempo de
+I/O de alternativas antes de construir novos índices gigantescos.
+
+**Próxima ação técnica:** não relançar a comparação completa
+imediatamente; observar o fim (ou limite) da segunda zona do probe,
+medir uma solução de acesso sequencial/materialização reduzida
+ou índice cobridor para subconjunto antes de adotar uma migração
+nacional. Nenhum dado foi alterado pelo probe.

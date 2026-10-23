@@ -62,11 +62,14 @@ def run(root, rows=100000, timeout=90):
     uri = db_file.resolve().as_uri() + "?mode=ro"
     with sqlite3.connect(uri, uri=True, timeout=15) as db:
         db.execute("PRAGMA query_only=ON")
-        minimum, maximum = db.execute(
-            "SELECT MIN(rowid),MAX(rowid) FROM votes").fetchone()
-        if minimum is None:
+        first = db.execute(
+            "SELECT rowid FROM votes ORDER BY rowid ASC LIMIT 1").fetchone()
+        last = db.execute(
+            "SELECT rowid FROM votes ORDER BY rowid DESC LIMIT 1").fetchone()
+        if first is None:
             print("Tabela votes vazia.")
             return []
+        minimum, maximum = first[0], last[0]
         middle = (minimum + maximum)//2
         spots = [("inicio", minimum),
                  ("meio", middle),

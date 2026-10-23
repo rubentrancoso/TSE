@@ -25,7 +25,7 @@ VERSION = "reconcile-stream-v1"
 HEADER = ["UF", "municipio", "zona", "secao", "turno", "cargo",
           "votavel", "votos_BU", "votos_secao", "diferenca", "situacao"]
 SOURCES = ("bu", "secao", "secao_nacional")
-INT_PREFIX = re.compile(r"^\s*([+-]?\d+)")
+INT_PREFIX = re.compile(r"^\s*([+-]?[0-9]+)")
 
 
 def now():
@@ -146,6 +146,7 @@ def exclusive_run(workspace):
             yield
         finally:
             if os.name == "nt":
+                handle.seek(0)
                 msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
             else:
                 fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
@@ -375,7 +376,7 @@ def consolidate(workspace, state, bucket_count, output, provenance):
     difference_dir = workspace / "differences"
     partial = Path(str(output) + ".part")
     totals = {"keys_compared": 0, "different_or_missing": 0,
-              "missing_bu": 0, "missing_section": 0}
+              "missing_bu": 0, "missing_section": 0, "raw_rows": 0}
     try:
         with open(partial, "w", encoding="utf-8-sig", newline="") as file:
             writer = csv.writer(file, delimiter=";", lineterminator="\n")
@@ -386,6 +387,7 @@ def consolidate(workspace, state, bucket_count, output, provenance):
                 if sha256(path) != result["digest"]:
                     raise RuntimeError(f"Arquivo de particao danificado: {path}")
                 for src, target in (("checked", "keys_compared"),
+                                    ("raw_rows", "raw_rows"),
                                     ("different", "different_or_missing"),
                                     ("missing_bu", "missing_bu"),
                                     ("missing_section", "missing_section")):
@@ -395,6 +397,18 @@ def consolidate(workspace, state, bucket_count, output, provenance):
                     shutil.copyfileobj(source, file)
             file.flush()
             os.fsync(file.fileno())
+        if totals["raw_rows"] != state["rows_eligible"]:
+            raise RuntimeError(
+                "Integridade: soma das linhas nas particoes nao corresponde "
+                f"ao scan ({totals['raw_rows']} != {state['rows_eligible']})")
+        if totals["keys_compared"] == 0 or (
+                totals["different_or_missing"] > totals["keys_compared"] or
+                totals["missing_bu"] + totals["missing_section"] >
+                totals["different_or_missing"]):
+            raise RuntimeError("Integridade: resumo vazio ou contadores incoerentes")
+        print(f"VALIDACAO ANTES DE SUBSTITUIR: "
+              f"{totals['raw_rows']:,} linhas particao/scan coincidem; "
+              f"{totals['keys_compared']:,} chaves.", flush=True)
         os.replace(partial, output)
     finally:
         if partial.exists():

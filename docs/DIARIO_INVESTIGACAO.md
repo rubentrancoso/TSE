@@ -4277,3 +4277,41 @@ declaracao de conciliacao nacional confirmada.
 **Observacao numerica:** `140699402-135717720=4981682` linhas nao elegiveis. No checkpoint de 76 milhoes, a mesma diferenca ja aparecia entre linhas lidas e elegiveis. Convergencia com o planejamento anterior de `135717720` linhas.
 
 **Seguimento:** novo `audit_reconciliation.py`, somente leitura sobre o CSV final de 8.816 bytes e seu summary, identifica distribuicao dos 228 casos por UF, turno, cargo, zona, secao, votavel e votos_BU, verifica contadores e checksum. Executar depois de `git pull` com `python audit_reconciliation.py`. Conferir a distribuicao e examinar fontes de cada caso antes de determinar sua causa; o script novo ainda nao foi executado no H: pelo assistente.
+
+
+---
+
+## 2026-10-24 — E0087 — Explicacao geografia/cargo das 228 ocorrencias
+
+`python audit_reconciliation.py` terminou no H: com
+`Conferencia CSV x resumo: OK` e SHA-256 do CSV
+`31db2a2915492fc07786ff79dc40c74a0d20f42d75d113a54e1c9be01c41ce5b`.
+
+Todas as 228 ocorrencias `SEM_SECAO` sao de
+`PE/30015/zona 4/turno 1/cargo 25`, distribuidas
+por 10 secoes, com soma de 2.445 votos BU e zero
+chaves duplicadas.
+
+O README ja identificava esse cargo como Conselheiro
+Distrital de Fernando de Noronha. Pesquisa de fontes
+primarias confirmou que o TSE anunciou 2.445 votantes
+em dez secoes para esta eleicao especial, realizada
+junto com as eleicoes gerais; o sitio tecnico do TSE
+identifica a eleicao distrital separadamente pelo
+codigo `6261` (vs `6257` federal e `6259` estadual).
+
+**Interpretacao:** 228 ausencias sao fortemente compativeis
+com diferenca de escopo da fonte `secao` para pleito
+especial. Nao sao diferencas numericas de votos em chaves
+pareadas e nao provam perda de votos da totalizacao.
+A causa especifica de ausencia do recurso por secao do
+pleito `6261` ainda precisa de comprovacao com fonte
+independente correspondente. Nao apagar nem reclassificar
+as linhas originais.
+
+Referencias oficiais:
+https://www.tse.jus.br/comunicacao/noticias/2026/Outubro/eleitores-de-fernando-de-noronha-elegem-7-conselheiros-distritais
+https://www.tse.jus.br/eleicoes/informacoes-tecnicas-sobre-a-divulgacao-de-resultados
+
+Relatorio tecnico completo e limites:
+`docs/RECONCILIACAO_NACIONAL_2026.md`.

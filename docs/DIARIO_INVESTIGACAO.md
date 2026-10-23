@@ -4362,3 +4362,49 @@ condicionais estao **planejados, nao executados**.
 Preservar os resultados negativos e verificacoes que
 contrariem as hipoteses; nao otimizar so em busca de
 um resultado preconcebido.
+
+
+---
+
+## 2026-10-24 — E0089 — Confirmacao agregada do pleito 6261 e matriz entre cargos
+
+**Verificacao real no computador do investigador:**
+
+- `git pull` atualizou o script `verify_noronha_6261.py`.
+- Seis testes sinteticos de `test_verify_noronha_6261.py`
+  concluidos: `Ran 6 tests ... OK`.
+- `python verify_noronha_6261.py` obteve o JSON do
+  endereco oficial
+  `https://resultados.tse.jus.br/oficial/ele2026/6261/dados/pe/pe30015-z0004-c0025-e006261-u.json`.
+- SHA-256 do JSON oficial:
+  `96463db912ac20355cddcd0cfbfd6bee5b8ed63feb04aad33e9d28264cae5ddf`.
+- 228 chaves de BU em PE/30015/zona4/turno1/cargo25,
+  10 secoes, 2.445 votos totais.
+- Comparados 24 votaveis: 24 iguais, 0 diferentes,
+  0 sem correspondencia; 95=44 (brancos),
+  96=62 (nulos), ambos iguais ao EA20 oficial.
+- Relatorio derivado:
+  `H:/TSE/forensics/urnas/analysis/validacao_6261/comparacao_96463db912ac2035.json`.
+- Saida literal: `RESULTADO: EQUIVALENCIA_AGREGADA_CONFIRMADA`.
+- Conclusao: igualdade de totais por votavel **na zona**,
+  nao auditoria independente de cada uma das 10 secoes.
+
+**Proxima fase publicada na main, mas ainda NAO executada no H::**
+
+- `cross_office_sections.py`, com
+  `tests/test_cross_office_sections.py`;
+- somente leitura das particoes BU/stream ja verificadas por SHA-256;
+- prepara matriz por secao dos seis cargos 1,3,5,6,7,8,
+  sem classificar candidato como direita/esquerda
+  antes de fonte verificavel; soma dos votos
+  especiais preservada para auditoria;
+- checkpoints derivados por particao e produto separado;
+  nao substitui reconciliacao nacional;
+- piloto proposto: `python cross_office_sections.py --pilot-buckets 2`;
+  depois, com testes OK e piloto verificado:
+  `python cross_office_sections.py`.
+
+Objetivo investigativo: quantificar correlacoes e limites
+de voto cruzado entre cargos e selecionar casos para pericia
+de artefatos de urna/transmissao. Nenhuma diferenca de
+padrão agregada basta para concluir fraude.

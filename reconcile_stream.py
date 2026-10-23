@@ -233,6 +233,16 @@ def sequential_scan(db, workspace, state, ufs, turn, bucket_count,
                               flush=True)
                         return
         persist_chunk()
+        print("SELAGEM: calculando SHA-256 das particoes, "
+              "para detectar danos ou alteracoes posteriores.", flush=True)
+        bucket_hashes = []
+        for i, path in enumerate(files):
+            digest = sha256(path)
+            bucket_hashes.append(digest)
+            if (i+1) % 64 == 0:
+                print(f"[SELAGEM] {i+1}/{bucket_count} particoes com hash.",
+                      flush=True)
+        state["bucket_hashes"] = bucket_hashes
         state["scan_complete"] = True
         state["scan_finished_utc"] = now()
         save_state(workspace / "state.json", state)
@@ -291,6 +301,16 @@ def reconcile_bucket(path, output):
 
 def reconcile_parts(workspace, state, bucket_count, after_part=None):
     paths = partition_files(workspace / "buckets", bucket_count)
+    expected_hashes = state.get("bucket_hashes")
+    if not expected_hashes or len(expected_hashes) != bucket_count:
+        raise RuntimeError("Particoes sem selo SHA-256: nao reconciliar")
+    for i, path in enumerate(paths):
+        if path.stat().st_size != state["offsets"][i]:
+            raise RuntimeError(f"Particao modificada desde checkpoint: {path}")
+        if sha256(path) != expected_hashes[i]:
+            raise RuntimeError(f"Particao alterada ou corrompida: {path}")
+    print(f"INTEGRIDADE: {bucket_count} particoes verificadas por SHA-256.",
+          flush=True)
     differences = workspace / "differences"
     differences.mkdir(exist_ok=True)
     parts = state["completed_parts"]
@@ -386,6 +406,12 @@ def reconcile_stream(db, output, ufs=None, turn=None, buckets=256,
     ufs = {str(uf).upper() for uf in (ufs or [])}
     if buckets < 2 or buckets > 256:
         raise ValueError("O numero de particoes deve ficar entre 2 e 256")
+    if chunk_rows < 1 or pilot_rows < 0:
+        raise ValueError("Parametros de chunk/piloto invalidos")
+    disk_free = shutil.disk_usage(output.parent).free
+    if disk_free < 5 * 1024**3:
+        raise RuntimeError("Espaco livre insuficiente: exige ao menos 5 GiB "
+                           "antes de gerar particoes; preserve os dados")
     fingerprint, provenance = identity(db, ufs, turn, buckets)
     workspace = (output.parent / "reconciliacao_checkpoints" /
                  "stream" / fingerprint)

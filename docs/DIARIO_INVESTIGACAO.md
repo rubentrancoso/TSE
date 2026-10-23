@@ -3885,3 +3885,62 @@ checkpoint por zona e ETA aproximada; comparar com o resumo antigo,
 sem apagar seus 14 relatorios historicos; `python urnas.py repair`
 isoladamente para recuperar o ZIP de SP. Registrar o resultado real
 e eventuais chaves remanescentes numa nova entrada.
+
+
+---
+
+## 2026-10-23 — E0079 — Gargalo de reconciliação: previsão de 180 horas; novo motor indexado
+
+**Registro da execução:** amostra do terminal encaminhada pelo investigador.
+A operação `python urnas.py reconcile` mostra progresso de
+80/6.251 a 152/6.251 zonas; a estimativa variou de 189h15min a
+164h56min, voltou a ultrapassar 180h. O contador da etapa chegou
+a mais de 14 mil segundos. Muitas zonas de AM demoravam
+consideravelmente mais que as de AL. A operação reportou zero
+divergências nas primeiras zonas; isso é um resultado parcial,
+não confirmação nacional.
+
+**Diagnóstico de desempenho pelo código-fonte:** o algoritmo
+incremental v2 utilizava para cada uma das 6.251 zonas
+`WITH grouped`, agregação, anti-join e junções à esquerda
+entre três fontes. O padrão pode repetir operações caras de
+ordenação e criação de estruturas temporárias no SQLite.
+Aumentar processos sem eliminar o trabalho repetido é arriscado,
+sobretudo com disco H: possivelmente limitado por I/O.
+
+**Melhoria publicada diretamente na `main`:**
+- criado `reconcile_fast.py`: uma leitura por zona usando o índice
+  `idx_votes_lookup`, agregação por chave em memória e comparação
+  direta BU/estadual/nacional, sem criar e juntar tabelas SQL por zona;
+- `reconcile_incremental.py` preserva o fingerprint lógico v2, assim
+  os checkpoints concluídos antes da atualização continuam válidos
+  após verificação SHA-256;
+- habilitados 1 a 8 processos independentes, padrão 4, fila limitada.
+  O ajuste serve para aproveitar CPU multicore, mas o rendimento
+  efetivo dependerá do disco. `--workers 2` é alternativa se o
+  acesso H: ficar saturado;
+- cache versionado e comprimido do planejamento de zonas, associado
+  à revisão SHA-256 das entradas e aos parâmetros da consulta. Evita
+  repetir o `GROUP BY` nacional ao retomar execução equivalente;
+- ETA de processamento paralelo baseado no tempo real de parede,
+  não na soma do tempo simultâneo dos trabalhadores;
+- relatório final só é consolidado quando todas as zonas terminam,
+  mantendo versão anterior intacta durante cálculos parciais.
+
+**Testes adicionados:** equivalência sintética entre cálculo SQL
+anterior e novo método em cada zona; prioridade estadual em presença
+de cópia nacional; cache de planejamento; subprocessos paralelos
+lendo base SQLite; reuso de checkpoints. Execução completa no drive H:
+não foi observada diretamente e precisa de confirmação na máquina.
+
+**Orientação operacional:** parar com Q/Ctrl+C, encerrar processo
+antes de atualizar o código, executar `git pull` e
+`python urnas.py reconcile --workers 4`. Nenhum download
+nem reimportação de dados são necessários para a nova reconciliação.
+Não excluir SQLite, ZIP ou checkpoints; monitorar 20 a 50 zonas novas,
+reavaliar ETA e utilização do disco antes de escolher quantidade
+de trabalhadores.
+
+**Cautela:** a meta é eliminar um gargalo técnico do algoritmo,
+não fabricar um resultado eleitoral. Comparações e fontes permanecem
+as mesmas, e a medida de desempenho na base real ainda está pendente.

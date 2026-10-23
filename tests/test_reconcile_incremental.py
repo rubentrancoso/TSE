@@ -168,6 +168,63 @@ class ResumeReconcileTests(unittest.TestCase):
             self.assertEqual(report["keys_compared"], 6)
             self.assertEqual(report["tasks_total"], 2)
 
+    def test_fast_engine_matches_previous_sql_per_zone(self):
+        from reconcile_fast import compare_task_fast, select_indexed
+        db = self.prepare()
+        tasks, _ = ri.tasks_from_db(db, [], None)
+        with tempfile.TemporaryDirectory() as folder:
+            for i, task in enumerate(tasks):
+                slow = Path(folder) / f"slow_{i}.csv"
+                fast = Path(folder) / f"fast_{i}.csv"
+                old_counts = ri.compare_task(db, task, slow)
+                new_counts = compare_task_fast(db, task, fast)
+                self.assertEqual(old_counts, new_counts)
+                with slow.open(encoding="utf-8", newline="") as left:
+                    old_rows = {tuple(row) for row in csv.reader(left, delimiter=";")}
+                with fast.open(encoding="utf-8", newline="") as right:
+                    new_rows = {tuple(row) for row in csv.reader(right, delimiter=";")}
+                self.assertEqual(old_rows, new_rows)
+                query, values = select_indexed(task)
+                plan = db.execute("EXPLAIN QUERY PLAN " + query, values).fetchall()
+                self.assertTrue(any("idx_votes_lookup" in str(row) for row in plan))
+
+    def test_cache_prevents_second_national_planning_query(self):
+        from unittest.mock import patch
+        db = self.prepare()
+        with tempfile.TemporaryDirectory() as folder:
+            output = Path(folder) / "report.csv"
+            initial, total = ri.cached_tasks_from_db(db, [], None, output)
+            with patch("reconcile_incremental.tasks_from_db",
+                       side_effect=AssertionError("planejamento nao deveria rodar")):
+                again, more = ri.cached_tasks_from_db(db, [], None, output)
+            self.assertEqual(total, more)
+            self.assertEqual([t["key"] for t in initial],
+                             [t["key"] for t in again])
+
+    def test_parallel_two_processes_resume_previous_checkpoints(self):
+        from reconcile_fast import compare_task_fast
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "votes.sqlite3"
+            db = sqlite3.connect(path)
+            urnas.schema(db)
+            for i, (uf,mu,z,se) in enumerate([
+                    ("AC","1007","9","1"), ("AC","1007","10","2"),
+                    ("AL","2003","11","4"), ("BA","33693","177","14")]):
+                row(db, 200+i*4, "bu", uf, mu, z, se, "1", "13", 67)
+                row(db, 201+i*4, "secao_nacional", uf, mu, z, se, "1", "13", 67)
+                row(db, 202+i*4, "bu", uf, mu, z, se, "1", "22", 143)
+                row(db, 203+i*4, "secao_nacional", uf, mu, z, se, "1", "22", 143)
+            db.commit()
+            output = Path(folder) / "report.csv"
+            first = ri.reconcile_resumable(db, output, workers=2)
+            self.assertEqual(first["workers"], 2)
+            self.assertEqual(first["different_or_missing"], 0)
+            self.assertEqual(first["keys_compared"], 8)
+            second = ri.reconcile_resumable(db, output, workers=2)
+            self.assertEqual(second["reused_tasks"], second["tasks_total"])
+            self.assertEqual(second["different_or_missing"], 0)
+            db.close()
+
     def test_eta_is_qualified(self):
         self.assertIn("aprox.", ri.eta_text(180))
         self.assertEqual(ri.eta_text(-1), "indisponivel")

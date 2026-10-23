@@ -352,6 +352,8 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None, worke
     processing_start = None
     pending = deque()
     executor = None
+    checkpoint_scan_start = time.monotonic()
+    checkpoint_checked = 0
 
     def update_progress():
         nonlocal done
@@ -401,27 +403,50 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None, worke
             after_chunk(index, task)
 
     try:
+        # Consultar SQLite uma vez, em vez de milhares de SELECTs pequenos
+        # sujeitos a latencia aleatoria no drive H:.
+        print("[FASE] Lendo indice de checkpoints existentes...", flush=True)
+        known = {
+            key: (checked_keys, ndiff, nb, ns, digest)
+            for key, checked_keys, ndiff, nb, ns, digest in checkpoint.execute(
+                """SELECT task_key,checked,different,missing_bu,missing_section,digest
+                   FROM completed WHERE fingerprint=?""", (fingerprint,))
+        }
+        print(f"[FASE] {len(known):,} checkpoints registrados; "
+              "checando integridade de cada arquivo existente.", flush=True)
         for index, task in enumerate(tasks, 1):
             key = "|".join(task["key"])
             slug = hashlib.sha256(key.encode("utf-8")).hexdigest()[:24]
             part = files_dir / (slug + ".csv")
-            old = checkpoint.execute(
-                """SELECT checked,different,missing_bu,missing_section,digest
-                   FROM completed WHERE fingerprint=? AND task_key=?""",
-                (fingerprint, key)).fetchone()
+            old = known.get(key)
             if old and part.is_file() and sha256_file(part) == old[4]:
                 save_completed(index, task, old[:4], part, 0.0, True)
             else:
                 pending.append((index, task, part))
+            checkpoint_checked += 1
+            if index % 500 == 0 or index == total:
+                print(f"[CHECKPOINTS] {index:,}/{total:,} avaliados; "
+                      f"{resumed:,} reutilizados; {len(pending):,} pendentes; "
+                      f"{time.monotonic()-checkpoint_scan_start:.1f}s.",
+                      flush=True)
 
+        print(f"[FASE] Checkpoints verificados. "
+              f"{len(pending):,} zonas aguardam comparacao nova.", flush=True)
         processing_start = time.monotonic()
         if actual_workers == 1:
             while pending:
                 index, task, part = pending.popleft()
                 temp = part.with_suffix(".csv.part")
                 clock = time.monotonic()
+                print(f"[ZONA INICIO] {index}/{total} {'/'.join(task['key'])} "
+                      f"{task['rows']:,} linhas; processo principal", flush=True)
                 try:
                     result = compare_task_fast(db, task, temp)
+                    print(f"[ZONA CONCLUIDA] {index}/{total} "
+                          f"{'/'.join(task['key'])}; "
+                          f"{time.monotonic()-clock:.1f}s; "
+                          f"{result[0]:,} chaves; {result[1]:,} diferencas.",
+                          flush=True)
                     save_completed(index, task, result, part,
                                    time.monotonic()-clock)
                 finally:
@@ -438,12 +463,31 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None, worke
                     t0 = time.monotonic()
                     future = executor.submit(process_task, database, task, str(temp))
                     inflight[future] = (index, task, part, t0)
-                finished, _ = wait(tuple(inflight), return_when=FIRST_COMPLETED)
+                    print(f"[ZONA SUBMETIDA] {index}/{total} "
+                          f"{'/'.join(task['key'])} {task['rows']:,} linhas.",
+                          flush=True)
+                finished, _ = wait(tuple(inflight), timeout=30,
+                                   return_when=FIRST_COMPLETED)
+                if not finished:
+                    longest = sorted(
+                        ((int(time.monotonic()-meta[3]), meta[0], meta[1]["key"])
+                         for meta in inflight.values()), reverse=True)[:3]
+                    print(f"[SEM RESULTADO] {len(inflight)} zonas nos processos; "
+                          f"mais antigas: " +
+                          ", ".join(f"#{idx} {'/'.join(key)} ha {age}s"
+                                    for age, idx, key in longest) +
+                          ". Verifique mensagens [WORKER] abaixo.",
+                          flush=True)
                 for future in finished:
                     index, task, part, t0 = inflight.pop(future)
                     temp = part.with_suffix(".csv.part")
                     try:
                         result = future.result()
+                        print(f"[ZONA CONCLUIDA] {index}/{total} "
+                              f"{'/'.join(task['key'])}; "
+                              f"{time.monotonic()-t0:.1f}s; "
+                              f"{result[0]:,} chaves; "
+                              f"{result[1]:,} diferencas.", flush=True)
                         save_completed(index, task, result, part,
                                        time.monotonic()-t0)
                     finally:

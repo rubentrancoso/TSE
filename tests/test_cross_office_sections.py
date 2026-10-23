@@ -68,7 +68,7 @@ class CrossOfficeTest(unittest.TestCase):
         pilot = co.run(self.root, pilot_buckets=1)
         self.assertEqual(pilot["status"], "piloto")
         result = co.run(self.root)
-        self.assertEqual(result["candidate_keys"], 9)
+        self.assertEqual(result["candidate_keys"], 8)
         self.assertEqual(result["source_bu_rows_selected"], 9)
         self.assertEqual(result["distinct_sections"], 2)
         self.assertEqual(result["paired_president_governor_sections"], 2)

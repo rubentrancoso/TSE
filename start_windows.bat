@@ -28,10 +28,12 @@ echo [5] Exportar registros de uma secao
 echo [6] Reconciliar fontes locais novamente
 echo [7] Verificar integridade dos downloads
 echo [8] Executar novamente a bateria estatistica (sem baixar arquivos)
+echo [9] Diagnosticar ultima coleta: erro e SEM_SECAO por UF/cargo
 echo [0] Sair
 echo.
-choice /C 123456780 /N /M "Selecione: "
-if errorlevel 9 exit /b 0
+choice /C 1234567890 /N /M "Selecione: "
+if errorlevel 10 exit /b 0
+if errorlevel 9 goto diagnose
 if errorlevel 8 goto stats
 if errorlevel 7 goto verify
 if errorlevel 6 goto reconcile
@@ -88,6 +90,11 @@ goto done
 
 :stats
 %PY% urnas.py stats
+goto done
+
+:diagnose
+echo Diagnostico SEM download e SEM recalcular reconciliacao.
+%PY% diagnose_forensics.py
 goto done
 
 :done

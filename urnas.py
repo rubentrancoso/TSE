@@ -923,8 +923,16 @@ def main():
     parser.add_argument("--candidate", help="Numero do votavel para exportacao")
     parser.add_argument("--output", help="Caminho do CSV exportado")
     parser.add_argument("--workers", type=int, default=4,
-                        help="Reconciliacao: processos paralelos de 1 a 8; "
-                             "padrao 4, tente 2 se o disco H estiver lento")
+                        help="Motor por zona antigo: processos de 1 a 8")
+    parser.add_argument("--engine", choices=("stream", "zones"), default="stream",
+                        help="Reconciliacao: stream sequencial (padrao) ou zones legado")
+    parser.add_argument("--buckets", type=int, default=256,
+                        help="Stream: particoes de 2 a 256; padrao 256")
+    parser.add_argument("--chunk-rows", type=int, default=1000000,
+                        help="Stream: linhas por checkpoint; padrao um milhao")
+    parser.add_argument("--pilot-rows", type=int, default=0,
+                        help="Stream: ler N linhas, salvar checkpoint e sair "
+                             "sem substituir os relatorios finais")
     parser.add_argument("--reserve-gb", type=float, default=2.0,
                         help="Espaco livre minimo adicional, padrao 2 GB")
     parser.add_argument("--no-import", action="store_true", help="Somente baixar e validar (nao importar CSV)")
@@ -1047,10 +1055,11 @@ def main():
                     output = root / "analysis" / "reconciliacao_bu_secao.csv"
                     run_control.stage("reconciliacao automatica BU x votacao por secao")
                     print("Reconciliacao automatica BU x votacao por secao...", flush=True)
-                    from reconcile_incremental import reconcile_resumable
-                    reconcile_resumable(db, output,
-                                        args.uf if not args.all else [], args.turn,
-                                        workers=args.workers)
+                    from reconcile_stream import reconcile_stream
+                    reconcile_stream(db, output,
+                                     args.uf if not args.all else [], args.turn,
+                                     buckets=args.buckets,
+                                     chunk_rows=args.chunk_rows)
                 except Exception as exc:
                     errors.append({"status": "error", "stage": "reconcile",
                                    "time_utc": now(), "error": str(exc)})
@@ -1111,10 +1120,21 @@ def main():
                     raise SystemExit("Sem dados BU de Presidente. A analise nao foi executada.")
             elif args.action == "reconcile":
                 output = Path(args.output or root / "analysis" / "reconciliacao_bu_secao.csv")
-                from reconcile_incremental import reconcile_resumable
-                run_control.stage("reconciliando por zona com checkpoints e estimativa de tempo")
-                reconcile_resumable(db, output, args.uf, args.turn,
-                                    workers=args.workers)
+                if args.engine == "stream":
+                    from reconcile_stream import reconcile_stream
+                    run_control.stage("varredura sequencial por rowid e "
+                                      "reconciliacao particionada")
+                    reconcile_stream(db, output, args.uf, args.turn,
+                                     buckets=args.buckets,
+                                     chunk_rows=args.chunk_rows,
+                                     pilot_rows=args.pilot_rows)
+                else:
+                    if args.pilot_rows:
+                        raise SystemExit("--pilot-rows exige --engine stream")
+                    from reconcile_incremental import reconcile_resumable
+                    run_control.stage("motor legado por zona e indice SQLite")
+                    reconcile_resumable(db, output, args.uf, args.turn,
+                                        workers=args.workers)
             elif args.action == "export":
                 if not db.execute("SELECT 1 FROM imports LIMIT 1").fetchone():
                     raise SystemExit("Base vazia. Execute fetch primeiro.")

@@ -97,6 +97,33 @@ Comandos principais:
 As dependências por fase estão em provenance/PHASES.json e as fontes, com classificação primária/captura/derivado e gaps de substituição, em provenance/SOURCES.json.
 
 
+## Diagnosticar recursos faltantes e divergencias (23/10/2026)
+
+A coleta pode produzir relatorios estatisticos e reconciliacao mesmo quando
+**um dos recursos oficiais falha**. Antes de publicar conclusoes, e necessario
+identificar esse recurso e medir quais estados, turnos e cargos aparecem
+sem correspondente na segunda fonte.
+
+Apos `git pull`, use **opcao 9** no `start_windows.bat`:
+`Diagnosticar ultima coleta`. Essa opcao executa
+`diagnose_forensics.py`, **nao baixa arquivos, nao executa nova
+importacao e nao refaz a reconciliacao**.
+
+A etapa le `download_manifest_latest.json`, mostra os nomes e motivos
+dos recursos com erro, o resumo da conciliacao e, por leitura sequencial
+do CSV existente, a distribuicao dos `SEM_SECAO` por UF/turno/cargo.
+O diagnostico e salvo em:
+
+`H:/TSE/forensics/urnas/analysis/diagnostico_execucao.json`
+
+A execucao de 23/10/2026 reportou 67.858.974 chaves comparadas,
+64.058.235 coincidencias e 3.800.739 casos `SEM_SECAO`; nenhum
+`SEM_BU` e nenhuma divergencia numerica `DIFERENTE` foi
+contabilizada naquele resumo. **Essas unidades sao chaves, nao
+eleitores, votos individuais nem secoes unicas.** Nao sabemos o
+recurso com erro nem a distribuicao geografica ate executar o
+diagnostico no ambiente local.
+
 ## Reconciliação retomável com estimativa de tempo (22/10/2026)
 
 A reconciliação anterior fazia uma única consulta SQLite nacional e não

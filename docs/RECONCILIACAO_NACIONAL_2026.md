@@ -133,3 +133,33 @@ sera uma validacao independente por candidato **da zona inteira**,
 e nao 228 comparacoes por secao. Ausencia de dados oficiais ou
 falha de acesso deve permanecer como pendencia explicita,
 sem inferir desvio de votos.
+
+
+## Execucao real da checagem focal 6261 (24/10/2026)
+
+O investigador confirmou execucao no H: com seis testes unitarios OK.
+`python verify_noronha_6261.py` acessou o endpoint oficial
+`https://resultados.tse.jus.br/oficial/ele2026/6261/dados/pe/pe30015-z0004-c0025-e006261-u.json`,
+preservou JSON SHA-256
+`96463db912ac20355cddcd0cfbfd6bee5b8ed63feb04aad33e9d28264cae5ddf`
+e gerou
+`analysis/validacao_6261/comparacao_96463db912ac2035.json`.
+
+**Resultado validado por candidato na zona eleitoral:** 228 chaves
+BU, 10 secoes, 2.445 votos, 24 votaveis pareados, 0 diferentes,
+0 sem par. Brancos=44 e nulos=62 tambem coincidem.
+`RESULTADO: EQUIVALENCIA_AGREGADA_CONFIRMADA`.
+
+**Interpretacao limitada:** encerra a diferenca de escopo
+daquelas 228 chaves no nivel de totalizacao **por zona**,
+mas nao compara as dez secoes uma a uma por fonte independente.
+Nao converter "igualdade de total oficial" em prova de
+seguranca fisica ou de ausencia universal de fraude.
+
+**Proxima fase:** gerar base por secao/cargo/candidato dos mesmos BU,
+abrangendo Presidente, Governador, Senado e deputados para testar
+hipoteses de compatibilidade ecologica (sem deduzir voto individual).
+Script versionado: `cross_office_sections.py` e testes
+`tests/test_cross_office_sections.py`. Comecar com piloto
+`--pilot-buckets 2` antes da execucao integral. Entrada unica:
+particoes TSV do motor stream, com validacao SHA-256 original.

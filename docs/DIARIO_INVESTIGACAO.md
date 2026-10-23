@@ -3842,3 +3842,46 @@ os conjuntos CSV separadamente.
 **Proxima verificacao:** resultado da tentativa no ambiente Windows
 do investigador. Sem acesso ao drive H: nao e possivel afirmar que
 o ZIP de SP esteja integro, recuperado ou indexado.
+
+
+---
+
+## 2026-10-23 — E0078 — Confirmacao da fonte nacional no SQLite
+
+**Evidencia:** saida literal de `python diagnose_forensics.py --quick`
+apos `git pull` (fast-forward de `8e1966b` para `17faaae` na
+`main`), compartilhada pelo investigador. O comando foi executado
+duas vezes com os mesmos contadores.
+
+**Inventario confirmado pela tabela `imports` do banco local:**
+
+| Fonte | Recursos | Linhas |
+| --- | ---: | ---: |
+| `bu` | 56 | 67.858.974 |
+| `secao` | 27 | 64.058.235 |
+| `secao_nacional` | 1 | 3.800.511 |
+
+As linhas de `secao` e `secao_nacional` totalizam **67.858.746**,
+exatamente **228** a menos que as linhas de `bu` registradas.
+O diagnostico anterior mostrou **3.800.511** chaves `SEM_SECAO`
+de cargo 1 (Presidente) e **228** de cargo 25, somente em PE.
+
+**Conclusao tecnica sustentada:** o arquivo nacional presidencial
+**esta importado** e a exclusao de `source_kind='secao_nacional'`
+pela versao anterior do reconciliador explica o padrao quantitativo
+dos `SEM_SECAO`. Ha correspondencia **numerica dos contadores**
+com a soma das fontes; falta verificar **chave por chave e voto por
+voto agregado em cada chave** com o reconciliador v2. Nao publicar
+a igualdade de contadores como conciliacao eleitoral concluida.
+
+**Estado do erro independente:** o arquivo de artefatos transmitidos
+de SP continua em `erro` por CRC invalido segundo o manifesto
+anterior. O reparo `urnas.py repair` ainda nao foi executado ou
+comprovado nesta entrada.
+
+**Proximas etapas:** `python urnas.py reconcile` para reprocessar
+as chaves usando a fonte nacional com prioridade da estadual,
+checkpoint por zona e ETA aproximada; comparar com o resumo antigo,
+sem apagar seus 14 relatorios historicos; `python urnas.py repair`
+isoladamente para recuperar o ZIP de SP. Registrar o resultado real
+e eventuais chaves remanescentes numa nova entrada.

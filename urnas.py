@@ -1188,9 +1188,24 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\nINTERRUPCAO CONCLUIDA. Os ZIPs prontos, o banco e os .part existentes "
-              "permanecem no H:. A proxima coleta continua.", file=sys.stderr, flush=True)
+        print("\nINTERRUPCAO CONCLUIDA. Arquivos e checkpoints confirmados "
+              "permanecem no H:. Repita o mesmo comando para retomar.",
+              file=sys.stderr, flush=True)
         sys.exit(130)
+    except sqlite3.OperationalError as exc:
+        # O Ctrl+C/Q interrompe o cursor SQLite via run_control.attach_db().
+        # SQLite pode levantar OperationalError('interrupted') em vez de
+        # KeyboardInterrupt. Isso e cancelamento esperado, nao corrupcao.
+        if "interrupted" in str(exc).lower():
+            import run_control
+            if run_control.cancelled():
+                print("\nINTERRUPCAO CONCLUIDA. Cursor SQLite cancelado "
+                      "a pedido; checkpoints no H: preservados. "
+                      "Repita o mesmo comando para retomar.",
+                      file=sys.stderr, flush=True)
+                sys.exit(130)
+        print("FALHA SQLITE: " + str(exc), file=sys.stderr, flush=True)
+        sys.exit(1)
     except (OSError, ValueError, RuntimeError, urllib.error.URLError, zipfile.BadZipFile) as exc:
         print("FALHA: " + str(exc), file=sys.stderr)
         sys.exit(1)

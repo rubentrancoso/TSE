@@ -90,3 +90,20 @@ complementares e exigem testes de robustez. É necessária correção por múlti
 testes e calibração com dados de referência antes de fazer afirmações
 estatísticas inferenciais. O componente atual emite indicadores exploratórios,
 não probabilidades de adulteração.
+
+
+## Continuidade da investigacao entre cargos e transmissao (24/10/2026)
+
+A bateria atual cobre principalmente os BUs presidenciais,
+mas a investigacao **nao termina com a igualdade entre os CSVs
+oficiais**. O roteiro de testes forenses de assinaturas/QR, cadeia
+de transmissao e possivel alteracao antes da publicacao, bem
+como os limites ecologicos e controles historicos para votos
+cruzados entre Presidente, Governador, Senado (duas escolhas em
+2026) e deputados, estao definidos no
+[protocolo permanente](PROTOCOLO_INVESTIGACAO_MULTICAMADAS_2026.md).
+
+Nenhum partido ou candidatura sera classificado ideologicamente
+por automatismo; a tabela de grupos deve ser versionada, ter
+fonte externa e passar por analises de sensibilidade. Prefeito
+2024 e uma comparacao historica, nao uma votacao simultanea.

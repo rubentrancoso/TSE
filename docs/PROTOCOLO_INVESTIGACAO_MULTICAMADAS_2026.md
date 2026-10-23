@@ -214,7 +214,7 @@ participação, distribuição e composição territorial.
 | --- | --- | --- |
 | P0 | Inventário de origem independente de BU/QR/artefatos e validação de assinaturas | Parcial/pendente |
 | P0 | Cotejar geração BU vs recepção/publicação por seção e candidato | Parcial/pendente |
-| P1 | Fechar pleito especial 6261 sem apagar 228 ocorrências | Script focal publicado, confirmação ainda pendente |
+| P1 | Fechar pleito especial 6261 sem apagar 228 ocorrências | **Concluído em agregado por zona**: 24 votáveis, 2.445 votos, 10 seções, zero diferenças; verificação individual por seção ainda pendente |
 | P1 | Perfil por seção de Presidente/Governador/Senado/Deputados | A construir |
 | P1 | Limites ecológicos de voto cruzado por seção e sensibilidade da classificação | A construir |
 | P2 | Modelos nulos, permutação condicionada, correção de testes múltiplos | A construir |

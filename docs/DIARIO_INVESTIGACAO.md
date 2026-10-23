@@ -3698,3 +3698,56 @@ estimativa é operacional, não previsão estatística de tempo garantida.
 **Evidência do próximo ensaio:** guardar do console as mensagens
 `PLANO PRONTO`, `PROGRESSO RECONCILIACAO` e
 `reconciliacao_bu_secao.summary.json`, assim como o hash das entradas.
+
+
+---
+
+## 2026-10-23 — E0075 — Resultado de conciliacao e estatistica, com uma fonte em erro
+
+**Evidencia recebida:** final do log de execucao fornecido pelo investigador,
+incluindo o resumo de reconciliacao, a bateria estatistica e o manifesto do
+historico. O arquivo de log encaminhado **nao inclui a mensagem especifica do
+recurso que falhou**; a causa nao deve ser adivinhada.
+
+**Resultado calculado pelo programa no ambiente do investigador:**
+- 113 recursos oficiais selecionados, 112 reutilizados, 0 novos;
+- 1 recurso com erro, a identificar em
+  `H:/TSE/forensics/urnas/download_manifest_latest.json`;
+- 67.858.974 chaves de comparacao BU versus votacao por secao;
+- 64.058.235 chaves coincidentes;
+- 3.800.739 chaves em `SEM_SECAO`;
+- 0 chaves em `SEM_BU`;
+- 0 chaves em `DIFERENTE` por diferenca numerica entre duas
+  chaves correspondentes, conforme os totais do resumo;
+- bateria estatistica: 499.206 secoes, 1.387 valores extremos
+  locais e 0 secoes com candidato duplicado na verificacao;
+- 14 relatorios preservados no snapshot
+  `20261023T021123576322Z-066fc88b7f`, incluindo CSV de
+  reconciliacao de 145.665.711 bytes.
+
+**Interpretacao limitada:** `SEM_SECAO` e uma chave de
+comparacao ausente na fonte `secao` indexada. Nao equivale a
+secoes fisicas inexistentes, votos eliminados ou fraude. Os pares
+de chaves efetivamente comparados fecharam na medida reportada.
+Ainda e necessario medir a distribuicao dos casos por
+UF/cargo/turno e identificar o recurso com falha. A analise nao
+confirma cobertura nacional completa apenas por contar
+499.206 secoes.
+
+**Observacao do fluxo:** o log recebido mostra o formato de
+reconciliacao antigo, com `keys_compared` e `limitations` e
+sem campos `engine`, `fingerprint` ou `tasks_completed`.
+A execucao **nao demonstra uso do novo reconciliador
+incremental**; pode ter sido iniciada antes do update.
+
+**Ajuste de investigacao:** criado `diagnose_forensics.py`,
+ligado ao menu opcao 9, que le o manifesto e os relatorios
+existentes sem download nem recalculo. Produz
+`analysis/diagnostico_execucao.json`, descreve a mensagem do erro
+e agrega `SEM_SECAO` por UF, turno e cargo. A classificacao
+dos dados de origem deve preceder qualquer conclusao a publicar
+no segundo artigo.
+
+**Verificacao pendente:** diagnostico dos arquivos locais reais
+e conferência do recurso em erro no manifesto. A ausencia de
+acesso remoto ao drive H: impede concluir esses itens neste evento.

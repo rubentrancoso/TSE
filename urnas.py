@@ -947,7 +947,9 @@ def main():
     root = root_path(args.root)
     run_control.configure_log(root)
     run_control.stage("registro persistente ativado em analysis/logs")
-    if args.action in ("fetch", "stats", "reconcile", "import", "repair"):
+    pilot_only = (args.action == "reconcile" and
+                  args.engine == "stream" and args.pilot_rows > 0)
+    if args.action in ("fetch", "stats", "reconcile", "import", "repair") and not pilot_only:
         run_control.stage("preservando historico ANTES de substituir relatorios")
         # Antes de qualquer substituicao, arquivar os relatorios da ultima
         # execucao. Se arquivar falhar, nao sobrescrever analises anteriores.
@@ -1157,10 +1159,15 @@ def main():
         finally:
             run_control.attach_db(None)
             db.close()
-        from history_forensics import snapshot as history_snapshot
-        run_control.stage("preservando historico da tarefa concluida")
-        history_snapshot(root, "apos-" + args.action,
-                         context={"ufs": args.uf, "turno": args.turn})
+        if not pilot_only:
+            from history_forensics import snapshot as history_snapshot
+            run_control.stage("preservando historico da tarefa concluida")
+            history_snapshot(root, "apos-" + args.action,
+                             context={"ufs": args.uf, "turno": args.turn})
+        else:
+            print("PILOTO: nenhum relatorio nacional alterado; "
+                  "nenhum snapshot historico desnecessario criado.",
+                  flush=True)
         return
     if args.action == "verify":
         total = 0

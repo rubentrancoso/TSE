@@ -3944,3 +3944,63 @@ de trabalhadores.
 **Cautela:** a meta é eliminar um gargalo técnico do algoritmo,
 não fabricar um resultado eleitoral. Comparações e fontes permanecem
 as mesmas, e a medida de desempenho na base real ainda está pendente.
+
+
+---
+
+## 2026-10-23 — E0080 — Ausencia de comprovacao de progresso na execucao multiprocessada
+
+**Evidencia compartilhada:** execucao literal de
+`python urnas.py reconcile --workers 5`. Iniciou com
+`HISTORICO antes-reconcile` (15 relatorios) e concluiu
+a consulta nacional de planejamento em **3.639,6 s**,
+enumerando 6.251 grupos e 135.717.720 linhas elegiveis.
+Gravou o plano compactado em
+`analysis/reconciliacao_checkpoints/plans/8633061accf908c836f25b61720cf06d0af2776f07d39a5d3faa1da63b9e29cd.json.gz`.
+
+Depois anunciou cinco processos paralelos e reutilizou
+pelo menos **160 checkpoints existentes**, com zero divergencias
+nos grupos reutilizados. O log continuou ate **6.933 s**
+de tempo na etapa, sem mensagem de nova zona concluida,
+sem identificacao de PID dos workers e sem progresso novo
+mensuravel. Isto **nao comprova a aceleracao anunciada**.
+A mera existencia da mensagem `PROCESSAMENTO: 5 processos`
+nao demonstra que os workers executaram e terminaram consultas.
+
+**Analise tecnica:** a revisao do agendador identificou duas
+fontes de opacidade: leitura/verificacao dos 6.251 checkpoints
+um a um com consultas individuais ao banco H: e ausencia de
+telemetria do inicio de cada tarefa ou da linha lida ate que
+um processo devolvesse a zona concluida. O log nao permite
+determinar se o bloqueio ocorreu na varredura de checkpoints,
+inicializacao de subprocessos ou consulta SQLite. O drive H:
+e uma hipotese de gargalo, nao causa comprovada.
+
+**Correcao publicada na `main`:**
+- carregar o cadastro SQLite dos checkpoints de uma vez e
+  conferir hashes com contador `[CHECKPOINTS] n/6251`,
+  reduzindo milhares de pequenas consultas ao drive H:;
+- imprimir `[FASE]` ao preparar tarefas,
+  `[ZONA SUBMETIDA]` ao enviar ao executor e
+  `[ZONA CONCLUIDA]` apenas depois de receber resultado real;
+- o worker imprime PID, abertura do SQLite,
+  `[WORKER BUSCA]` e `[WORKER LENDO]` a cada 20 segundos
+  quando houver linhas sendo recebidas; mensagem
+  `[WORKER SQLITE ATIVO]` quando a maquina virtual ainda
+  executa o SQL;
+- a cada 30 segundos sem zona concluida, o processo pai
+  informa `[SEM RESULTADO]`, a quantidade de tarefas ativas
+  e a idade das mais antigas.
+
+**Orientacao segura:** encerrar a execucao antiga antes do
+`git pull`; nao apagar bancos, ZIPs, planos e checkpoints.
+Reiniciar **com 1 processo para diagnostico**:
+`python urnas.py reconcile --workers 1`, verificando
+a primeira zona nova e cronometro. Se houver conclusoes
+rapidas e estabilidade de I/O, tentar 2 e depois 4 processos,
+sem rodar instancias simultaneas do reconciliador.
+
+**Limite:** o comportamento real da proxima execucao precisa
+ser observado antes de afirmar ganho. O saldo de 3.800.511
+chaves presidenciais segue em verificacao; nao foi calculado
+nenhum novo resultado nacional nessa execucao multiprocessada.

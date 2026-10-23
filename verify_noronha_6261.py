@@ -208,7 +208,8 @@ def main():
     complete = (not different and not unpaired and not extra
                 and totals_match and secs_match)
     result = {
-        "checked_at_utc": datetime.now(timezone.utc).isoformat(),
+        "official_snapshot_utc": datetime.fromtimestamp(
+            cached.stat().st_mtime, tz=timezone.utc).isoformat(),
         "status": "EQUIVALENCIA_AGREGADA_CONFIRMADA" if complete
                   else "VERIFICACAO_ADICIONAL_NECESSARIA",
         "method": "soma BU por votavel vs JSON oficial de resultado agregado por zona",

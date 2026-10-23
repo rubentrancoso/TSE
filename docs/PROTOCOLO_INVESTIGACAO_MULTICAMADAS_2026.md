@@ -215,7 +215,7 @@ participação, distribuição e composição territorial.
 | P0 | Inventário de origem independente de BU/QR/artefatos e validação de assinaturas | Parcial/pendente |
 | P0 | Cotejar geração BU vs recepção/publicação por seção e candidato | Parcial/pendente |
 | P1 | Fechar pleito especial 6261 sem apagar 228 ocorrências | **Concluído em agregado por zona**: 24 votáveis, 2.445 votos, 10 seções, zero diferenças; verificação individual por seção ainda pendente |
-| P1 | Perfil por seção de Presidente/Governador/Senado/Deputados | A construir |
+| P1 | Perfil por seção de Presidente/Governador/Senado/Deputados | Extrator `cross_office_sections.py` publicado; execução real no H: pendente |
 | P1 | Limites ecológicos de voto cruzado por seção e sensibilidade da classificação | A construir |
 | P2 | Modelos nulos, permutação condicionada, correção de testes múltiplos | A construir |
 | P2 | Comparação histórica 2022 e prefeitura 2024 com compatibilização | A construir |
@@ -241,3 +241,46 @@ relatórios antigos; publicar novos derivados sem
 sobrescrever evidencia. GitHub: somente branch main,
 sem pull requests. Documentar cada execução no
 `DIARIO_INVESTIGACAO.md`.
+
+
+## Execucao da matriz de votos entre cargos (24/10/2026)
+
+O modulo `cross_office_sections.py` consome **somente** as
+256 particoes TSV assinadas localmente com SHA-256 pelo
+`reconcile-stream-v1`. Seleciona exclusivamente
+`source_kind=bu`, sem reabrir o SQLite e sem misturar
+fontes BU e seção. Agrupa por UF/municipio/zona/secao/turno/
+cargo/votavel e soma duplicatas com checkpoint por particao.
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_cross_office_sections.py -v
+python cross_office_sections.py --pilot-buckets 2
+python cross_office_sections.py
+```
+
+O piloto processa **duas particoes de hash**, nao uma amostra
+probabilistica da populacao. Ele nao publica matriz nacional.
+A execucao completa retoma as particoes ja confirmadas,
+produz `analysis/entre_cargos/<fingerprint>-<versao>/` com:
+- `candidatos/bucket-XXXX.csv`: votos BU por
+  secao/cargo/votavel; os cargos 1/3/5/6/7/8 sao considerados;
+- `secoes/bucket-XXXX.csv`: totais por secao
+  para Presidente, Governador e Senado, com ausencias explicitas;
+- `secoes_por_cargo.csv`: matriz consolidada de secoes;
+- `state.json`, `summary.json`: progresso,
+  SHA-256 e contagens verificaveis.
+
+Os totais por cargo **nao equivalem a apoio ideologico**.
+Diferença entre a soma de votos de Presidente e Governador
+na mesma secao nao prova adulteracao, sobretudo em casos
+de regras eleitorais e eleitores habilitados por cargo
+distintos. O Senado tem duas oportunidades de voto; nunca
+interpretar soma de senadores como numero de eleitores.
+
+Antes dos testes de transferencias politicas, criar e revisar
+uma tabela de classificacao de candidaturas e alianças, com
+fontes explicitas e variantes de sensibilidade.
+
+**Estado:** codigo e testes sinteticos publicados; piloto
+nacional e testes locais no H: ainda aguardam execucao.

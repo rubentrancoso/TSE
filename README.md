@@ -575,3 +575,16 @@ agora encaminham BU, arquivos transmitidos e votacao por secao de 2026
 automaticamente para `H:/TSE/forensics/urnas`. Nunca duplicam esses
 recursos novos no antigo diretorio do portal. Para consultar sem downloads,
 use `python urnas.py status`.
+
+
+## Objetivo permanente: auditoria eleitoral multievidencia (24/10/2026)
+
+A reconciliacao BU x secao e uma etapa, **nao o objetivo final**.
+O projeto continua investigando a integridade dos votos desde
+os artefatos da urna e a transmissao ate a publicacao final, as
+series temporais, os padroes estatisticos e a compatibilidade
+geografica entre Presidente, Governador, Senado e deputados.
+Inclui limites ecologicos para voto cruzado, modelos condicionados,
+controle de dados historicos 2022/2024 e distincao explicita entre
+anomalia, hipotese e prova. O documento norteador e
+[Protocolo permanente de investigacao multievidencia](docs/PROTOCOLO_INVESTIGACAO_MULTICAMADAS_2026.md).

@@ -4136,3 +4136,73 @@ hardware, a base SQLite, page cache e indices.
 Nao construir automaticamente indice cobridor
 nacional de dezenas de milhoes de registros,
 sem prever custo, espaco e verificação.
+
+
+---
+
+## 2026-10-23 — E0084 — Benchmark sequencial confirma vantagem local; motor externo retomavel
+
+**Dados efetivamente medidos no H: do investigador:**
+
+- SQLite original: **221,24 GiB**;
+- espaco livre no volume H: **1.711,45 GiB**;
+- consulta de amostras por `rowid` em `votes NOT INDEXED`;
+- `inicio`: 50.000 linhas em 1,09 s, **45.745,7 linhas/s**;
+- `meio`: 50.000 linhas em 0,78 s, **63.938,6 linhas/s**;
+- `fim`: 50.000 linhas em 0,09 s, **537.634,4 linhas/s**
+  (provavelmente favorecida por cache; nao extrapolar);
+- SQLite confirmou `SEARCH votes USING INTEGER PRIMARY KEY (rowid>?)`
+  nos tres pontos.
+
+Em comparacao, os probes indexados por zona retornaram
+68–117 linhas/s. A discrepancia de ordens de grandeza
+justifica abandonar esse padrao de acesso para o trabalho
+nacional. **A medicao de 50 mil linhas nao garante a
+velocidade sustentada sobre todos os 140 milhoes de registros.**
+
+**Implementacao iniciada e publicada na `main`:**
+
+- novo `reconcile_stream.py` (engine `reconcile-stream-v1`);
+- varredura unica de SQLite por `rowid`, selecionando os
+  nove campos estritamente necessarios, sem `dados_json`;
+- normalizacao de UF, municipio, zona, secao, turno,
+  cargo e votavel conforme regras de reconciliacao;
+- distribuicao deterministica em 256 particoes TSV por hash
+  de (UF, municipio, zona, turno);
+- checkpoints com offsets, rowid, total de linhas examinadas,
+  fsync antes de salvar o estado, retomada que descarta
+  escritos nao confirmados; arquivos fisicos preservados;
+- selagem SHA-256 das particoes antes da comparacao;
+- comparacao de chaves por particao, com `secao`
+  estadual prevalecendo sobre `secao_nacional` de Presidente
+  sem somar a mesma chave duas vezes;
+- resultado de cada particao com digest/checkpoint independente;
+  consolidacao atomica do CSV ao concluir todas;
+- bloqueio entre processos para nao executar a mesma
+  sessao stream duas vezes em paralelo;
+- mecanismo de piloto `--pilot-rows` que nao substitui
+  o relatorio nem cria historico redundante;
+- `urnas.py reconcile` e opcao 6 do menu usam
+  stream por padrao; metodo `--engine zones` permanece
+  disponivel e todos seus checkpoints permanecem intactos;
+- testes sinteticos incluidos para equivalencia com
+  reconciliador antigo, duplicatas, fontes presidenciais,
+  divergencias, interrupcao no scan/particoes, SHA e
+  mudanca dos recursos importados.
+
+**Estado da confianca:** a implementacao foi publicada no
+codigo, mas **ainda nao foi executada sobre H: neste registro**,
+e nao ha confirmacao de GitHub Actions concluidos. Nao
+afirmar que a reconciliacao nacional foi acelerada nem
+que a integridade do resultado final foi confirmada.
+A proxima evidencia exigida e a saida do teste offline
+mais o piloto de 1.000.000 linhas em 4 checkpoints de
+250.000 linhas, que mostrara a velocidade efetiva de
+leitura + escrita das particoes.
+
+**Instrucoes para o piloto seguro:**
+`git pull`;
+`python -m unittest discover -s tests -p test_reconcile_stream.py -v`;
+`python urnas.py reconcile --engine stream --pilot-rows 1000000 --chunk-rows 250000`.
+Apenas depois de analisar esses resultados, executar
+`python urnas.py reconcile --engine stream`.

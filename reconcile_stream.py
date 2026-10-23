@@ -8,6 +8,7 @@ origem. Checkpoints com offsets permitem interromper qualquer etapa.
 from __future__ import annotations
 
 import csv
+from contextlib import contextmanager
 import hashlib
 import io
 import json
@@ -119,6 +120,35 @@ def load_state(path, fingerprint, bucket_count):
              "completed_parts": {}}
     save_state(path, state)
     return state
+
+
+@contextmanager
+def exclusive_run(workspace):
+    """Lock interprocesso, solto automaticamente quando o processo termina."""
+    lockpath = workspace / "stream.lock"
+    with open(lockpath, "a+b") as handle:
+        if handle.tell() == 0 and lockpath.stat().st_size == 0:
+            handle.write(b"0")
+            handle.flush()
+        handle.seek(0)
+        try:
+            if os.name == "nt":
+                import msvcrt
+                msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+            else:
+                import fcntl
+                fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except OSError as exc:
+            raise RuntimeError(
+                "Outra reconciliacao stream esta usando o mesmo checkpoint; "
+                "encerre a execucao anterior antes de prosseguir") from exc
+        try:
+            yield
+        finally:
+            if os.name == "nt":
+                msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+            else:
+                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
 
 
 def partition_files(directory, bucket_count):
@@ -416,23 +446,23 @@ def reconcile_stream(db, output, ufs=None, turn=None, buckets=256,
     workspace = (output.parent / "reconciliacao_checkpoints" /
                  "stream" / fingerprint)
     workspace.mkdir(parents=True, exist_ok=True)
-    state = load_state(workspace / "state.json", fingerprint, buckets)
-    print(f"RECONCILIACAO STREAM: {buckets} particoes; "
-          "leitura sequencial ROWID, sem alterar tabela votes.", flush=True)
-    print(f"FONTE: {len(provenance['resources'])} importacoes; "
-          f"fingerprint {fingerprint[:16]}; "
-          f"checkpoint: {workspace}", flush=True)
-    sequential_scan(db, workspace, state, ufs, turn, buckets,
-                    chunk_rows=chunk_rows, after_chunk=after_chunk,
-                    pilot_rows=pilot_rows)
-    if pilot_rows:
-        return {"status": "piloto_checkpoint_salvo", "engine": VERSION,
-                "fingerprint": fingerprint, "checkpoint_folder": str(workspace),
-                "rows_scanned": state["rows_scanned"],
-                "rows_eligible": state["rows_eligible"],
-                "scan_complete": state["scan_complete"]}
-    # Seguranca: se particionamento foi interrompido, nenhuma comparacao inicia.
-    if not state["scan_complete"]:
-        raise RuntimeError("Particionamento nao finalizado")
-    reconcile_parts(workspace, state, buckets, after_part=after_part)
-    return consolidate(workspace, state, buckets, output, provenance)
+    with exclusive_run(workspace):
+        state = load_state(workspace / "state.json", fingerprint, buckets)
+        print(f"RECONCILIACAO STREAM: {buckets} particoes; "
+              "leitura sequencial ROWID, sem alterar tabela votes.", flush=True)
+        print(f"FONTE: {len(provenance['resources'])} importacoes; "
+              f"fingerprint {fingerprint[:16]}; "
+              f"checkpoint: {workspace}", flush=True)
+        sequential_scan(db, workspace, state, ufs, turn, buckets,
+                        chunk_rows=chunk_rows, after_chunk=after_chunk,
+                        pilot_rows=pilot_rows)
+        if pilot_rows:
+            return {"status": "piloto_checkpoint_salvo", "engine": VERSION,
+                    "fingerprint": fingerprint, "checkpoint_folder": str(workspace),
+                    "rows_scanned": state["rows_scanned"],
+                    "rows_eligible": state["rows_eligible"],
+                    "scan_complete": state["scan_complete"]}
+        if not state["scan_complete"]:
+            raise RuntimeError("Particionamento nao finalizado")
+        reconcile_parts(workspace, state, buckets, after_part=after_part)
+        return consolidate(workspace, state, buckets, output, provenance)

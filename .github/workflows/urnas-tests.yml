@@ -8,9 +8,11 @@ on:
       - history_forensics.py
       - run_control.py
       - reconcile_incremental.py
+      - diagnose_forensics.py
       - collect_forensics.py
       - tests/test_urnas.py
       - tests/test_reconcile_incremental.py
+      - tests/test_diagnose_forensics.py
       - tests/test_statistical_forensics.py
       - tests/test_history_forensics.py
       - .github/workflows/urnas-tests.yml
@@ -21,9 +23,11 @@ on:
       - history_forensics.py
       - run_control.py
       - reconcile_incremental.py
+      - diagnose_forensics.py
       - collect_forensics.py
       - tests/test_urnas.py
       - tests/test_reconcile_incremental.py
+      - tests/test_diagnose_forensics.py
       - tests/test_statistical_forensics.py
       - tests/test_history_forensics.py
 
@@ -36,6 +40,6 @@ jobs:
         with:
           python-version: '3.12'
       - name: Validar sintaxe
-        run: python -m py_compile urnas.py statistical_forensics.py history_forensics.py run_control.py collect_forensics.py reconcile_incremental.py
+        run: python -m py_compile urnas.py statistical_forensics.py history_forensics.py run_control.py collect_forensics.py reconcile_incremental.py diagnose_forensics.py
       - name: Testes com arquivos sinteticos
         run: python -m unittest discover -s tests -p 'test_*.py' -v

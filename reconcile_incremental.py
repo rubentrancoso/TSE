@@ -540,7 +540,20 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None, worke
     except BaseException:
         checkpoint.rollback()
         if executor is not None:
-            executor.shutdown(wait=False, cancel_futures=True)
+            # Python < 3.14 nao expõe terminate_workers(). Ao cancelar,
+            # encerrar os workers de leitura para nao deixar processos
+            # antigos consumindo o H: depois que o pai sair.
+            if hasattr(executor, "terminate_workers"):
+                executor.terminate_workers()
+            else:
+                processes = list(getattr(executor, "_processes", {}).values())
+                for worker in processes:
+                    if worker is not None and worker.is_alive():
+                        worker.terminate()
+                executor.shutdown(wait=False, cancel_futures=True)
+                for worker in processes:
+                    if worker is not None:
+                        worker.join(timeout=2)
         print(f"RECONCILIACAO INTERROMPIDA: {done:,}/{total:,} zonas "
               "preservadas; basta reexecutar para retomar.",
               file=sys.stderr, flush=True)

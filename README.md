@@ -208,8 +208,12 @@ anunciar o tempo total de reconciliacao.
    no mesmo workspace.
 
 A base SQLite, os ZIPs e os checkpoints antigos por zona
-nao sao modificados ou apagados pelo motor stream. Os novos
-arquivos ficam em `analysis/reconciliacao_checkpoints/stream/<hash>`.
+nao sao modificados ou apagados pelo motor stream. **Atenção:**
+os checkpoints do motor por zona são preservados como evidência,
+mas não podem ser reutilizados para evitar a varredura do motor
+sequencial, pois representam uma estratégia de execução diferente.
+O próprio motor stream cria checkpoints para suas retomadas.
+Os novos arquivos ficam em `analysis/reconciliacao_checkpoints/stream/<hash>`.
 O hash identifica a versao do algoritmo, os recursos importados
 e seus SHA-256, os filtros e o numero de particoes. Uma fonte
 revisada recebe outro workspace; nenhuma evidencia anterior

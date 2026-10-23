@@ -3751,3 +3751,94 @@ no segundo artigo.
 **Verificacao pendente:** diagnostico dos arquivos locais reais
 e conferência do recurso em erro no manifesto. A ausencia de
 acesso remoto ao drive H: impede concluir esses itens neste evento.
+
+
+---
+
+## 2026-10-23 — E0076 — Identificacao da fonte nacional de Presidente excluida da reconciliacao
+
+**Evidencia nova do investigador:** `diagnostico_execucao.json`, extraido
+do banco e relatorios locais, com 113 recursos selecionados e processados,
+112 reutilizados, 1 falha no ZIP de artefatos transmitidos SP.
+
+**Reconstrucao do resultado anterior:**
+- 67.858.974 chaves de cargo/candidato/secao comparadas;
+- 64.058.235 com igualdade numérica;
+- 3.800.739 `SEM_SECAO`, zero `SEM_BU`;
+- todas as chaves ausentes no primeiro turno;
+- 3.800.511 chaves de `cargo=1` (Presidente), espalhadas por
+  todas as UFs e exterior;
+- 228 chaves de `cargo=25`, exclusivamente Pernambuco.
+
+**Causa identificada no código, nao ainda comprovada na base real:**
+a versao anterior de `reconcile()` selecionava somente
+`source_kind='bu'` e `source_kind='secao'`. O proprio coletor
+classifica o conjunto nacional de **Presidente por secao eleitoral**
+em uma terceira categoria, `source_kind='secao_nacional'`, para
+evitar duplicidade de votos. Esse arquivo nacional era portanto
+**excluido da comparacao**, produzindo ausencia de contrapartida
+principalmente em `cargo=1`.
+
+**Correcao de lógica:** `reconcile_incremental.py` v2 inclui o
+`secao_nacional` somente no cargo 1; usa a fonte estadual
+`secao` com prioridade por chave (UF, municipio, zona, secao,
+turno, cargo, votavel) e o arquivo nacional somente como
+complemento de chaves inexistentes. **Nunca soma as duas fontes**.
+A versao v2 invalida automaticamente checkpoints antigos por
+incorporar o numero da versao na impressao digital das fontes.
+
+**Limite da inferencia:** a classificacao de 3.800.511 chaves
+presidenciais como lacuna de comparacao e um diagnostico da
+logica de software, nao significa que todas serao conciliadas.
+Ainda e necessario confirmar que o arquivo nacional esta
+efetivamente importado no SQLite, verificar seu layout, repetir
+a reconciliacao e medir os casos residuais.
+
+**Cargo 25 - contexto externo:** a Eleicao Municipal de
+Fernando de Noronha (PE) de 04/10/2026 incluiu votacao para
+Conselho Distrital, documentada pelo TSE e TRE-PE em 05/10/2026.
+O cargo 25 e pertencente a esse pleito local, nao Presidente.
+Os 228 registros sem contraparte precisam ser confrontados com
+o conjunto adequado desse pleito, sem contaminar o indice de
+discrepancias do cargo 1.
+
+Fontes primarias:
+- https://www.tse.jus.br/comunicacao/noticias/2026/Outubro/eleitores-de-fernando-de-noronha-elegem-7-conselheiros-distritais
+- https://www.tre-pe.jus.br/comunicacao/noticias/2026/Outubro/eleitores-de-fernando-de-noronha-elegem-7-conselheiros-distritais
+
+**Proximo teste:** confirmar importacao `secao_nacional` com
+`diagnose_forensics.py`; executar reconciliacao revisada e comparar
+resultado anterior e novo por UF/cargo. O CSV antigo e seus hashes
+permanecem no snapshot de historico
+`20261023T021123576322Z-066fc88b7f`.
+
+---
+
+## 2026-10-23 — E0077 — Recuperacao segura do ZIP de artefatos de Sao Paulo
+
+**Erro original literal:** `Arquivo incompleto, corrompido ou ZIP com
+CRC invalido`, no arquivo parcial
+`bu_imgbu_logjez_rdv_vscmr_2026_1t_SP.zip.part`.
+
+**Observacao:** esse arquivo pertence ao conjunto
+`artefatos` transmitidos de SP (BU binarios, RDV, log etc.).
+A falha de CRC nao e uma divergencia de votos nem explica o
+padrao nacional de `SEM_SECAO` do reconciliador, que consulta
+os conjuntos CSV separadamente.
+
+**Alteracoes no codigo:**
+- download com CRC/SHA falho passa a mover o arquivo suspeito para
+  `H:/TSE/forensics/urnas/quarantine/artefatos/SP/` com hash e
+  motivo, sem o destruir;
+- tenta novamente uma transferencia integral desde o zero,
+  no maximo uma segunda tentativa automatica;
+- preserva a segunda copia caso tambem seja invalida, sem laço infinito;
+- comando `python urnas.py repair` e **opcao A do menu** executam
+  somente os recursos em erro no manifesto anterior;
+- o reparo importa apenas os arquivos recuperados (nao refaz
+  conciliacao de dezenas de milhoes de chaves nem estatistica);
+- manifesta o reparo e grava snapshot historico apos conclusao.
+
+**Proxima verificacao:** resultado da tentativa no ambiente Windows
+do investigador. Sem acesso ao drive H: nao e possivel afirmar que
+o ZIP de SP esteja integro, recuperado ou indexado.

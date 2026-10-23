@@ -12,6 +12,7 @@ import csv
 import json
 import os
 import sys
+import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -30,6 +31,19 @@ def diagnostic(root: Path, *, detailed=True, emit=print):
     manifest = load(root / "download_manifest_latest.json")
     recap = load(root / "analysis" / "reconciliacao_bu_secao.summary.json")
     stats = load(root / "analysis" / "estatistica" / "estatistica_resumo.json")
+    imports_by_kind = collections.defaultdict(lambda: {"resources": 0, "rows": 0})
+    database = root / "analysis" / "urna_2026.sqlite3"
+    if database.is_file():
+        try:
+            with sqlite3.connect(f"file:{database.as_posix()}?mode=ro",
+                                 uri=True, timeout=10) as conn:
+                for key, rows in conn.execute(
+                        "SELECT resource_key,rows FROM imports"):
+                    kind = str(key).split(":", 1)[0]
+                    imports_by_kind[kind]["resources"] += 1
+                    imports_by_kind[kind]["rows"] += int(rows)
+        except sqlite3.Error as exc:
+            emit("AVISO: nao consegui consultar inventario SQLite: " + str(exc))
 
     emit("=== DIAGNOSTICO LOCAL TSE (SEM NOVO DOWNLOAD) ===")
     if manifest is None:
@@ -50,6 +64,14 @@ def diagnostic(root: Path, *, detailed=True, emit=print):
             emit("  MOTIVO: " + str(error.get("error", "sem detalhe no manifesto")))
             if error.get("url"):
                 emit("  ENDERECO: " + str(error["url"]))
+
+    for kind in ("bu", "secao", "secao_nacional"):
+        rec = imports_by_kind[kind]
+        emit(f"IMPORTADO {kind}: {rec['resources']} recursos / "
+             f"{rec['rows']:,} linhas (tabela imports)")
+    if not imports_by_kind["secao_nacional"]["rows"]:
+        emit("ATENCAO: nenhuma linha secao_nacional registrada como importada. "
+             "O novo conciliador ainda nao podera completar Presidente.")
 
     if recap:
         emit("RECONCILIACAO: chaves={:,}; coincidentes={:,}; SEM_BU={:,}; "
@@ -74,6 +96,7 @@ def diagnostic(root: Path, *, detailed=True, emit=print):
 
     errors_by_uf = collections.Counter()
     errors_by_uf_cargo = collections.Counter()
+    pe_25_places = collections.Counter()
     statuses = collections.Counter()
     examples = []
     comparison = root / "analysis" / "reconciliacao_bu_secao.csv"
@@ -91,6 +114,10 @@ def diagnostic(root: Path, *, detailed=True, emit=print):
                     cargo = (record.get("cargo") or "?").strip()
                     errors_by_uf[(uf, turn)] += 1
                     errors_by_uf_cargo[(uf, turn, cargo)] += 1
+                    if uf == "PE" and cargo == "25":
+                        pe_25_places[(record.get("municipio", ""),
+                                      record.get("zona", ""),
+                                      record.get("secao", ""))] += 1
                     if len(examples) < 10:
                         examples.append({k: record.get(k, "") for k in (
                             "UF", "municipio", "zona", "secao", "turno",
@@ -107,6 +134,13 @@ def diagnostic(root: Path, *, detailed=True, emit=print):
         emit("SEM_SECAO por UF/turno/cargo (maiores contagens):")
         for (uf, turn, cargo), amount in errors_by_uf_cargo.most_common(15):
             emit(f"  {uf} turno {turn} cargo {cargo}: {amount:,} chaves")
+        if pe_25_places:
+            emit("CARGO 25 PE - municipios/zonas/secoes distintas "
+                 "para examinar cobertura da eleicao local:")
+            emit(f"  {len(pe_25_places)} secoes observadas nos SEM_SECAO "
+                 "(quantidade de chaves nao equivale a votos).")
+            for (mu, zo, se), amount in pe_25_places.most_common(15):
+                emit(f"  municipio={mu} zona={zo} secao={se}: {amount} chaves")
     elif detailed:
         emit("ATENCAO: CSV de reconciliacao indisponivel para agrupar diferencas.")
 
@@ -118,6 +152,7 @@ def diagnostic(root: Path, *, detailed=True, emit=print):
         "processed": manifest.get("processed") if manifest else None,
         "errors": errors if isinstance(errors, list) else [],
         "reconciliation": recap,
+        "imported_sources_by_kind": dict(imports_by_kind),
         "statistical_summary": {
             "secoes": stats.get("secoes"), "desvios_locais_sinalizados": stats.get(
                 "desvios_locais_sinalizados"), "status": stats.get("status")}
@@ -131,6 +166,9 @@ def diagnostic(root: Path, *, detailed=True, emit=print):
             {"uf": uf, "turn": turn, "cargo": cargo, "keys": count}
             for (uf, turn, cargo), count in errors_by_uf_cargo.most_common()],
         "examples": examples,
+        "pe_office_25_missing_by_section": [
+            {"municipio": mu, "zona": zone, "secao": sec, "keys": amount}
+            for (mu, zone, sec), amount in pe_25_places.most_common()],
         "limitations": [
             "Esta analise agrupa chaves nao reconciliadas; nao prova ausencia fisica de votos.",
             "O erro de um recurso deve ser analisado antes de inferir discrepancia eleitoral.",

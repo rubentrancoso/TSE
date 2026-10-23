@@ -141,6 +141,39 @@ class UrnasTests(unittest.TestCase):
             self.assertIn("BA;.bu;1;100;1;1",
                           (Path(tmp) / "arquivos_por_uf.csv").read_text(encoding="utf-8-sig"))
 
+    def test_repair_only_failed_sp_artifact_without_global_reanalysis(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            root.mkdir(parents=True, exist_ok=True)
+            resource = {
+                "time_utc": "2026-10-22", "kind": "artefatos", "uf": "SP",
+                "id": "art-sp-01", "name": "SP - Arquivos transmitidos",
+                "url": "https://cdn.tse.jus.br/sp.zip",
+                "status": "error", "error": "ZIP CRC invalido",
+            }
+            manifest_path = root / "download_manifest_latest.json"
+            urnas.atomic_json(manifest_path, {
+                "selected": 1, "processed": 1, "reused": 0, "downloaded": 0,
+                "resources": [resource], "errors": [resource],
+            })
+            zip_path = root / "teste_sp.zip"
+            with zipfile.ZipFile(zip_path, "w") as archive:
+                archive.writestr("p003220-sp-m71072-z0001-s0001.rdv", b"rdv-sintetico")
+            digest = urnas.sha256_file(zip_path)
+            from unittest.mock import patch
+            with patch("urnas.download", return_value=(zip_path, digest)) as patched:
+                completed = urnas.repair_failed_resources(root, 0)
+                self.assertEqual(completed, 0)
+                self.assertEqual(patched.call_count, 1)
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            self.assertEqual(manifest["errors"], [])
+            self.assertEqual(manifest["resources"][0]["status"], "repaired")
+            self.assertTrue((root / "repair_manifest_latest.json").exists())
+            db = sqlite3.connect(root / "analysis" / "urna_2026.sqlite3")
+            self.assertEqual(
+                db.execute("SELECT COUNT(*) FROM archive_entries").fetchone()[0], 1)
+            db.close()
+
     def test_corrupt_sp_zip_is_quarantined_and_downloaded_cleanly_once(self):
         from unittest.mock import patch
 

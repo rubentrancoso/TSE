@@ -4255,3 +4255,25 @@ sem excluir checkpoints. Conferir no inicio
 `VARREDURA CONCLUIDA`, `INTEGRIDADE`,
 `PARTICAO` e o resumo final antes de qualquer
 declaracao de conciliacao nacional confirmada.
+
+
+---
+
+## 2026-10-24 — E0086 — Reconciliacao stream nacional concluida
+
+**Execucao observada em log fornecido pelo investigador:**
+
+- Engine `reconcile-stream-v1`, fingerprint `8ab3ce83c8992b9a4be03587c0f2fc49e93d5d3247b76a182d4a2dac0a9ce6b2`.
+- Total `rows_scanned=140699402`; elegiveis `135717720`.
+- 256 particoes seladas e verificadas por SHA-256.
+- `keys_compared=67858974`; `matches=67858746`.
+- `different_or_missing=228`, todas classificadas `SEM_SECAO`; `missing_bu=0`.
+- `imports_incomplete=[]`, `status=concluido`.
+- O resumo mantem `cobertura_nacional_confirmada=false`. Este indicador e conservador e fixo no codigo, **nao e calculado** a partir das 228 ocorrencias.
+- O CSV final foi gravado com 8.816 bytes, contra 145.665.711 bytes do relatorio preservado no snapshot anterior. Metodologia e conteudo das duas versoes requerem comparacao independente antes de interpretar a diferenca.
+- A saida confirma selagem completa e resultado consolidado, nao certificacao fisica da eleicao nem auditoria independente de todos os recursos esperados.
+- Duracao total deste ultimo trecho na etapa foi aproximadamente 2.309 s, incluindo varredura retomada de 76 milhoes, selagem, comparacao e consolidacao.
+
+**Observacao numerica:** `140699402-135717720=4981682` linhas nao elegiveis. No checkpoint de 76 milhoes, a mesma diferenca ja aparecia entre linhas lidas e elegiveis. Convergencia com o planejamento anterior de `135717720` linhas.
+
+**Seguimento:** novo `audit_reconciliation.py`, somente leitura sobre o CSV final de 8.816 bytes e seu summary, identifica distribuicao dos 228 casos por UF, turno, cargo, zona, secao, votavel e votos_BU, verifica contadores e checksum. Executar depois de `git pull` com `python audit_reconciliation.py`. Conferir a distribuicao e examinar fontes de cada caso antes de determinar sua causa; o script novo ainda nao foi executado no H: pelo assistente.

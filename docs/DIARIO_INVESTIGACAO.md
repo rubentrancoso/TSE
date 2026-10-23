@@ -4206,3 +4206,52 @@ leitura + escrita das particoes.
 `python urnas.py reconcile --engine stream --pilot-rows 1000000 --chunk-rows 250000`.
 Apenas depois de analisar esses resultados, executar
 `python urnas.py reconcile --engine stream`.
+
+
+---
+
+## 2026-10-23 — E0085 — Piloto sequencial de um milhao de linhas concluido no H:
+
+**Saida literal do investigador:** comando
+`python urnas.py reconcile --engine stream --pilot-rows 1000000 --chunk-rows 250000`
+concluiu normalmente, usando 256 particoes, com fingerprint
+`8ab3ce83c8992b9a4be03587c0f2fc49e93d5d3247b76a182d4a2dac0a9ce6b2`.
+
+**Evidencias quantitativas, incluindo leitura e gravacao de checkpoints:**
+- checkpoint 1: rowid=250.000; 250.000 examinadas/elegiveis;
+  36.116 linhas/s;
+- checkpoint 2: rowid=500.000; 500.000 examinadas/elegiveis;
+  27.304 linhas/s;
+- checkpoint 3: rowid=750.000; 750.000 examinadas/elegiveis;
+  25.330 linhas/s;
+- checkpoint 4: rowid=1.000.000; 1.000.000 examinadas/elegiveis;
+  24.224 linhas/s na media acumulada;
+- limite superior informado no banco: rowid=140.699.402;
+- `PILOTO CONCLUIDO` e confirmacao explicita de que
+  `nenhum relatorio nacional alterado`.
+
+**Conclusao tecnicamente sustentada:** a fase de varredura,
+normalizacao e particionamento executa e grava checkpoints
+persistentes na base real. A velocidade sustentada do primeiro
+milhao foi ~24.224 linhas/s (aprox. 41 s), muito superior
+aos 68–117 linhas/s das consultas indexadas por zona.
+Nao existe ainda evidencia de que as 256 particoes possam
+ser reconciliadas e consolidadas nessa mesma velocidade,
+nem teste nacional de equivalencia concluido.
+
+**Projecao condicional:** restam aproximadamente
+139,7 milhoes de rowids; a 24.224 linhas/s seriam
+aproximadamente 1h36min adicionais somente para a
+varredura. A velocidade pode variar com cache, volume
+de particoes, CPU, disco e sistema de arquivos; nao e
+um compromisso de duracao total.
+
+**Proximo passo:** exigir `OK` nos testes
+`python -m unittest discover -s tests -p test_reconcile_stream.py -v`
+caso ainda nao demonstrado, e depois retomar usando
+`python urnas.py reconcile --engine stream`,
+sem excluir checkpoints. Conferir no inicio
+`retomando depois de rowid=1,000,000`, observar
+`VARREDURA CONCLUIDA`, `INTEGRIDADE`,
+`PARTICAO` e o resumo final antes de qualquer
+declaracao de conciliacao nacional confirmada.

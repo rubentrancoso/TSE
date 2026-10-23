@@ -8,6 +8,7 @@ Um resultado antigo nunca é reutilizado se os SHA-256 importados mudarem.
 from __future__ import annotations
 
 import csv
+import gzip
 import hashlib
 import json
 import os
@@ -92,6 +93,58 @@ def tasks_from_db(db, ufs, turn):
         n += int(qty)
     tasks = sorted(groups.values(), key=key_sort)
     return tasks, n
+
+
+def cached_tasks_from_db(db, ufs, turn, output):
+    """Cache de planejamento; nao refaz GROUP BY nacional apos interrupcao."""
+    imports = list(db.execute(
+        """SELECT resource_key,sha256,rows FROM imports
+           WHERE resource_key LIKE 'bu:%'
+              OR resource_key LIKE 'secao:%'
+              OR resource_key LIKE 'secao_nacional:%'
+           ORDER BY resource_key"""))
+    changes = list(db.execute(
+        "SELECT resource_key,sha256,updated_utc FROM import_progress "
+        "ORDER BY resource_key"))
+    identity = json.dumps(
+        {"schema": "zone-plan-v1", "algorithm": VERSION,
+         "imports": imports, "partial_imports": changes,
+         "ufs": sorted(ufs), "turn": turn},
+        ensure_ascii=False, sort_keys=True)
+    checksum = hashlib.sha256(identity.encode("utf-8")).hexdigest()
+    cache_dir = Path(output).parent / "reconciliacao_checkpoints" / "plans"
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_path = cache_dir / (checksum + ".json.gz")
+    if cache_path.is_file():
+        with gzip.open(cache_path, "rt", encoding="utf-8") as stream:
+            payload = json.load(stream)
+        tasks = [{
+            "key": tuple(x["key"]), "ufs": set(x["ufs"]),
+            "municipios": set(x["municipios"]), "zonas": set(x["zonas"]),
+            "turnos": set(x["turnos"]), "rows": x["rows"]}
+            for x in payload["tasks"]]
+        print(f"PLANO REUTILIZADO: {len(tasks):,} zonas do cache "
+              "(sem repetir GROUP BY nacional).", flush=True)
+        return tasks, payload["total_rows"]
+    tasks, total_rows = tasks_from_db(db, ufs, turn)
+    payload = {
+        "total_rows": total_rows,
+        "tasks": [{"key": x["key"],
+                   "ufs": sorted(x["ufs"]),
+                   "municipios": sorted(x["municipios"]),
+                   "zonas": sorted(x["zonas"]),
+                   "turnos": sorted(x["turnos"]),
+                   "rows": x["rows"]} for x in tasks]}
+    tmp = cache_dir / (checksum + ".tmp")
+    try:
+        with gzip.open(tmp, "wt", encoding="utf-8") as stream:
+            json.dump(payload, stream, ensure_ascii=False)
+        os.replace(tmp, cache_path)
+    finally:
+        if tmp.exists():
+            tmp.unlink()
+    print(f"PLANO PRESERVADO: {cache_path}", flush=True)
+    return tasks, total_rows
 
 
 def source_fingerprint(db, tasks, ufs, turn):
@@ -260,7 +313,7 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None, worke
           "CTEs e JOINs pesados; prioridade estadual e complemento "
           "nacional para Presidente.", flush=True)
     begin_plan = time.monotonic()
-    tasks, total_rows = tasks_from_db(db, ufs, turn)
+    tasks, total_rows = cached_tasks_from_db(db, ufs, turn, output)
     fingerprint, provenance = source_fingerprint(db, tasks, ufs, turn)
     checkpoint_dir = output.parent / "reconciliacao_checkpoints" / fingerprint
     checkpoint_dir.mkdir(parents=True, exist_ok=True)
@@ -296,6 +349,7 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None, worke
     new_work_seconds = 0.0
     total = len(tasks)
     started = time.monotonic()
+    processing_start = None
     pending = deque()
     executor = None
 
@@ -306,8 +360,11 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None, worke
             if new_work_tasks < 5 or new_work_rows == 0:
                 eta = "calculando com os primeiros grupos"
             else:
+                elapsed = ((time.monotonic()-processing_start)
+                           if actual_workers > 1 and processing_start is not None
+                           else new_work_seconds)
                 eta = eta_text((total_rows-done_rows)
-                               * new_work_seconds / new_work_rows)
+                               * elapsed / new_work_rows)
             if done == total:
                 eta = "grupos completos; falta consolidar o relatorio"
             print(f"PROGRESSO: {done:,}/{total:,} zonas, {pct:.1f}% das linhas; "
@@ -357,6 +414,7 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None, worke
             else:
                 pending.append((index, task, part))
 
+        processing_start = time.monotonic()
         if actual_workers == 1:
             while pending:
                 index, task, part = pending.popleft()

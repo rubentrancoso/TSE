@@ -23,8 +23,11 @@ def audit(csv_path: Path, show_all: bool = False) -> int:
     if not csv_path.is_file() or not summary_path.is_file():
         raise SystemExit("CSV ou resumo ausente: " + str(csv_path))
     summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    digest = hashlib.sha256()
     with csv_path.open("rb") as source:
-        checksum = hashlib.file_digest(source, "sha256").hexdigest()
+        for block in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(block)
+    checksum = digest.hexdigest()
     with csv_path.open("r", encoding="utf-8-sig", newline="") as source:
         reader = csv.DictReader(source, delimiter=";")
         expected = {*KEYS, "votos_BU", "votos_secao", "diferenca", "situacao"}

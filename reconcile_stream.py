@@ -143,13 +143,18 @@ def rollback_buckets(paths, offsets):
 
 
 def sequential_scan(db, workspace, state, ufs, turn, bucket_count,
-                    chunk_rows=500000, after_chunk=None):
+                    chunk_rows=1000000, after_chunk=None, pilot_rows=0):
     if state["scan_complete"]:
         print("VARREDURA: integralmente preservada em checkpoint; "
               "nenhuma releitura do SQLite.", flush=True)
         return
-    if chunk_rows < 1:
-        raise ValueError("chunk_rows precisa ser positivo")
+    if chunk_rows < 1 or pilot_rows < 0:
+        raise ValueError("chunk_rows positivo e pilot_rows nao negativo")
+    if pilot_rows:
+        chunk_rows = min(chunk_rows, pilot_rows)
+        print(f"PILOTO: no maximo {pilot_rows:,} linhas adicionais; "
+              "gravar checkpoint e sair sem substituir o relatorio.",
+              flush=True)
     files = partition_files(workspace / "buckets", bucket_count)
     rollback_buckets(files, state["offsets"])
     from_rowid = int(state["last_rowid"])
@@ -221,6 +226,12 @@ def sequential_scan(db, workspace, state, ufs, turn, bucket_count,
                     relevant += 1
                 if count >= chunk_rows:
                     persist_chunk()
+                    if pilot_rows and state["rows_scanned"] - initial_scanned >= pilot_rows:
+                        print(f"PILOTO CONCLUIDO: {state['rows_scanned']-initial_scanned:,} "
+                              "linhas novas, checkpoint persistido; "
+                              "varredura nacional ainda incompleta.",
+                              flush=True)
+                        return
         persist_chunk()
         state["scan_complete"] = True
         state["scan_finished_utc"] = now()
@@ -367,7 +378,8 @@ def consolidate(workspace, state, bucket_count, output, provenance):
 
 
 def reconcile_stream(db, output, ufs=None, turn=None, buckets=256,
-                     chunk_rows=500000, after_chunk=None, after_part=None):
+                     chunk_rows=1000000, after_chunk=None, after_part=None,
+                     pilot_rows=0):
     """API retomável. after_chunk/after_part usados apenas por testes."""
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -385,7 +397,14 @@ def reconcile_stream(db, output, ufs=None, turn=None, buckets=256,
           f"fingerprint {fingerprint[:16]}; "
           f"checkpoint: {workspace}", flush=True)
     sequential_scan(db, workspace, state, ufs, turn, buckets,
-                    chunk_rows=chunk_rows, after_chunk=after_chunk)
+                    chunk_rows=chunk_rows, after_chunk=after_chunk,
+                    pilot_rows=pilot_rows)
+    if pilot_rows:
+        return {"status": "piloto_checkpoint_salvo", "engine": VERSION,
+                "fingerprint": fingerprint, "checkpoint_folder": str(workspace),
+                "rows_scanned": state["rows_scanned"],
+                "rows_eligible": state["rows_eligible"],
+                "scan_complete": state["scan_complete"]}
     # Seguranca: se particionamento foi interrompido, nenhuma comparacao inicia.
     if not state["scan_complete"]:
         raise RuntimeError("Particionamento nao finalizado")

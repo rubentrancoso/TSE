@@ -824,13 +824,87 @@ def reconcile(db, output, ufs, turn):
         print("ATENCAO: sem intersecao validada de registros BU x secao.", file=sys.stderr)
 
 
+def repair_failed_resources(root, reserve, no_import=False):
+    """Repara SOMENTE recursos em erro no ultimo manifesto, sem recomputar relatorios."""
+    import run_control
+    manifest = root / "download_manifest_latest.json"
+    if not manifest.is_file():
+        print("Nao ha manifesto de coleta para reparar.", flush=True)
+        return 0
+    record = json.loads(manifest.read_text(encoding="utf-8"))
+    previous_errors = list(record.get("errors") or [])
+    candidates = [e for e in previous_errors
+                  if e.get("id") and e.get("url") and e.get("kind") and e.get("uf")]
+    if not candidates:
+        print("Manifesto sem recursos em erro aptos para reparacao.", flush=True)
+        return 0
+    db = None
+    if not no_import:
+        db_path = root / "analysis" / "urna_2026.sqlite3"
+        db_path.parent.mkdir(parents=True, exist_ok=True)
+        run_control.stage("abrindo SQLite para indexar apenas recursos reparados")
+        db = sqlite3.connect(db_path, timeout=90)
+        run_control.attach_db(db)
+        schema(db)
+        db.commit()
+    repaired, failed = 0, []
+    try:
+        for i, error in enumerate(candidates, 1):
+            if run_control.cancelled():
+                raise KeyboardInterrupt
+            kind, uf = error["kind"], error["uf"]
+            resource = {key: error.get(key) for key in ("id", "name", "url")
+                        if error.get(key)}
+            run_control.stage(f"reparo {i}/{len(candidates)}: {kind}/{uf}")
+            print("REPARANDO recurso em erro: " + str(resource.get("name")), flush=True)
+            try:
+                path, digest = download(root, kind, uf, resource, reserve)
+                if db is not None:
+                    run_control.stage(f"indexando arquivo reparado {kind}/{uf}")
+                    key = kind + ":" + str(resource["id"])
+                    import_file(db, path, kind, key, digest)
+                new_record = dict(error)
+                new_record.pop("error", None)
+                new_record.update({"status": "repaired", "sha256": digest,
+                                   "path": str(path), "repaired_utc": now()})
+                record["resources"] = [
+                    new_record if
+                    e.get("id") == error.get("id") and
+                    e.get("kind") == kind and e.get("uf") == uf else e
+                    for e in record.get("resources", [])
+                ]
+                record["errors"] = [
+                    e for e in record["errors"] if not (
+                        e.get("id") == error["id"] and e.get("kind") == kind
+                        and e.get("uf") == uf)
+                ]
+                record["downloaded"] = int(record.get("downloaded") or 0) + 1
+                record["updated_at_utc"] = now()
+                atomic_json(manifest, record)
+                repaired += 1
+            except Exception as exc:
+                failed.append({"id": resource.get("id"), "uf": uf, "kind": kind,
+                               "error": str(exc)})
+                print(f"ERRO NO REPARO {kind}/{uf}: {exc}", file=sys.stderr)
+        atomic_json(root / "repair_manifest_latest.json", {
+            "updated_at_utc": now(), "attempted": len(candidates),
+            "repaired": repaired, "errors": failed})
+        print(f"REPARO: {repaired} recursos recuperados, "
+              f"{len(failed)} erros; reconciliacao NAO repetida.", flush=True)
+        return len(failed)
+    finally:
+        if db is not None:
+            run_control.attach_db(None)
+            db.close()
+
+
 def main():
     import run_control
     run_control.install()
     run_control.stage("analisando argumentos e preparando acesso ao drive de dados")
     parser = argparse.ArgumentParser(
         description="Gerenciador TSE: consultar, baixar sob demanda, validar e tornar BU/sections consultaveis")
-    parser.add_argument("action", choices=("status", "fetch", "import", "export", "reconcile", "stats", "verify"),
+    parser.add_argument("action", choices=("status", "fetch", "import", "export", "reconcile", "stats", "repair", "verify"),
                         help="status=apenas consultar; fetch=baixar e importar; import=processar arquivos locais")
     parser.add_argument("--root", help="Diretorio de dados (padrao no Windows: H:/TSE/forensics/urnas)")
     parser.add_argument("--kind", choices=("bu", "secao", "artefatos"), action="append",
@@ -858,7 +932,7 @@ def main():
     root = root_path(args.root)
     run_control.configure_log(root)
     run_control.stage("registro persistente ativado em analysis/logs")
-    if args.action in ("fetch", "stats", "reconcile", "import"):
+    if args.action in ("fetch", "stats", "reconcile", "import", "repair"):
         run_control.stage("preservando historico ANTES de substituir relatorios")
         # Antes de qualquer substituicao, arquivar os relatorios da ultima
         # execucao. Se arquivar falhar, nao sobrescrever analises anteriores.
@@ -872,6 +946,12 @@ def main():
         os.environ["TMP"] = str(temporary.resolve())
         os.environ["TEMP"] = str(temporary.resolve())
         os.environ["TMPDIR"] = str(temporary.resolve())
+    if args.action == "repair":
+        fails = repair_failed_resources(root, int(args.reserve_gb * 1024**3),
+                                        args.no_import)
+        if fails:
+            raise SystemExit(1)
+        return
     kinds = args.kind or (["bu", "secao"] if args.action != "verify" else list(DATASETS))
     kinds = list(dict.fromkeys(kinds))
     if args.action in ("status", "fetch"):

@@ -206,8 +206,29 @@ def validate_archived_file(path, expected_size=0, expected_hash=None):
     return digest
 
 
-def download(root, kind, uf, resource, reserve, legacy=None):
-    """Baixa uma vez, valida, continua .part e preserva revisoes de fonte."""
+def quarantine_partial(root, kind, uf, part, reason):
+    """Preserva bytes suspeitos fora do cache de retomada (sem apagar evidencia)."""
+    if not part.exists():
+        return None
+    digest = sha256_file(part)
+    folder = root / "quarantine" / kind / uf
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / (part.name + "." + digest[:16] + ".bad")
+    if target.exists():
+        if sha256_file(target) != digest:
+            raise RuntimeError("Colisao de SHA ao preservar parcial corrompido")
+        part.unlink()
+    else:
+        os.replace(part, target)
+    atomic_json(Path(str(target) + ".json"), {
+        "sha256": digest, "reason": reason, "quarantined_utc": now(),
+        "original_part": str(part), "bytes": target.stat().st_size})
+    print(f"ZIP PARCIAL SUSPEITO preservado em {target}", flush=True)
+    return target
+
+
+def download(root, kind, uf, resource, reserve, legacy=None, _fresh_retry=False):
+    """Baixa, valida CRC/SHA, preserva ZIPs suspeitos e tenta copia limpa uma vez."""
     dest = resource_path(root, kind, uf, resource)
     state_file = Path(str(dest) + ".meta.json")
     url = str(resource["url"])
@@ -318,8 +339,12 @@ def download(root, kind, uf, resource, reserve, legacy=None):
                                          "resource_revision": revision,
                                          "recovered_partial": True, "checked_at_utc": now()})
                 return dest, digest
-            part.unlink()
-            return download(root, kind, uf, resource, reserve, legacy=None)
+            quarantine_partial(root, kind, uf, part,
+                               "HTTP 416 e parcial sem validacao CRC/SHA")
+            if _fresh_retry:
+                raise RuntimeError("ZIP incompleto persistente apos tentativa limpa: " + str(part))
+            return download(root, kind, uf, resource, reserve, legacy=None,
+                            _fresh_retry=True)
         raise
     if offset and response.status == 206:
         content_range = response.headers.get("Content-Range", "")
@@ -356,7 +381,15 @@ def download(root, kind, uf, resource, reserve, legacy=None):
         raise RuntimeError("SHA-256 oficial nao corresponde ao arquivo recebido: " + str(part))
     valid = validate_archived_file(part, expected_size, digest_hex)
     if not valid:
-        raise RuntimeError("Arquivo incompleto, corrompido ou ZIP com CRC invalido: " + str(part))
+        preserved = quarantine_partial(
+            root, kind, uf, part, "ZIP incompleto, corrompido ou CRC invalido")
+        if not _fresh_retry:
+            print("REFACAO AUTOMATICA: nova transferencia de bytes desde zero "
+                  "(no maximo uma tentativa).", flush=True)
+            return download(root, kind, uf, resource, reserve, legacy=None,
+                            _fresh_retry=True)
+        raise RuntimeError("ZIP invalido mesmo apos segunda transferencia; "
+                           f"copia preservada: {preserved}")
     os.replace(part, dest)
     atomic_json(state_file, {"source_url": url, "resource_id": resource.get("id"),
                              "resource_name": resource.get("name"),

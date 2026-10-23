@@ -141,6 +141,35 @@ class UrnasTests(unittest.TestCase):
             self.assertIn("BA;.bu;1;100;1;1",
                           (Path(tmp) / "arquivos_por_uf.csv").read_text(encoding="utf-8-sig"))
 
+    def test_corrupt_sp_zip_is_quarantined_and_downloaded_cleanly_once(self):
+        from unittest.mock import patch
+
+        class Response(io.BytesIO):
+            status = 200
+            headers = {}
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            buffer = io.BytesIO()
+            with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_STORED) as archive:
+                archive.writestr("dados.csv", b"secoes-teste-original")
+            clean = buffer.getvalue()
+            corrupt = clean.replace(b"secoes-teste-original", b"secoes-teste-corromp")
+            self.assertNotEqual(clean, corrupt)
+            self.assertTrue(zipfile.is_zipfile(io.BytesIO(corrupt)))
+            resource = {"id": "sp-zip", "name": "SP - Arquivos transmitidos",
+                        "url": "https://cdn.tse.jus.br/test-sp.zip"}
+            with patch("urllib.request.urlopen",
+                       side_effect=[Response(corrupt), Response(clean)]) as getter:
+                dest, checksum = urnas.download(root, "artefatos", "SP", resource, 0)
+                self.assertEqual(getter.call_count, 2)
+                self.assertEqual(checksum, urnas.sha256_file(dest))
+                self.assertEqual(dest.read_bytes(), clean)
+            quarantined = list((root / "quarantine" / "artefatos" / "SP").glob("*.bad"))
+            self.assertEqual(len(quarantined), 1)
+            self.assertEqual(quarantined[0].read_bytes(), corrupt)
+            self.assertTrue(Path(str(quarantined[0]) + ".json").exists())
+
     def test_download_cache_prevents_second_network_request(self):
         from unittest.mock import patch
 

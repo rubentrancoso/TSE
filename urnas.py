@@ -889,6 +889,10 @@ def repair_failed_resources(root, reserve, no_import=False):
         atomic_json(root / "repair_manifest_latest.json", {
             "updated_at_utc": now(), "attempted": len(candidates),
             "repaired": repaired, "errors": failed})
+        from history_forensics import snapshot as history_snapshot
+        run_control.stage("preservando historico da reparacao focalizada")
+        history_snapshot(root, "apos-reparo",
+                         context={"reparados": repaired, "falhas": failed})
         print(f"REPARO: {repaired} recursos recuperados, "
               f"{len(failed)} erros; reconciliacao NAO repetida.", flush=True)
         return len(failed)

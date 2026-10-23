@@ -9,6 +9,7 @@ from __future__ import annotations
 import csv
 import os
 import sqlite3
+import time
 from pathlib import Path
 
 HEADER = ["UF", "municipio", "zona", "secao", "turno", "cargo",
@@ -58,7 +59,19 @@ def compare_task_fast(db, task, path):
     # Em cada chave, acumular fontes em campos separados. Nunca somar
     # fonte estadual e nacional: a estadual tem prioridade por chave.
     totals = {}
+    start = time.monotonic()
+    counted = 0
+    next_log = start + 20
+    print(f"[WORKER BUSCA] pid={os.getpid()} zona={'/'.join(task['key'])}; "
+          "executando SELECT indexado.", flush=True)
     for kind, uf, mu, zo, sec, turn, cargo, candidate, votes in db.execute(sql, args):
+        counted += 1
+        moment = time.monotonic()
+        if moment >= next_log:
+            print(f"[WORKER LENDO] pid={os.getpid()} zona={'/'.join(task['key'])}; "
+                  f"{counted:,} linhas lidas; {moment-start:.1f}s.",
+                  flush=True)
+            next_log = moment + 20
         ca = str(cargo).strip().lower()
         if kind == "secao_nacional" and ca != "1":
             continue
@@ -70,6 +83,10 @@ def compare_task_fast(db, task, path):
         by_source = totals.setdefault(key, {})
         by_source[kind] = by_source.get(kind, 0) + int(votes)
 
+    print(f"[WORKER LEITURA OK] pid={os.getpid()} zona={'/'.join(task['key'])}; "
+          f"{counted:,} linhas em {time.monotonic()-start:.1f}s; "
+          f"{len(totals):,} chaves. Gravando divergencias.",
+          flush=True)
     checked = different = missing_bu = missing_section = 0
     with Path(path).open("w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file, delimiter=";")
@@ -96,6 +113,9 @@ def compare_task_fast(db, task, path):
                              status))
         file.flush()
         os.fsync(file.fileno())
+    print(f"[WORKER OK] pid={os.getpid()} zona={'/'.join(task['key'])}; "
+          f"{checked:,} chaves, {different:,} divergencias; "
+          f"{time.monotonic()-start:.1f}s.", flush=True)
     return checked, different, missing_bu, missing_section
 
 
@@ -103,6 +123,10 @@ def process_task(database_path, task, part_path):
     """Worker independente, seguro para multiprocessing no Windows."""
     db_path = Path(database_path)
     uri = db_path.resolve().as_uri() + "?mode=ro"
+    print(f"[WORKER INICIADO] pid={os.getpid()} "
+          f"zona={'/'.join(task['key'])}; abrindo SQLite leitura.", flush=True)
     with sqlite3.connect(uri, uri=True, timeout=30) as db:
         db.execute("PRAGMA query_only=ON")
+        print(f"[WORKER SQLITE OK] pid={os.getpid()} "
+              f"zona={'/'.join(task['key'])}.", flush=True)
         return compare_task_fast(db, task, part_path)

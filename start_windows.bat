@@ -25,7 +25,7 @@ echo [2] Abrir painel de apuracao
 echo [3] Consultar disponibilidade e arquivos ja baixados
 echo [4] Coleta opcional por UF (BU, votacao e arquivos de urna)
 echo [5] Exportar registros de uma secao
-echo [6] Reconciliar fontes locais novamente
+echo [6] Reconciliar fontes locais via varredura sequencial (retomavel)
 echo [7] Verificar integridade dos downloads
 echo [8] Executar novamente a bateria estatistica (sem baixar arquivos)
 echo [9] Diagnosticar ultima coleta: erro e SEM_SECAO por UF/cargo
@@ -82,7 +82,7 @@ goto done
 
 :reconcile
 echo Comparacao dos BUs e votos por secao JA BAIXADOS.
-echo Sem download; checkpoints por zona e previsao aproximada de conclusao.
+echo Sem download; varredura sequencial com particoes e checkpoints.
 %PY% urnas.py reconcile
 goto done
 
@@ -108,12 +108,12 @@ goto done
 :done
 echo.
 if errorlevel 130 (
-  echo [CANCELADO] Coleta interrompida a pedido. Execute 1 para continuar.
+  echo [CANCELADO] Checkpoints preservados. Repita a mesma opcao para retomar.
   pause
   goto menu
 )
 if errorlevel 1 (
-  echo [AVISO] A rotina encerrou com erro; escolha 1 para continuar de onde parou.
+  echo [AVISO] A rotina encerrou com erro. Consulte a mensagem e retome a mesma opcao.
 ) else (
   echo Rotina concluida. Veja os relatórios e mensagens acima.
 )

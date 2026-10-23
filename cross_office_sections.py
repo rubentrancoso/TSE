@@ -83,7 +83,7 @@ def extract_bucket(src, candidates_out, sections_out):
         nonlocal paired, unequal
         for key in section_keys:
             amounts = per_section[key]
-            count_cargos.update(amounts)
+            count_cargos.update(amounts.keys())
             pres, gov, sen = (amounts.get(c) for c in ("1", "3", "5"))
             if pres is not None and gov is not None:
                 paired += 1

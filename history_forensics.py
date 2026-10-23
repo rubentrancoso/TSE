@@ -85,7 +85,8 @@ def eligible_reports(root):
         for path in sorted(folder.iterdir()):
             if path.is_file() and path.suffix.lower() in REPORT_SUFFIXES:
                 selected.append((path, path.relative_to(root).as_posix()))
-    for name in ("download_manifest_latest.json", "catalogo_latest.json"):
+    for name in ("download_manifest_latest.json", "catalogo_latest.json",
+                 "repair_manifest_latest.json"):
         path = root / name
         if path.is_file():
             selected.append((path, name))

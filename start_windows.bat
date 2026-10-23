@@ -29,10 +29,12 @@ echo [6] Reconciliar fontes locais novamente
 echo [7] Verificar integridade dos downloads
 echo [8] Executar novamente a bateria estatistica (sem baixar arquivos)
 echo [9] Diagnosticar ultima coleta: erro e SEM_SECAO por UF/cargo
+echo [A] Reparar APENAS arquivos em erro da ultima coleta
 echo [0] Sair
 echo.
-choice /C 1234567890 /N /M "Selecione: "
-if errorlevel 10 exit /b 0
+choice /C 123456789A0 /N /M "Selecione: "
+if errorlevel 11 exit /b 0
+if errorlevel 10 goto repair
 if errorlevel 9 goto diagnose
 if errorlevel 8 goto stats
 if errorlevel 7 goto verify
@@ -95,6 +97,12 @@ goto done
 :diagnose
 echo Diagnostico SEM download e SEM recalcular reconciliacao.
 %PY% diagnose_forensics.py
+goto done
+
+:repair
+echo Reparar SOMENTE recursos em erro no ultimo manifesto.
+echo Nao refaz reconciliacao ou estatisticas; reaproveita os dados.
+%PY% urnas.py repair
 goto done
 
 :done

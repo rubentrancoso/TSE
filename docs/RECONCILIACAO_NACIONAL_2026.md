@@ -96,3 +96,40 @@ nao substitui cotejo candidato por candidato.
 ja verificados apenas para repetir a conciliacao; nao modificar
 `analysis/reconciliacao_checkpoints` nem sobrescrever o CSV atual
 ate nova etapa auditavel.
+
+
+## Checagem focal por JSON oficial da zona 4
+
+Foi publicado na main `verify_noronha_6261.py`, uma verificacao
+**somente-leitura** do CSV nacional final. Este script nao acessa o
+SQLite nem modifica os 256 checkpoints. Ele monta um consolidado
+BU por votavel das 228 linhas de PE/30015/zona 4/cargo 25,
+e consulta **um unico** arquivo de resultado unificado do TSE
+para a eleicao `6261` em nivel de zona.
+
+O formato do endpoint decorre da especificacao EA20 do portal
+e de amostras de arquivos de 2026; a URL exata ainda requer
+confirmacao HTTP no computador do investigador:
+`https://resultados.tse.jus.br/oficial/ele2026/6261/dados/pe/pe30015-z0004-c0025-e006261-u.json`.
+
+O programa preserva o JSON bruto no H:, mostra seu SHA-256,
+valida ID da eleicao, zona e cargo, confronta todos os votaveis
+`n`/`vap` (com `vb` e `tvn` para branco/nulo), confere
+10 secoes e 2.445 votos totais, e salva um relatorio
+versionado por hash. A rede nao sera chamada novamente ao
+encontrar o arquivo original salvo.
+
+Passos apos finalizar a reconciliacao:
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_verify_noronha_6261.py -v
+python verify_noronha_6261.py
+```
+
+**Escopo da evidencia:** o JSON EA20 agrega por zona,
+nao fornece votacao individual por secao. Se houver igualdade,
+sera uma validacao independente por candidato **da zona inteira**,
+e nao 228 comparacoes por secao. Ausencia de dados oficiais ou
+falha de acesso deve permanecer como pendencia explicita,
+sem inferir desvio de votos.

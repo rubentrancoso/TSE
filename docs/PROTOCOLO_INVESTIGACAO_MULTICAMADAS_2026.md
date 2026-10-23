@@ -284,3 +284,44 @@ fontes explicitas e variantes de sensibilidade.
 
 **Estado:** codigo e testes sinteticos publicados; piloto
 nacional e testes locais no H: ainda aguardam execucao.
+
+
+## Auditoria descritiva dos denominadores por secao (24/10/2026)
+
+**Evidencia de execucao real:** a matriz entre cargos foi concluida
+no computador do investigador com SHA-256
+`9aefc6cf4591180a1f2edfdc2cdb7b9e44c19ae8caf2b5d23fa2d6c83f02dfad`.
+Ela contem **499.206 secoes** e **67.858.746** chaves BU,
+para cargos 1,3,5,6,7,8.
+Presidente aparece em 499.206 secoes; Governador e Senado,
+em 497.897 cada um; 497.897 secoes possuem ambos
+Presidente e Governador. Nestas, **17.233** secoes
+(aproximadamente 3,46%) tem totais distintos.
+**Nao classificar estas diferencas como divergencias de
+totalizacao BU x oficial nem como fraude.**
+Os 228 registros do cargo 25 do pleito especial 6261
+foram deliberadamente excluidos da matriz regular;
+a verificacao agregada especifica ja foi concluida.
+
+**Auditoria seguinte publicada:** `audit_cross_office_totals.py`.
+Executar apos o `git pull` e testes:
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_audit_cross_office_totals.py -v
+python audit_cross_office_totals.py
+```
+
+O script confere SHA-256 da matriz, repeticoes de secao,
+coerencia dos flags de cargo e os contadores nacionais,
+sem reler SQLite. Produz no subdiretorio
+`auditoria_totais/`: `por_uf_turno.csv`,
+`por_municipio_turno.csv`, `maiores_diferencas.csv`
+e `summary.json` com SHA-256 das tres saidas.
+Documenta a **distribuicao** e a magnitude dos 17.233
+casos, sem fazer classificacao ideologica.
+
+Depois: averiguar as maiores diferencas com artefatos BU,
+regras de voto por cargo, votos brancos/nulos,
+comparecimento e identificador de eleicao, antes da
+analise de correlacao territorial de candidaturas.

@@ -922,6 +922,9 @@ def main():
     parser.add_argument("--secao", help="Secao eleitoral para exportacao")
     parser.add_argument("--candidate", help="Numero do votavel para exportacao")
     parser.add_argument("--output", help="Caminho do CSV exportado")
+    parser.add_argument("--workers", type=int, default=4,
+                        help="Reconciliacao: processos paralelos de 1 a 8; "
+                             "padrao 4, tente 2 se o disco H estiver lento")
     parser.add_argument("--reserve-gb", type=float, default=2.0,
                         help="Espaco livre minimo adicional, padrao 2 GB")
     parser.add_argument("--no-import", action="store_true", help="Somente baixar e validar (nao importar CSV)")
@@ -1046,7 +1049,8 @@ def main():
                     print("Reconciliacao automatica BU x votacao por secao...", flush=True)
                     from reconcile_incremental import reconcile_resumable
                     reconcile_resumable(db, output,
-                                        args.uf if not args.all else [], args.turn)
+                                        args.uf if not args.all else [], args.turn,
+                                        workers=args.workers)
                 except Exception as exc:
                     errors.append({"status": "error", "stage": "reconcile",
                                    "time_utc": now(), "error": str(exc)})
@@ -1109,7 +1113,8 @@ def main():
                 output = Path(args.output or root / "analysis" / "reconciliacao_bu_secao.csv")
                 from reconcile_incremental import reconcile_resumable
                 run_control.stage("reconciliando por zona com checkpoints e estimativa de tempo")
-                reconcile_resumable(db, output, args.uf, args.turn)
+                reconcile_resumable(db, output, args.uf, args.turn,
+                                    workers=args.workers)
             elif args.action == "export":
                 if not db.execute("SELECT 1 FROM imports LIMIT 1").fetchone():
                     raise SystemExit("Base vazia. Execute fetch primeiro.")

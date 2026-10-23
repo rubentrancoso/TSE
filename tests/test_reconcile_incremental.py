@@ -42,6 +42,64 @@ class ResumeReconcileTests(unittest.TestCase):
         db.commit()
         return db
 
+    def test_president_national_source_fills_state_gap_without_double_count(self):
+        db = sqlite3.connect(":memory:")
+        urnas.schema(db)
+        # Estado publica outros cargos; Presidente aparece no CSV nacional.
+        row(db, 2, "bu", "AC", "1007", "9", "1", "1", "13", 67)
+        row(db, 3, "bu", "AC", "1007", "9", "1", "1", "22", 143)
+        row(db, 4, "secao_nacional", "AC", "1007", "9", "1", "1", "13", 67)
+        row(db, 5, "secao_nacional", "AC", "1007", "9", "1", "1", "22", 143)
+        row(db, 6, "bu", "AC", "1007", "9", "1", "1", "95", 2)
+        row(db, 7, "secao_nacional", "AC", "1007", "9", "1", "1", "95", 2)
+        row(db, 8, "bu", "AC", "1007", "9", "1", "1", "96", 7)
+        row(db, 9, "secao_nacional", "AC", "1007", "9", "1", "1", "96", 7)
+        db.commit()
+        with tempfile.TemporaryDirectory() as folder:
+            result = ri.reconcile_resumable(db, Path(folder) / "output.csv")
+            self.assertEqual(result["keys_compared"], 4)
+            self.assertEqual(result["different_or_missing"], 0)
+            self.assertEqual(result["missing_section"], 0)
+            self.assertTrue(result["fingerprint"])
+
+        # Se houver tambem a mesma chave estadual, esta prevalece,
+        # nao se somam 67 + 67 nem se compara duas vezes.
+        row(db, 10, "secao", "AC", "1007", "9", "1", "1", "13", 67)
+        db.commit()
+        with tempfile.TemporaryDirectory() as folder:
+            result = ri.reconcile_resumable(db, Path(folder) / "output.csv")
+            self.assertEqual(result["keys_compared"], 4)
+            self.assertEqual(result["different_or_missing"], 0)
+
+    def test_president_national_missing_and_other_office_remain_visible(self):
+        db = sqlite3.connect(":memory:")
+        urnas.schema(db)
+        row(db, 2, "bu", "PE", "24570", "23", "7", "1", "13", 61)
+        row(db, 3, "bu", "PE", "24570", "23", "7", "1", "25", 14)
+        # Registro de cargo diferente que nao esta no nacional.
+        db.execute("UPDATE votes SET cargo='25' WHERE line=3")
+        db.commit()
+        with tempfile.TemporaryDirectory() as folder:
+            report = ri.reconcile_resumable(db, Path(folder) / "output.csv")
+            self.assertEqual(report["different_or_missing"], 2)
+            self.assertEqual(report["missing_section"], 2)
+
+    def test_national_resource_change_invalidates_checkpoints(self):
+        db = self.prepare()
+        db.execute("""INSERT INTO imports
+            (resource_key,sha256,imported_utc,rows,files,parser_version)
+            VALUES('secao_nacional:presidente','old','2026-10-23',40,1,3)""")
+        db.commit()
+        with tempfile.TemporaryDirectory() as folder:
+            filename = Path(folder) / "output.csv"
+            old = ri.reconcile_resumable(db, filename)
+            db.execute("""UPDATE imports SET sha256='changed'
+                WHERE resource_key='secao_nacional:presidente'""")
+            db.commit()
+            new = ri.reconcile_resumable(db, filename)
+            self.assertNotEqual(old["fingerprint"], new["fingerprint"])
+            self.assertEqual(new["reused_tasks"], 0)
+
     def test_resume_after_interrupt_and_no_recount(self):
         db = self.prepare()
         with tempfile.TemporaryDirectory() as d:

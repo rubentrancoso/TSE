@@ -19,7 +19,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-VERSION = "reconcile-zones-v1"
+VERSION = "reconcile-zones-v2-presidential-national-fallback"
 HEADER = ["UF", "municipio", "zona", "secao", "turno", "cargo",
           "votavel", "votos_BU", "votos_secao", "diferenca", "situacao"]
 
@@ -57,7 +57,9 @@ def tasks_from_db(db, ufs, turn):
     A consulta de planejamento pode demorar em bancos enormes. A fase é
     anunciada e cronometrada separadamente, antes de qualquer estimativa.
     """
-    where = ["source_kind IN ('bu', 'secao')", "votos IS NOT NULL",
+    where = ["source_kind IN ('bu', 'secao', 'secao_nacional')",
+             "(source_kind != 'secao_nacional' OR cargo IN ('1', 'presidente'))",
+             "votos IS NOT NULL",
              "TRIM(uf) != ''", "TRIM(municipio) != ''",
              "TRIM(zona) != ''", "TRIM(turno) != ''",
              "TRIM(secao) != ''", "TRIM(cargo) != ''", "TRIM(votavel) != ''"]
@@ -100,6 +102,7 @@ def source_fingerprint(db, tasks, ufs, turn):
                 """SELECT resource_key,sha256,rows FROM imports
                    WHERE resource_key LIKE 'bu:%'
                       OR resource_key LIKE 'secao:%'
+                      OR resource_key LIKE 'secao_nacional:%'
                    ORDER BY resource_key""")]
     except sqlite3.OperationalError:
         source = []
@@ -140,7 +143,9 @@ def sql_group_for_task(task):
         group = sorted(values)
         where.append(column + " IN (" + ",".join("?" for _ in group) + ")")
         params.extend(group)
-    where.extend(("source_kind IN ('bu','secao')", "votos IS NOT NULL",
+    where.extend(("source_kind IN ('bu','secao','secao_nacional')",
+                  "(source_kind != 'secao_nacional' OR cargo IN ('1','presidente'))",
+                  "votos IS NOT NULL",
                   "TRIM(votavel) != ''", "TRIM(cargo) != ''",
                   "TRIM(secao) != ''"))
     sql = """
@@ -158,7 +163,23 @@ def sql_group_for_task(task):
         GROUP BY origem,uf,municipio,zona,secao,turno,cargo,votavel
     ),
     bu AS (SELECT * FROM grouped WHERE origem='bu'),
-    sec AS (SELECT * FROM grouped WHERE origem='secao')
+    sec_state AS (SELECT * FROM grouped WHERE origem='secao'),
+    sec_national AS (SELECT * FROM grouped WHERE origem='secao_nacional' AND cargo='1'),
+    -- Fonte estadual tem precedencia por CHAVE exata. O arquivo nacional
+    -- complementa somente os votos presidenciais que nao constam nele.
+    -- Nunca somar linhas estaduais e nacionais para a mesma chave.
+    sec AS (
+        SELECT * FROM sec_state
+        UNION ALL
+        SELECT n.* FROM sec_national n
+        WHERE NOT EXISTS (
+            SELECT 1 FROM sec_state s
+            WHERE s.uf=n.uf AND s.municipio=n.municipio AND
+                  s.zona=n.zona AND s.secao=n.secao AND
+                  s.turno=n.turno AND s.cargo=n.cargo AND
+                  s.votavel=n.votavel
+        )
+    )
     SELECT b.uf,b.municipio,b.zona,b.secao,b.turno,b.cargo,b.votavel,
            b.votos,s.votos
     FROM bu b LEFT JOIN sec s ON
@@ -230,6 +251,8 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None):
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
     ufs = [str(x).upper() for x in (ufs or [])]
+    print("RECONCILIACAO: usando secao estadual e complemento nacional de "
+          "Presidente, sem duplicar chaves.", flush=True)
     print("RECONCILIACAO: preparando o plano de trabalho por UF, zona e turno...",
           flush=True)
     clock = time.monotonic()
@@ -350,8 +373,11 @@ def reconcile_resumable(db, output, ufs=None, turn=None, after_chunk=None):
             "missing_bu": missing_bu, "missing_section": missing_sec,
             "matches": checked-different, "reused_tasks": resumed,
             "csv": str(output), "checkpoint_folder": str(checkpoint_dir),
-            "limitations": "A comparacao cobre apenas source_kind bu e secao, "
-            "com campos de identificacao preenchidos. As fontes sao "
+            "section_source_priority": ("secao estadual por chave; "
+                "secao_nacional apenas para cargo Presidente e chave ausente "
+                "na secao estadual; nunca somar fontes duplicadas"),
+            "limitations": "Comparacao BU versus secao estadual ou nacional "
+            "de Presidente, somente com chaves preenchidas. As fontes sao "
             "dados publicados pelo TSE, nao provas independentes da urna fisica."
         }
         atomic_json(output.with_suffix(".summary.json"), summary)

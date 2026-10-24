@@ -610,3 +610,61 @@ O script gera `diagnostico_conjunto/todos_os_pares.csv`,
 `por_uf_cargo.csv` e `summary.json` com hashes.
 **Status:** implementado na main; aguarda execucao real
 para saber quantos pares mudam de sinal ou amplitude.
+
+
+## Diagnostico conjunto real dos 778 pares — 24/10/2026
+
+O investigador apresentou o resultado final de
+`audit_cross_office_correlations.py`, com 7 testes OK:
+162 pares Presidente/Governador e 616 Presidente/Senado.
+Ambos os arquivos de origem foram confrontados por SHA-256;
+todos os 778 coeficientes bruto e intrazona foram calculados.
+O resumo produzido fica em
+`analysis/entre_cargos/8ab3ce83c8992b9a-94fc637b4737c20d/diagnostico_conjunto/summary.json`.
+
+**Governador:** 162 pares aptos, zero inversao de sinal
+com magnitudes >=0,10 em ambos os coeficientes,
+29 mudancas absolutas >=0,20. Direcoes apos ajuste:
+71 positivas, 75 negativas, 16 proximas de zero.
+
+**Senado:** 610 pares aptos de 616 (seis nao alcancaram
+o filtro de pelo menos 1.000 votos do senador),
+13 inversoes relevantes de sinal e 92 mudancas
+absolutas >=0,20. Direcoes: 172 positivas, 185
+negativas e 253 proximas de zero.
+As inversoes ocorrem em oito UFs:
+TO=4, AC=2, RN=2, AL=1, AM=1,
+PI=1, RR=1, SP=1. Os 13 pares
+**nao sao necessariamente 13 senadores diferentes**.
+
+Comparar magnitudes de correlacao entre cargos requer
+normalizacao comparavel; Governador usa votos validos,
+Senado usa total por eleitor com duas escolhas.
+Ambos os conjuntos compartilham as mesmas secoes e
+presidenciaveis, logo os pares nao sao independentes.
+Sem significancia calibrada e confirmacao documental,
+nao atribuir essas inversoes a fraude.
+
+**Proximo passo antes de novas leituras volumosas:**
+`review_cross_office_correlations.py`, que verifica
+SHA-256 e contabiliza exatamente quais IDs de Senador
+e Presidente integram os 13 pares, seus `r_bruto`,
+`r_ajustado`, secões, zonas e votos, e quais senadores
+sao repetidos nos pares. Retorna tambem lista de todas
+as 121 mudancas >=0,20 dos dois cargos. Os relatórios
+ficam em `diagnostico_conjunto/revisao_inversoes/`.
+Testes sintéticos sao obrigatorios antes da execucao
+no conjunto real:
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_review_cross_office_correlations.py -v
+python review_cross_office_correlations.py
+```
+
+Essa etapa **nao relê SQLite nem BU**.
+Apos examinar os IDs de candidato, enriquecer
+com dados oficiais de candidatura/partido/coligacao,
+sem classificacao ideologica automatica;
+depois calibrar significancia e robustez com
+metodos espaciais e controles temporais.

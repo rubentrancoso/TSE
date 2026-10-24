@@ -43,7 +43,7 @@ Nao converter dissonancia politica agregada em
 inferencia individual ou prova automatica de fraude.
 
 **Precedencia:** este bloco substitui as recomendacoes
-anteriores de incorporar dados de 2022 ou 2024
+anteriores de incorporar dados de 2022
 como comparadores na etapa corrente, inclusive nos
 blocos historicos deste mesmo arquivo e em mensagens
 anteriores. Preservar essas descricoes como registro

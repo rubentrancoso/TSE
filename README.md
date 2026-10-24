@@ -12,8 +12,7 @@ Painel local para acompanhar a apuração presidencial de 2026 diretamente do JS
 A investigacao atual usa **dados eleitorais de 2026**
 para testar a hipotese de um **mecanismo ou formula geral**
 que o investigador considera possivelmente aplicavel a
-2022 e 2026. **Nao utilizar bases eleitorais de 2022
-ou 2024** como comparadores ou controles nesta fase.
+2022 e 2026. **Nao utilizar bases eleitorais de 2022** como comparadores ou controles nesta fase.
 A mencao a 2022 e conceitual; o mecanismo e a sua
 aplicacao ainda precisam ser especificados e testados.
 Os estudos historicos ja existentes sao preservados

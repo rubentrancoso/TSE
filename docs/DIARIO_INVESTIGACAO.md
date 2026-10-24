@@ -4808,3 +4808,88 @@ python senate_ecological_bounds.py
 O ultimo comando reexamina os arquivos BU por candidato
 porque essa nova pergunta exige dados por secao;
 nao requer reexecutar a reconciliacao nacional.
+
+
+---
+
+## 2026-10-24 — E0098 — Limites por secao de voto cruzado com nove senadores
+
+**Execucao observada no computador do investigador:**
+`python -m unittest discover -s tests -p test_senate_ecological_bounds.py -v`
+terminou `Ran 6 tests ... OK`.
+`python senate_ecological_bounds.py` percorreu as
+**256/256** particoes BU por candidato e conferiu
+**67.858.746** chaves, sem SQLite; terminou
+`LIMITES PRESIDENTE X SENADO CONCLUIDOS`.
+
+Entradas preservadas:
+- mapa oficial local de nove candidaturas
+  `docs/CANDIDATOS_SENADO_INVERSOES_2026.csv`
+  SHA-256 `ecf426fdfaeef33fe36dc6d2451657a77b84abec6933115255b187c5fe9cdd9f`;
+- relatorio das 13 inversoes
+  SHA-256 `b71eabb5c98764b351c90a5ccb18abe81caac924fe0186f426243767a3e5e03b`;
+- CSV dos 18 limites
+  `analysis/entre_cargos/8ab3ce83c8992b9a-94fc637b4737c20d/limites_presidencia_senado_inversoes/limites_por_senador_presidente.csv`
+  SHA-256 `bdf25f56d647d9265b7e20fcc9e75095f712031659b32bffcc7e7380ff20157f`.
+
+**Conceitos:** cada senador S representa eleitores distintos,
+porque cada candidato pode ser escolhido uma vez, apesar
+das duas vagas. Nas mesmas secoes, P=13 ou P=22 e
+N=comparecimento presidencial; intersecao desconhecida:
+`max(0,P+S-N) <= sobreposicao <= min(P,S)`.
+A somatoria e feita **por secao**, estreitando os limites
+em relacao a usar apenas a UF. Os limites N incluem
+eleitores em transito eventualmente elegiveis so
+para Presidente, o que conserva a inferencia.
+
+**Valores minimos necessarios, como fracao dos votos de S:**
+
+| UF | Senador | Votos S | Minimo tambem P13 | Minimo fora de P22 |
+| --- | --- | ---: | ---: | ---: |
+| AC | Dr. Junior Feitosa | 19.283 | 85 (0,44%) | 128 (0,66%) |
+| AL | Arthur Lira | 948.703 | 193.108 (20,35%) | 306.199 (32,28%) |
+| AM | Plinio Valerio | 948.793 | 125.588 (13,24%) | 165.094 (17,40%) |
+| PI | Ciro Nogueira | 904.961 | 289.310 (31,97%) | 413.039 (45,64%) |
+| RN | Tercio Tinoco | 102.834 | 653 (0,64%) | 1.840 (1,79%) |
+| RR | Teresa Surita | 117.270 | 1.671 (1,42%) | 2.041 (1,74%) |
+| SP | Soninha Francine | 165.707 | 0 (0%) | 1 (aprox. 0%) |
+| TO | Alexandre Guimaraes | 316.786 | 15.531 (4,90%) | 27.935 (8,82%) |
+| TO | Eduardo Gomes | 450.191 | 35.429 (7,87%) | 65.317 (14,51%) |
+
+**Inferencia rigorosa:** por exemplo, nos BU de PI, ao
+menos 289.310 dos eleitores registrados para Ciro Nogueira
+tambem escolheram P13, e ao menos 413.039 nao escolheram
+P22. Isso nao afirma que foram os mesmos 289.310 ou que
+o restante foi necessariamente para P13: os conjuntos
+foram delimitados separadamente e ha demais candidaturas,
+brancos/nulos. **Nao converter em imputacao de
+voto individual, desvio ou adulteracao.**
+Nao somar dois senadores de uma mesma UF como eleitores unicos;
+nao extrapolar os nove selecionados por inversao
+de sinal para todos os 308 candidatos ao Senado.
+
+**Avanco leve publicado na main (ainda sem execucao real):**
+`audit_senate_ecological_bounds.py` com os testes
+`tests/test_audit_senate_ecological_bounds.py`.
+Reabre APENAS o CSV de 18 linhas e JSON; confere hashes
+do CSV e do mapa, consistencia com a revisao anterior,
+bounds e percentuais, e produz o resumo
+`analise_limites/resumo_cruzamento.csv`
+e `analise_limites/summary.json`.
+Nao reler novamente os 67,8 milhoes de BU.
+
+Comandos a executar:
+```bat
+git pull
+python -m unittest discover -s tests -p test_audit_senate_ecological_bounds.py -v
+python audit_senate_ecological_bounds.py
+```
+
+O proximo passo substantivo deve separar fatos aritmeticos
+de explicacoes eleitorais: identificar coligacoes e
+candidaturas nos dados oficiais finais, e construir
+grupos concorrentes de classificacao; usar controles
+2022/2024 harmonizados ou modelos nulos condicionais
+para perguntar se a magnitude dos limites e atipica.
+A hipotese de integridade urna/transmissao permanece
+independente.

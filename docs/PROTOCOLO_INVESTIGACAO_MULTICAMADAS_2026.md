@@ -806,3 +806,40 @@ coligacoes documentadas; testar cenarios
 alternativos de classificacao politica e
 obter referencias de 2022/2024 ou
 simulacoes condicionais.
+
+
+## Proxima entrega ativa: inventario material exclusivo 2026
+
+A auditoria dos 18 limites senatoriais foi repetida
+sem resultados novos. A linha do mecanismo geral
+segue sem dados historicos de 2022.
+
+Para deixar de repetir correlacoes e margens
+de BU, a proxima etapa utiliza
+`inventory_material_evidence_2026.py` e o
+protocolo falsificavel
+`docs/TESTE_FORMULA_GERAL_SOMENTE_2026.md`.
+
+O inventario consulta a tabela `archive_entries`
+do SQLite **somente em leitura** e nao le votos.
+Separa artefatos TSE de capturas fisicas/QR
+de terceiros declaradas e verificadas por SHA-256.
+A existencia de hash em arquivo TSE NAO implica
+autenticidade criptografica, independencia de
+origem nem identidade com o BU emitido pela urna.
+Uma captura declarada tambem nao se torna
+independente apenas por constar num manifesto.
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_inventory_material_evidence_2026.py -v
+python inventory_material_evidence_2026.py
+```
+
+Nao usar dados eleitorais de 2022 na etapa.
+A ausencia de artefatos capturados de forma
+independente limita a verificacao de qualquer
+transformacao sistematica: marcar
+`DADO_INSUFICIENTE` e buscar tais artefatos,
+sem tratar ausencia de evidencia como ausencia
+de problema ou como prova de problema.

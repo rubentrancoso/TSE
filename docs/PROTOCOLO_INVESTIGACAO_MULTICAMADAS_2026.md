@@ -717,3 +717,56 @@ sociopolitica e a hipotese de alteracao de totalizacao.
 Uma necessidade matematica de voto cruzado **nao e prova
 de fraudacao**, apenas um fato dedutivel das contagens
 dos BU oficiais existentes.
+
+
+## Resultado real dos limites senatoriais por secao — 24/10/2026
+
+A execucao de `senate_ecological_bounds.py` no H:
+foi concluida; **6 testes sintéticos OK**, 256 particoes
+BU verificadas, 67.858.746 chaves conferidas,
+nove candidatos ao Senado e 18 pares com P13/P22.
+CSV original dos limites com SHA-256
+`bdf25f56d647d9265b7e20fcc9e75095f712031659b32bffcc7e7380ff20157f`.
+
+Dentre os resultados, a sobreposicao **minima
+matematicamente obrigatoria** com P13 e a quantidade
+minima que **nao pode** ter votado em P22:
+- Ciro Nogueira/PI: >=289.310 (31,97%) em P13;
+  >=413.039 (45,64%) fora de P22;
+- Arthur Lira/AL: >=193.108 (20,35%) em P13;
+  >=306.199 (32,28%) fora de P22;
+- Plinio Valerio/AM: >=125.588 (13,24%) em P13;
+  >=165.094 (17,40%) fora de P22;
+- Eduardo Gomes/TO: >=35.429 (7,87%) em P13;
+  >=65.317 (14,51%) fora de P22.
+
+Todos os nove casos e as ressalvas sao preservados
+na entrada E0098 do Diario. Os nove senadores foram
+escolhidos **por terem inversoes de sinal de
+correlacao**; logo a amostra nao pode representar
+os 308 candidatos ao Senado. Valores sao limites
+deduzidos dos BU, nao contagem exata de eleitores
+cruzados. A investigacao de autenticidade de
+artefatos e transmissao continua distinta.
+
+Novo `audit_senate_ecological_bounds.py` faz
+conferencia adicional leve: verifica integridade
+do CSV de 18 pares, dois presidenciaveis por
+senador, percentuais, bounds e identidade
+`minimo_fora_de_P = votos_senador - maximo_com_P`,
+sem reler BU. Gera uma linha por candidato
+com P13 e P22 lado a lado:
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_audit_senate_ecological_bounds.py -v
+python audit_senate_ecological_bounds.py
+```
+
+**Depois disso, nao repetir a mesma aritmetica:**
+priorizar a calibracao historica e contextual de
+compatibilidade, por UF/municipio/zona e por
+coligacoes documentadas; testar cenarios
+alternativos de classificacao politica e
+obter referencias de 2022/2024 ou
+simulacoes condicionais.

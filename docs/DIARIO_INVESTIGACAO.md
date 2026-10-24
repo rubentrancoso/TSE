@@ -4744,3 +4744,67 @@ verifica SHA-256, limiares e resumo, e produz:
 
 Executar `git pull`, testar modulo e rodar a revisao.
 Nao reprocessar dados brutos antes de examinar os pares.
+
+
+---
+
+## 2026-10-24 — E0097 — Candidatos das 13 inversoes identificados e limites ecologicos
+
+**Entrada observada:** 5/5 testes OK em
+`tests/test_review_cross_office_correlations.py`,
+seguido de `REVISAO DAS INVERSOES CONCLUIDA`,
+com 778 pares, 13 inversoes no Senado,
+0 no Governador, 9 senadores distintos em 8 UFs.
+
+**IDs, filiacoes e identificacao verificada nas paginas
+de candidatos do Senado Federal publicadas em 24/08/2026:**
+
+- AC 277: Dr. Junior Feitosa (DC), 19.283 votos;
+- AL 111: Arthur Lira (PP), 948.703 votos;
+- AM 455: Plinio Valerio (PSDB), 948.793 votos;
+- PI 111: Ciro Nogueira (PP), 904.961 votos;
+- RN 444: Tercio Tinoco (Uniao), 102.834 votos;
+- RR 155: Teresa Surita (MDB), 117.270 votos;
+- SP 232: Soninha Francine (Cidadania), 165.707 votos;
+- TO 153: Alexandre Guimaraes (MDB), 316.786 votos;
+- TO 222: Eduardo Gomes (PL), 450.191 votos.
+
+Total: 9 candidaturas distintas, 7 siglas e 13
+pares Presidente/Senador; duas candidaturas
+presidenciais compartilhadas geram dependencias
+entre coeficientes. Fontes URL individuais:
+`docs/CANDIDATOS_SENADO_INVERSOES_2026.csv`.
+Coeficientes por par e regras de interpretacao em
+`docs/REVISAO_INVERSOES_SENADO_2026.md`.
+Lista de candidatura de agosto nao equivale a
+situacao juridica final; conferir EA20 e DivulgaCand.
+
+**Proxima fase publicada na main, ainda sem execucao
+real no H::** `senate_ecological_bounds.py` e
+`tests/test_senate_ecological_bounds.py`.
+Verifica todos os SHA-256 dos arquivos BU seccionais
+derivados, usa mapa dos nove candidatos e cruza com
+os mesmos IDs de `revisao_inversoes/summary.json`.
+Calcula limites exatos de interseccao por secao,
+`max(0,P+S-N) <= intersecao <= min(P,S)`, soma
+os limites por UF/candidatura e registra os limites
+percentuais de eleitores que necessariamente podem
+ou nao podem ter feito a escolha presidencial.
+O Senado tem duas vagas, mas cada pessoa escolhe
+um candidato especifico no maximo uma vez.
+Este modulo NAO imputa combinacoes individuais,
+nao estima fraude nem reabre SQLite.
+Saidas em `limites_presidencia_senado_inversoes/`,
+com CSV, JSON e hashes.
+
+**Comandos no computador do investigador:**
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_senate_ecological_bounds.py -v
+python senate_ecological_bounds.py
+```
+
+O ultimo comando reexamina os arquivos BU por candidato
+porque essa nova pergunta exige dados por secao;
+nao requer reexecutar a reconciliacao nacional.

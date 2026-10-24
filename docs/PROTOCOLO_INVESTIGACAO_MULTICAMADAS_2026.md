@@ -13,6 +13,42 @@ de duas fontes oficiais ou esqueça a linha de investigação original.
 a resposta antes dos testes é proibido.** Todas as hipóteses aceitam
 resultados que as refutem.
 
+## DIRETRIZ ATIVA — referencia a 2022 e escopo analitico (24/10/2026)
+
+**Correcao explicita do investigador:** nesta linha de trabalho
+NAO utilizar bases de votos, resultados, microdados ou distribuicoes
+eleitorais de 2022 como controle, treino ou comparacao. A referencia
+a "2022" e **conceitual**: existe uma hipotese de uma
+**formula ou mecanismo geral alegadamente comum aos pleitos de
+2022 e 2026**. Sua existencia, formulacao, parametros e
+aplicacao nao estao demonstrados.
+
+**Evidencia empirica para testar essa hipotese agora:
+somente dados eleitorais de 2026** (BU, cargo, secao,
+publicacao, cadeia de transmissao e registros externos
+independentes quando disponiveis). O estudo de 2022
+permanece no acervo e no diario como trabalho historico
+ja realizado, sem nova leitura, reprocessamento,
+reutilizacao como controle ou extensao nesta fase.
+
+**Como testar uma "formula" sem a presumir verdadeira:**
+formular uma transformacao matematica concreta de votos,
+seu dominio (secao/cargo/candidato/tempo), entradas,
+parametros, saidas previstas e residuos falsificaveis.
+Ajustar/validar em particoes distintas de **2026**,
+controlar geografia, voto em transito, denominadores
+do Senado e os demais candidatos; confrontar predicoes
+com artefatos de urna e publicacao independentes.
+Nao converter dissonancia politica agregada em
+inferencia individual ou prova automatica de fraude.
+
+**Precedencia:** este bloco substitui as recomendacoes
+anteriores de incorporar dados de 2022 ou 2024
+como comparadores na etapa corrente, inclusive nos
+blocos historicos deste mesmo arquivo e em mensagens
+anteriores. Preservar essas descricoes como registro
+da evolucao do plano, nao como comandos ativos.
+
 ## Estado comprovado e pendências
 
 - O motor stream reconciliou 140.699.402 registros examinados,

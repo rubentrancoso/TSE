@@ -103,7 +103,7 @@ def source(root):
 def choose_candidates(paths, turn="1", limit_governor=3):
     by_office = Counter()
     count = 0
-    for path in paths:
+    for index, path in enumerate(paths, 1):
         for r in rows(path):
             count += 1
             if r["turno"] != turn or r["cargo"] not in ("1", "3"):
@@ -115,6 +115,9 @@ def choose_candidates(paths, turn="1", limit_governor=3):
             if n < 0:
                 raise RuntimeError("Votos negativos em " + str(path))
             by_office[(r["UF"], r["cargo"], v)] += n
+        if index in (1, 2, len(paths)) or index % 20 == 0:
+            print(f"[RANKING {index}/{len(paths)}] "
+                  f"{count:,} chaves BU verificadas", flush=True)
     nationals = Counter()
     for (uf, office, candidate), votes in by_office.items():
         if office == "1":

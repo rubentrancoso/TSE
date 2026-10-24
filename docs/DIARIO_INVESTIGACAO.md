@@ -4535,3 +4535,43 @@ médias `municipio+zona`, sem supor ideologia nem
 voto individual. No momento este script ainda **não foi
 executado na base real H:**; executar testes e coleta
 de saídas antes de interpretar qualquer coeficiente.
+
+
+---
+
+## 2026-10-24 — E0093 — Extensao comparacao eleitoral para Senado
+
+**Solicitacao do investigador:** nao limitar cruzamentos
+entre cargos a Presidente/Governador; investigar tambem
+Presidente/Senado, candidato por candidato, e mais tarde
+as possibilidades de alinhamentos/coligacoes politicas
+com controle de territorio e historico.
+
+**Publicacao na main:** novo
+`cross_office_senate_correlations.py`,
+`tests/test_cross_office_senate_correlations.py`
+e inclusao da bateria no workflow dos testes.
+
+O modulo seleciona os 2 presidenciaveis com mais
+votos e por padrao **todos** os senadores por UF
+(`--top-senators N` e opcional para ensaio reduzido).
+Compara por secao as respectivas taxas de apoio.
+Denominadores: Presidente total de votos do cargo;
+Senado total de votos do cargo **dividido por 2**,
+pois no primeiro turno de 2026 cada eleitor fez
+duas escolhas ao Senado. Brancos e nulos integram
+os denominadores, nao os numeradores dos candidatos.
+
+Gera correlacoes Pearson brutas e apos remover
+efeitos fixos de municipio+zona, com matriz
+somente de BU previamente verificada por SHA-256.
+Nao deduz voto individual nem compatibilidade
+ideologica automaticamente. Preserva os artefatos
+do modulo de Governador; as saidas senatoriais
+ficam em diretorio especifico.
+
+**Estado:** ainda sem execucao real no H: e sem
+comprovacao local dos testes. Proximos comandos:
+`git pull`;
+`python -m unittest discover -s tests -p test_cross_office_senate_correlations.py -v`;
+`python cross_office_senate_correlations.py`.

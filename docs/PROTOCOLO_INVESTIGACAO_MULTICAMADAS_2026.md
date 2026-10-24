@@ -668,3 +668,52 @@ com dados oficiais de candidatura/partido/coligacao,
 sem classificacao ideologica automatica;
 depois calibrar significancia e robustez com
 metodos espaciais e controles temporais.
+
+
+## Limites necessarios de escolha cruzada nos nove candidatos (24/10/2026)
+
+A revisao nacional real identificou nove candidaturas
+ao Senado em oito UFs (13 pares com inversao
+de sinal, 5 testes OK). Os nomes, partidos e links
+publicos ficam em `docs/CANDIDATOS_SENADO_INVERSOES_2026.csv`;
+a tabela com as 13 correlações e o contexto metodologico
+esta em `docs/REVISAO_INVERSOES_SENADO_2026.md`.
+Filiacao partidaria **nao substitui** evidencia de
+aliança concreta nem comprova a ideologia do eleitor.
+
+Para responder de modo verificavel a hipotese de
+compatibilidade de eleitores entre cargos, o novo
+`senate_ecological_bounds.py` mede por secao:
+- N = total de votos presidenciais, incluindo brancos,
+  nulos e possiveis votos em transito;
+- P = votos na secao para um presidencial (13 ou 22);
+- S = votos na secao para um senador entre os nove IDs;
+- intersecao necessaria minima = `max(0, P+S-N)`;
+- intersecao possivel maxima = `min(P,S)`;
+- senadores que necessariamente nao cabem nos votos
+  do candidato P = `max(0, S-P)`.
+
+Cada candidato senatorial so pode ser escolhido
+uma vez por eleitor, apesar das duas vagas ao Senado.
+As intersecoes sao **limites**, nao valores observados.
+A soma das intersecoes minimas de diferentes categorias
+pode ser analisada, mas as maximas individuais nao
+devem ser somadas e chamadas de resultado observado.
+
+O script valida o hash de todas as 256 particoes
+de candidatos e exige mapeamento exatamente coincidente
+com o relatorio anterior. Faz uma varredura BU por secao,
+sem abrir SQLite e sem alterar a evidencia.
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_senate_ecological_bounds.py -v
+python senate_ecological_bounds.py
+```
+
+Depois de obtidos os limites, interpretar separadamente
+a necessidade matematica de votos cruzados, a plausibilidade
+sociopolitica e a hipotese de alteracao de totalizacao.
+Uma necessidade matematica de voto cruzado **nao e prova
+de fraudacao**, apenas um fato dedutivel das contagens
+dos BU oficiais existentes.

@@ -99,17 +99,18 @@ class SenateCorrelationsTest(unittest.TestCase):
         path = self.paths[0]
         with path.open("r", encoding="utf-8", newline="") as file:
             records = list(csv.reader(file, delimiter=";"))
-        # troca 170 por 171 na secao 1, deslocando 130 votos
-        # para 170, mas sem alterar a soma total de Senado (200).
+        # Distribuicao invalida: um candidato tem 110 votos numa
+        # secao de 100 eleitores, mas a soma senatorial continua 200.
         for rec in records[1:]:
             if rec[3] == "1" and rec[5] == "5":
                 if rec[6] == "170":
-                    rec[7] = "130"
+                    rec[7] = "110"
                 elif rec[6] == "171":
-                    rec[7] = "-30"
+                    rec[7] = "0"
+                elif rec[6] == "172":
+                    rec[7] = "90"
         with path.open("w", encoding="utf-8", newline="") as file:
             csv.writer(file, delimiter=";").writerows(records)
-        _, original, paths = sen.source(self.root) if False else (None, None, None)
         # Aplicar a modificacao autorizada apenas na fixture: o teste
         # nao deve ser confundido com SHA divergente.
         state_path = path.parent.parent / "state.json"

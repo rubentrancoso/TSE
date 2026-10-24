@@ -1,5 +1,6 @@
 """Testes offline do inventario 2026: catalogo oficial x captura declarada."""
 import csv
+from contextlib import closing
 import hashlib
 import json
 from pathlib import Path
@@ -18,7 +19,9 @@ class MaterialEvidenceTest(unittest.TestCase):
         self.analysis = self.root / "analysis"
         self.analysis.mkdir()
         self.db = self.analysis / "urna_2026.sqlite3"
-        with sqlite3.connect(self.db) as db:
+        # sqlite3.Connection.__exit__ confirma transacao, mas NAO fecha
+        # o handle. No Windows isso bloqueia tempfile.cleanup e unlink.
+        with closing(sqlite3.connect(self.db)) as db:
             db.execute("""CREATE TABLE archive_entries (
                 resource_key TEXT, member TEXT, bytes INTEGER,
                 extensao TEXT, uf TEXT, municipio TEXT, zona TEXT,
@@ -34,6 +37,7 @@ class MaterialEvidenceTest(unittest.TestCase):
                      "SP", "71072", "1", "10", None),
                 ],
             )
+            db.commit()
         self.base = self.root / "evidencia_independente_2026"
         self.base.mkdir()
         self.original = self.base / "captura-ac-01.txt"

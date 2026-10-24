@@ -515,3 +515,55 @@ de emitir interpretacao empirica.
 **Fontes oficiais para a regra de duas vagas:**
 https://www.tse.jus.br/comunicacao/noticias/2026/Setembro/manual-do-eleitor-veja-como-se-preparar-para-a-votacao
 https://www.tse.jus.br/eleicoes/informacoes-tecnicas-sobre-a-divulgacao-de-resultados
+
+
+## Resultado real Presidente x Senado — 616 pares (24/10/2026)
+
+Execucao nacional observada: `cross_office_senate_correlations.py`
+terminou com sucesso, com 5 testes OK, 27 UFs,
+308 candidaturas ao Senado, 497.897 secoes com
+ambos cargos e 616 pares Presidente x Senador.
+O arquivo `correlacao_presidente_senado/pares_por_uf.csv`
+tem SHA-256
+`0b05e18dd5eb9b980e203ef361bcbaf069fb28008f51f310cb44b49d8c618d68`.
+
+Este numero de pares confirma apenas a **cobertura de
+processamento**; nao classifica sinal ou forca dos
+coeficientes, pois o terminal nao exibiu as linhas.
+
+O novo `audit_senate_correlations.py` faz analise
+leve **somente desse CSV**, sem reprocessar BU:
+verifica SHA-256, existencia de todos os 616 pares,
+disponibilidade dos coeficientes e distribuicao por UF.
+Produz `correlacao_presidente_senado/diagnostico/`
+com `todos_pares.csv`, `por_uf.csv` e `summary.json`.
+
+Filtros **descritivos** predefinidos para evitar
+reversoes triviais por ruido de pequena amostra:
+- minimo 1.000 secoes;
+- minimo 10 zonas com variacao interna;
+- minimo 1.000 votos da candidatura senatorial;
+- sinais opostos de `r_bruto` e `r_ajustado`
+  somente com `|r| >= 0,1` em ambos;
+- mudanca de magnitude relevante como
+  `|r_bruto-r_ajustado| >= 0,2`.
+
+Nao sao limiares de significancia estatistica nem
+probabilidade de fraude. Registrar todas as 616
+linhas, incluindo as nao calculaveis ou abaixo
+dos limiares, antes de investigar qualquer caso.
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_audit_senate_correlations.py -v
+python audit_senate_correlations.py
+```
+
+Para concluir comparacao entre Governador e Senado,
+ainda e preciso executar
+`cross_office_candidate_correlations.py`
+e separar efeitos de denominadores diferentes.
+A etapa de comparacao de apoio a blocos partidarios
+fica pendente de classificacao historica e geografica
+documentada; nao derivar rotulos politicos dos
+coeficientes.

@@ -7,6 +7,20 @@ Painel local para acompanhar a apuração presidencial de 2026 diretamente do JS
 - [O gráfico travou. O que os dados realmente mostram até agora](docs/ARTIGO_PUBLICO.md) — artigo de uma página, em linguagem acessível, com o que foi feito, os resultados atuais e os próximos passos.
 - [Estado executivo da investigação](docs/ONE_PAGE_INVESTIGACAO.md) — resumo técnico dos achados e das fases.
 
+## Escopo ativo da investigacao (atualizado em 24/10/2026)
+
+A investigacao atual usa **dados eleitorais de 2026**
+para testar a hipotese de um **mecanismo ou formula geral**
+que o investigador considera possivelmente aplicavel a
+2022 e 2026. **Nao utilizar bases eleitorais de 2022
+ou 2024** como comparadores ou controles nesta fase.
+A mencao a 2022 e conceitual; o mecanismo e a sua
+aplicacao ainda precisam ser especificados e testados.
+Os estudos historicos ja existentes sao preservados
+por transparencia, sem reexecucao nesta fase.
+Consultar a diretriz ativa em
+`docs/PROTOCOLO_INVESTIGACAO_MULTICAMADAS_2026.md`.
+
 ## Rodar no Windows
 
 1. Abra a pasta do repositório.

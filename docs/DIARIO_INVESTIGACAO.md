@@ -4494,3 +4494,44 @@ com SHA-256, sem reabrir banco nem checkpoints originais.
 Depois, buscar dados oficiais de voto em transito para
 validar a causa por secao e seguir para modelos de
 compatibilidade politica entre cargos.
+
+
+---
+
+## 2026-10-24 — E0092 — Controle Senado=2xGovernador e correlação entre candidatos
+
+**Resultado observado diretamente no log do investigador:**
+`python -m unittest discover -s tests -p test_audit_cross_office_eligibility.py -v`
+terminou `Ran 4 tests ... OK`. A execução real de
+`python audit_cross_office_eligibility.py` terminou normalmente
+usando SHA-256 da matriz
+`9aefc6cf4591180a1f2edfdc2cdb7b9e44c19ae8caf2b5d23fa2d6c83f02dfad`.
+
+No país, 499.206 seções contêm Presidente. Há 1.309 seções
+com Presidente e sem Governador, somando 341.766 votos
+presidenciais. Nas 497.897 seções com Governador e Presidente,
+480.664 totalizam P=G, 17.233 P>G (soma excedente 165.584),
+zero G>P. **Nas 497.897 seções com Senado/Governador
+S=2×G exatamente**, em nenhuma foi encontrado S diferente
+de 2×G. `amostra_quebras=[]`.
+
+**Interpretação:** estas relações apoiam uma explicação
+contábil de elegibilidade por cargo, compatível com
+voto em trânsito fora da UF (apenas Presidente),
+voto presidencial no exterior e duas vagas para Senado;
+ainda não há comprovação da origem exata das
+17.233 diferenças por identificação de eleitores
+habilitados/seções oficiais. Não atribuir automaticamente
+165.584 votos a trânsito. As identidades são internas
+a BU e não substituem evidência física independente.
+
+**Avanço implementado na main:** novo
+`cross_office_candidate_correlations.py`,
+com testes `tests/test_cross_office_candidate_correlations.py`.
+Analisa os dois presidenciáveis mais votados e três
+governadores mais votados em cada UF, nos BU da matriz,
+calculando correlação bruta e correlação após subtrair
+médias `municipio+zona`, sem supor ideologia nem
+voto individual. No momento este script ainda **não foi
+executado na base real H:**; executar testes e coleta
+de saídas antes de interpretar qualquer coeficiente.

@@ -4893,3 +4893,68 @@ grupos concorrentes de classificacao; usar controles
 para perguntar se a magnitude dos limites e atipica.
 A hipotese de integridade urna/transmissao permanece
 independente.
+
+
+---
+
+## 2026-10-24 — E0099 — Limites auditados e escopo conceitual da formula 2022
+
+**Execucao apresentada pelo investigador:** `git pull` concluiu;
+`python -m unittest discover -s tests -p test_audit_senate_ecological_bounds.py -v`
+concluiu **6/6 testes OK**; a execucao real
+`python audit_senate_ecological_bounds.py` terminou
+`AUDITORIA RESUMIDA DE LIMITES CONCLUIDA`.
+Resultado: 9 senadores, 18 pares Presidente-Senado,
+checagem de SHA/percentuais/margens e CSV novo em
+`H:/TSE/forensics/urnas/analysis/entre_cargos/8ab3ce83c8992b9a-94fc637b4737c20d/limites_presidencia_senado_inversoes/analise_limites/resumo_cruzamento.csv`
+com SHA-256
+`87fa7f7a3fd954e5fb794eff0eb16b42872ae7b611aecb443efccce7be0933a0`.
+
+Cinco maiores limites minimos necessarios P13:
+Ciro Nogueira (PI) 289.310 / 31,9693%;
+Arthur Lira (AL) 193.108 / 20,3549%;
+Plinio Valerio (AM) 125.588 / 13,2366%;
+Eduardo Gomes (TO) 35.429 / 7,8698%;
+Alexandre Guimaraes (TO) 15.531 / 4,9027%.
+
+Cinco maiores minimos de votos senatoriais fora de P22:
+Ciro Nogueira (PI) 413.039 / 45,6416%;
+Arthur Lira (AL) 306.199 / 32,2755%;
+Plinio Valerio (AM) 165.094 / 17,4004%;
+Eduardo Gomes (TO) 65.317 / 14,5087%;
+Alexandre Guimaraes (TO) 27.935 / 8,8183%.
+Sao limites aritmeticos, **nao contagens exatas do
+voto individual, parametros de manipulacao ou prova
+de adulteracao**.
+
+### Correcao explicita do objetivo pelo investigador
+
+O investigador esclareceu que **NAO deseja usar dados
+eleitorais de 2022** nas proximas analises. Sua
+referencia a 2022 dizia respeito a uma **hipotese de
+formula ou mecanismo geral** que teria sido usado em
+2022 e 2026, e NAO a comparar microdados ou resultados
+de 2022 contra 2026.
+
+Portanto, a partir desta entrada, os proximos testes
+desta linha utilizam **somente dados de 2026**,
+com eventuais evidencias documentais independentes
+da urna, transmissao e totalizacao da mesma eleicao.
+Nao carregar, treinar, recalibrar ou reproduzir
+modelos com arquivos eleitorais de 2022. O trabalho
+anterior de 2022 permanece preservado como
+historico do projeto, sem novas execucoes.
+Nao afirmar como fato a existencia de uma formula
+aplicada nos dois pleitos: sua expressao matematica,
+parametros, entradas, saidas e predicoes falsificaveis
+ainda precisam ser definidos e testados.
+
+**Prioridade seguinte:** modelar hipoteses concorrentes
+de mecanismo sistematico nos dados de 2026 e testar
+residuos, sinais esperados, concentracao espacial
+e estabilidade em subconjuntos disjuntos do
+mesmo pleito, seguidos por confrontacao material
+com BUs fisicos/QR, arquivos assinados e cadeia
+de transmissao. Testes ecologicos de voto cruzado
+apenas fundamentam limites de composicao eleitoral:
+nao identificam a causalidade de alteracoes.

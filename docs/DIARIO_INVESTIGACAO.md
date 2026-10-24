@@ -4575,3 +4575,66 @@ comprovacao local dos testes. Proximos comandos:
 `git pull`;
 `python -m unittest discover -s tests -p test_cross_office_senate_correlations.py -v`;
 `python cross_office_senate_correlations.py`.
+
+
+---
+
+## 2026-10-24 — E0094 — Correlacao nacional Presidente x Senado executada
+
+**Execucao real observada diretamente no terminal do investigador:**
+`git pull` sincronizou `cross_office_senate_correlations.py`.
+A bateria `python -m unittest discover -s tests -p test_cross_office_senate_correlations.py -v`
+executou **5 testes com OK**, incluindo validacao de duas
+escolhas, assinatura SHA-256 da derivacao e ajuste por zona.
+
+O comando real `python cross_office_senate_correlations.py`
+terminou `CORRELACAO PRESIDENCIA X SENADO CONCLUIDA`.
+Resultados medidos:
+
+- 67.858.746 chaves BU verificadas na origem por SHA-256;
+- presidenciaveis selecionados: votaveis `22` e `13`;
+- **27 UFs**, **308 candidaturas ao Senado**;
+- **497.897 secoes pareadas**, todas com percentuais
+  computaveis de Presidente e Senado;
+- **616 pares** = 308 candidatos senatoriais x 2 presidenciais;
+- CSV publicado apenas no disco do investigador:
+  `H:/TSE/forensics/urnas/analysis/entre_cargos/8ab3ce83c8992b9a-94fc637b4737c20d/correlacao_presidente_senado/pares_por_uf.csv`;
+- SHA-256 do CSV:
+  `0b05e18dd5eb9b980e203ef361bcbaf069fb28008f51f310cb44b49d8c618d68`.
+
+**Interpretação:** o log confirma que as correlacoes brutas
+e intrazona foram calculadas, **nao apresenta os 616
+coeficientes**. Portanto nao afirmar quantos sao positivos,
+negativos, fortes ou mudam sinal antes de obter o diagnostico.
+O metodo usa a taxa de cada senador com denominador
+`total de votos ao Senado / 2`, para duas escolhas, e
+percentual presidencial por secao. E uma comparacao
+ecologica, nao reconstituicao de cédulas individuais.
+
+**Publicacao adicional ainda nao executada no H::**
+`audit_senate_correlations.py` e testes
+`tests/test_audit_senate_correlations.py`.
+Le apenas o CSV de 616 linhas e seu resumo, valida
+SHA-256 e cardinalidade, contabiliza por UF coeficientes
+existentes, reversoes robustas de sinal e reducao
+geografica. Predefine minimos descritivos
+1.000 secoes, 10 zonas com variacao e 1.000 votos
+senatoriais. Sinal oposto requer magnitudes de ambos
+os coeficientes >= 0,1; mudanca >= 0,2 e marcada
+separadamente. Regras descritivas, nao p-valores.
+
+**Proximos comandos:**
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_audit_senate_correlations.py -v
+python audit_senate_correlations.py
+```
+
+Ainda esta pendente a execucao nacional do modulo
+`cross_office_candidate_correlations.py` para Governador,
+necessaria para comparacao entre os dois cargos.
+Controlar que as duas implementacoes usam denominadores
+diferentes (para Governo, votos validos; para Senado,
+eleitores que votaram nas duas escolhas) antes de comparar
+magnitudes de Pearson. Nunca inferir fraude so de correlacao.

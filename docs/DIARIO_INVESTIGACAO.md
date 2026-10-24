@@ -4958,3 +4958,58 @@ com BUs fisicos/QR, arquivos assinados e cadeia
 de transmissao. Testes ecologicos de voto cruzado
 apenas fundamentam limites de composicao eleitoral:
 nao identificam a causalidade de alteracoes.
+
+
+---
+
+## 2026-10-24 — E0100 — Confirmacao sem dados novos; iniciar teste material de 2026
+
+O investigador apresentou novamente a mesma execucao de
+`audit_senate_ecological_bounds.py` ja documentada na
+entrada E0099, com 6/6 testes OK, nove senadores,
+18 pares e mesmo CSV SHA-256
+`87fa7f7a3fd954e5fb794eff0eb16b42872ae7b611aecb443efccce7be0933a0`.
+**Nao e nova observacao e nao muda os resultados.**
+
+A diretriz sobre 2022 foi confirmada: NAO utilizar
+dados eleitorais de 2022. A hipotese de uma
+formula comum a 2022 e 2026 e referencia
+conceitual, nao comparacao historica nem fato
+ja demonstrado. O conjunto empirico atual e
+exclusivamente a eleicao 2026.
+
+**Nova prioridade:** parar auditorias repetidas de
+limites e verificar evidencia fisica e origem de
+votos. Publicados na main:
+- `inventory_material_evidence_2026.py`: consulta
+  somente a tabela `archive_entries` no SQLite
+  em modo de leitura, agrupando por UF/extensao
+  os artefatos .bu/.rdv/.imgbu/.log/.vota
+  oficialmente catalogados; nao reprocessa
+  dados de voto. Compara, separadamente,
+  eventual manifesto de capturas de terceiros
+  em `evidencia_independente_2026/manifest.csv`
+  e verifica hashes dos originais declarados,
+  sem promover SHA-256 a assinatura ou
+  independencia da fonte.
+- `tests/test_inventory_material_evidence_2026.py`
+  com sete testes sinteticos.
+- `docs/TESTE_FORMULA_GERAL_SOMENTE_2026.md`:
+  define X (BU independente), Y (publicado),
+  D=Y-X (so quando X verificavel) e hipoteses
+  falsificaveis H0, H1, H2 e H3 para transferencia,
+  proporcionalidade ou selecao temporal.
+
+**Importante:** X independente ainda NAO foi
+demonstrado nesta fase. Sem X nao se pode
+estimar diferencas materiais D a partir de
+correlacoes, nem atribuir manipulacao.
+Os novos scripts/testes foram publicados, mas
+nao ha execucao no H: confirmada neste registro.
+
+Proximos comandos:
+```bat
+git pull
+python -m unittest discover -s tests -p test_inventory_material_evidence_2026.py -v
+python inventory_material_evidence_2026.py
+```

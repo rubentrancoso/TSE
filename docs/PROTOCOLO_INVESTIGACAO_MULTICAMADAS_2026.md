@@ -443,3 +443,75 @@ Relatórios novos em
 `analysis/entre_cargos/<fingerprint-versao>/correlacao_presidente_governador/`:
 `pares_por_uf.csv` e `summary.json`.
 O código ainda aguarda testes reais no H:.
+
+
+## Modulo Presidente x Senado — 24/10/2026
+
+**Solicitacao explicita do investigador:** o cruzamento
+entre cargos deve analisar o Senado com a mesma importancia
+de Governador, candidato por candidato. Uma eventual
+coerencia ideologica nao deve ser inferida apenas da soma
+de votos de candidatos do mesmo bloco.
+
+**Novo codigo** `cross_office_senate_correlations.py`,
+com testes sinteticos
+`tests/test_cross_office_senate_correlations.py`.
+
+O motor faz somente leitura dos mesmos CSVs de BU ja
+extraidos por secao, valida SHA-256 dos 256 arquivos
+contra `analysis/entre_cargos/.../state.json` e seleciona
+as **duas candidaturas presidenciais mais votadas** no
+primeiro turno e, por padrao, **todos os candidatos ao
+Senado** presentes em cada UF.
+
+Para cada secao, define:
+- `P_s = votos_do_presidenciavel / total_de_votos_para_presidente`
+  (inclui brancos e nulos no denominador);
+- `S_s = votos_do_senador / (total_de_votos_para_senado / 2)`
+  (inclui brancos e nulos no denominador).
+
+Como 2026 teve duas vagas de Senado, `S_s` mede
+a proporcao do eleitorado que votou naquele candidato
+nas duas oportunidades, **nao** a participacao do
+candidato na soma dos votos senatoriais.
+Se um candidato tem 40 votos e 100 eleitores,
+sua taxa sera 40%, ainda que o total da disputa
+ao Senado seja 200 votos. A soma das taxas de
+todos os candidatos nao tem obrigacao de 100%.
+
+Para cada par Presidente/Senador, calcular:
+- Pearson descritivo bruto por secao dentro de UF;
+- Pearson de desvios intrazona (subtrair media
+  por municipio+zona, evitando confundimento geografico);
+- seções com dados validos para os dois cargos;
+- votos totais ao senador, para contextualizar peso amostral.
+
+A implementacao agrega momentos de cada zona ao
+final do seu grupo: memoria nao cresce com todos
+os grupos territoriais de todo o pais.
+Nao deduz o voto presidencial do eleitor a partir
+da escolha senatorial; essa inferencia ecologica
+nao e identificavel individualmente.
+
+**Comandos, apos `git pull`:**
+
+```bat
+python -m unittest discover -s tests -p test_cross_office_senate_correlations.py -v
+python cross_office_senate_correlations.py
+```
+
+Para um ensaio limitado, pode-se utilizar
+`--top-senators 6` (seis senadores por UF),
+mas o padrao `0` inclui todos.
+
+Saidas esperadas em
+`analysis/entre_cargos/<fingerprint-versao>/correlacao_presidente_senado/`:
+`pares_por_uf.csv`, `summary.json`, com SHA-256.
+Nao substituem `correlacao_presidente_governador`.
+A versao atual ainda nao foi validada no H:;
+exigir saida dos testes e processamento real antes
+de emitir interpretacao empirica.
+
+**Fontes oficiais para a regra de duas vagas:**
+https://www.tse.jus.br/comunicacao/noticias/2026/Setembro/manual-do-eleitor-veja-como-se-preparar-para-a-votacao
+https://www.tse.jus.br/eleicoes/informacoes-tecnicas-sobre-a-divulgacao-de-resultados

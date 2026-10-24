@@ -56,7 +56,7 @@ def select_candidates(paths, turn, max_senators):
         raise RuntimeError("Dois presidenciaveis nao encontrados")
     selected_senators = {}
     for uf, candidates in senators.items():
-        ranked = sorted(candidates, key=lambda x: (-candidates[x], int(x) if x.isdecimal() else x))
+        ranked = sorted(candidates, key=lambda x: (-candidates[x], 0 if x.isdecimal() else 1, int(x) if x.isdecimal() else x))
         selected_senators[uf] = ranked[:max_senators] if max_senators else ranked
     return selected_president, selected_senators, senators, total_keys
 
@@ -87,12 +87,13 @@ def compute(paths, president, senators, turn):
         pres_votes = {}
         sen_votes = {}
         total_pres = total_sen = 0
+        has_pres = has_sen = False
 
         def finish_section():
             if current_section is None:
                 return
             uf, _, _, _, t = current_section
-            if t != turn or not pres_votes or not sen_votes or uf not in senators:
+            if t != turn or not has_pres or not has_sen or uf not in senators:
                 return
             present[uf] += 1
             if total_pres <= 0 or total_sen <= 0 or total_sen % 2:
@@ -124,6 +125,7 @@ def compute(paths, president, senators, turn):
                 current_section = section
                 pres_votes, sen_votes = {}, {}
                 total_pres = total_sen = 0
+                has_pres = has_sen = False
             if r["turno"] != turn:
                 continue
             cargo, candidate = r["cargo"], r["votavel"]
@@ -133,10 +135,12 @@ def compute(paths, president, senators, turn):
             if n < 0:
                 raise RuntimeError("Numero de votos negativo na entrada")
             if cargo == "1":
+                has_pres = True
                 total_pres += n
                 if candidate in president:
                     pres_votes[candidate] = pres_votes.get(candidate, 0) + n
             else:
+                has_sen = True
                 total_sen += n
                 if candidate not in INVALID:
                     senator_votes[(r["UF"], candidate)] += n

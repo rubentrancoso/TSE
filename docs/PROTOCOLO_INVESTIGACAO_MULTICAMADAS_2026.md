@@ -382,3 +382,64 @@ transito depende de listas oficiais de secoes/habilitacoes ou
 de outros dados verificaveis de eleitores por cargo.
 Os novos scripts/testes estao publicados na main, mas nao
 foram executados no H: neste registro.
+
+
+## Auditoria de elegibilidade concluída no H: (24/10/2026)
+
+O investigador executou `python audit_cross_office_eligibility.py`,
+com **4/4 testes OK**, a partir da matriz original com SHA-256
+`9aefc6cf4591180a1f2edfdc2cdb7b9e44c19ae8caf2b5d23fa2d6c83f02dfad`.
+
+**Resultados reais:**
+- 499.206 seções com votos presidenciais;
+- 497.897 seções também com Governador e Senado;
+- 1.309 seções somente com Presidente, somando **341.766 votos**;
+- 480.664 seções com P=G;
+- 17.233 com P>G, excedente **165.584 votos** nas pareadas;
+- **0** com G>P;
+- nas 497.897 seções pareadas G/S,
+  **497.897 obedecem S=2×G**, 0 exceções e
+  soma `S-2G=0`;
+- zero quebras de invariantes na amostra.
+
+**Interpretação:** as identidades são compatíveis com a
+elegibilidade distinta de voto presidencial e duas vagas
+no Senado. O grupo das 1.309 seções sem Governador precisa
+de identificação de UF/município, especialmente eleitorado
+inscrito no exterior `ZZ`. A coincidência matemática,
+dentro de fontes BU, não comprova autenticidade física
+nem atribui as diferenças exclusivamente a voto em trânsito.
+
+## Próximo módulo: correlações ecológicas de candidaturas
+
+Foi publicado `cross_office_candidate_correlations.py`.
+Em vez de iniciar com rótulos ideológicos presumidos,
+o programa seleciona os dois candidatos presidenciais
+com mais votos válidos nacionais no turno 1, e
+os três candidatos a Governador mais votados em cada UF.
+Faz somente leitura das **256 partições BU por candidato**,
+com SHA-256 conferido contra o checkpoint da matriz.
+
+Para cada par Presidente/Governador dentro de uma UF,
+calcula:
+- correlação descritiva bruta de percentuais por seção;
+- correlação após retirar médias específicas de
+  `municipio+zona` (evita parte do confundimento geográfico);
+- número de seções com ambos os cargos presentes e
+  denominadores de votos válidos positivos.
+
+O coeficiente **não infere como uma pessoa votou**.
+Sem mapa de posicionamento, aliança e partido
+versionado, não interpreta direita/esquerda.
+Uma correlação forte não comprova manipulação.
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_cross_office_candidate_correlations.py -v
+python cross_office_candidate_correlations.py
+```
+
+Relatórios novos em
+`analysis/entre_cargos/<fingerprint-versao>/correlacao_presidente_governador/`:
+`pares_por_uf.csv` e `summary.json`.
+O código ainda aguarda testes reais no H:.

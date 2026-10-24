@@ -4638,3 +4638,45 @@ Controlar que as duas implementacoes usam denominadores
 diferentes (para Governo, votos validos; para Senado,
 eleitores que votaram nas duas escolhas) antes de comparar
 magnitudes de Pearson. Nunca inferir fraude so de correlacao.
+
+
+---
+
+## 2026-10-24 — E0095 — Correlacao Presidente e Governador nacional concluida
+
+**Evidencia observada diretamente no terminal do investigador:**
+
+- `python -m unittest discover -s tests -p test_cross_office_candidate_correlations.py -v` concluiu **4 testes OK**;
+- `python cross_office_candidate_correlations.py` percorreu e verificou as 256 particoes de candidatos derivadas de BU, **67.858.746 chaves**;
+- duas candidaturas presidenciais selecionadas pelos votos totais: `22` e `13`;
+- Governador: tres candidaturas selecionadas por cada uma de **27 UFs**;
+- **497.897 secoes pareadas**, todas com frações validas para o calculo;
+- **162 pares** Presidente x Governador, com correlações brutas e ajustadas por municipio+zona;
+- CSV `H:/TSE/forensics/urnas/analysis/entre_cargos/8ab3ce83c8992b9a-94fc637b4737c20d/correlacao_presidente_governador/pares_por_uf.csv`;
+- SHA-256: `2e76281067a9d8bdb2c59dd3a702baab4fa573e6706a35f2399e1d425b41d627`.
+
+**Consolidado de cobertura:** 162 pares P/G + 616 pares P/S = **778 pares calculados**. Esse numero nao informa os sinais ou amplitudes, que ainda devem ser extraidos dos CSVs; nao confundir processamento com conclusao investigativa. Os dois modulos tem denominadores diferentes: Governador usa votos validos presidenciais e governatoriais; Senado usa votos totais (incluindo branco/nulo), e no Senado divide as duas oportunidades de voto por 2.
+
+**Avanco publicado na main, ainda nao executado no H::**
+`audit_cross_office_correlations.py` e
+`tests/test_audit_cross_office_correlations.py`.
+O script verifica SHA-256, turnos, candidaturas e todos os pares
+dos dois CSVs existentes, registra sinais, casos sem coeficiente,
+mudancas apos retirar medias municipais/zonais e filtros descritivos.
+Saidas em `analysis/entre_cargos/8ab3ce83c8992b9a-94fc637b4737c20d/diagnostico_conjunto/`.
+**Nao reler BU nem SQLite**.
+
+Comandos de proxima execucao:
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_audit_cross_office_correlations.py -v
+python audit_cross_office_correlations.py
+```
+
+Avisos cientificos: os 778 pares nao sao amostras independentes
+(os mesmos eleitores/secoes entram em varias comparacoes).
+Sinal trocado e correlacao forte nao demonstram voto cruzado de
+pessoas identificadas nem fraude. Filtros são heuristicas descritivas,
+nao valores-p calibrados. Qualquer inferencia eleitoral depende de
+robustez, simulacoes adequadas e verificacao externa.

@@ -4680,3 +4680,67 @@ Sinal trocado e correlacao forte nao demonstram voto cruzado de
 pessoas identificadas nem fraude. Filtros são heuristicas descritivas,
 nao valores-p calibrados. Qualquer inferencia eleitoral depende de
 robustez, simulacoes adequadas e verificacao externa.
+
+
+---
+
+## 2026-10-24 — E0096 — Diagnostico nacional dos 778 pares
+
+O investigador executou `git pull`, os testes
+`test_audit_cross_office_correlations.py` (7/7 OK),
+e `python audit_cross_office_correlations.py` com
+`DIAGNOSTICO CONJUNTO PRESIDENTE X GOVERNADOR E SENADO CONCLUIDO`.
+
+**Resultado nacional calculado a partir dos CSVs de
+correlacao (sem reler os BU):**
+
+- **778 pares totais**, 162 Presidente/Governador e
+  616 Presidente/Senado;
+- Governador: **162 aptos**, 0 sem coeficiente,
+  **0 inversoes de sinal robustas**, 29 mudancas absolutas
+  de Pearson >=0,20; correlacao ajustada: 71 r>=0,10,
+  75 r<=-0,10, 16 entre -0,10 e +0,10;
+- Senado: **610 de 616 aptos** (6 fora do filtro de
+  minimo de votos), 0 sem coeficiente, **13 inversoes de sinal
+  robustas**, 92 mudancas absolutas >=0,20; correlacao
+  ajustada entre os 610 aptos: 172 r>=0,10,
+  185 r<=-0,10, 253 entre -0,10 e +0,10;
+- inversoes senatoriais por UF:
+  **TO 4, AC 2, RN 2, AL 1, AM 1, PI 1, RR 1, SP 1**;
+  8 UFs, 13 pares, possivelmente menos de 13 candidaturas
+  senatoriais distintas (dois presidenciaveis por senador);
+- mudancas >=0,20 representam ~17,9% dos pares aptos
+  do Governador (29/162) e ~15,1% do Senado (92/610),
+  **nao** frequencia de adulteracao eleitoral;
+- saida:
+  `H:/TSE/forensics/urnas/analysis/entre_cargos/8ab3ce83c8992b9a-94fc637b4737c20d/diagnostico_conjunto/summary.json`.
+
+**Interpretacao metodologica:** a revisao descritiva
+identifica sensibilidade geográfica dos coeficientes e
+possibilidade de paradoxo de Simpson; nao ha resultado
+de testes de significancia calibrada, evidencia independente
+de alteracao material nem inferencia de voto individual.
+As 778 correlacoes nao sao observacoes independentes,
+e Senado e Governador usam denominadores diferentes.
+Nao inferir padrao politico a partir de IDs `22`, `13`,
+ou outros sem identificar candidaturas e alianças
+com fontes e controle por UF.
+
+**Proxima verificacao publicada na main, ainda nao
+executada no H::**
+
+`review_cross_office_correlations.py` e
+`tests/test_review_cross_office_correlations.py`.
+Le apenas os 778 pares de `diagnostico_conjunto/todos_os_pares.csv`,
+verifica SHA-256, limiares e resumo, e produz:
+- `revisao_inversoes/senado_pares_invertidos.csv` com
+  os 13 pares individuais, r bruto, r ajustado,
+  UF, identificadores e tamanho do conjunto;
+- `revisao_inversoes/senado_por_uf.csv` com
+  **quantidade de senadores distintos por UF**;
+- `revisao_inversoes/mudancas_020.csv` com todos
+  os 121 pares de mudanca >=0,20;
+- `revisao_inversoes/summary.json` com hashes.
+
+Executar `git pull`, testar modulo e rodar a revisao.
+Nao reprocessar dados brutos antes de examinar os pares.

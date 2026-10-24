@@ -7,7 +7,7 @@ Todos os códigos e testes são publicados diretamente na branch `main`.
 ## Escopo ativo: teste de mecanismo geral, somente 2026
 
 Por orientacao explicita do investigador em 24/10/2026,
-**nao usar dados eleitorais de 2022 ou 2024** nesta
+**nao usar dados eleitorais de 2022** nesta
 fase. Quando o investigador menciona "a formula de
 2022", refere-se a hipotese de um mesmo mecanismo geral
 possivelmente aplicado em 2022 e 2026, **nao** a
@@ -17,7 +17,7 @@ A existencia da formula permanece uma hipotese.
 Validar modelos com divisoes geograficas/temporais
 **dentro da eleicao de 2026** e com evidencia
 externa independente dos mesmos resultados.
-Qualquer instrucao anterior de comparar 2022/2024
+Qualquer instrucao anterior de comparar dados de 2022
 fica fora de escopo para novas execucoes e scripts,
 sem apagar os estudos historicos ja realizados.
 

@@ -567,3 +567,46 @@ A etapa de comparacao de apoio a blocos partidarios
 fica pendente de classificacao historica e geografica
 documentada; nao derivar rotulos politicos dos
 coeficientes.
+
+
+## Primeiro fechamento de pares por candidato: 778 (24/10/2026)
+
+`cross_office_candidate_correlations.py` foi executado com
+sucesso no H: (4/4 testes sintéticos OK), confirmando **162 pares**
+nas 27 UFs, cada UF com 3 candidaturas a Governador e 2 a Presidente.
+Foram 497.897 seções pareadas, 67.858.746 chaves BU de origem
+verificadas, e SHA-256
+`2e76281067a9d8bdb2c59dd3a702baab4fa573e6706a35f2399e1d425b41d627`
+para `correlacao_presidente_governador/pares_por_uf.csv`.
+
+Com o modulo do Senado, ha **778 pares de candidatos calculados**.
+O novo `audit_cross_office_correlations.py` confere os hashes
+dos CSVs de 162 e 616 pares, seu universo, turno e
+fingerprint, aplicando criterios descritivos:
+- n≥1000 seções por par, ≥10 grupos territoriais com
+  variacao, ambos coeficientes calculaveis;
+- no Senado, ≥1000 votos no candidato (campo ausente na
+  versao existente do arquivo de Governador; esta
+  diferenca de controle fica documentada);
+- sinal oposto com magnitudes ≥0,1 em ambas medidas;
+- mudança absoluta de correlação ≥0,2.
+
+**Importante:** Gov usa votos validos do cargo como denominador
+e Senado usa votos totais por eleitor habilitado (dois votos por
+eleitor no Senado). Por isso, nao equiparar numericamente
+as duas taxas nem usar coeficientes para imputar voto individual.
+Outros controles territoriais, multiplos testes,
+comportamento historico e artefatos independentes continuam
+necessarios para avaliar qualquer suspeita.
+
+Comandos recomendados:
+```bat
+git pull
+python -m unittest discover -s tests -p test_audit_cross_office_correlations.py -v
+python audit_cross_office_correlations.py
+```
+
+O script gera `diagnostico_conjunto/todos_os_pares.csv`,
+`por_uf_cargo.csv` e `summary.json` com hashes.
+**Status:** implementado na main; aguarda execucao real
+para saber quantos pares mudam de sinal ou amplitude.

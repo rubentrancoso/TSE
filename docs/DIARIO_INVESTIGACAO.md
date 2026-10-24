@@ -5013,3 +5013,61 @@ git pull
 python -m unittest discover -s tests -p test_inventory_material_evidence_2026.py -v
 python inventory_material_evidence_2026.py
 ```
+
+
+---
+
+## 2026-10-24 — E0101 — Falha Windows em fixture SQLite do inventario
+
+**Relato real recebido:** `git pull` levou o projeto ao
+commit `75d69fd`; comando
+`python -m unittest discover -s tests -p test_inventory_material_evidence_2026.py -v`
+terminou `Ran 7 tests ... FAILED (errors=7)`.
+Os rastros mostram **PermissionError [WinError 32]**
+ao executar `Path.unlink` e `tempfile.cleanup` nos
+arquivos `C:/Users/PC/AppData/Local/Temp/tmp.../analysis/urna_2026.sqlite3`.
+Nao houve mensagem de erro SQL, hash ou divergencia
+nos votos. Alguns metadados sinteticos chegaram a
+ser corretamente relatados antes da falha.
+
+**Diagnostico do codigo:** a fixture em
+`tests/test_inventory_material_evidence_2026.py`
+criava SQLite com `with sqlite3.connect(...) as db`,
+que confirma a transacao mas nao fecha
+automaticamente a conexao. No Windows, uma
+conexao ainda aberta bloqueia exclusao do
+arquivo temporario. O codigo produtivo do
+inventario ja chamava `conn.close()`
+no bloco `finally`.
+
+**Correcao direta na main:** substituir
+o contexto da fixture por
+`with contextlib.closing(sqlite3.connect(...))`,
+executar `db.commit()` antes do fechamento
+(commit `ba91186`). No modulo produtivo,
+a consulta de amostra de UF foi mudada de
+`WHERE UPPER(uf)=?` para `WHERE uf=?`
+e `extensao IN(...)`, permitindo uso do
+indice ja existente `idx_archives_secao`,
+sem alteracao do banco (commit `2a9e536`).
+
+O log do investigador termina imediatamente
+apos digitar `python inventory_material_evidence_2026.py`;
+**NAO ha saida conclusiva de execucao real**.
+Nao inventar contagens reais de BUs, RDVs
+ou capturas fisicas. A solucao foi publicada,
+mas **aguarda novo teste no Windows do investigador**.
+
+Comandos apos eventual termino/cancelamento
+do processo anterior, se ainda ativo:
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_inventory_material_evidence_2026.py -v
+python inventory_material_evidence_2026.py
+```
+
+Protocolo ativo continua exclusivamente em 2026.
+Ninguem deve alterar o SQLite original ou
+tratar arquivos oficiais TSE com SHA-256 como
+captura independente de um BU impresso.

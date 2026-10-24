@@ -88,9 +88,9 @@ def official_inventory(dbpath):
             for raw_uf, mu, zone, section, ext, member in conn.execute(
                     """SELECT uf, municipio, zona, secao, extensao, member
                        FROM archive_entries
-                       WHERE UPPER(uf) = ? AND
-                             LOWER(extensao) IN ('.bu','.imgbu','.rdv','.log','.vota')
-                             AND secao IS NOT NULL AND TRIM(secao) != ''
+                       WHERE uf = ? AND
+                             extensao IN ('.bu','.imgbu','.rdv','.log','.vota')
+                             AND secao IS NOT NULL AND secao != ''
                        LIMIT 2""", (uf,)):
                 samples.append({
                     "UF": raw_uf, "municipio": mu, "zona": zone,

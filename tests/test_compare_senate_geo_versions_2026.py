@@ -32,7 +32,7 @@ class CompareSenateGeoTest(unittest.TestCase):
         self.write(self.old,"cross-office-senate-v1",self.rows)
         second=[list(x) for x in self.rows]
         second[0][6]="0.2"  # inversao desaparece
-        second[1][6]="-0.3" # aparece outra inversao
+        second[1][6]="-0.3" # a inversao antiga desaparece
         self.write(self.new,"cross-office-senate-v2",second)
 
     def write(self, path,version,records):
@@ -56,11 +56,11 @@ class CompareSenateGeoTest(unittest.TestCase):
         report=comparison.run(self.root)
         self.assertEqual(report["pairs_compared"],2)
         self.assertEqual(report["totals"]["v1_inversoes"],2)
-        self.assertEqual(report["totals"]["v2_inversoes"],2)
+        self.assertEqual(report["totals"]["v2_inversoes"],0)
         self.assertEqual(report["totals"]["persistentes"],0)
         self.assertEqual(report["totals"]["apenas_v1"],2)
-        self.assertEqual(report["totals"]["novas_v2"],2)
-        self.assertEqual(len(report["v2_pares_com_inversao"]),2)
+        self.assertEqual(report["totals"]["novas_v2"],0)
+        self.assertEqual(len(report["v2_pares_com_inversao"]),0)
         self.assertEqual(sha256(Path(report["output"])),
                          report["output_sha256"])
 

@@ -5322,3 +5322,55 @@ python test_fixed_vote_formula_2026.py
 
 Nao concluir que existe transferencia eleitoral
 sem fonte material independente para `D=Y-X`.
+
+
+---
+
+## 2026-10-25 — E0105 — Execucao real da robustez e diagnostico de zonas
+
+**Fonte da evidencia:** saida completa da opcao C executada pelo
+investigador em Windows, em H:/TSE/forensics/urnas (2026, turno 1).
+Os primeiros trechos de 2 particoes e um par AC/170
+sao testes SINTETICOS; os dados reais comecam em
+`[ROBUSTEZ 1/256]` e terminam em `[ROBUSTEZ 256/256]`.
+
+- 4 testes sinteticos locais concluídos;
+- 256/256 particoes BU lidas uma vez, SHA conferidos;
+- 13 pares reais das 616 comparacoes v2, reconstituidos
+  sem desvio dos coeficientes originais;
+- 400 replicacoes bootstrap por zona/par;
+- 13/13 com sinal intrazona preservado ao retirar
+  uma zona de cada vez;
+- 6/13 mantiveram sinal em todas as replicacoes;
+- 9/13 apresentaram quantis bootstrap de 2,5% e
+  97,5% inteiramente do mesmo lado de zero;
+- 4/13 tiveram intervalo atravessando zero:
+  AM 22/455; RN 13/444; TO 13/153; TO 22/153;
+- 4/13 mantiveram sinal e modulo >= 0,10
+  em >=95% das replicacoes:
+  AC 13/277; PI 13/111; TO 13/222; TO 22/222.
+
+CSV no H::
+`analysis/entre_cargos/8ab3ce83c8992b9a-94fc637b4737c20d/correlacao_presidente_senado_v2/robustez_inversoes_2026/pares_robustez.csv`.
+SHA-256:
+`f8dfe10cd1aa2f7c5d02c20f3aec54db75920273361380d811d2242c6613933e`.
+
+**Interpretação:** estabilidade descritiva de algumas
+correlacoes, não evidencia de urna adulterada.
+Os pares foram selecionados entre 616, e as zonas
+podem ser espacialmente dependentes. Nao atribuir
+significancia confirmatoria a esses quantis bootstrap.
+
+**Proxima fase implementada:** novo
+`analyze_senate_zone_drivers_2026.py`, opcao D de
+`start_windows.bat`, verifica SHA-256 dos checkpoints
+produzidos pela opcao C e identifica as zonas mais
+influentes na correlacao, sem reler BU ou SQLite.
+Testes CI aprovados em Windows e Linux:
+132 testes por SO,
+https://github.com/rubentrancoso/TSE/actions/runs/40237539069
+
+Documentacao detalhada:
+`docs/ROBUSTEZ_SENADO_2026.md`.
+Execucao empirica da opcao D: pendente.
+Nenhum microdado de 2022 foi utilizado.

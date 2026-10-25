@@ -30,10 +30,12 @@ echo [7] Verificar integridade dos downloads
 echo [8] Executar novamente a bateria estatistica (sem baixar arquivos)
 echo [9] Diagnosticar ultima coleta: erro e SEM_SECAO por UF/cargo
 echo [A] Reparar APENAS arquivos em erro da ultima coleta
+echo [B] VALIDAR SENADO V2 E FORMULA 2026 (sem download / sem SQLite)
 echo [0] Sair
 echo.
-choice /C 123456789A0 /N /M "Selecione: "
-if errorlevel 11 exit /b 0
+choice /C 123456789AB0 /N /M "Selecione: "
+if errorlevel 12 exit /b 0
+if errorlevel 11 goto validate_2026
 if errorlevel 10 goto repair
 if errorlevel 9 goto diagnose
 if errorlevel 8 goto stats
@@ -104,6 +106,30 @@ echo Reparar SOMENTE recursos em erro no ultimo manifesto.
 echo Nao refaz reconciliacao ou estatisticas; reaproveita os dados.
 %PY% urnas.py repair
 goto done
+
+:validate_2026
+echo.
+echo FASE 2026 - testes, ajuste Senado v2, comparacao v1/v2 e formula fixa.
+echo Usa somente particoes BU locais em H:. NAO faz download e NAO abre SQLite.
+echo Se uma etapa falhar, interrompe para proteger a interpretacao dos resultados.
+%PY% -m unittest discover -s tests -p "test_*.py" -q
+if errorlevel 1 goto validate_failed
+%PY% cross_office_senate_correlations.py
+if errorlevel 1 goto validate_failed
+%PY% compare_senate_geo_versions_2026.py
+if errorlevel 1 goto validate_failed
+%PY% test_fixed_vote_formula_2026.py
+if errorlevel 1 goto validate_failed
+echo.
+echo [CONCLUIDO] Confira as inversoes Senado v2 e a predicao fora da amostra.
+goto done
+
+:validate_failed
+echo.
+echo [ERRO] Validacao 2026 interrompida. Nao considerar os resultados completos.
+echo Consulte a mensagem anterior; os dados originais nao foram modificados.
+pause
+goto menu
 
 :done
 echo.

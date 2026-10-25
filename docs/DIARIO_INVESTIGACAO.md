@@ -5071,3 +5071,84 @@ Protocolo ativo continua exclusivamente em 2026.
 Ninguem deve alterar o SQLite original ou
 tratar arquivos oficiais TSE com SHA-256 como
 captura independente de um BU impresso.
+
+
+---
+
+## 2026-10-25 — E0102 — Inventario material real: apenas PDFs no indice
+
+**Saida observada no terminal do investigador:**
+`git pull` atualizou a main ate `07abb0a`.
+`python -m unittest discover -s tests -p test_inventory_material_evidence_2026.py -v`
+terminou **7 testes OK**, validando a correcao de WinError 32.
+`python inventory_material_evidence_2026.py` terminou normalmente,
+gravando `H:/TSE/forensics/urnas/analysis/evidencia_material_2026/inventario.json`.
+
+**Resultado real do inventario SQLite archive_entries:**
+- `catalogo_tse_status=CATALOGO_CONSULTADO`;
+- **84 membros PDF**, nenhum hash de membro PDF calculado
+  na coluna `sha256`;
+- **29 identificadores de UF** distintos no grupo
+  do catalogo, que podem incluir `ZZ` e
+  `NAO_IDENTIFICADA`, sem interpretacao
+  preliminar de cobertura eleitoral;
+- **0** membros .bu/.rdv/.imgbu/.log/.vota
+  nessa tabela;
+- **0 capturas externas registradas** em
+  `evidencia_independente_2026/manifest.csv`.
+
+A contagem `0` significa **ausencia no indice consultado,
+NAO ausencia comprovada no disco, no portal TSE ou
+entre capturas fisicas de terceiros**.
+
+**Fonte oficial primaria verificada na web:**
+https://dadosabertos.tse.jus.br/dataset/resultados-2026-arquivos-transmitidos-para-totalizacao
+O conjunto "Resultados 2026 - Arquivos transmitidos para
+totalizacao" lista ZIPs por UF e exterior ZZ, declarando
+arquivos `bu log rdv vota` na situacao "Totalizado".
+Logo os arquivos existem publicamente como conjunto de
+recursos; nao foi verificado que todos estejam locais,
+integros ou decodificaveis. Nao baixar imediatamente
+ZIPs potencialmente grandes nem afirmar independência
+das copias oficiais.
+
+**Causa potencial no proprio codigo:**
+`urnas.py` usa `kinds=['bu','secao']` por padrao
+para `fetch`; `artefatos` exige selecao
+explicita. O motor `import_file` somente
+popula `archive_entries` para recursos ja
+importados, e somente calcula hashes internos
+de .bu/.rdv/.log/.vota/.imgbu se
+`kind='artefatos'`. Os PDFs nao comprovam
+que ZIPs de transmissao foram ingeridos.
+Ainda nao se sabe se a causa real foi
+falta de download, importacao desabilitada,
+erro de importacao, ou ficheiros locais
+com caminho divergente.
+
+**Implementacao publicada e pendente de execucao
+real no H::**
+`diagnose_artifact_coverage_2026.py`
+e `tests/test_diagnose_artifact_coverage_2026.py`.
+Consulta SEM download, em modo leitura,
+`catalogo_latest.json` (recursos declarados),
+arquivos de `raw/artefatos/<UF>/` e SQLite
+(`imports`, `archive_entries`), separando
+recurso disponibilizado, ZIP local,
+parcial, indice e extensoes.
+Gera `analysis/evidencia_material_2026/diagnostico_cobertura.json`.
+NAO abre ZIP, nao le registros de votos,
+nao usa dados de 2022.
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_diagnose_artifact_coverage_2026.py -v
+python diagnose_artifact_coverage_2026.py
+```
+
+Somente depois desse diagnostico decidir se
+cabe reindexar ZIPs que ja estao no H: ou
+baixar seletivamente arquivos de uma UF.
+Lembrar que artefatos transmitidos pelo TSE
+ainda nao sao capturas independentes
+do BU impresso na hora da votacao.

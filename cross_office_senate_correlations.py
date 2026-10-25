@@ -159,23 +159,13 @@ def results_table(raw, zones, candidate_votes):
         for local in by_uf[(uf, turn)]:
             n = local["n"]
             sections_reconciled += n
-            if n < 2:
-                continue
-            zone_count += 1
+            if n >= 2:
+                zone_count += 1
             x = local["p"][p]
             y = local["s"][senator]
             subtract_xy += x * y / n
             subtract_xx += x * x / n
             subtract_yy += y * y / n
-        # Os grupos de 1 secao tambem precisam remover sua media:
-        # caso contrario, nao ha efeito fixo real. Recontar TODAS as zonas.
-        for local in by_uf[(uf, turn)]:
-            if local["n"] == 1:
-                x = local["p"][p]
-                y = local["s"][senator]
-                subtract_xy += x*y
-                subtract_xx += x*x
-                subtract_yy += y*y
         if sections_reconciled != m.n:
             raise RuntimeError("Somas por zona nao fecham com secoes do par "
                                + repr(key))
@@ -215,9 +205,9 @@ def run(root, turn="1", max_senators=0):
           "| UFs senador:", len(selected),
           "| candidaturas ao Senado:",
           sum(len(v) for v in selected.values()), flush=True)
-    raw, within, present, valid, votes = compute(paths, pres, selected, turn)
-    table = results_table(raw, within, votes)
-    dest = folder / "correlacao_presidente_senado"
+    raw, zones, present, valid, votes = compute(paths, pres, selected, turn)
+    table = results_table(raw, zones, votes)
+    dest = folder / "correlacao_presidente_senado_v2"
     dest.mkdir(exist_ok=True)
     output = dest / "pares_por_uf.csv"
     tmp = Path(str(output) + ".part")
@@ -235,6 +225,8 @@ def run(root, turn="1", max_senators=0):
             tmp.unlink()
     report = {
         "version": VERSION, "status": "DESCRITIVO_CONCLUIDO",
+        "geographic_adjustment": "means by full UF+municipio+zona+turno, across all buckets",
+        "supersedes": "correlacao_presidente_senado (v1 geographical adjustment)",
         "fingerprint": original["source_fingerprint"], "turno": turn,
         "presidente_top2": pres,
         "senadores_por_uf": {uf: list(items) for uf, items in sorted(selected.items())},

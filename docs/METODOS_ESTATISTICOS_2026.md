@@ -1,5 +1,24 @@
 # Métodos estatísticos de investigação eleitoral — 2026
 
+## PRIORIDADE CIENTIFICA ATIVA — 25/10/2026
+
+Orientacao do investigador: suspender o aprofundamento sequencial das
+13 inversoes por zona (inclusive opcao E como proximo passo) e
+priorizar analise ESTATISTICA FORENSE nacional, sem preselecionar
+candidatos ou regioes nem pressupor mecanismos fraudulentos.
+
+O novo protocolo pre-execucao e
+[PROTOCOLO_ESTATISTICO_FORENSE_2026.md](PROTOCOLO_ESTATISTICO_FORENSE_2026.md).
+Ordem: matriz compacta por secao/denominadores e cobertura;
+modelos nulos calibrados, fingerprints comparecimento-voto quando
+houver aptos/comparecimento validos, modelos beta-binomiais e
+picos de percentuais; depois digitos, multivariado e residuos.
+Correcao para multiplos testes, simulacoes nulas, controle de falso
+positivo e validacao territorial sao obrigatorios antes de declarar
+anomalia robusta. Testes anteriores continuam preservados, mas
+nao definem a amostra do novo estudo.
+
+
 **Estado:** módulo `statistical_forensics.py` integrado à opção **1 — COLETA COMPLETA**
 do menu `start_windows.bat` e ao subcomando `python urnas.py stats`.
 Todos os códigos e testes são publicados diretamente na branch `main`.

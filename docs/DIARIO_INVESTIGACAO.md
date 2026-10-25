@@ -5374,3 +5374,55 @@ Documentacao detalhada:
 `docs/ROBUSTEZ_SENADO_2026.md`.
 Execucao empirica da opcao D: pendente.
 Nenhum microdado de 2022 foi utilizado.
+
+
+---
+
+## 2026-10-25 — E0106 — Influencia por zona e stress de retirada conjunta
+
+**Fonte:** saida da opcao D executada pelo investigador em
+Windows sobre checkpoints da opcao C, apenas BU 2026.
+O primeiro par AC/13/170 nos caminhos Temp era teste
+SINTETICO e foi excluido das inferencias empiricas.
+
+**Resultado de 2026**: 256/256 checkpoints com SHA-256
+conferido; 13 pares e 2.156 linhas par x zona (as zonas
+podem reaparecer para outros pares); 65 entradas top5
+por par; 13 resumos. Recalculou todos os r ajustados.
+
+Hashes dos tres CSVs:
+- resumo: 55bc291a596a5c45f88e042e6d659a1d137fcb1a76e052070f057bb5c13b3183
+- zonas: 6ccbec12342a13b320360f8de967bd4a6c0d158db43c7da4074d801ffadd9007
+- top5: 0017ff8cc47d093042e9cdcef8eafcd00f45c465d2723b5fb95b382cf1b08826
+
+**Observacoes geograficas:**
+- SP 13/232: 490/779 zonas com covariancia alinhada,
+  267 opostas e 22 zero; top 5 apenas 13,441%
+  da soma de covariancia absoluta; maior delta
+  de r ao omitir uma zona = 0,003821.
+- AC 13/277: 20/23 zonas alinhadas; top5 = 79,484%
+  de covariancia absoluta; maior delta = 0,045933.
+- RN 13/444: 90/172 alinhadas e 82 opostas;
+  top5 = 54,334%; maior delta = 0,047606.
+- Os 13 pares apontam para apenas 8 diferentes
+  zonas de maior influencia, uma em cada UF presente;
+  isso se deve em parte a pares compartilhando secoes
+  e candidaturas, e nao implica fonte comum de alteracao.
+
+Lista e tabelas integrais:
+\`docs/INFLUENCIA_ZONAL_SENADO_2026_25OUT.md\`.
+
+**Nova opcao E:** stress adversarial removendo ao mesmo
+tempo 1,3,5 zonas com maiores magnitudes da covariancia,
+5 zonas de maior influencia individual, e 400 retiradas
+aleatorias de cinco zonas. Usa apenas os checkpoints
+da opcao C e valida SHA-256; dados originais preservados.
+Avaliacao POS-SELECAO: nao e p-valor, nao corrige testes
+multiplos, nao e prova de adulteracao eleitoral.
+
+**Validacao:** 136/136 testes sinteticos aprovados
+em Windows e Linux
+https://github.com/rubentrancoso/TSE/actions/runs/40238571980
+
+**Execucao empirica da opcao E:** pendente em H:.
+Nenhuma importacao de dados eleitorais de 2022.

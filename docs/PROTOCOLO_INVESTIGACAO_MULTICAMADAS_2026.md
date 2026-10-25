@@ -13,6 +13,29 @@ de duas fontes oficiais ou esqueça a linha de investigação original.
 a resposta antes dos testes é proibido.** Todas as hipóteses aceitam
 resultados que as refutem.
 
+## ATUALIZACAO OPERACIONAL — 25/10/2026: OPCOES C, D e E
+
+**A opcao D foi executada com dados reais 2026** e confirmou
+2.156 registros zona x par, 256 checkpoints validados e 13
+pares estudados. Ela nao releu BU. Detalhes e hashes em
+`docs/INFLUENCIA_ZONAL_SENADO_2026_25OUT.md`.
+A opcao C havia confirmado estabilidade de sinal por
+exclusao de uma zona em 13/13 pares; isso nao informa
+o efeito de retirar varias zonas juntas.
+
+**Proxima execucao empírica ativa:** apos `git pull`,
+abrir `start_windows.bat` e escolher **E**. A opcao E
+faz um stress POS-SELECAO: retira 1/3/5 zonas mais
+concentradas e usa 400 retiradas aleatorias de
+cinco zonas por par, somente dos checkpoints da C.
+Nao baixa, nao abre SQLite e nao reindexa.
+**CI Linux e Windows:** 136 testes cada,
+https://github.com/rubentrancoso/TSE/actions/runs/40238571980
+
+Permanece pendente BU fisico/QR independente com
+proveniencia valida para aferir diferencas `D=Y-X`.
+Coeficientes de ecologia eleitoral nao provam fraude.
+
 ## RESULTADO EMPIRICO E PRECEDENCIA — 25/10/2026
 
 A opcao **B** de `start_windows.bat` foi executada localmente

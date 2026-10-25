@@ -7,7 +7,18 @@ from pathlib import Path
 import tempfile
 import unittest
 
-import test_fixed_vote_formula_2026 as formula
+# O script executavel tem o mesmo basename deste arquivo de teste.
+# Sob unittest discover, um import convencional carregaria este proprio
+# teste (modulo ja em sys.modules), em vez da implementacao na raiz.
+# Carregar a implementacao por caminho e sob nome exclusivo.
+import importlib.util
+
+_IMPL = Path(__file__).resolve().parents[1] / "test_fixed_vote_formula_2026.py"
+_SPEC = importlib.util.spec_from_file_location("formula_fixa_presidencial_impl_2026", _IMPL)
+if _SPEC is None or _SPEC.loader is None:
+    raise ImportError("Nao foi possivel localizar a implementacao da formula fixa")
+formula = importlib.util.module_from_spec(_SPEC)
+_SPEC.loader.exec_module(formula)
 from reconcile_stream import sha256
 
 

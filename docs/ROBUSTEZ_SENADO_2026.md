@@ -134,7 +134,11 @@ em `start_windows.bat`. Resultados esperados em
 `robustez_inversoes_2026/drivers_zonais/`
 (`resumo_pares.csv`, `zonas_por_par.csv`,
 `top5_zonas_influentes.csv`, `summary.json`).
-A execucao real da opcao D ainda nao ocorreu.
+A opcao D foi executada em 25/10/2026, com 256 checkpoints
+verificados e 2.156 registros zona x par. Resultados:
+`docs/INFLUENCIA_ZONAL_SENADO_2026_25OUT.md`.
+Proxima etapa: opcao E, retirada conjunta das zonas influentes,
+sem reler os votos.
 
 **Validacao de codigo da opcao C:** 128 testes aprovados
 em Windows e Linux:

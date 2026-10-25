@@ -55,6 +55,23 @@ ajuste de medias geograficas, embora a
 selecao dos nove candidatos dependa da
 triagem antiga.
 
+**Atalho de execucao para Windows (25/10/2026):** depois de
+`git pull`, abrir `start_windows.bat` e selecionar
+**opcao B — VALIDAR SENADO V2 E FORMULA 2026**.
+A opcao roda a bateria de testes sintéticos, a correlacao corrigida,
+a comparacao v1/v2 e a formula fixa na ordem indicada abaixo.
+Se alguma etapa falhar, as seguintes nao sao executadas.
+A opcao B nao efetua novos downloads, nao reindexa e nao abre SQLite.
+Os arquivos originais em H: sao preservados; os novos resultados
+sao gravados somente em diretorios de analise.
+
+**Validacao de codigo:** a execucao CI
+`40225595039` concluiu com sucesso apos corrigir a colisao
+de nomes entre o modulo de testes e o script de formula.
+**Validacao empirica:** ainda depende de executar a opcao B
+com os 256 CSVs no Windows. Nao afirmar os totais reais
+de inversoes v2 antes dessa execucao.
+
 **Execucao controlada, sem reler SQLite:**
 
 ```bat

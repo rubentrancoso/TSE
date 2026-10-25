@@ -31,10 +31,12 @@ echo [8] Executar novamente a bateria estatistica (sem baixar arquivos)
 echo [9] Diagnosticar ultima coleta: erro e SEM_SECAO por UF/cargo
 echo [A] Reparar APENAS arquivos em erro da ultima coleta
 echo [B] VALIDAR SENADO V2 E FORMULA 2026 (sem download / sem SQLite)
+echo [C] ROBUSTEZ SENADO 2026 (bootstrap de zonas, sem SQLite)
 echo [0] Sair
 echo.
-choice /C 123456789AB0 /N /M "Selecione: "
-if errorlevel 12 exit /b 0
+choice /C 123456789ABC0 /N /M "Selecione: "
+if errorlevel 13 exit /b 0
+if errorlevel 12 goto robust_2026
 if errorlevel 11 goto validate_2026
 if errorlevel 10 goto repair
 if errorlevel 9 goto diagnose
@@ -122,6 +124,19 @@ if errorlevel 1 goto validate_failed
 if errorlevel 1 goto validate_failed
 echo.
 echo [CONCLUIDO] Confira as inversoes Senado v2 e a predicao fora da amostra.
+goto done
+
+:robust_2026
+echo.
+echo ROBUSTEZ DESCRITIVA DAS INVERSOES SENADO 2026.
+echo Le BU ja derivados em H:, confere SHA-256; nao reindexa nem baixa.
+echo Checkpoints permitem retomada sem repetir particoes ja processadas.
+%PY% -m unittest discover -s tests -p "test_robust_senate_inversions_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% robust_senate_inversions_2026.py
+if errorlevel 1 goto validate_failed
+echo.
+echo [CONCLUIDO] Consulte robustez_inversoes_2026/summary.json.
 goto done
 
 :validate_failed

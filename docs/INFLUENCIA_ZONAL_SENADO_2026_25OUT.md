@@ -105,3 +105,8 @@ Informar fracoes de secoes removidas, r original,
 r apos exclusao, e eventual troca de sinal.
 Esse teste e deliberadamente POS-SELECAO e
 descritivo, jamais uma probabilidade de fraude.
+
+**Status da proxima verificacao:** codigo da opcao E publicado,
+CI com 136 testes aprovados em Linux e Windows
+(https://github.com/rubentrancoso/TSE/actions/runs/40238571980).
+Execucao real da E no disco H: ainda pendente.

@@ -13,83 +13,56 @@ de duas fontes oficiais ou esqueça a linha de investigação original.
 a resposta antes dos testes é proibido.** Todas as hipóteses aceitam
 resultados que as refutem.
 
-## RETIFICACAO DE METODO E EXECUCAO ATIVA — 25/10/2026
+## RESULTADO EMPIRICO E PRECEDENCIA — 25/10/2026
 
-**Os BUs ja existentes no H: serao reutilizados.**
-A proxima tarefa e testar uma hipotese concreta
-de formula nos dados somente de 2026, nao fazer
-novos inventarios ou downloads.
+A opcao **B** de `start_windows.bat` foi executada localmente
+com os BU de 2026 previamente extraidos no H:.
+Nao foi necessario fazer download nem reindexar o SQLite de 221 GiB.
+A bateria local passou com 122 testes; o mesmo conjunto
+passou em CI Linux e Windows.
 
-Uma auditoria do codigo encontrou um erro
-no ajuste geografico do Senado v1:
-`cross_office_senate_correlations.py` agrupava
-momentos por municipio+zona **somente dentro
-de cada particao BU**, mas uma zona aparece
-em varias das 256 particoes. Assim, **os 13
-pares com inversao do Senado sao resultados
-provisorios de v1**, nao casos confirmados
-apos controle geografico correto. Correcoes
-na v2, sem substituir os artefatos v1:
+- 256 particoes verificadas, 67.858.746 chaves de candidatos;
+- 497.897 secoes com Presidente e Senado, 308 candidaturas
+  senatoriais e 616 pares Presidente/Senado;
+- **13 inversoes intrazona na v1 e na v2**, todas persistentes,
+  sem coeficientes alterados acima de 0,000001;
+- 397.341 secoes de treino e 101.266 de validacao para a
+  proporcao nacional fixa `round(alpha_c*N_pres)`;
+- predicoes exatas: 0,834436% (P13) e 0,935161% (P22);
+  o criterio predefinido de 95% nao foi atendido;
+- erros absolutos medios nacionais: 33,551123 (P13)
+  e 31,844696 (P22), versus 11,971461 e 12,140975
+  no modelo municipio+zona.
 
-- `cross_office_senate_correlations.py`: v2
-  centra as 497.897 secoes pelas **zonas
-  completas** de todas as particoes;
-- `tests/test_cross_office_senate_correlations.py`:
-  fixture de mesma zona dividida por buckets;
-- `compare_senate_geo_versions_2026.py` e
-  `tests/test_compare_senate_geo_versions_2026.py`:
-  comparacao com 616 pares e hashes;
-- `test_fixed_vote_formula_2026.py` e testes:
-  testa votos P13/P22 = `round(alpha*N_pres)`
-  apenas na eleicao 2026, separando treino
-  e validacao por hash de secao e comparando
-  modelos nacionais, por UF e por zona.
+**Retificacao da premissa anterior:** a v1 calculava momentos
+por bucket, mas `reconcile_stream.bucket_for` particiona
+por `UF|municipio|zona|turno`. A zona nao se reparte
+entre buckets nesse algoritmo; portanto, a suspeita
+anterior de erro de centralizacao da v1 nao se confirmou.
+A v2 torna o metodo independente de futuros
+esquemas de particionamento.
 
-O teste de fórmula nao infere transferencias
-entre candidatos. Para comprovar alteracao,
-continua necessaria a origem independente da
-contagem do BU emitido pela urna. Os limites
-de cruzamento do Senado calculados por secao
-sao aritmeticamente distintos do erro de
-ajuste de medias geograficas, embora a
-selecao dos nove candidatos dependa da
-triagem antiga.
+**Limite probatorio:** a correlacao ecologica nao permite
+inferir votos individuais. O resultado da formula fixa
+refuta somente a forma testada, e nao supostas
+transferencias de votos entre urna e publicacao.
+Sem registro contemporaneo independente do BU,
+`D[s,c]=Y[s,c]-X[s,c]` nao pode ser estimado.
 
-**Atalho de execucao para Windows (25/10/2026):** depois de
-`git pull`, abrir `start_windows.bat` e selecionar
-**opcao B — VALIDAR SENADO V2 E FORMULA 2026**.
-A opcao roda a bateria de testes sintéticos, a correlacao corrigida,
-a comparacao v1/v2 e a formula fixa na ordem indicada abaixo.
-Se alguma etapa falhar, as seguintes nao sao executadas.
-A opcao B nao efetua novos downloads, nao reindexa e nao abre o SQLite do acervo (os testes podem usar bases temporarias).
-Os arquivos originais em H: sao preservados; os novos resultados
-sao gravados somente em diretorios de analise.
+Evidencia, hashes e conclusoes:
+`docs/RESULTADOS_SENADO_FORMULA_2026_25OUT.md`.
+Usar esse relatorio e a nota de `REVISAO_INVERSOES_SENADO_2026.md`
+em lugar das notas provisórias anteriores de 24/10.
 
-**Validacao de codigo:** a execucao CI
-`40225595039` concluiu com sucesso apos corrigir a colisao
-de nomes entre o modulo de testes e o script de formula.
-**Validacao empirica:** ainda depende de executar a opcao B
-com os 256 CSVs no Windows. Nao afirmar os totais reais
-de inversoes v2 antes dessa execucao.
-
-**Execucao controlada, sem reler SQLite:**
+### Reproducao local sem download
 
 ```bat
 git pull
-python -m unittest discover -s tests -p test_cross_office_senate_correlations.py -v
-python -m unittest discover -s tests -p test_compare_senate_geo_versions_2026.py -v
-python -m unittest discover -s tests -p test_fixed_vote_formula_2026.py -v
+python -m unittest discover -s tests -p "test_*.py" -q
 python cross_office_senate_correlations.py
 python compare_senate_geo_versions_2026.py
 python test_fixed_vote_formula_2026.py
 ```
-
-Os CSVs e JSONs novos sao gravados em
-`analysis/entre_cargos/<fingerprint>/`,
-em subpastas proprias, sem mudar a v1.
-Os testes novos ainda dependem de validacao
-pelo investigador no Windows, antes de
-interpretar resultados reais.
 
 ## PRECEDENCIA OPERACIONAL — dados ja coletados no H: (25/10/2026)
 

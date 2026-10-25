@@ -5152,3 +5152,83 @@ baixar seletivamente arquivos de uma UF.
 Lembrar que artefatos transmitidos pelo TSE
 ainda nao sao capturas independentes
 do BU impresso na hora da votacao.
+
+
+---
+
+## 2026-10-25 — E0103 — Correcao de escopo do inventario e do BAT completo
+
+**Correcao necessaria do assistente.** O investigador contestou
+corretamente a suposicao de que a falta de .bu/.rdv na tabela
+`archive_entries` significaria ausencia de dados de urna ou
+necessidade de baixar novamente o acervo.
+
+**Codigo da rotina completa verificado diretamente na main:**
+
+1. `start_windows.bat`, opcao 1 `COLETA COMPLETA`,
+   executa `python collect_forensics.py all --download-portal-files`.
+2. `collect_forensics.py::main` chama
+   `collect_portal(...)` e, em seguida,
+   `collect_urnas_h()` quando o download foi solicitado.
+3. `collect_urnas_h()` executa a CLI de `urnas.py`
+   com `fetch --all --kind bu --kind secao --kind artefatos`.
+4. `urnas.py::resource_path` grava recursos selecionados
+   em `H:/TSE/forensics/urnas/raw/<kind>/<UF>/`, conforme
+   o `root_path()` no Windows.
+5. `urnas.py::import_file` indexa os ZIPs baixados em
+   `H:/TSE/forensics/urnas/analysis/urna_2026.sqlite3`,
+   incluindo as tabelas `votes` e `archive_entries`
+   quando os recursos sao efetivamente importados.
+6. O coletor separado preserva arquivos do portal que
+   NAO sao de urna em `H:/TSE/forensics/portal/files/`;
+   snapshots ficam sob `data/forensics` no projeto.
+
+**Observacoes de execucoes anteriores realmente confirmadas:**
+
+- BU digital x CSV por secao: **67.858.746** chaves
+  coincidentes na matriz de candidatos;
+- matriz cross-office com **499.206 secoes**;
+- **497.897** secoes pareadas entre Presidente,
+  Governador e Senado;
+- correlações: **162** pares Presidente/Governador
+  + **616** pares Presidente/Senado;
+- limites ecologicos para nove senadores e dois
+  presidenciaveis: **18** pares auditados;
+- as origens e os derivados continuam no drive H:.
+
+**Alcance real do inventario de E0102:** ele consultou
+SOMENTE `archive_entries` e listou 84 membros PDF,
+sem entradas .bu/.rdv/.imgbu/.log. Isso NAO mede
+todo o banco (`votes`), nao percorre os diretórios de
+download, nao examina os ZIPs brutos e nao altera
+o que ja foi comprovado pelas execucoes das analises.
+A coluna hash vazia para PDF e esperada, porque
+`import_file` calcula hash de membro apenas para
+extensoes especificas e recurso `kind=artefatos`.
+Os resultados do inventario sao verdadeiros no
+seu escopo, mas a interpretacao anterior do assistente
+e as propostas reiteradas de "localizar os dados"
+ou recomeçar a coleta estavam incorretas.
+
+**Diretriz operacional corrigida:**
+
+- NAO reiniciar coleta, NAO exigir outra busca de
+  arquivos ou inventarios como precondicao;
+- NAO reprocessar 67,8 M chaves sem pergunta
+  substantiva que de fato exija acesso por secao;
+- aproveitar os BUs oficiais e os demais artefatos
+  ja catalogados e suas hashes/fingerprints;
+- prosseguir com teste falsificavel e comparacoes
+  dos DADOS DE 2026 para a hipotese de mecanismo
+  geral comum a pleitos diferentes (sem importar
+  microdados de 2022);
+- quando a hipotese exigir material INDEPENDENTE
+  contemporaneo ao encerramento da urna, separar
+  essa fonte de copia oficial, sem confundir
+  ausencia no manifesto com ausencia global.
+
+**Status:** corrigida a interpretacao; nenhuma
+alteracao de dados ou novo download realizado.
+O script `diagnose_artifact_coverage_2026.py`
+e apenas diagnostico OPCIONAL, nao a proxima fase
+obrigatoria da investigacao.

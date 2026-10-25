@@ -72,8 +72,71 @@ ou QR independente, capturado no encerramento da votacao,
 com a publicacao do mesmo boletim e chave eleitoral.
 Sem `X` independente, o vetor `D=Y-X` e desconhecido.
 
-**Estado (25/10/2026):** codigo e testes sinteticos publicados.
-GitHub Actions confirmou **128/128 testes OK em Windows e Linux**:
+## Execucao real em H: — 25/10/2026
+
+A opcao C passou por **4 testes sinteticos locais** e processou
+**256/256 particoes BU de 2026**, sem reuso de checkpoints
+na primeira execucao. Reconstruiu os 13 pares com os
+coeficientes originais e concluiu 400 replicacoes por par.
+
+**Resultados agregados:**
+- 13/13 pares preservaram o sinal apos retirar qualquer
+  zona eleitoral isoladamente (leave-one-zone-out, 100%);
+- o sinal tambem permaneceu nos filtros de zonas com
+  menos de 5 ou 10 secoes;
+- 6/13 preservaram o sinal em todas as 400 replicacoes;
+- 9/13 tiveram os quantis de 2,5% e 97,5% do bootstrap
+  inteiramente de um lado do zero;
+- 4/13 cruzaram zero nos quantis exploratorios;
+- apenas 4/13 tiveram sinal e modulo >=0,10 em pelo
+  menos 95% das reamostragens. Esses quatro foram
+  AC 13 x 277, PI 13 x 111, TO 13 x 222 e TO 22 x 222.
+
+| UF | Presid. | Senador | r intrazona | Boot mesmo sinal | Quantis 2,5% a 97,5% |
+|---|---|---|---:|---:|---|
+| AC | 13 | 277 | -0,215486 | 100% | [-0,324748; -0,087176] |
+| AC | 22 | 277 | +0,191363 | 100% | [+0,068365; +0,311476] |
+| AL | 22 | 111 | +0,109550 | 99,75% | [+0,025425; +0,206951] |
+| AM | 22 | 455 | +0,105302 | 93,75% | [-0,023042; +0,228187] |
+| PI | 13 | 111 | -0,211450 | 100% | [-0,311706; -0,122902] |
+| RN | 13 | 444 | +0,118039 | 96,25% | [-0,004577; +0,225701] |
+| RN | 22 | 444 | -0,127813 | 97,75% | [-0,226602; -0,000778] |
+| RR | 13 | 155 | +0,223131 | 99,75% | [+0,060567; +0,379599] |
+| SP | 13 | 232 | -0,117541 | 100% | [-0,135553; -0,095634] |
+| TO | 13 | 153 | -0,102593 | 94,00% | [-0,200707; +0,014871] |
+| TO | 13 | 222 | -0,328465 | 100% | [-0,420937; -0,224021] |
+| TO | 22 | 153 | +0,111438 | 96,25% | [-0,012968; +0,210037] |
+| TO | 22 | 222 | +0,341408 | 100% | [+0,251164; +0,424964] |
+
+**Arquivo empirico:**
+`H:/TSE/forensics/urnas/analysis/entre_cargos/8ab3ce83c8992b9a-94fc637b4737c20d/correlacao_presidente_senado_v2/robustez_inversoes_2026/pares_robustez.csv`
+
+SHA-256:
+`f8dfe10cd1aa2f7c5d02c20f3aec54db75920273361380d811d2242c6613933e`.
+
+O resultado fornece **estabilidade descritiva**, nao
+significancia confirmatoria: os pares foram escolhidos
+depois de examinar 616 correlacoes, e os bootstrap
+nao ajustam multiplas comparacoes nem dependencia espacial.
+Nao ha evidencia independente de diferenca `D=Y-X`.
+
+### Seguimento: diagnostico de influencia por zona
+
+`analyze_senate_zone_drivers_2026.py` reutiliza apenas
+os **checkpoints zonais da opcao C** com seus SHA-256,
+sem ler novamente os 67,8 milhoes de registros BU.
+Reconstroi os 13 coeficientes, lista as zonas de maior
+influencia por exclusao e quantifica zonas com covariancia
+a favor e contra o sinal agregado.
+
+No Windows, apos `git pull`, escolher **opcao D**
+em `start_windows.bat`. Resultados esperados em
+`robustez_inversoes_2026/drivers_zonais/`
+(`resumo_pares.csv`, `zonas_por_par.csv`,
+`top5_zonas_influentes.csv`, `summary.json`).
+A execucao real da opcao D ainda nao ocorreu.
+
+**Validacao de codigo da opcao C:** 128 testes aprovados
+em Windows e Linux:
 https://github.com/rubentrancoso/TSE/actions/runs/40236148686
-Aguardando apenas a **execucao empirica local no disco H:**;
-nenhum resultado de bootstrap de BU reais e presumido.
+

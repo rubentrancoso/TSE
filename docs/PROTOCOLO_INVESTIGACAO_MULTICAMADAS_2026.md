@@ -61,7 +61,7 @@ triagem antiga.
 A opcao roda a bateria de testes sintéticos, a correlacao corrigida,
 a comparacao v1/v2 e a formula fixa na ordem indicada abaixo.
 Se alguma etapa falhar, as seguintes nao sao executadas.
-A opcao B nao efetua novos downloads, nao reindexa e nao abre SQLite.
+A opcao B nao efetua novos downloads, nao reindexa e nao abre o SQLite do acervo (os testes podem usar bases temporarias).
 Os arquivos originais em H: sao preservados; os novos resultados
 sao gravados somente em diretorios de analise.
 

@@ -1,22 +1,17 @@
-> **RETIFICACAO METODOLOGICA — 25/10/2026.**
-> Os 13 casos abaixo foram extraidos da **v1**, que
-> centralizava seções por municipio+zona separadamente em
-> cada bucket de 256 particoes. A mesma zona pode estar
-> em buckets diferentes; logo a correlacao intrazona v1
-> e sua lista de inversoes NAO estao confirmadas.
-> Esta tabela permanece por rastreabilidade, mas
-> **nao deve fundamentar conclusoes atuais**.
-> A v2, publicada em
-> `cross_office_senate_correlations.py`, calcula as
-> medias por zona completa entre todos os buckets
-> e escreve em `correlacao_presidente_senado_v2/`.
-> Os casos persistentes/novos serao identificados
-> por `compare_senate_geo_versions_2026.py`
-> **depois da execucao real**. As contas originais
-> dos limites de sobreposicao por secao nao sao
-> alteradas por este problema de centralizacao,
-> mas sua selecao inicial de nove candidatos foi
-> baseada nessa triagem v1.
+> **RETIFICACAO EMPIRICA — 25/10/2026.**
+> Os dados reais de 256 particoes SHA-256 verificadas confirmaram
+> **616 pares e 13 inversoes v1/v2**, todas persistentes.
+> Nenhum coeficiente mudou acima de 0,000001.
+> A preocupacao anterior sobre zonas divididas entre buckets
+> foi esclarecida pelo codigo de origem: `reconcile_stream.bucket_for`
+> particiona por `UF|municipio|zona|turno`, conservando uma
+> zona/turno integralmente no mesmo bucket. Portanto, a v1
+> ja aplicava o ajuste completo a este acervo. A v2
+> generaliza o calculo a futuros esquemas de particionamento.
+> Essas 13 inversoes sao fatos descritivos de correlacao,
+> **nao provas de fraude ou de voto individual**.
+> SHA-256 do CSV v2: `7fc29f2f8a040e7880b72782e45ae60df01a8b2e908b2021e477dcdb08443dcd`.
+> SHA-256 da comparacao: `5074153e7a658287405ee1508005d7c6e5d5e711b94a8395e77e49c98a6c7a37`.
 
 # Revisao das 13 inversoes de correlacao Presidente x Senado — 2026
 

@@ -18,6 +18,7 @@ on:
       - senate_robustness_stats_2026.py
       - senate_robustness_io_2026.py
       - robust_senate_inversions_2026.py
+      - analyze_senate_zone_drivers_2026.py
       - test_fixed_vote_formula_2026.py
       - compare_senate_geo_versions_2026.py
       - audit_senate_correlations.py
@@ -54,6 +55,7 @@ on:
       - tests/test_reconcile_io_probe.py
       - tests/test_bucket_geo_invariance_2026.py
       - tests/test_robust_senate_inversions_2026.py
+      - tests/test_analyze_senate_zone_drivers_2026.py
       - tests/test_diagnose_forensics.py
       - tests/test_statistical_forensics.py
       - tests/test_history_forensics.py
@@ -75,6 +77,7 @@ on:
       - senate_robustness_stats_2026.py
       - senate_robustness_io_2026.py
       - robust_senate_inversions_2026.py
+      - analyze_senate_zone_drivers_2026.py
       - test_fixed_vote_formula_2026.py
       - compare_senate_geo_versions_2026.py
       - audit_senate_correlations.py
@@ -111,6 +114,7 @@ on:
       - tests/test_reconcile_io_probe.py
       - tests/test_bucket_geo_invariance_2026.py
       - tests/test_robust_senate_inversions_2026.py
+      - tests/test_analyze_senate_zone_drivers_2026.py
       - tests/test_diagnose_forensics.py
       - tests/test_statistical_forensics.py
       - tests/test_history_forensics.py
@@ -128,6 +132,6 @@ jobs:
         with:
           python-version: '3.12'
       - name: Validar sintaxe
-        run: python -m py_compile urnas.py statistical_forensics.py history_forensics.py run_control.py collect_forensics.py reconcile_incremental.py reconcile_fast.py reconcile_stream.py reconcile_probe.py reconcile_io_probe.py diagnose_forensics.py cross_office_sections.py audit_cross_office_totals.py audit_cross_office_eligibility.py cross_office_candidate_correlations.py cross_office_senate_correlations.py test_fixed_vote_formula_2026.py compare_senate_geo_versions_2026.py robust_senate_inversions_2026.py senate_robustness_io_2026.py senate_robustness_stats_2026.py audit_senate_correlations.py audit_cross_office_correlations.py review_cross_office_correlations.py senate_ecological_bounds.py audit_senate_ecological_bounds.py inventory_material_evidence_2026.py diagnose_artifact_coverage_2026.py verify_noronha_6261.py
+        run: python -m py_compile urnas.py statistical_forensics.py history_forensics.py run_control.py collect_forensics.py reconcile_incremental.py reconcile_fast.py reconcile_stream.py reconcile_probe.py reconcile_io_probe.py diagnose_forensics.py cross_office_sections.py audit_cross_office_totals.py audit_cross_office_eligibility.py cross_office_candidate_correlations.py cross_office_senate_correlations.py test_fixed_vote_formula_2026.py compare_senate_geo_versions_2026.py robust_senate_inversions_2026.py analyze_senate_zone_drivers_2026.py senate_robustness_io_2026.py senate_robustness_stats_2026.py audit_senate_correlations.py audit_cross_office_correlations.py review_cross_office_correlations.py senate_ecological_bounds.py audit_senate_ecological_bounds.py inventory_material_evidence_2026.py diagnose_artifact_coverage_2026.py verify_noronha_6261.py
       - name: Testes com arquivos sinteticos
         run: python -m unittest discover -s tests -p 'test_*.py' -v

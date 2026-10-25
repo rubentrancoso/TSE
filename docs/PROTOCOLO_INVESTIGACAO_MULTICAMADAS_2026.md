@@ -13,6 +13,38 @@ de duas fontes oficiais ou esqueça a linha de investigação original.
 a resposta antes dos testes é proibido.** Todas as hipóteses aceitam
 resultados que as refutem.
 
+## PRECEDENCIA OPERACIONAL — dados ja coletados no H: (25/10/2026)
+
+A opcao 1 do `start_windows.bat` **ja executa coleta
+integral**: `collect_forensics.py all --download-portal-files`
+chama `collect_urnas_h()`, que invoca
+`urnas.py fetch --all --kind bu --kind secao --kind artefatos`.
+O acervo de urnas fica em
+`H:/TSE/forensics/urnas/raw/{bu,secao,artefatos}/`
+e os dados indexados em
+`H:/TSE/forensics/urnas/analysis/urna_2026.sqlite3`.
+Os arquivos de portal nao pertencentes a urnas podem
+ficar tambem em `H:/TSE/forensics/portal/files/`.
+
+**EVIDENCIA CONFIRMADA:** 67.858.746 chaves BU
+ja analisadas, 499.206 secoes na matriz e
+497.897 secoes pareadas entre cargos. A ausencia
+de `.bu/.rdv` na tabela `archive_entries`
+de um inventario parcial nao significa ausencia
+de BU digital ou de arquivos baixados e NAO
+justifica recomecar downloads ou reindexacoes.
+
+**A partir deste ponto:** nunca usar
+`inventory_material_evidence_2026.py` ou
+`diagnose_artifact_coverage_2026.py` como
+bloqueio obrigatorio para retomar a investigacao.
+Eles sao ferramentas OPCIONAIS de metadados,
+nao inventarios totais de evidencias e
+nao substituem o historico de processamento.
+Seguir as hipoteses analiticas sobre 2026,
+usando os artefatos existentes. Ver diario E0103.
+Nao importar microdados de 2022.
+
 ## DIRETRIZ ATIVA — referencia a 2022 e escopo analitico (24/10/2026)
 
 **Correcao explicita do investigador:** nesta linha de trabalho

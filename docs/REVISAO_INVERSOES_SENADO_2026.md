@@ -1,3 +1,23 @@
+> **RETIFICACAO METODOLOGICA — 25/10/2026.**
+> Os 13 casos abaixo foram extraidos da **v1**, que
+> centralizava seções por municipio+zona separadamente em
+> cada bucket de 256 particoes. A mesma zona pode estar
+> em buckets diferentes; logo a correlacao intrazona v1
+> e sua lista de inversoes NAO estao confirmadas.
+> Esta tabela permanece por rastreabilidade, mas
+> **nao deve fundamentar conclusoes atuais**.
+> A v2, publicada em
+> `cross_office_senate_correlations.py`, calcula as
+> medias por zona completa entre todos os buckets
+> e escreve em `correlacao_presidente_senado_v2/`.
+> Os casos persistentes/novos serao identificados
+> por `compare_senate_geo_versions_2026.py`
+> **depois da execucao real**. As contas originais
+> dos limites de sobreposicao por secao nao sao
+> alteradas por este problema de centralizacao,
+> mas sua selecao inicial de nove candidatos foi
+> baseada nessa triagem v1.
+
 # Revisao das 13 inversoes de correlacao Presidente x Senado — 2026
 
 **Data:** 24/10/2026

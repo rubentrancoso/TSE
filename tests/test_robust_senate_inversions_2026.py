@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 import robust_senate_inversions_2026 as robust
 from senate_robustness_io_2026 import aggregate_shard
-from senate_robustness_stats_2026 import analyze
+from senate_robustness_stats_2026 import analyze, sum_cov
 from reconcile_stream import sha256
 
 
@@ -44,6 +44,11 @@ class RobustnessTest(unittest.TestCase):
         self.root=Path(self.temp.name)
         self.folder=self.root/"analysis"/"entre_cargos"/"fixture"
         (self.folder/"candidatos").mkdir(parents=True)
+
+    def test_generator_moments_are_not_consumed_mid_sum(self):
+        values = [(1.0,2.0,3.0),(4.0,5.0,6.0)]
+        self.assertEqual(sum_cov(values),sum_cov(x for x in values))
+        self.assertEqual(sum_cov(x for x in values),(5.0,7.0,9.0))
 
     def test_simpson_and_bootstrap_sign(self):
         path=self.folder/"candidatos"/"bucket-0000.csv"

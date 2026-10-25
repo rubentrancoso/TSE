@@ -13,7 +13,8 @@ def stress(key, records, reference, repetitions=400):
     if repetitions < 100:
         raise ValueError("Sao exigidas pelo menos 100 replicacoes")
     total_sections=sum(m[0] for _,m in records)
-    active=[(ident,m,centered(m)) for ident,m in records if m[0]>=2]
+    active=sorted(((ident,m,centered(m)) for ident,m in records if m[0]>=2),
+                  key=lambda item:item[0])
     if total_sections!=reference["n"] or len(active)!=reference["z"]:
         raise RuntimeError("Quantidade de secoes ou zonas difere da v2")
     base=sum_cov(x[2] for x in active)

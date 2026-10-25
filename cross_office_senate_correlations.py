@@ -22,7 +22,7 @@ from cross_office_candidate_correlations import Moments, pearson, rows, source
 from reconcile_stream import sha256
 from urnas import root_path
 
-VERSION = "cross-office-senate-v1"
+VERSION = "cross-office-senate-v2"
 INVALID = {"95", "96"}
 COLS = ("UF", "turno", "presidente", "senador", "secoes_com_dois_cargos",
         "correlacao_bruta_pearson", "correlacao_dentro_municipio_zona",
@@ -61,29 +61,24 @@ def select_candidates(paths, turn, max_senators):
     return selected_president, selected_senators, senators, total_keys
 
 
-def add_centered(zone, within):
-    for key, m in zone.items():
-        if m.n < 2:
-            continue
-        xy, xx, yy = m.centered()
-        current = within[key]
-        current[0] += xy
-        current[1] += xx
-        current[2] += yy
-        current[3] += 1
-
-
 def compute(paths, president, senators, turn):
+    """Centra por zona COMPLETA, independentemente do bucket de origem.
+
+    Uma mesma zona pode aparecer em diversos buckets SHA. Guardar somente
+    n e somas de percentuais por candidato/zona e o momento bruto por par.
+    Formula exata: soma((x-x_geo)*(y-y_geo))
+                   = soma(x*y) - soma_geo(soma(x)*soma(y)/n_geo).
+    """
     raw = defaultdict(Moments)
-    within = defaultdict(lambda: [0.0, 0.0, 0.0, 0])
+    # Estatisticas marginais por zona, nao pares por zona: memoria pequena.
+    zones = defaultdict(lambda: {"n": 0, "p": defaultdict(float),
+                                 "s": defaultdict(float)})
     present = Counter()
     included = Counter()
     senator_votes = Counter()
 
     for i, path in enumerate(paths, 1):
         current_section = None
-        current_zone = None
-        zone_moments = defaultdict(Moments)
         pres_votes = {}
         sen_votes = {}
         total_pres = total_sen = 0
@@ -92,49 +87,46 @@ def compute(paths, president, senators, turn):
         def finish_section():
             if current_section is None:
                 return
-            uf, _, _, _, t = current_section
+            uf, mu, zona, sec, t = current_section
             if t != turn or not has_pres or not has_sen or uf not in senators:
                 return
             present[uf] += 1
             if total_pres <= 0 or total_sen <= 0 or total_sen % 2:
                 return
-            # Voto por candidato nao pode superar numero de pessoas
-            # que fizeram duas escolhas senatoriais nessa secao.
-            elig = total_sen // 2
-            if any(n > elig for n in sen_votes.values()):
+            eligible = total_sen // 2
+            if any(n > eligible for n in sen_votes.values()):
                 raise RuntimeError("Senador excede comparecimento estimado: "
                                    + repr(current_section))
             included[uf] += 1
-            for p in president:
-                x = pres_votes.get(p, 0) / total_pres
-                for s in senators[uf]:
-                    y = sen_votes.get(s, 0) / elig
-                    key = (uf, turn, p, s)
-                    raw[key].add(x, y)
-                    zone_moments[key].add(x, y)
+            g = zones[(uf, mu, zona, t)]
+            g["n"] += 1
+            xs = {p: pres_votes.get(p, 0) / total_pres for p in president}
+            ys = {s: sen_votes.get(s, 0) / eligible for s in senators[uf]}
+            for p, x in xs.items():
+                g["p"][p] += x
+                for senator, y in ys.items():
+                    raw[(uf, t, p, senator)].add(x, y)
+            for senator, y in ys.items():
+                g["s"][senator] += y
 
         for r in rows(path):
-            section = (r["UF"], r["municipio"], r["zona"], r["secao"], r["turno"])
-            zone = section[:3] + (section[4],)
-            if current_section != section:
+            section = (r["UF"], r["municipio"], r["zona"],
+                       r["secao"], r["turno"])
+            if section != current_section:
                 finish_section()
-                if current_zone != zone:
-                    add_centered(zone_moments, within)
-                    zone_moments = defaultdict(Moments)
-                    current_zone = zone
                 current_section = section
                 pres_votes, sen_votes = {}, {}
                 total_pres = total_sen = 0
                 has_pres = has_sen = False
             if r["turno"] != turn:
                 continue
-            cargo, candidate = r["cargo"], r["votavel"]
-            if cargo not in ("1", "5"):
+            office, candidate = r["cargo"], r["votavel"]
+            if office not in ("1", "5"):
                 continue
             n = int(r["votos_BU"])
             if n < 0:
                 raise RuntimeError("Numero de votos negativo na entrada")
-            if cargo == "1":
+            if office == "1":
                 has_pres = True
                 total_pres += n
                 if candidate in president:
@@ -147,32 +139,63 @@ def compute(paths, president, senators, turn):
                 if candidate in senators.get(r["UF"], ()):
                     sen_votes[candidate] = sen_votes.get(candidate, 0) + n
         finish_section()
-        add_centered(zone_moments, within)
         if i <= 2 or i % 20 == 0 or i == len(paths):
             print(f"[SENADO PARES {i}/{len(paths)}] "
                   f"secoes aproveitadas={sum(included.values()):,}", flush=True)
-    return raw, within, present, included, senator_votes
+    return raw, zones, present, included, senator_votes
 
 
-def results_table(raw, within, candidate_votes):
+def results_table(raw, zones, candidate_votes):
+    by_uf = defaultdict(list)
+    for (uf, mu, zona, t), record in zones.items():
+        by_uf[(uf, t)].append(record)
     data = []
     for key in sorted(raw):
-        uf, turn, p, s = key
-        raw_coeff = pearson(raw[key].centered())
-        local = within[key]
-        adjusted = pearson(local[:3])
+        uf, turn, p, senator = key
+        m = raw[key]
+        subtract_xy = subtract_xx = subtract_yy = 0.0
+        zone_count = 0
+        sections_reconciled = 0
+        for local in by_uf[(uf, turn)]:
+            n = local["n"]
+            sections_reconciled += n
+            if n < 2:
+                continue
+            zone_count += 1
+            x = local["p"][p]
+            y = local["s"][senator]
+            subtract_xy += x * y / n
+            subtract_xx += x * x / n
+            subtract_yy += y * y / n
+        # Os grupos de 1 secao tambem precisam remover sua media:
+        # caso contrario, nao ha efeito fixo real. Recontar TODAS as zonas.
+        for local in by_uf[(uf, turn)]:
+            if local["n"] == 1:
+                x = local["p"][p]
+                y = local["s"][senator]
+                subtract_xy += x*y
+                subtract_xx += x*x
+                subtract_yy += y*y
+        if sections_reconciled != m.n:
+            raise RuntimeError("Somas por zona nao fecham com secoes do par "
+                               + repr(key))
+        raw_coeff = pearson(m.centered())
+        adjusted = pearson((m.sxy - subtract_xy,
+                            max(0.0, m.sxx - subtract_xx),
+                            max(0.0, m.syy - subtract_yy)))
         data.append({
-            "UF": uf, "turno": turn, "presidente": p, "senador": s,
-            "secoes_com_dois_cargos": raw[key].n,
+            "UF": uf, "turno": turn, "presidente": p, "senador": senator,
+            "secoes_com_dois_cargos": m.n,
             "correlacao_bruta_pearson": (
                 round(raw_coeff, 6) if raw_coeff is not None else ""),
             "correlacao_dentro_municipio_zona": (
                 round(adjusted, 6) if adjusted is not None else ""),
-            "zonas_com_variacao": local[3],
-            "votos_senador": candidate_votes[(uf, s)],
+            "zonas_com_variacao": zone_count,
+            "votos_senador": candidate_votes[(uf, senator)],
             "interpretacao": (
-                "Fracoes de eleitores por cargo; Senado usa duas escolhas. "
-                "Correlacao de secoes nao identifica voto individual nem fraude."),
+                "v2: centro por zona completa atraves de todos os buckets; "
+                "Senado com duas escolhas. Correlacao nao identifica "
+                "voto individual nem fraude."),
         })
     return data
 

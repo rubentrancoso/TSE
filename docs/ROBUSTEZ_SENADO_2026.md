@@ -72,5 +72,8 @@ ou QR independente, capturado no encerramento da votacao,
 com a publicacao do mesmo boletim e chave eleitoral.
 Sem `X` independente, o vetor `D=Y-X` e desconhecido.
 
-**Estado de inicio:** codigo publicado e em validacao de CI,
-aguardando execucao empirica no disco H:.
+**Estado (25/10/2026):** codigo e testes sinteticos publicados.
+GitHub Actions confirmou **128/128 testes OK em Windows e Linux**:
+https://github.com/rubentrancoso/TSE/actions/runs/40236148686
+Aguardando apenas a **execucao empirica local no disco H:**;
+nenhum resultado de bootstrap de BU reais e presumido.

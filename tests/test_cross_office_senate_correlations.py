@@ -83,6 +83,53 @@ class SenateCorrelationsTest(unittest.TestCase):
             1.0, places=5)
         self.assertEqual(int(pair["votos_senador"]), 180)
 
+    def test_same_zone_split_across_shards(self):
+        """O ajuste deve ser invariante a distribuicao de zonas nos buckets."""
+        original = sen.run(self.root)
+        with Path(original["csv"]).open("r", encoding="utf-8") as stream:
+            expected = {
+                (r["presidente"], r["senador"]):
+                r["correlacao_dentro_municipio_zona"]
+                for r in csv.DictReader(stream, delimiter=";")
+            }
+        # Original: cada bucket tem uma zona. Novo: cada bucket tem
+        # UMA secao de cada zona. A versao antiga centrava cada
+        # metade separadamente e perdia o efeito intrazona.
+        data = []
+        for path in self.paths:
+            with path.open("r", encoding="utf-8", newline="") as file:
+                data.extend(list(csv.DictReader(file, delimiter=";")))
+        for i, path in enumerate(self.paths):
+            selected = sorted((r for r in data
+                               if (int(r["secao"]) - 1) % 2 == i),
+                              key=lambda x: (x["UF"], x["municipio"],
+                                             x["zona"], x["secao"],
+                                             x["turno"], x["cargo"],
+                                             x["votavel"]))
+            with path.open("w", encoding="utf-8", newline="") as file:
+                w = csv.DictWriter(
+                    file, delimiter=";", fieldnames=[
+                        "UF", "municipio", "zona", "secao", "turno",
+                        "cargo", "votavel", "votos_BU"])
+                w.writeheader()
+                w.writerows(selected)
+        state_path = self.paths[0].parent.parent / "state.json"
+        state = json.loads(state_path.read_text("utf-8"))
+        for i, path in enumerate(self.paths):
+            state["completed"][str(i)]["candidate_sha256"] = sha256(path)
+        state_path.write_text(json.dumps(state), encoding="utf-8")
+        recalculated = sen.run(self.root)
+        with Path(recalculated["csv"]).open("r", encoding="utf-8") as stream:
+            found = {
+                (r["presidente"], r["senador"]):
+                r["correlacao_dentro_municipio_zona"]
+                for r in csv.DictReader(stream, delimiter=";")
+            }
+        self.assertEqual(expected, found)
+        self.assertAlmostEqual(float(found[("13", "170")]), 1.0, places=5)
+        self.assertEqual(recalculated["version"], "cross-office-senate-v2")
+        self.assertIn("v2", recalculated["csv"])
+
     def test_selected_subset(self):
         result = sen.run(self.root, max_senators=2)
         self.assertEqual(result["senadores_total"], 2)

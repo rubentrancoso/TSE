@@ -95,11 +95,11 @@ class FormulaHypothesisTest(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             formula.run(self.root)
 
-    def test_vote_total_inconsistency_rejected(self):
+    def test_negative_vote_rejected_even_with_authorized_fixture_hash(self):
         paths, count = fixture(self.root)
         with paths[0].open("r", newline="", encoding="utf-8") as f:
             data = list(csv.reader(f, delimiter=";"))
-        data[1][7] = "101"
+        data[1][7] = "-1"
         with paths[0].open("w", newline="", encoding="utf-8") as f:
             csv.writer(f, delimiter=";").writerows(data)
         state_path = paths[0].parent.parent / "state.json"

@@ -17,7 +17,9 @@ def centered(m):
 
 
 def sum_cov(moments):
-    return tuple(math.fsum(m[i] for m in moments) for i in range(3))
+    # A entrada pode ser um gerador: materializar antes das 3 passagens.
+    materialized = list(moments)
+    return tuple(math.fsum(m[i] for m in materialized) for i in range(3))
 
 
 def quantile(ordered, p):

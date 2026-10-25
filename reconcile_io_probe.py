@@ -8,6 +8,7 @@ de tempo por amostra. Nao cria indices nem altera bancos/checkpoints.
 from __future__ import annotations
 
 import argparse
+from contextlib import closing
 import os
 import shutil
 import sqlite3
@@ -22,16 +23,19 @@ def sample_window(db, start_rowid, limit, timeout):
     sql = "SELECT " + COLUMNS + " FROM votes NOT INDEXED WHERE rowid>=? LIMIT ?"
     plan = " | ".join(str(p[-1]) for p in db.execute(
         "EXPLAIN QUERY PLAN " + sql, (start_rowid, limit)))
-    begun = time.monotonic()
+    # perf_counter_ns evita a resolucao insuficiente do relogio em
+    # leituras muito curtas no Windows (elapsed == 0 => throughput 0).
+    begun = time.perf_counter_ns()
     last = [begun]
+    timeout_ns = int(timeout * 1_000_000_000)
     count = 0
     def progress():
-        t = time.monotonic()
-        if t - last[0] >= 10:
-            print(f"  [SQL ATIVO] {count:,} linhas em {t-begun:.1f}s",
+        t = time.perf_counter_ns()
+        if t - last[0] >= 10_000_000_000:
+            print(f"  [SQL ATIVO] {count:,} linhas em {(t-begun)/1_000_000_000:.1f}s",
                   flush=True)
             last[0] = t
-        return 1 if t - begun >= timeout else 0
+        return 1 if t - begun >= timeout_ns else 0
     db.set_progress_handler(progress, 10000)
     try:
         for _ in db.execute(sql, (start_rowid, limit)):
@@ -43,9 +47,11 @@ def sample_window(db, start_rowid, limit, timeout):
               flush=True)
     finally:
         db.set_progress_handler(None, 0)
-    elapsed = time.monotonic()-begun
+    elapsed_ns = max(1, time.perf_counter_ns() - begun)
+    elapsed = elapsed_ns / 1_000_000_000
     return {"rows": count, "seconds": elapsed,
-            "rows_per_sec": round(count / elapsed, 1) if elapsed else 0,
+            "rows_per_sec": round(count * 1_000_000_000 / elapsed_ns, 1)
+                            if count else 0,
             "plan": plan}
 
 
@@ -60,7 +66,9 @@ def run(root, rows=100000, timeout=90):
           f"espaco livre H: {free/(1024**3):.2f} GiB")
     print("Nao executar junto com a reconciliacao nacional.", flush=True)
     uri = db_file.resolve().as_uri() + "?mode=ro"
-    with sqlite3.connect(uri, uri=True, timeout=15) as db:
+    # sqlite3.Connection como context manager NAO fecha a conexao.
+    # closing garante liberacao imediata do arquivo no Windows.
+    with closing(sqlite3.connect(uri, uri=True, timeout=15)) as db:
         db.execute("PRAGMA query_only=ON")
         first = db.execute(
             "SELECT rowid FROM votes ORDER BY rowid ASC LIMIT 1").fetchone()

@@ -32,10 +32,12 @@ echo [9] Diagnosticar ultima coleta: erro e SEM_SECAO por UF/cargo
 echo [A] Reparar APENAS arquivos em erro da ultima coleta
 echo [B] VALIDAR SENADO V2 E FORMULA 2026 (sem download / sem SQLite)
 echo [C] ROBUSTEZ SENADO 2026 (bootstrap de zonas, sem SQLite)
+echo [D] ZONAS QUE INFLUENCIAM OS 13 PARES (usa checkpoints C)
 echo [0] Sair
 echo.
-choice /C 123456789ABC0 /N /M "Selecione: "
-if errorlevel 13 exit /b 0
+choice /C 123456789ABCD0 /N /M "Selecione: "
+if errorlevel 14 exit /b 0
+if errorlevel 13 goto drivers_2026
 if errorlevel 12 goto robust_2026
 if errorlevel 11 goto validate_2026
 if errorlevel 10 goto repair
@@ -137,6 +139,18 @@ if errorlevel 1 goto validate_failed
 if errorlevel 1 goto validate_failed
 echo.
 echo [CONCLUIDO] Consulte robustez_inversoes_2026/summary.json.
+goto done
+
+:drivers_2026
+echo.
+echo INFLUENCIA TERRITORIAL DAS 13 INVERSOES - SEM RELEITURA DE BU.
+echo Verifica os SHA-256 dos checkpoints da opcao C.
+%PY% -m unittest discover -s tests -p "test_analyze_senate_zone_drivers_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% analyze_senate_zone_drivers_2026.py
+if errorlevel 1 goto validate_failed
+echo.
+echo [CONCLUIDO] Consulte robustez_inversoes_2026/drivers_zonais/summary.json
 goto done
 
 :validate_failed

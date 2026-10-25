@@ -110,7 +110,7 @@ goto done
 :validate_2026
 echo.
 echo FASE 2026 - testes, ajuste Senado v2, comparacao v1/v2 e formula fixa.
-echo Usa somente particoes BU locais em H:. NAO faz download e NAO abre SQLite.
+echo Usa somente particoes BU locais em H:. NAO faz download nem acessa o SQLite de 221 GiB do acervo.
 echo Se uma etapa falhar, interrompe para proteger a interpretacao dos resultados.
 %PY% -m unittest discover -s tests -p "test_*.py" -q
 if errorlevel 1 goto validate_failed

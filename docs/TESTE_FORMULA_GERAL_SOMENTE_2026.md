@@ -129,3 +129,96 @@ originais. Registrar origens honestamente; escrever
 **Notas:** fotos/QR precisam validacao de legibilidade,
 identidade de urna e integridade. Nao compartilhar
 dados pessoais de fiscais sem consentimento.
+
+
+## Primeira experiencia computacional de forma funcional (25/10/2026)
+
+**Forma especifica falsificavel:**
+
+```text
+H_F: votos_P13(secao) = round(alpha_13 * N_pres_secao)
+H_F: votos_P22(secao) = round(alpha_22 * N_pres_secao)
+```
+
+Aqui `N_pres_secao` inclui brancos e nulos, os dois
+alphas sao ajustados **somente com secoes de treino**
+e sao constantes nacionais. Este e um modelo simples
+da alegada "formula geral", **nao** a hipotese de
+transferencia H1/H2 definida acima: sem BU independente
+nao existem as diferencas D necessarias a H1/H2.
+
+`test_fixed_vote_formula_2026.py` le os
+CSV BU por candidato de 2026 ja validados por
+SHA-256, com `N >= 50` por padrao.
+Reserva aproximadamente 20% das secoes para
+validacao usando
+`SHA256(UF|municipio|zona|secao|turno)[0] % 5 == 0`,
+independente da ordenacao de buckets.
+Com as outras 80%, estima os alphas nacionais,
+taxas por UF e taxas por municipio+zona.
+Avalia no conjunto de validacao, sem ajustar
+parametros com ele, a taxa de previsoes
+exatas, taxa com erro <=1 voto e erro medio
+absoluto dos tres modelos.
+
+**Regra descritiva predefinida e exigente:**
+a forma nacional fica "nao refutada por este criterio"
+apenas com >=95% de previsoes exatas nas
+secoes de validacao e erro medio nacional
+nao superior ao modelo territorial.
+Isso **nao e p-valor nem evidencia de manipulacao**.
+Mesmo com previsoes exatas a origem pode
+ser natural. Se nao passar, somente esta
+**forma fixa muito restrita** perde suporte;
+outras formulas hipoteticas nao estao
+descartadas automaticamente.
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_fixed_vote_formula_2026.py -v
+python test_fixed_vote_formula_2026.py
+```
+
+Saida de 2026 em
+`analysis/entre_cargos/<fingerprint>/formula_fixa_presidencial_2026/`
+contendo `predicao_fora_amostra.csv`, `summary.json`
+e SHA-256. E uma unica leitura das particoes
+de BU por candidato depois da verificacao
+automatica de seus 256 hashes; nao abre SQLite.
+
+### Retificacao critica das correlacoes senatoriais
+
+As 13 inversoes senatoriais anteriormente mencionadas
+vieram de `cross_office_senate_correlations.py` **v1**.
+A v1 calculava medias territoriais por bucket isolado;
+uma zona eleitoral pode estar em varios buckets.
+O resultado ajustado nao e estatisticamente
+o verdadeiro efeito fixo de municipio+zona.
+
+A **v2** corrige a soma das marginais por zona entre
+todos os buckets e subtrai
+`sum_z (sum_x_z * sum_y_z / n_z)` da soma
+de `x*y` total. Aplica a correção tambem
+a variancia de x e y, incluindo grupos com
+apenas uma secao. Preserva a v1 sem alteracao e
+escreve em
+`correlacao_presidente_senado_v2/`.
+Teste adicional divide secoes da mesma
+zona entre buckets e exige resultados identicos.
+
+```bat
+python -m unittest discover -s tests -p test_cross_office_senate_correlations.py -v
+python -m unittest discover -s tests -p test_compare_senate_geo_versions_2026.py -v
+python cross_office_senate_correlations.py
+python compare_senate_geo_versions_2026.py
+```
+
+**Resultados ainda pendentes de execucao real**.
+Nao reutilizar os 13 casos anteriores como
+estatistica confirmada enquanto a v2
+nao for processada e comparada.
+O codigo de limites ecologicos por secao continua
+validando identidades de contagens, mas os
+nove candidatos foram selecionados por um
+filtro v1 e NAO representam necessariamente
+as inversoes existentes na v2.

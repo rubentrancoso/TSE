@@ -5232,3 +5232,93 @@ alteracao de dados ou novo download realizado.
 O script `diagnose_artifact_coverage_2026.py`
 e apenas diagnostico OPCIONAL, nao a proxima fase
 obrigatoria da investigacao.
+
+
+---
+
+## 2026-10-25 — E0104 — Metodo Senado v2 e primeiro teste de formula fora da amostra
+
+**Objetivo ativo do investigador:** seguir a analise
+substantiva de uma hipotese de mecanismo geral,
+utilizando exclusivamente votos de 2026 que ja
+estao no drive H:, sem refazer coleta e sem
+introduzir arquivos eleitorais de 2022.
+
+### Retificacao de achado anterior
+
+Foi detectado, na inspecao do codigo,
+que a v1 de `cross_office_senate_correlations.py`
+fechava os momentos da mesma zona eleitoral
+independentemente em cada um dos 256 buckets.
+Como os buckets dividem secoes, nao zonas,
+isso muda o ajuste intrazona e pode gerar
+inversoes de sinal espurias. As correlacoes
+**brutas** ficam inalteradas, mas as intrazona
+**v1** e a lista de 13 inversoes da E0096/E0097
+devem ser consideradas **provisorias/retificadas**.
+Os nove candidatos da etapa de limites foram
+selecionados por esse filtro anterior; os
+limites aritmeticos continuam limites por secao
+para aqueles candidatos, mas nao sao um
+ranking de atuais inversoes v2.
+
+Foi publicada na main a v2 do mesmo modulo,
+com zona `(UF,municipio,zona,turno)` completa
+sobre TODOS os buckets e formula de centralizacao:
+`Sxy_intra = sum(x*y) - sum_z(sum(x_z)*sum(y_z)/n_z)`.
+As variancias x e y seguem a mesma identidade.
+Os testes agora contêm caso de mesma zona em
+buckets diferentes. Resultados v2 sao gravados
+em `correlacao_presidente_senado_v2/`,
+preservando v1 para rastreabilidade.
+
+`compare_senate_geo_versions_2026.py` confronta
+os 616 pares, hashes, metadados, coeficientes
+brutos identicos e revisa quantas inversoes
+v1 persistem, desaparecem ou surgem na v2.
+Grava comparacao no diretorio de v2.
+**Sem resultados reais nesta entrada**.
+
+### Primeira forma concreta de formula a refutar
+
+Publicado `test_fixed_vote_formula_2026.py`:
+testa a forma `votos_P=round(alpha_P * N_pres)`
+para os presidenciaveis 13 e 22 em 2026.
+Usa 80% de secoes para treino e cerca de
+20% para validacao, definidos por hash do
+identificador da secao (independente do bucket).
+O ajuste usa somente treino: alfa nacional,
+alfa estadual e alfa por municipio+zona,
+com fallback documentado. Preve as contagens
+da validacao e compara MAE, RMSE, exatidao
+e erro de ate um voto. A regra de avaliacao
+da formula fixa nacional foi definida antes
+de executar dados reais (>=95% de acerto exato
+e MAE nacional <= MAE do modelo territorial).
+E criterio descritivo exigente, NAO p-valor.
+NENHUM acerto permite inferir fraude,
+e fracasso desta forma simples nao descarta
+outros mecanismos possiveis.
+
+Os modulos e testes foram publicados
+diretamente em `main`; os testes novos
+ainda nao foram executados no Windows
+do investigador. A analise le apenas
+os arquivos BU por candidato derivados
+ja presentes, valida SHA-256 e nao
+acessa o SQLite nem baixa nada.
+
+**Proximos comandos:**
+
+```bat
+git pull
+python -m unittest discover -s tests -p test_cross_office_senate_correlations.py -v
+python -m unittest discover -s tests -p test_compare_senate_geo_versions_2026.py -v
+python -m unittest discover -s tests -p test_fixed_vote_formula_2026.py -v
+python cross_office_senate_correlations.py
+python compare_senate_geo_versions_2026.py
+python test_fixed_vote_formula_2026.py
+```
+
+Nao concluir que existe transferencia eleitoral
+sem fonte material independente para `D=Y-X`.

@@ -49,6 +49,7 @@ on:
       - tests/test_diagnose_artifact_coverage_2026.py
       - tests/test_verify_noronha_6261.py
       - tests/test_reconcile_io_probe.py
+      - tests/test_bucket_geo_invariance_2026.py
       - tests/test_diagnose_forensics.py
       - tests/test_statistical_forensics.py
       - tests/test_history_forensics.py
@@ -101,6 +102,7 @@ on:
       - tests/test_diagnose_artifact_coverage_2026.py
       - tests/test_verify_noronha_6261.py
       - tests/test_reconcile_io_probe.py
+      - tests/test_bucket_geo_invariance_2026.py
       - tests/test_diagnose_forensics.py
       - tests/test_statistical_forensics.py
       - tests/test_history_forensics.py

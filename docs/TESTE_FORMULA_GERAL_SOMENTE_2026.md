@@ -186,39 +186,38 @@ e SHA-256. E uma unica leitura das particoes
 de BU por candidato depois da verificacao
 automatica de seus 256 hashes; nao abre SQLite.
 
-### Retificacao critica das correlacoes senatoriais
+### Resultado empirico e revisao metodologica — 25/10/2026
 
-As 13 inversoes senatoriais anteriormente mencionadas
-vieram de `cross_office_senate_correlations.py` **v1**.
-A v1 calculava medias territoriais por bucket isolado;
-uma zona eleitoral pode estar em varios buckets.
-O resultado ajustado nao e estatisticamente
-o verdadeiro efeito fixo de municipio+zona.
+Execucao real no H: com os 256 CSVs de BU por candidato,
+verificados por SHA-256, concluida. A v2 do ajuste de
+municipio+zona usa as medias globais por zona e e robusta
+a particoes arbitrarias. No acervo real, `reconcile_stream.bucket_for`
+manteve cada `UF|municipio|zona|turno` num so bucket.
+A alegacao anterior de que a mesma zona poderia estar espalhada
+entre as particoes nao se aplicava a esses dados.
 
-A **v2** corrige a soma das marginais por zona entre
-todos os buckets e subtrai
-`sum_z (sum_x_z * sum_y_z / n_z)` da soma
-de `x*y` total. Aplica a correção tambem
-a variancia de x e y, incluindo grupos com
-apenas uma secao. Preserva a v1 sem alteracao e
-escreve em
-`correlacao_presidente_senado_v2/`.
-Teste adicional divide secoes da mesma
-zona entre buckets e exige resultados identicos.
+**Senado:** 67.858.746 linhas de candidatos conferidas,
+497.897 secoes pareadas, 616 pares e 13 inversoes.
+V1 e v2 concordam nos 616 coeficientes dentro
+da precisao reportada; as 13 inversoes persistem.
+As inversoes nao demonstram transferencia individual
+de voto nem fraude.
 
-```bat
-python -m unittest discover -s tests -p test_cross_office_senate_correlations.py -v
-python -m unittest discover -s tests -p test_compare_senate_geo_versions_2026.py -v
-python cross_office_senate_correlations.py
-python compare_senate_geo_versions_2026.py
-```
+**Forma fixa nacional:** 397.341 secoes no treinamento
+e 101.266 na validacao. P13: 0,834436% de predicoes
+exatas, MAE 33,551123 votos/seção; P22: 0,935161%
+de predicoes exatas, MAE 31,844696.
+No modelo municipio+zona, MAE 11,971461 (P13)
+e 12,140975 (P22). Ambos os candidatos
+ficaram abaixo do criterio de 95% de acerto exato.
+O modelo restrito `round(alpha_c*N_pres)` foi refutado
+segundo o criterio predefinido.
 
-**Resultados ainda pendentes de execucao real**.
-Nao reutilizar os 13 casos anteriores como
-estatistica confirmada enquanto a v2
-nao for processada e comparada.
-O codigo de limites ecologicos por secao continua
-validando identidades de contagens, mas os
-nove candidatos foram selecionados por um
-filtro v1 e NAO representam necessariamente
-as inversoes existentes na v2.
+**Nao** foram testadas transferencias ocultas H1/H2,
+porque ainda nao ha vetor independente `D=Y-X`.
+Sem BU de terceiros contemporaneo ou artefato
+original autenticado, o teste nao identifica mudancas
+entre a urna e a publicacao oficial.
+
+Relatorio consolidado:
+`docs/RESULTADOS_SENADO_FORMULA_2026_25OUT.md`.

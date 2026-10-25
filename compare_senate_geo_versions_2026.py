@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Compara os coeficientes senatoriais de ajuste geografico v1 e v2 (2026).
 
-v1 centralizou municipios/zonas dentro de cada bucket SHA isoladamente.
-v2 reune todos os buckets antes de remover as medias territoriais.
-Nao le BU nem SQLite; verifica integridade dos dois CSVs e compara
-616 pares sem supor que as antigas 13 inversoes persistem.
+v1 centralizou municipio+zona dentro de cada bucket; v2 reune marginais
+geograficas globais. O particionador reconcile_stream.bucket_for usa
+UF+municipio+zona+turno, conservando cada zona em apenas um bucket.
+Portanto, o calculo v1 ja era globalmente equivalente para esse acervo.
+Nao le BU nem SQLite; verifica os hashes e compara 616 pares.
 """
 from __future__ import annotations
 
@@ -171,7 +172,8 @@ def run(root):
             for r in data if r["inversao_v2"]],
         "output": str(csv_path), "output_sha256": sha256(csv_path),
         "limites": [
-            "A analise v1 de 13 inversoes estava baseada no controle geometrico por bucket e nao deve ser reutilizada",
+            "O particionador original manteve UF+municipio+zona+turno num unico bucket: portanto v1 e v2 podem ser iguais",
+            "A v2 e robusta a outros esquemas de particao; revisar a proveniencia se as particoes forem substituidas",
             "Mudar sinal por ajuste geográfico nao demonstra fraude",
             "Dados de 2022 nao foram utilizados",
         ],

@@ -33,10 +33,12 @@ echo [A] Reparar APENAS arquivos em erro da ultima coleta
 echo [B] VALIDAR SENADO V2 E FORMULA 2026 (sem download / sem SQLite)
 echo [C] ROBUSTEZ SENADO 2026 (bootstrap de zonas, sem SQLite)
 echo [D] ZONAS QUE INFLUENCIAM OS 13 PARES (usa checkpoints C)
+echo [E] STRESS: EXCLUIR VARIAS ZONAS (usa checkpoints C)
 echo [0] Sair
 echo.
-choice /C 123456789ABCD0 /N /M "Selecione: "
-if errorlevel 14 exit /b 0
+choice /C 123456789ABCDE0 /N /M "Selecione: "
+if errorlevel 15 exit /b 0
+if errorlevel 14 goto stress_2026
 if errorlevel 13 goto drivers_2026
 if errorlevel 12 goto robust_2026
 if errorlevel 11 goto validate_2026
@@ -151,6 +153,18 @@ if errorlevel 1 goto validate_failed
 if errorlevel 1 goto validate_failed
 echo.
 echo [CONCLUIDO] Consulte robustez_inversoes_2026/drivers_zonais/summary.json
+goto done
+
+:stress_2026
+echo.
+echo STRESS TERRITORIAL 2026 - EXCLUSAO CONJUNTA DE ZONAS.
+echo Usa somente os checkpoints SHA-256 da opcao C; nao reler BU ou SQLite.
+%PY% -m unittest discover -s tests -p "test_stress_senate_zones_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% stress_senate_zones_2026.py
+if errorlevel 1 goto validate_failed
+echo.
+echo [CONCLUIDO] Consulte robustez_inversoes_2026/stress_zonas/summary.json.
 goto done
 
 :validate_failed

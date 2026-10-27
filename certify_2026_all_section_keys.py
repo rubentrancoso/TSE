@@ -109,7 +109,8 @@ def count_snapshot(path):
     s=raw.get("s",{})
     if "st" not in s or "ts" not in s:
         raise RuntimeError("Snapshot EA20 sem st/ts: "+str(path))
-    return {"st":norm(s["st"]),"ts":norm(s["ts"]),
+    return {"st":int(str(s["st"]).replace(".","")),
+            "ts":int(str(s["ts"]).replace(".","")),
             "date":str(raw.get("dt") or raw.get("dg") or ""),
             "time":str(raw.get("ht") or raw.get("hg") or ""),
             "path":str(path),"sha256":sha256(path)}

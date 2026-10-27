@@ -197,3 +197,10 @@ por si só a semântica operacional interna de \`st\` nem
 explica automaticamente os outros 42 de \`BR.st - BWEB\`.
 O tratamento correto é investigar as duas diferenças
 **com referência temporal equivalente**.
+
+
+## Fase P executada em 27/10/2026: saldo de 42 isolado no exterior ZZ
+
+A execucao real em Windows confirmou que TODAS as 27 UFs brasileiras possuem igualdade de chaves EA16 versus BWEB (497.897 secoes principais), com hashes dos 27 EA16 e 27 BWEB validados. Todas as 27 UFs tem EA20.st igual ao seu numero de BWEB. O exterior ZZ tem 1.309 secoes BWEB contra EA20.st de 1.351: excedente de exatamente 42 no contador estadual do exterior. Os 28 EA20 estaduais somam 499.248, iguais ao snapshot nacional, sem discrepancia de agregacao entre BR e soma UF. Portanto o saldo +42 de BR versus BWEB vem INTEIRAMENTE de ZZ, nao da BA ou de MG. O saldo 6+36 de municipios antigos em BA/MG era uma coincidencia numerica e nao a localizacao das 42 do exterior. Votos validos nacionais ja fecham nos 119.300.788 da fase M. O programa P nao tem EA16 do exterior para conferir chaves, e a causa funcional de st 1351 versus BWEB 1309 continua pendente.
+
+Foi criada a opcao Q (Fase 5L), audit_zz_42_sections_2026.py. Ela le somente received-ZZ.csv selado por SHA no cache H e os EA20 da UF ZZ e de suas localidades ja arquivados em data/forensics/runs/20261005T104314Z. Confere os SHA-256 com manifest.jsonl original, agrega por codigo de municipio do exterior, compara as somas municipais com o contador estadual e identifica as localidades com saldo positivo ou negativo. Informa cobertura parcial quando faltar JSON municipal ou manifesto. Nenhum download, ZIP ou SQLite. Saidas phase5l_zz_municipal_counter_breakdown_2026.csv e phase5l_zz_42_sections_2026_summary.json no H. Q aguarda execucao empirica local.

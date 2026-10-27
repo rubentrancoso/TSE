@@ -34,10 +34,12 @@ echo [B] VALIDAR SENADO V2 E FORMULA 2026 (sem download / sem SQLite)
 echo [C] ROBUSTEZ SENADO 2026 (bootstrap de zonas, sem SQLite)
 echo [D] ZONAS QUE INFLUENCIAM OS 13 PARES (usa checkpoints C)
 echo [E] STRESS: EXCLUIR VARIAS ZONAS (usa checkpoints C)
+echo [F] PERIODICIDADE 2026: vales e permutacoes (sem baixar BU)
 echo [0] Sair
 echo.
-choice /C 123456789ABCDE0 /N /M "Selecione: "
-if errorlevel 15 exit /b 0
+choice /C 123456789ABCDEF0 /N /M "Selecione: "
+if errorlevel 16 exit /b 0
+if errorlevel 15 goto periodicity_2026
 if errorlevel 14 goto stress_2026
 if errorlevel 13 goto drivers_2026
 if errorlevel 12 goto robust_2026
@@ -165,6 +167,17 @@ if errorlevel 1 goto validate_failed
 if errorlevel 1 goto validate_failed
 echo.
 echo [CONCLUIDO] Consulte robustez_inversoes_2026/stress_zonas/summary.json.
+goto done
+
+:periodicity_2026
+echo.
+echo SERIE NACIONAL DE 2026 - PESQUISA DE VALES E PERIODICIDADE.
+echo 193 snapshots 2026, sem 2022, download ou SQLite.
+%PY% -m unittest discover -s tests -p "test_analyze_periodicity_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% analyze_periodicity_2026.py
+if errorlevel 1 goto validate_failed
+echo [CONCLUIDO] data\forensics\analysis\phase5a_periodicity_2026_summary.json
 goto done
 
 :validate_failed

@@ -21,20 +21,33 @@ from analyze_periodicity_2026 import (
 from reconcile_stream import sha256
 from urnas import root_path
 
-VERSION="phase5d-periodicity-2026-sensitivity-v1"
+VERSION="phase5d-periodicity-2026-sensitivity-v2"
 # Definidos ANTES de analisar os resultados da fase 5D.
 CONFIGS=((1000,15),(5000,9),(5000,21),
          (10000,9),(10000,21),(20000,15))
 THRESHOLDS=(4.0,8.0,12.0)
 
 
-def read_verified_series(folder):
-    previous=json.loads((folder/"phase5c_summary.json").read_text("utf-8"))
-    if previous.get("status")!="APURACAO_POR_MINUTO_ANALISADA":
-        raise RuntimeError("Fase 5C nao autorizou teste temporal")
-    trace=folder/"serie_2026_por_minuto.csv"
-    if (not trace.is_file() or
-        sha256(trace)!=previous.get("timeline_sha256")):
+def read_verified_series(folder,corrected=False):
+    if corrected:
+        previous=json.loads((folder/"phase5h_corrected_periodicity_2026_summary.json").read_text("utf-8"))
+        if previous.get("status")!="VALIDOS_PRESIDENCIAIS_CORRIGIDOS" or previous.get("difference_valid_vs_official")!=0:
+            raise RuntimeError("A fase M nao conciliou os validos")
+        trace=folder/"phase5h_minute_corrected_2026.csv"
+        digest=previous.get("corrected_minutes_sha256")
+        n_expected=previous["distinct_minutes"]
+        sections_expected=previous["initial_sections"]
+        valid_expected=previous["corrected_totals"]["valid"]
+    else:
+        previous=json.loads((folder/"phase5c_summary.json").read_text("utf-8"))
+        if previous.get("status")!="APURACAO_POR_MINUTO_ANALISADA":
+            raise RuntimeError("Fase 5C nao autorizou teste temporal")
+        trace=folder/"serie_2026_por_minuto.csv"
+        digest=previous.get("timeline_sha256")
+        n_expected=previous["minute_bins"]
+        sections_expected=previous["match_and_coverage"]["sections_timestamped"]
+        valid_expected=previous["match_and_coverage"]["total_in_timed_sections"]["valid"]
+    if not trace.is_file() or sha256(trace)!=digest:
         raise RuntimeError("Serie por minuto danificada ou nao verificada")
     rows=[]
     with trace.open(encoding="utf-8-sig",newline="") as f:
@@ -46,15 +59,14 @@ def read_verified_series(folder):
                     ("minutes","batch_share_pct","cum_share_pct")
                     else int(item[field]))
             rows.append(item)
-    if len(rows)!=previous.get("minute_bins") or not rows:
+    if len(rows)!=n_expected or not rows:
         raise RuntimeError("Quantidade de minutos alterada")
     last_sections=rows[-1]["sections"]
     count=sum(r["d_sections"] for r in rows)
     voters=sum(r["d_valid"] for r in rows)
-    totals=previous["match_and_coverage"]
     if (count!=last_sections or
-        count!=totals["sections_timestamped"] or
-        voters!=totals["total_in_timed_sections"]["valid"] or
+        count!=sections_expected or
+        voters!=valid_expected or
         any(x["d_valid"]<0 for x in rows)):
         raise RuntimeError("Contagens da serie nao batem com Fase 5C")
     return rows,previous
@@ -108,11 +120,11 @@ def atomic_json(path,payload):
         if tmp.exists():tmp.unlink()
 
 
-def run(root,permutations_count=300,seed=20261027):
+def run(root,permutations_count=300,seed=20261027,corrected=False):
     if permutations_count<100:
         raise ValueError("Minimo de 100 permutacoes")
     folder=root/"analysis"/"periodicidade_bweb_2026"
-    data,report=read_verified_series(folder)
+    data,report=read_verified_series(folder,corrected=corrected)
     result=[]
     for volume,window in CONFIGS:
         try:
@@ -135,9 +147,11 @@ def run(root,permutations_count=300,seed=20261027):
                    "status":"NAO_EXECUTADO","reason":str(exc)}
         result.append(entry)
     summary={"version":VERSION,"status":"EXPLORATORIO_CONCLUIDO",
-             "source_2026_minute_series_sha256":report["timeline_sha256"],
-             "sections":report["match_and_coverage"]["sections_timestamped"],
-             "minute_bins":report["minute_bins"],
+             "source_mode":"CORRIGIDO_NR28" if corrected else "ORIGINAL_H",
+             "source_2026_minute_series_sha256":report[
+                "corrected_minutes_sha256" if corrected else "timeline_sha256"],
+             "sections":report["initial_sections"] if corrected else report["match_and_coverage"]["sections_timestamped"],
+             "minute_bins":report["distinct_minutes"] if corrected else report["minute_bins"],
              "seed":seed,"null_simulations_each":permutations_count,
              "parameter_grid":len(CONFIGS),
              "results":result,
@@ -148,7 +162,7 @@ def run(root,permutations_count=300,seed=20261027):
               "Este teste parte dos dados oficiais publicados, nao audita BU impresso independente",
               "Resultado nao constitui probabilidade de fraude ou inocencia",
               "Sem microdados de 2022, sem rede, sem SQLite, sem releitura de ZIPs BU"]}
-    path=folder/"phase5d_sensitivity_2026_summary.json"
+    path=folder/("phase5d_sensitivity_corrected_2026_summary.json" if corrected else "phase5d_sensitivity_2026_summary.json")
     atomic_json(path,summary)
     print("FASE 5D CONCLUIDA, relatorio:",path,flush=True)
     return summary
@@ -158,5 +172,6 @@ if __name__=="__main__":
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root")
     parser.add_argument("--permutacoes",type=int,default=300)
+    parser.add_argument("--corrigido",action="store_true",help="Usar denominadores da opcao M, sem reler ZIP")
     args=parser.parse_args()
-    run(root_path(args.root),args.permutacoes)
+    run(root_path(args.root),args.permutacoes,corrected=args.corrigido)

@@ -54,6 +54,9 @@ class NationalKeys2026Tests(unittest.TestCase):
         snap=mod.count_snapshot(file)
         self.assertEqual(snap["st"],40)
         self.assertEqual(snap["ts"],40)
+        file.write_text(json.dumps({"s":{"st":"35.476","ts":"35.476"}}),encoding="utf-8")
+        dotted=mod.count_snapshot(file)
+        self.assertEqual(dotted["st"],35476)
         file.write_text("alterado",encoding="utf-8")
         with self.assertRaises(RuntimeError):
             mod.sha_safe(file,good)

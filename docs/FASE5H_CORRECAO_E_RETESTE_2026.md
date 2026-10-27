@@ -225,3 +225,57 @@ Resultados dela nao devem ser afirmados antecipadamente.
 Cuidado adicional: os diversos parametros e periodos da
 grade sao multiplas comparacoes no MESMO conjunto eleitoral;
 selecionar o menor valor-p nao e teste confirmatorio.
+
+
+## Execucao real da opcao I corrigida — 27/10/2026
+
+O investigador executou a grade sobre a serie corrigida M,
+sem reabrir BU ou ZIPs. As tres primeiras rodadas de 80 pontos
+em diretorios Temp sao exclusivamente fixtures sinteticas
+e nao os dados oficiais. Os resultados nacionais reais sao:
+
+| Minimo de validos/min | Mediana | Minutos usados | R2 | p individual | p blocos 5 | Vales >= 8 pp |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1.000 | 15 | 316 | 0,0299 | 0,4186 | 0,4784 | 11 |
+| 5.000 | 9 | 275 | 0,0260 | 0,8272 | 0,7176 | 5 |
+| **5.000** | **21** | **275** | **0,0614** | **0,0133** | **0,0233** | **4** |
+| 10.000 | 9 | 254 | 0,0234 | 0,9601 | 0,9336 | 0 |
+| 10.000 | 21 | 254 | 0,0420 | 0,2691 | 0,5083 | 1 |
+| 20.000 | 15 | 227 | 0,0538 | 0,1362 | 0,2824 | 0 |
+
+Cada valor-p acima tem 300 simulacoes e varredura da maior
+frequencia dentre as 144 consideradas naquela configuracao.
+A configuracao 5.000 validos + mediana de 21 apresentou
+p em blocos = **0,0233**, mas foi selecionada entre seis
+configuracoes. Um limite conservador para a familia
+de seis testes e Bonferroni **p ajustado ~0,140**,
+nao atingindo 0,05. Isso e exploratorio; as seis
+configuracoes sao correlacionadas e este ajuste nao
+modela toda a dependencia geografica.
+
+A quantidade de vales variou de 0 a 11 com os filtros,
+e somente quatro vales passaram o corte de 8pp na
+configuracao selecionada; esse comportamento mostra
+sensibilidade a parametrizacao, sem provar a
+inexistencia de fenomenos menores.
+
+**Nova opcao N (Fase 5I) implementada:**
+`joint_sensitivity_periodicity_2026.py` le somente o
+CSV corrigido e SHA-selado da M e calibra diretamente
+o **maximo do R2 nas seis configuracoes e 144 frequencias**
+com as mesmas permutacoes cronologicas de participacao
+em todas as configuracoes. Aplica quartis de progresso,
+embaralhamento individual ou blocos de cinco, e
+recalcula a mediana local em cada replica. Este
+controle conjunto trata a selecao da configuracao
+e da frequencia numa mesma referencia nula, mas
+NAO e um controle espacial/eleitoral completo.
+
+A opcao N foi publicada e testada com dados sinteticos
+em CI; a sua execucao real no H: permanece pendente.
+Nenhum p global calibrado da opcao N e anunciado aqui.
+
+O relatorio gerado pela opcao I corrigida esta no H:
+`analysis/periodicidade_bweb_2026/phase5d_sensitivity_corrected_2026_summary.json`.
+O futuro relatorio N:
+`analysis/periodicidade_bweb_2026/phase5i_joint_periodicity_2026_summary.json`.

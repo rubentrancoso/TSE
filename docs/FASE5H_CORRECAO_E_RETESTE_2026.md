@@ -1,9 +1,8 @@
 # Fase 5H — corrigir nulos tecnicos e testar novamente a periodicidade em 2026
 
-**Estado em 27/10/2026:** a fase **L** foi executada e CONCLUIDA
-nos arquivos reais BWEB locais do primeiro turno de 2026;
-a fase **M** foi implementada na main e validada por testes
-sinteticos, mas sua execucao empirica no disco H: ainda e pendente.
+**Estado em 27/10/2026:** as fases **L e M** foram executadas e CONCLUIDAS
+nos BWEB reais de 2026; votos validos corrigidos reconciliados com
+resultado nacional, e testes estatisticos refeitos.
 
 ## Resultado da opcao L: reconciliacao exata
 
@@ -129,3 +128,70 @@ A pesquisa de periodicidade continua exploratoria:
 p-valores sobre permutacoes de residuos nao
 representam probabilidade de fraude e nao
 corrigem toda a heterogeneidade territorial.
+
+
+## Execucao real da opcao M — 27/10/2026
+
+**Situacao: concluida no disco H: com dados reais de 2026.**
+A saida do terminal foi fornecida pelo investigador.
+As primeiras 5 verificacoes, em pastas temporarias Windows e
+com apenas 2 secoes, sao fixtures de teste. A execucao nacional
+real comeca em `[NR28 AC] secoes com 28=20, votos=23`.
+
+Os 28 ZIPs BWEB foram lidos novamente apenas para derivar o mapa
+numero 28 por secao, e as somas foram comparadas ao cache H, ao
+resultado L e ao total nacional. Resultado:
+- secoes processadas: **499.206**;
+- votos reclassificados de validos para anulados tecnicos: **5.246**;
+- votos validos corrigidos: **119.300.788**;
+- diferenca entre validos corrigidos e total oficial: **0**;
+- Lula (13): **53.879.538**, sem divergencia;
+- Flavio (22): **56.104.503**, sem divergencia;
+- instantes de recepcao: **354 minutos e 9.039 segundos**
+  ja observados na fase J;
+- por minuto, 254 lotes com >=10.000 validos;
+- por bloco-alvo de 500, 1000 e 2000 secoes,
+  respectivamente 893, 470 e 243 lotes.
+
+### Periodicidade antes e depois da correcao
+
+| Medida | Antes H/J | Depois M |
+| --- | ---: | ---: |
+| Periodo mais forte por minuto | 14,208199 min | 14,208199 min |
+| R2 senoidal por minuto | 0,03954052 | 0,03958410 |
+| p de permutacao individual (minutos) | 0,3086913 | 0,3066933 |
+| p de permutacao em blocos (minutos) | 0,4945055 | 0,4935065 |
+| Vales por minuto, limite de 8pp | 1 | 1 |
+| Residuo do vale de 21:31 (pp) | -4,43335 | -4,43163 |
+| Proeminencia desse vale (pp) | 9,24395 | 9,24548 |
+| Votos validos no lote de 21:31 | 15.312 | 15.311 |
+
+| Alvo | Melhor periodo em secoes (antes/depois) | R2 antes | R2 corrigido | p em blocos corrigido |
+| --- | ---: | ---: | ---: | ---: |
+| 500 | 4.829,436671 | 0,01776219 | 0,01777551 | 0,2089552 |
+| 1000 | 4.829,436671 | 0,01976418 | 0,01976781 | 0,8706468 |
+| 2000 | 35.103,147196 | 0,04767183 | 0,04768052 | 0,6069652 |
+
+Em todas as tres escalas BU agrupados, **zero vales** ultrapassaram
+proeminencia de 8pp. Nulos tecnicos foram retirados corretamente
+dos denominadores, sem alterar a frequencia mais forte
+nas escalas de 500/1000 urnas.
+
+**Conclusao condicionada:** a regularidade candidata em ~4.829
+secoes **nao se tornou estatisticamente robusta** apos a
+reclassificacao. O melhor pico em 500 urnas continuou com
+p individual 0,039801 mas p com blocos = 0,2089552;
+as tres escalas e muitas frequencias nao constituem testes
+independentes. Os controles nao preservam toda dependencia
+territorial. Nada disso prova fraude ou ausencia dela.
+
+**Estado cientifico:** a conciliacao dos 5.246 votos foi
+encerrada com hashes e por secao; a discrepancia de
+**42 secoes da contagem** segue separada e ainda nao foi
+resolvida por identidade. O estudo de variacao de limiares
+e janelas de suavizacao ainda nao foi repetido sobre a
+serie corrigida, e testes nulos com dependencia espacial
+tambem nao foram executados.
+
+Arquivo de saida local:
+`H:/TSE/forensics/urnas/analysis/periodicidade_bweb_2026/phase5h_corrected_periodicity_2026_summary.json`.

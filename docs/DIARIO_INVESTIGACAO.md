@@ -5477,3 +5477,44 @@ neste ambiente.** O relatorio esperado e:
 H:/TSE/forensics/urnas/analysis/periodicidade_bweb_2026/phase5c_summary.json.
 Sem ele, NAO se conhece o valor-p de periodicidade
 nos BUs individuais de 2026.
+
+
+---
+
+## 2026-10-27 — E0108 — Fase 5C concluida empiricamente; segundos e robustez
+
+**Fonte:** saida do terminal fornecida pelo investigador na opcao H
+(Windows, H:/TSE/forensics/urnas, primeiro turno presidencial 2026).
+As linhas dos testes em diretorio Temp sao inteiramente sinteticas
+e nao se misturam aos dados das 28 UFs oficiais.
+
+- 499.206 secoes extraidas dos BWEB locais SHA-validados (27 UFs + ZZ).
+- 499.206 com DT_BU_RECEBIDO, nenhuma sem horario; 354 minutos.
+- 254 minutos com >= 10.000 votos validos no teste por lote.
+- Um vale de proeminencia >=8pp: 04/10 21:31,
+  496.190 secoes acumuladas, 15.312 validos no minuto,
+  residuo -4,43335pp, proeminencia 9,24395pp.
+- Periodo senoidal maximo 14,208199 min,
+  R² 0,03954052.
+- p empirico sobre 1.000 permutacoes: 0,3086913 individual;
+  0,4945055 em blocos de cinco.
+- Nao excepcional frente aos dois nulos exploratorios.
+
+**Cobertura a conferir:** 499.248 secoes na ultima
+versao nacional da Fase 5A contra 499.206 nos ZIPs BWEB:
+42 chaves de diferenca; sem pressupor adulteracao,
+perda de votos ou identidade do escopo sem conciliacao.
+Usar tambem total_compare_with_official do phase5c_summary.json.
+
+**Ajustes publicados:** teste adicional na opcao I,
+sensibilidade do minimo de votos e mediana (somente
+CSV por minuto da H); teste adicional na opcao J,
+pelo SEGUNDO original DT_BU_RECEBIDO ja salvo em
+received-UF.csv, sem reler o ZIP, com agrupamentos
+atomicos de segundo e blocos 500/1000/2000 BU.
+Manter a ressalva de que multiplos BUs de mesmo
+segundo NAO possuem ordem observada internamente.
+
+**Estado empirico:** H concluido; I/J ainda nao executados.
+Metodo e numeros:
+docs/FASE5C_BU_INDIVIDUAL_PERIODICIDADE_2026.md.

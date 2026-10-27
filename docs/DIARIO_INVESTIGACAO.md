@@ -5713,3 +5713,12 @@ N ainda nao executada empiricamente no disco H.
 
 Relatorio atualizado:
 docs/FASE5H_CORRECAO_E_RETESTE_2026.md.
+
+
+---
+
+## 2026-10-27 — E0114 — Resultado empirico da opcao N (ajuste conjunto)
+
+N foi executada em Windows sobre a serie corrigida de 2026, e o log completo foi fornecido pelo investigador. Os 80 pontos dos testes Temp sao sinteticos, nao eleitorais. No real, melhor configuracao 5000 validos por minuto e mediana 21, n=275, periodo 14,208199 min, R2=0,061372845. Foram testadas seis configuracoes e 144 frequencias por configuracao sob permutacoes coordenadas. Em 300 replicacoes, o maximo observado foi ultrapassado 41 vezes para embaralhamento individual: p=0,13953488; e 283 vezes no nulo em blocos de cinco: p=0,94352159. Resultado nao excepcional sob esse nulo conjunto. A I embaralhava residuos prontos, enquanto N permuta participacoes e recalcula a mediana, portanto valores-p da I e da N nao sao diretamente comparaveis. Codigo SHA da fonte corrigida: be7f92701ae3aaeeb3a9b27f0c1eea17d7848bcee64b49d5231fbcba664fcee4. Pendencia separada: 42 secoes em diferenca de contagem, validos totais ja reconciliados.
+
+Relatorio: docs/FASE5H_CORRECAO_E_RETESTE_2026.md.

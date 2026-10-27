@@ -5722,3 +5722,14 @@ docs/FASE5H_CORRECAO_E_RETESTE_2026.md.
 N foi executada em Windows sobre a serie corrigida de 2026, e o log completo foi fornecido pelo investigador. Os 80 pontos dos testes Temp sao sinteticos, nao eleitorais. No real, melhor configuracao 5000 validos por minuto e mediana 21, n=275, periodo 14,208199 min, R2=0,061372845. Foram testadas seis configuracoes e 144 frequencias por configuracao sob permutacoes coordenadas. Em 300 replicacoes, o maximo observado foi ultrapassado 41 vezes para embaralhamento individual: p=0,13953488; e 283 vezes no nulo em blocos de cinco: p=0,94352159. Resultado nao excepcional sob esse nulo conjunto. A I embaralhava residuos prontos, enquanto N permuta participacoes e recalcula a mediana, portanto valores-p da I e da N nao sao diretamente comparaveis. Codigo SHA da fonte corrigida: be7f92701ae3aaeeb3a9b27f0c1eea17d7848bcee64b49d5231fbcba664fcee4. Pendencia separada: 42 secoes em diferenca de contagem, validos totais ja reconciliados.
 
 Relatorio: docs/FASE5H_CORRECAO_E_RETESTE_2026.md.
+
+
+---
+
+## 2026-10-27 — E0115 — 42 seções: conciliação de níveis BA/MG e opção O
+
+Novo exame dos relatórios versionados da Fase 2 e do último snapshot nacional. A diferença nacional 499.248 - BWEB 499.206 = +42 contrasta níveis diferentes da diferença BA/MG entre EA20 estadual e municipais (BA +6, MG +36). O inventário EA16 das 27 UFs continha 497.897 seções principais, mais 1.309 BWEB no exterior = 499.206. Entre os onze municípios BA/MG com divergência ts-st, os contadores de zonas respondem por apenas 36 seções (BA 6, MG 30); as seis restantes concentram-se em Joaíma/MG, cujo município EA20 registra st 34/ts 40, mas a zona 0149 registra st 40/ts 40. A tabela da Fase 2 preserva 460 chaves EA18 de dez zonas e todos esses 460 registros tinham status Totalizada; não possui os 40 EA18 da zona 0149 pois o EA20 zonal não divergia. Uma igualdade de saldos 42 não identifica os mesmos 42 registros.
+
+Implementada a nova opção O, reconcile_42_section_counters_2026.py, que verifica os SHA dos caches BWEB da H em BA/MG, confronta municípios e zonas EA20, e usa configurações EA16 completas locais se disponíveis e validadas pelo hash anterior. Gera CSV de diferenças de chave eleitoral observáveis, sem inventar nomes de seções a partir de um contador. Sem rede, ZIP ou SQLite. Validada em 185 testes Windows e Linux: https://github.com/rubentrancoso/TSE/actions/runs/40531866677. Execução real de O no disco H ainda pendente.
+
+Relatório: docs/FASE5J_CONCILIACAO_42_SECOES_2026.md.

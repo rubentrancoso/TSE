@@ -36,10 +36,12 @@ echo [D] ZONAS QUE INFLUENCIAM OS 13 PARES (usa checkpoints C)
 echo [E] STRESS: EXCLUIR VARIAS ZONAS (usa checkpoints C)
 echo [F] PERIODICIDADE 2026: vales e permutacoes (sem baixar BU)
 echo [G] BU INDIVIDUAL 2026: conferir horarios EA16 e construir matriz por secao
+echo [H] BU RECEBIDOS 2026: extrair DT_BU_RECEBIDO e testar vales por minuto
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEFG0 /N /M "Selecione: "
-if errorlevel 17 exit /b 0
+choice /C 123456789ABCDEFGH0 /N /M "Selecione: "
+if errorlevel 18 exit /b 0
+if errorlevel 17 goto bweb_received_periodicity_2026
 if errorlevel 16 goto bu_unit_timing_2026
 if errorlevel 15 goto periodicity_2026
 if errorlevel 14 goto stress_2026
@@ -192,6 +194,22 @@ if errorlevel 1 goto validate_failed
 %PY% analyze_bu_individual_timing_2026.py
 if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] analysis\entre_cargos\...\periodicidade_bu_individual_2026\summary.json
+goto done
+
+:bweb_received_periodicity_2026
+echo.
+echo FASE 5C: ORDEM DE RECEBIMENTO BWEB POR SECAO - SOMENTE 2026.
+echo Confere SHA dos ZIPs originais e DT_BU_RECEBIDO; nunca baixa ou usa SQLite.
+echo Analisa por MINUTO; nao inventa ordem das urnas empatadas.
+%PY% -m unittest discover -s tests -p "test_extract_bweb_received_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% -m unittest discover -s tests -p "test_analyze_bweb_receipt_periodicity_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% extract_bweb_received_2026.py
+if errorlevel 1 goto validate_failed
+%PY% analyze_bweb_receipt_periodicity_2026.py
+if errorlevel 1 goto validate_failed
+echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5c_summary.json
 goto done
 
 :validate_failed

@@ -5625,3 +5625,44 @@ definicoes/escopos; nao e explicada automaticamente
 pelo caso do candidato 28.
 
 Relatorio: docs/FASE5G_IDENTIFICACAO_5246_VOTOS_2026.md.
+
+
+---
+
+## 2026-10-27 — E0111 — Conciliacao L definitiva e teste M implementado
+
+**Execucao real Windows, primeira votacao presidencial 2026:**
+opcao L concluiu com status CONCILIACAO_COMPLETA_NR_28,
+5.246 votos do numero presidencial 28, 5.246 votos
+a mais no antigo calculo de validos, 28/28 UFs
+reconciliadas com residuo ZERO em cada UF.
+Os votos 13 e 22 haviam fechado por UF na etapa K.
+A suposta divergencia inicial em AC (+1) no
+inicio do terminal veio exclusivamente de teste
+sintetico no diretorio Temp.
+
+**Correcao na pesquisa temporal:** fase M acrescentada
+ao menu e implementada em
+correct_bweb_28_periodicity_2026.py.
+Pelo mapa n28 por secao com checkpoints SHA-256,
+subtrai os votos 28 da contagem de validos do mesmo
+BU, e refaz as series por minuto, por segundo e blocos
+500/1000/2000 sem alterar arquivos H/J/K/L.
+Exige 119.300.788 validos, Lula 53.879.538,
+Flavio 56.104.503 e 5.246 nulos tecnicos corrigidos.
+Reusa ZIPs BWEB originais de 2026 sem download;
+na primeira execucao necessita nova leitura apenas
+das colunas para identificar qual secao votou 28,
+porque L armazenou somente somas por UF.
+Sem SQLite nem microdados de 2022.
+
+**Estado:** M validada somente com fixture; ainda
+nao executada sobre os BWEB reais locais.
+176 testes de codigo passaram em Windows/Linux:
+https://github.com/rubentrancoso/TSE/actions/runs/40522038862
+
+Continuam separados: (1) periodicidade corrigida,
+(2) divergencia de 42 secoes entre as duas contagens,
+sem identidades por secao demonstradas.
+
+Detalhes: docs/FASE5H_CORRECAO_E_RETESTE_2026.md.

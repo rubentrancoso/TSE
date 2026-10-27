@@ -279,3 +279,8 @@ O relatorio gerado pela opcao I corrigida esta no H:
 `analysis/periodicidade_bweb_2026/phase5d_sensitivity_corrected_2026_summary.json`.
 O futuro relatorio N:
 `analysis/periodicidade_bweb_2026/phase5i_joint_periodicity_2026_summary.json`.
+
+
+## Opcao N — execucao real 27/10/2026
+
+O operador executou a fase N nos dados corrigidos de 2026. Diferenciar testes sinteticos com 80 pontos em AppData/Local/Temp da apuracao real: 275 pontos, minimo de 5.000 validos por minuto, mediana 21, periodo 14,208199 minutos, R2=0,061372845. O teste conjunto abrangeu 6 configuracoes e 144 frequencias por configuracao. Das 300 replicacoes individuais, 41 ultrapassaram o maximo observado: p_global=0,13953488. Nas 300 replicacoes em blocos de cinco, 283 ultrapassaram: p_global=0,94352159. SHA da serie corrigida: be7f92701ae3aaeeb3a9b27f0c1eea17d7848bcee64b49d5231fbcba664fcee4. O pico nao foi extraordinario sob os nulos conjuntos. Diferenca importante: na I, o nulo permutava os residuos calculados; na N, permuta a participacao nos lotes e recalcula as medianas a cada repeticao. Por isso, p=0,0233 da I e p=0,65116 (configuracao escolhida, nulo em blocos da N) nao sao diretamente equivalentes. O p global por blocos na N foi 0,94352. Nenhum desses numeros representa probabilidade de fraude ou prova de regularidade. A diferenca de 42 secoes continua pendente e independente da conciliacao exata de 119.300.788 validos.

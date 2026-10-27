@@ -236,7 +236,10 @@ def run(root,simulations=1000,min_vote=10000):
         "secoes":source["sections_total"],
         "com_hora":source["sections_timestamped"],
         "minutos":len(series),
-        "coverage":source["fraction_sections_in_UF_span_under_5min"],
+        "fraction_in_UF_receipt_bursts_under_5min":source["fraction_sections_in_UF_span_under_5min"],
+        "valid_votes_vs_national":source["total_compare_with_official"]["valid"],
+        "flavio_votes_vs_national":source["total_compare_with_official"]["flavio"],
+        "lula_votes_vs_national":source["total_compare_with_official"]["lula"],
         "periodicity":outcome.get("periodicity"),
         "result":str(dst/"phase5c_summary.json")},
         ensure_ascii=False,indent=2),flush=True)

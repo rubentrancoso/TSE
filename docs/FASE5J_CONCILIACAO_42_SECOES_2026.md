@@ -160,3 +160,40 @@ no mesmo diretório H: da investigação.
 
 **Estado:** O concluída empiricamente; P desenvolvida e
 validada com fixtures em CI, ainda sem execução real no H:.
+
+
+## Timestamps dos contadores municipais divergentes — fonte da Fase 2
+
+Os 11 snapshots EA20 municipais de \`section_config_reconciliation.csv\`
+preservam o instante \`ea20_dt + ea20_ht\`:
+
+| UF | Município | EA20 municipal, data/hora BRT |
+|---|---|---|
+| BA | Belo Campo | 04/10/2026 20:59:55 |
+| BA | Conceição do Coité | 04/10/2026 21:00:07 |
+| BA | Itaeté | 04/10/2026 20:59:48 |
+| MG | Rosário da Limeira | 04/10/2026 20:57:03 |
+| MG | Bom Jesus do Galho | 04/10/2026 20:52:48 |
+| MG | Botumirim | 04/10/2026 21:00:32 |
+| MG | Curral de Dentro | 04/10/2026 20:59:54 |
+| MG | Ijaci | 04/10/2026 20:59:43 |
+| MG | Joaíma | 04/10/2026 20:56:18 |
+| MG | Santo Antônio do Amparo | 04/10/2026 21:00:26 |
+| MG | Senador Modestino Gonçalves | 04/10/2026 20:59:43 |
+
+O snapshot nacional final versionado na Fase 5A registra
+**05/10/2026 02:59:31 BRT**; portanto, as 11 instâncias
+municipais com \`st<ts\` são de aproximadamente **seis horas
+antes** do encerramento da série nacional. É absolutamente
+inadequado comparar seus contadores \`st\` como se tivessem
+a mesma referência temporal que o nacional final. Os
+status EA18 \`Totalizada\` preservados são posteriores aos
+instantâneos municipais na base analisada.
+
+**Inferência com ressalva:** snapshots municipais não atualizados
+são uma possível explicação parcial do total de 42 no
+contraste UF↔municipal. A idade do timestamp não demonstra
+por si só a semântica operacional interna de \`st\` nem
+explica automaticamente os outros 42 de \`BR.st - BWEB\`.
+O tratamento correto é investigar as duas diferenças
+**com referência temporal equivalente**.

@@ -1,6 +1,6 @@
 # Fase 5C — periodicidade dos BU individuais, primeiro turno de 2026
 
-**Status em 27/10/2026:** Fase 5C executada com 499.206 BU reais de 2026. Fases 5D e 5E publicadas, ainda sem execucao empirica no H:. Nao usar microdados de 2022.
+**Status em 27/10/2026:** Fase 5C executada com 499.206 BU reais de 2026. Fase 5E concluida com 2026 real; I e K disponiveis, ainda sem dados locais de execucao.. Nao usar microdados de 2022.
 
 ## Problema estudado
 
@@ -163,3 +163,55 @@ horarios; o campo com_hora confirma 499.206/499.206.
   contrasta com permutacoes. Esta abordagem
   esta mais proxima da escala do video.
 Os testes empiricos I e J NAO ocorreram ainda.
+
+## Resultados empiricos J — Fase 5E, 27/10/2026
+
+A saida enviada pelo investigador inclui PRIMEIRO uma fixture
+de teste com 120 BU e 60 segundos, no diretorio Temp,
+que NAO faz parte dos resultados eleitorais.
+
+**Fase real, primeiro turno 2026:**
+499.206 BUs, 9.039 segundos distintos, 100% dos horarios
+com segundos explicitos. Blocos de 500/1000/2000 BUs
+produziram 893/470/243 pontos analisaveis. Zero vales
+residuais acima de 8 pontos percentuais (pode haver menores).
+
+| Bloco alvo | Periodo preferido (BU) | R2 | p individual | p bloco cinco |
+|---|---:|---:|---:|---:|
+| 500 | 4.829,436671 | 0,01776219 | 0,039801 | 0,2089552 |
+| 1000 | 4.829,436671 | 0,01976418 | 0,6368159 | 0,8706468 |
+| 2000 | 35.103,147196 | 0,04767183 | 0,159204 | 0,6069652 |
+
+O periodo 4.829 BU e uma frequencia CANDIDATA,
+nao confirmacao independente em duas escalas: a
+base e a mesma. O p exploratorio individual de 500 BU
+nao resiste a blocos de cinco atualizacoes. A escolha
+do minimo entre varios testes nao tem ajuste conjunto
+adicional para a grade de blocos, e as permutacoes
+nao preservam toda a estrutura geografica.
+
+**A conciliacao aritmetica nacional encontrou:**
+- Flavio: 56.104.503 BWEB = 56.104.503 oficial.
+- Lula: 53.879.538 BWEB = 53.879.538 oficial.
+- Validos BU: 119.306.034; validos nacional: 119.300.788;
+  diferenca **+5.246** atribuivel ARITMETICAMENTE
+  ao grupo dos outros candidatos e sua classificacao.
+- Demais BU = 9.321.993 e demais nacional = 9.316.747.
+  Isso nao identifica o candidato nem a origem da diferenca.
+- BWEB 499.206 secoes x nacional snapshot 499.248:
+  diferenca de contagem = -42. Escopos podem diferir.
+
+O antigo diagnostico de BA/MG exibia diferencas municipais
+de 6 e 36 secoes respectivamente, somando 42; nao foi
+demonstrado serem as mesmas 42 secoes da discrepancia
+nacional (correspondencia nao verificada).
+
+Nova opcao **K** foi programada para localizar a diferenca
+de 5.246 validos por UF, sem reabrir os ZIPs BWEB,
+sem downloads, SQLite ou dados de 2022. Usa os arquivos
+received-UF.csv da opcao H e a tabela oficial nacional
+uf_candidate_reconciliation.csv versionada no repositorio.
+
+A opcao **I** continua disponivel para sensibilidade de
+limiares e suavizacao; nao substitui uma pesquisa de
+anomalias calibrada pela composicao territorial.

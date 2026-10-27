@@ -43,7 +43,9 @@ def official(reference):
             if key in uf_candidates:
                 raise RuntimeError("Candidato por UF duplicado em referencia: "+repr(key))
             votes=int(row["uf_votes"])
-            if votes<0 or votes!=int(row["sum_municipal_votes"]):
+            municipal=int(row["sum_municipal_votes"])
+            delta=int(row["difference"])
+            if min(votes,municipal)<0 or votes-municipal!=delta:
                 raise RuntimeError("Total de votos invalido na referencia: "+repr(key))
             uf_candidates[key]=votes
     groups={}
@@ -146,7 +148,6 @@ def run(root,reference=DEFAULT_REFERENCE):
     national={column:sum(row[column] for row in rows)
               for column in COLUMNS if column!="UF"}
     national["diff_sections_vs_snapshot_499248"]=national["secoes_BWEB"]-499248
-    national["expected_valid_diff"]=5246
     if (national["validos_BWEB"]-national["validos_UF_oficial"]
         !=national["diferenca_validos"] or
         national["diferenca_validos"]!=national["diferenca_demais"]+

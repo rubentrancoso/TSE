@@ -44,10 +44,12 @@ echo [L] IDENTIFICAR 5246 VOTOS: conferir NR_VOTAVEL=28 no BWEB original
 echo [M] CORRIGIR VALIDADE E REFAZER PERIODICIDADE 2026 (usa H/K/L)
 echo [N] TESTE GLOBAL: periodicidade 2026 com 6 filtros e ajuste conjunto
 echo [O] RECONCILIAR 42 SECOES: EA20/EA16 vs BWEB (sem baixar ou SQLite)
+echo [P] CERTIDAO NACIONAL: EA16 vs BWEB por chave 2026 (27 UFs)
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEFGHIJKLMNO0 /N /M "Selecione: "
-if errorlevel 25 exit /b 0
+choice /C 123456789ABCDEFGHIJKLMNOP0 /N /M "Selecione: "
+if errorlevel 26 exit /b 0
+if errorlevel 25 goto certify_all_sections_2026
 if errorlevel 24 goto reconcile_42_2026
 if errorlevel 23 goto joint_sensitivity_2026
 if errorlevel 22 goto correct_vote28_2026
@@ -305,6 +307,18 @@ if errorlevel 1 goto validate_failed
 %PY% reconcile_42_section_counters_2026.py
 if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5j_42_section_counter_reconciliation_2026_summary.json
+goto done
+
+:certify_all_sections_2026
+echo.
+echo FASE 5K: CERTIDAO NACIONAL DE CHAVES EA16 x BWEB, SEM BAIXAR NEM ZIP/SQLite.
+echo Confere EA16 original de cada UF com SHA da fase 3 e BU do cache H.
+echo Se snapshots EA20 estaduais ja arquivados existirem, identifica em qual nivel divergem contadores.
+%PY% -m unittest discover -s tests -p "test_certify_2026_all_section_keys.py" -q
+if errorlevel 1 goto validate_failed
+%PY% certify_2026_all_section_keys.py
+if errorlevel 1 goto validate_failed
+echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5k_national_section_key_certificate_2026_summary.json
 goto done
 
 :validate_failed

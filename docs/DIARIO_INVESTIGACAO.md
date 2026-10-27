@@ -5733,3 +5733,45 @@ Novo exame dos relatórios versionados da Fase 2 e do último snapshot nacional.
 Implementada a nova opção O, reconcile_42_section_counters_2026.py, que verifica os SHA dos caches BWEB da H em BA/MG, confronta municípios e zonas EA20, e usa configurações EA16 completas locais se disponíveis e validadas pelo hash anterior. Gera CSV de diferenças de chave eleitoral observáveis, sem inventar nomes de seções a partir de um contador. Sem rede, ZIP ou SQLite. Validada em 185 testes Windows e Linux: https://github.com/rubentrancoso/TSE/actions/runs/40531866677. Execução real de O no disco H ainda pendente.
 
 Relatório: docs/FASE5J_CONCILIACAO_42_SECOES_2026.md.
+
+
+---
+
+## 2026-10-27 — E0116 — O real: zero divergências de chaves; certidão nacional P
+
+**Execução real de O em Windows (Fase 5J):**
+- 35.476 BWEB BA e 52.062 BWEB MG, ambos SHA-validos;
+- EA16 BA 35.476 principais + 2.474 agregadas e MG
+  52.062 principais + 2.131 agregadas, SHA-validos;
+- nas 11 localidades municipais anômalas BA/MG e seus
+  11 contadores de zonas: ZERO diferencas entre chaves
+  EA16 principais/BWEB/EA18 pre-derivados;
+- numero 42 de contador municipal = 36 de diferenca
+  zonas TS-ST + seis entre st zona 0149 e st municipal
+  de Joaíma/MG; nao ha chave comprovadamente ausente;
+- snapshot final nacional st=499.248, 499.206 BWEB:
+  nao provar identidade com os 42 acima por subtracao.
+
+**Novo exame temporal:** a referência municipal EA20 nos 11
+municípios anômalos tem horario entre **04/10/2026
+20:52:48 e 21:00:32**, enquanto o último agregado
+nacional versionado é de **05/10/2026 02:59:31 BRT**.
+É necessário comparar os níveis usando o mesmo corte
+temporal: snapshots municipais antigos são uma explicação
+plausível para st inferiores, não prova de qualquer causa
+ou da identidade do excesso BR de 42.
+
+**Nova opção P (Fase 5K):**
+certify_2026_all_section_keys.py, revisão de TODAS as
+27 UFs com EA16 SHA da Fase 3A contra chaves BWEB SHA da H,
+e ZZ contabilizado separadamente. Lê snapshots UF/ZZ
+da coleta anteriormente arquivada se disponíveis para
+localizar nível territorial do excesso de st. Se falta
+EA16 original de qualquer UF, informa cobertura parcial;
+não inventa prova nacional. Nenhum download, ZIP ou SQLite.
+Caminho: phase5k_national_section_key_certificate_2026_summary.json.
+Software validado em **189 testes por SO Windows/Linux**:
+https://github.com/rubentrancoso/TSE/actions/runs/40533912161
+(opção P ainda NÃO executada no disco H do investigador).
+
+Relatório detalhado: docs/FASE5J_CONCILIACAO_42_SECOES_2026.md.

@@ -46,10 +46,12 @@ echo [N] TESTE GLOBAL: periodicidade 2026 com 6 filtros e ajuste conjunto
 echo [O] RECONCILIAR 42 SECOES: EA20/EA16 vs BWEB (sem baixar ou SQLite)
 echo [P] CERTIDAO NACIONAL: EA16 vs BWEB por chave 2026 (27 UFs)
 echo [Q] EXTERIOR ZZ: localizar +42 secoes por municipio EA20/BWEB
+echo [R] EXTERIOR ZZ: conferir comparecimento e votos nas 42 secoes
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEFGHIJKLMNOPQ0 /N /M "Selecione: "
-if errorlevel 27 exit /b 0
+choice /C 123456789ABCDEFGHIJKLMNOPQR0 /N /M "Selecione: "
+if errorlevel 28 exit /b 0
+if errorlevel 27 goto audit_zz_42_votes_2026
 if errorlevel 26 goto audit_zz_42_2026
 if errorlevel 25 goto certify_all_sections_2026
 if errorlevel 24 goto reconcile_42_2026
@@ -333,6 +335,18 @@ if errorlevel 1 goto validate_failed
 %PY% audit_zz_42_sections_2026.py
 if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5l_zz_42_sections_2026_summary.json
+goto done
+
+:audit_zz_42_votes_2026
+echo.
+echo FASE 5M: VERIFICAR COMPARECIMENTO E VOTOS EA20 DOS 42 CONTADORES ZZ.
+echo Usa apenas JSONs EA20 arquivados e manifesto SHA da opcao Q.
+echo Nao baixa arquivos, nem consulta ZIP, SQLite ou dados 2022.
+%PY% -m unittest discover -s tests -p "test_audit_zz_42_voting_status_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% audit_zz_42_voting_status_2026.py
+if errorlevel 1 goto validate_failed
+echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5m_zz_42_voting_status_2026_summary.json
 goto done
 
 :validate_failed

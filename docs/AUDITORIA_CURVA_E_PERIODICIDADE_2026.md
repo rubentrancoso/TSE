@@ -151,3 +151,25 @@ FORMALMENTE**.
 - `data/forensics/analysis/phase4h_summary.json`
 - `data/forensics/analysis/phase3e_summary.json`
 - `docs/INVESTIGACAO_TOTALIZACAO_2026.md`
+
+
+## Atualizacao de 27/10/2026 — mistura aleatoria condicional dos votos
+
+Nova pergunta: seria impossivel obter 152 quedas consecutivas do percentual de Flavio por mero agrupamento dos votos restantes?
+
+Foi executado experimento Monte Carlo com gerador NumPy, distribuicao hipergeometrica multivariada exata, 10.000 replicacoes, semente inteira 20261027.
+
+Estado de partida 20:04:39: 100.491.132 votos validos; Flavio 48.704.246; Lula 43.705.754. Pool posterior: 18.809.656 votos validos; Flavio 7.400.257; Lula 10.173.784; outros 1.235.615. Os tamanhos dos 152 lotes efetivos foram preservados. Em cada rodada foram redistribuidos ALEATORIAMENTE os VOTOS INDIVIDUAIS restantes entre os 152 lotes, SEM reposicao, com todos os totais finais preservados. Os percentuais acumulados foram recalculados de contagens inteiras.
+
+**Resultados sob ESSE modelo:**
+- 9.777 de 10.000 (97,77%) produziram 152 quedas estritas do percentual de Flavio;
+- 9.936 de 10.000 (99,36%) produziram 152 subidas estritas do percentual de Lula;
+- 9.760 de 10.000 (97,60%) produziram ambas simultaneamente.
+
+Esse nulo demonstra que a sequencia de 152 movimentos na mesma direcao NAO e estatisticamente impossivel nem rara QUANDO SE CONDICIONA AO POOL TARDIO OBSERVADO: Flavio tinha 48,466% no acumulado as 20:04, enquanto entre os votos restantes sua participacao era de apenas 39,343%.
+
+ATENCAO: essa simulacao embaralha votos individuais, NAO urnas BU inteiras, e condiciona ao numero de votos e sua composicao remanescente efetivamente observados. Nao testa se a chegada desse pool foi natural, nao preserva localizacao, nem modela horarios, nem verifica picos periodicos. Os percentuais acima NAO sao probabilidades de fraude ou inocencia. Um modelo por urnas com geografia/ordem de divulgacao ainda precisa ser testado para a hipotese mais ampla.
+
+O script reproduzivel esta em simulate_post_resume_random_vote_mixing_2026.py. Entrada: data/forensics/analysis/phase4g_post_resume_batches.csv, que contem os 152 lotes com seus volumes; nao le SQLite, nem baixa dados. Executar com Python e NumPy instalado.
+
+A hipotese de periodicidade dos saltos de maior magnitude permanece NAO TESTADA formalmente com modelo nulo condicionado em volume e geografia.

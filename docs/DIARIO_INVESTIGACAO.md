@@ -5666,3 +5666,12 @@ Continuam separados: (1) periodicidade corrigida,
 sem identidades por secao demonstradas.
 
 Detalhes: docs/FASE5H_CORRECAO_E_RETESTE_2026.md.
+
+
+---
+
+## 2026-10-27 - E0112 - Reteste M concluido
+
+Fonte: console Windows enviado pelo investigador. Dados reais 2026, excluidos os testes sinteticos em Temp. 499.206 secoes, 5.246 votos do numero 28 reclassificados na propria secao, 119.300.788 validos reconciliados sem diferenca. Serie corrigida por minuto: periodo 14,208199 min, R2 0,0395841, p individual 0,3066933 e p em blocos 0,4935065. Blocos de 500/1000 secoes: periodo 4.829,436671 secoes, R2 0,01777551/0,01976781, p em blocos 0,2089552/0,8706468. Blocos de 2000: periodo 35.103,147196 secoes, R2 0,04768052, p em blocos 0,6069652. Zero vales acima de 8 pp nos blocos de urnas. Resultado nao excepcional sob nulos em blocos. Permanecem 42 secoes de diferenca de contagem entre BWEB e snapshot nacional, sem diferenca dos votos validos.
+
+Documento: docs/FASE5H_CORRECAO_E_RETESTE_2026.md.

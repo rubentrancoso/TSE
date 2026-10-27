@@ -5675,3 +5675,41 @@ Detalhes: docs/FASE5H_CORRECAO_E_RETESTE_2026.md.
 Fonte: console Windows enviado pelo investigador. Dados reais 2026, excluidos os testes sinteticos em Temp. 499.206 secoes, 5.246 votos do numero 28 reclassificados na propria secao, 119.300.788 validos reconciliados sem diferenca. Serie corrigida por minuto: periodo 14,208199 min, R2 0,0395841, p individual 0,3066933 e p em blocos 0,4935065. Blocos de 500/1000 secoes: periodo 4.829,436671 secoes, R2 0,01777551/0,01976781, p em blocos 0,2089552/0,8706468. Blocos de 2000: periodo 35.103,147196 secoes, R2 0,04768052, p em blocos 0,6069652. Zero vales acima de 8 pp nos blocos de urnas. Resultado nao excepcional sob nulos em blocos. Permanecem 42 secoes de diferenca de contagem entre BWEB e snapshot nacional, sem diferenca dos votos validos.
 
 Documento: docs/FASE5H_CORRECAO_E_RETESTE_2026.md.
+
+
+---
+## 2026-10-27 — E0113 — Sensibilidade I corrigida e teste global N
+
+Execucao real da opcao I sobre 354 minutos do primeiro
+turno presidencial de 2026, votos do numero 28 excluidos.
+Somente os resultados apos os 4 testes sinteticos em
+pastas Temp sao empiricos. As seis configuracoes
+apresentaram R2 entre 0,0234 e 0,0614; vales de
+proeminencia >=8pp variaram de 0 a 11.
+
+Destaque exploratorio: filtro >=5.000 votos/min,
+mediana 21; 275 minutos analisados, R2 0,0614,
+p individual 0,0133, p em blocos 0,0233 com
+300 simulacoes. As outras cinco configuracoes
+tiveram p em blocos >=0,2824. Como houve busca
+em seis configuracoes, limite de Bonferroni:
+p ajustado aproximadamente 0,140; nao significativo
+ao nivel familiar 0,05. Nenhum desses resultados
+prova fraude ou sua ausencia.
+
+Adicionada nova opcao N, em
+joint_sensitivity_periodicity_2026.py, que testa
+o maximo R2 comum sobre seis configuracoes e
+144 frequencias, utilizando a mesma permutacao
+de participacoes entre todas as configuracoes;
+recalcula as medianas em cada replica e apresenta
+p global sob nulidades individual e por blocos
+de cinco. Usa apenas cache corrigido M com SHA,
+sem ZIP, SQLite, rede ou dados de 2022.
+Validado em testes sinteticos Windows/Ubuntu,
+181 testes por sistema na CI
+https://github.com/rubentrancoso/TSE/actions/runs/40527293690.
+N ainda nao executada empiricamente no disco H.
+
+Relatorio atualizado:
+docs/FASE5H_CORRECAO_E_RETESTE_2026.md.

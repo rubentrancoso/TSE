@@ -210,6 +210,17 @@ def run(root,simulations=200):
         raise ValueError("Exigir pelo menos 100 simulacoes")
     base=root/"analysis"/"periodicidade_bweb_2026"
     groups,coverage=read_seconds(base)
+    previous=base/"phase5c_summary.json"
+    if previous.is_file():
+        earlier=json.loads(previous.read_text("utf-8"))
+        matched=earlier.get("match_and_coverage",{})
+        reference=matched.get("total_in_timed_sections",{})
+        for k,field in (("valid","valid_votes"),("flavio","flavio_votes"),
+                        ("lula","lula_votes")):
+            if k in reference and reference[k]!=coverage[field]:
+                raise RuntimeError("Totais da Fase 5E divergentes da Fase 5C")
+        coverage["national_vote_reconciliation"]=matched.get(
+            "total_compare_with_official",{})
     tsec=group_to_series(groups)
     secondpath=base/"phase5e_por_segundo_2026.csv"
     write_csv(secondpath,tsec)
@@ -261,6 +272,7 @@ def run(root,simulations=200):
         "secs":coverage["n_distinct_seconds"],
         "secoes":coverage["sections"],
         "precisao":coverage["seconds_coverage"],
+        "diferencas_votos_versus_nacional":coverage.get("national_vote_reconciliation",{}),
         "tests":[{"target_sections":t["target_sections"],
                   "blocks":t["blocks"],
                   "periodicity":t.get("periodicity")}

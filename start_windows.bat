@@ -37,7 +37,7 @@ echo [E] STRESS: EXCLUIR VARIAS ZONAS (usa checkpoints C)
 echo [F] PERIODICIDADE 2026: vales e permutacoes (sem baixar BU)
 echo [G] BU INDIVIDUAL 2026: conferir horarios EA16 e construir matriz por secao
 echo [H] BU RECEBIDOS 2026: extrair DT_BU_RECEBIDO e testar vales por minuto
-echo [I] ROBUSTEZ DOS VALES 2026: variar filtros sem reler BU ou ZIP
+echo [I] ROBUSTEZ DOS VALES 2026: filtros na serie CORRIGIDA (usa M)
 echo [J] BU POR SEGUNDO 2026: padrao em blocos de 500-2000 urnas (cache H)
 echo [K] CONCILIAR 5246 VOTOS: BWEB vs votos oficiais por UF (cache H)
 echo [L] IDENTIFICAR 5246 VOTOS: conferir NR_VOTAVEL=28 no BWEB original
@@ -224,13 +224,13 @@ goto done
 
 :sensitivity_bweb_2026
 echo.
-echo FASE 5D: SENSIBILIDADE DA PERIODICIDADE 2026, REUSA CSV POR MINUTO DA OPCAO H.
+echo FASE 5D: SENSIBILIDADE DA PERIODICIDADE 2026, REUSA CSV CORRIGIDO DA OPCAO M.
 echo NAO rele arquivos BU nem ZIP; NAO reindexa SQLite nem faz download.
 %PY% -m unittest discover -s tests -p "test_sensitivity_bweb_periodicity_2026.py" -q
 if errorlevel 1 goto validate_failed
-%PY% sensitivity_bweb_periodicity_2026.py
+%PY% sensitivity_bweb_periodicity_2026.py --corrigido
 if errorlevel 1 goto validate_failed
-echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5d_sensitivity_2026_summary.json
+echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5d_sensitivity_corrected_2026_summary.json
 goto done
 
 :per_second_2026

@@ -2,7 +2,7 @@
 
 **Data:** 27 de outubro de 2026. Somente primeiro turno presidencial de 2026.
 
-**Estado:** diagnóstico sobre arquivos já versionados executado; opção O implementada na branch main e validada em testes sintéticos. A conciliação de chaves dos BWEB reais do disco H: depende da execução local de O. Não foi feito novo download, nem aberto o SQLite de 221 GB.
+**Estado:** diagnóstico sobre arquivos já versionados executado; opção O implementada na branch main e validada em testes sintéticos. A conciliação de chaves BA/MG pela opção O foi executada com os dados reais; a ampliação nacional P ainda depende de execução local. Não foi feito novo download, nem aberto o SQLite de 221 GB.
 
 ## Comparações distintas: não somar nem equiparar indevidamente
 
@@ -88,3 +88,75 @@ https://github.com/rubentrancoso/TSE/actions/runs/40531866677
 ## Interpretação limitada
 
 O projeto identificou a divergência numérica e sua localização por município/nível de agregação. A causa final do contador nacional `st` 42 acima dos BWEB ainda não foi comprovada por referência de seção individual. Sem definições verificadas dos contadores e comparação de seus snapshots temporais, **não se deve dizer que encontramos 42 urnas faltando**. As somas dos votos presidenciais de 2026 corrigidos continuam iguais ao total oficial.
+
+
+## Execução real O — 27/10/2026
+
+A opção **O** foi executada pelo investigador em Windows sobre os
+caches reais BA/MG da fase H. O prologo com 1 chave em cada UF
+e EA16 com 2 principais corresponde a 4 testes em diretorios
+temporarios, e NAO a dados eleitorais.
+
+**Resultado real confirmado:**
+- BWEB: BA **35.476** chaves únicas, MG **52.062**;
+- EA16 SHA verificado: BA **35.476 principais + 2.474 agregadas**,
+  MG **52.062 principais + 2.131 agregadas**;
+- 11 municípios com diferença \`ts-st\` na fase EA20
+  (BA 3, MG 8), 11 zonas verificadas;
+- diferença contadores municipais: BA 6, MG 36 = **42**;
+- diferença entre \`ts-st\` zonais: **36**;
+- diferença entre \`st\` zonal e municipal: **6**, em
+  Joaíma/MG, zona 0149;
+- **ZERO diferenças de chave individual** entre EA16, os BWEB
+  e o subconjunto de EA18 preservado, nos 11 municípios
+  investigados. O campo \`candidate_bweb_key_difference_count=0\`
+  refere-se aos municípios investigados, NAO a uma auditoria
+  chave-a-chave completa das 27 UFs.
+- \`snapshot_nacional_st=499248\`, conjunto BWEB 499206;
+  \`BR.st - BWEB = 42\`;
+- votos presidenciais validos da fase M batem exatamente
+  nos 119.300.788, sem diferença.
+
+**Conclusão:** nas localidades analisadas, nenhuma seção
+EA16 principal foi encontrada sem BU correspondente;
+porém, os campos de contador \`st/ts\` divergentes não
+revelam, individualmente, quais chaves compõem sua diferença.
+A coincidência dos dois saldos nacionais 42 exige uma
+verificação separada, não se pode inferir urnas perdidas.
+
+## Próxima verificação implementada: opção P, Fase 5K
+
+\`certify_2026_all_section_keys.py\` amplia o cotejo do conjunto
+EA16 principal às **27 UFs nacionais** e cruza cada uma das
+chaves dos BWEB da opção H, incluindo o exterior ZZ somente
+na contagem BWEB (sem supor existência de EA16 do exterior).
+
+O programa:
+- valida os arquivos originais EA16 SHA, ancorados nos
+  hashes do relatório da fase 3A;
+- identifica exatamente chaves faltantes/inesperadas entre
+  EA16 principal e BWEB quando ambas fontes originais estão
+  disponíveis, preservando identificação UF/município/zona/seção;
+- se alguma UF não tiver EA16 original disponível localmente,
+  relata **cobertura parcial**; não substitui contagem por
+  certidão falsa de coincidência de chaves;
+- tenta ler os arquivos EA20 de UF já arquivados no snapshot
+  de \`data/forensics/runs/20261005T104314Z/live/uf\`,
+  identificando quantas UFs estão disponíveis, horários de
+  geração, hashes e diferenças de \`st/ts\` em relação aos
+  BWEB da mesma UF;
+- **somente se todas as 28 UFs/ZZ estiverem arquivadas**
+  mostra diferença \`BR.st - soma(UF.st)\`, distinguindo
+  diferença na agregação nacional e divergência nos
+  próprios contadores estaduais;
+- não abre ZIP, não acessa SQLite, não baixa arquivos e
+  não consulta dados de 2022.
+
+Saídas locais:
+\`phase5k_national_section_key_certificate_2026_summary.json\`,
+\`phase5k_all_uf_section_keys_2026.csv\` e
+\`phase5k_ea16_bweb_key_mismatches_2026.csv\`
+no mesmo diretório H: da investigação.
+
+**Estado:** O concluída empiricamente; P desenvolvida e
+validada com fixtures em CI, ainda sem execução real no H:.

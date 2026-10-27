@@ -5775,3 +5775,14 @@ https://github.com/rubentrancoso/TSE/actions/runs/40533912161
 (opção P ainda NÃO executada no disco H do investigador).
 
 Relatório detalhado: docs/FASE5J_CONCILIACAO_42_SECOES_2026.md.
+
+
+---
+
+## 2026-10-27 — E0117 — Fase P real: diferenca nacional de 42 esta integralmente em ZZ
+
+O investigador executou P no Windows: 27 UFs tiveram arquivos EA16 originais SHA-validados e ZERO diferencas entre as 497.897 chaves principais e os BWEB. O exterior ZZ possui 1.309 chaves BWEB, sem EA16 do exterior no inventario anterior, enquanto seu EA20.uf.st registra 1.351: **+42**. Nas 27 UFs, EA20.uf.st iguala BWEB em todas. Os 28 EA20 UF/ZZ somam 499.248, exatamente o nacional, com saldo nacional menos soma de UFs igual a 0. A diferenca de 42 entre 499.248 e 499.206 vem exclusivamente de ZZ, nao dos 11 contadores municipais antigos de BA e MG, cuja soma +42 era coincidencia entre metricas de escopos diferentes. Os 119.300.788 votos validos ja foram conciliados.
+
+Nova etapa Q: audit_zz_42_sections_2026.py. Analisa exclusivamente ZZ com os EA20 municipais e seus SHA no manifesto original, mais 1.309 BWEB do cache H. Localiza se o saldo de 42 esta nos municipios do exterior ou apenas no agregado estadual, lista as localidades e as datas, sem downloads/ZIP/SQLite. Q ainda nao executada empiricamente no H.
+
+Documento: docs/FASE5J_CONCILIACAO_42_SECOES_2026.md.

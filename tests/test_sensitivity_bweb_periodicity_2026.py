@@ -66,6 +66,32 @@ class Sensitivity2026Test(unittest.TestCase):
         self.assertEqual(out,second)
         self.assertTrue((self.base/"phase5d_sensitivity_2026_summary.json").is_file())
 
+
+    def test_corrected_mode_sha_and_national_totals(self):
+        import shutil
+        corrected=self.base/"phase5h_minute_corrected_2026.csv"
+        shutil.copyfile(self.series,corrected)
+        report={
+            "status":"VALIDOS_PRESIDENCIAIS_CORRIGIDOS",
+            "difference_valid_vs_official":0,
+            "distinct_minutes":80,
+            "initial_sections":80,
+            "corrected_totals":{"valid":80*30000},
+            "corrected_minutes_sha256":sha256(corrected)
+        }
+        (self.base/"phase5h_corrected_periodicity_2026_summary.json").write_text(
+            json.dumps(report),encoding="utf-8")
+        rows,_=mod.read_verified_series(self.base,corrected=True)
+        self.assertEqual(len(rows),80)
+        result=mod.run(self.root,permutations_count=100,corrected=True)
+        self.assertEqual(result["source_mode"],"CORRIGIDO_NR28")
+        self.assertEqual(result["parameter_grid"],6)
+        self.assertTrue((self.base/"phase5d_sensitivity_corrected_2026_summary.json").is_file())
+        with corrected.open("a",encoding="utf-8") as f:
+            f.write("tampered\\n")
+        with self.assertRaises(RuntimeError):
+            mod.read_verified_series(self.base,corrected=True)
+
     def test_not_enough_iterations(self):
         with self.assertRaises(ValueError):
             mod.run(self.root,permutations_count=99)

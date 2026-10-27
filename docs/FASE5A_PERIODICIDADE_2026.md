@@ -133,3 +133,18 @@ mesma rotina usando cada BU como unidade.
 
 Nao usar uma ordem geografica arbitraria
 para fingir ordem de transmissao.
+
+## Validacao de reproducibilidade
+
+O codigo `analyze_periodicity_2026.py` foi executado automaticamente
+com as 1.000 permutacoes completas na CI do GitHub, em **Windows e Linux**.
+Os dois sistemas geraram exatamente os mesmos resultados:
+140 lotes, 4 vales, periodo 2,51888031 min, R² 0,07781158,
+p(embaralhamento individual) 0,19680320,
+p(blocos de cinco) 0,25274725.
+Bateria de codigo: **142 testes aprovados por sistema**.
+https://github.com/rubentrancoso/TSE/actions/runs/40505029694
+
+Portanto esta nao e apenas uma proposta de teste: e uma
+**execucao nacional real em 2026, reproduzida em dois sistemas**.
+Ainda nao e equivalente a ordenar cada BU individual.

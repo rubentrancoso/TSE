@@ -204,3 +204,80 @@ O tratamento correto é investigar as duas diferenças
 A execucao real em Windows confirmou que TODAS as 27 UFs brasileiras possuem igualdade de chaves EA16 versus BWEB (497.897 secoes principais), com hashes dos 27 EA16 e 27 BWEB validados. Todas as 27 UFs tem EA20.st igual ao seu numero de BWEB. O exterior ZZ tem 1.309 secoes BWEB contra EA20.st de 1.351: excedente de exatamente 42 no contador estadual do exterior. Os 28 EA20 estaduais somam 499.248, iguais ao snapshot nacional, sem discrepancia de agregacao entre BR e soma UF. Portanto o saldo +42 de BR versus BWEB vem INTEIRAMENTE de ZZ, nao da BA ou de MG. O saldo 6+36 de municipios antigos em BA/MG era uma coincidencia numerica e nao a localizacao das 42 do exterior. Votos validos nacionais ja fecham nos 119.300.788 da fase M. O programa P nao tem EA16 do exterior para conferir chaves, e a causa funcional de st 1351 versus BWEB 1309 continua pendente.
 
 Foi criada a opcao Q (Fase 5L), audit_zz_42_sections_2026.py. Ela le somente received-ZZ.csv selado por SHA no cache H e os EA20 da UF ZZ e de suas localidades ja arquivados em data/forensics/runs/20261005T104314Z. Confere os SHA-256 com manifest.jsonl original, agrega por codigo de municipio do exterior, compara as somas municipais com o contador estadual e identifica as localidades com saldo positivo ou negativo. Informa cobertura parcial quando faltar JSON municipal ou manifesto. Nenhum download, ZIP ou SQLite. Saidas phase5l_zz_municipal_counter_breakdown_2026.csv e phase5l_zz_42_sections_2026_summary.json no H. Q aguarda execucao empirica local.
+
+
+## 27/10/2026 — Q executada no disco H: 41 localidades do exterior
+
+A opção Q, fase 5L, foi executada pelo investigador sobre
+os arquivos locais de 2026 e produziu
+`phase5l_zz_42_sections_2026_summary.json`.
+O prologo de testes com dois municípios fictícios Cidade A/B
+no `AppData/Local/Temp` e contadores EA20=5/BWEB=3
+é SINTÉTICO; os resultados reais começam após
+`Ran 5 tests ... OK`.
+
+**Conciliação real, com hashes do manifesto original:**
+- EA20 `ZZ.st=ZZ.ts=1.351`; BWEB exterior **1.309**,
+  diferença **+42**;
+- a soma de todos os **186** EA20 municipais de ZZ é
+  **1.351**, igual ao `ZZ.st`;
+- 186/186 JSONs EA20 municipais encontrados e SHA-validados;
+- 41 municípios/localidades têm `EA20.st > BWEB`,
+  e **nenhum** possui diferença negativa;
+- todos os 41 têm **zero** seções BWEB presidenciais;
+- **Sarajevo**: 2 seções EA20, zero BWEB;
+- outras **40 localidades**: 1 seção EA20 e zero BWEB;
+- soma das diferenças por localidade = **42**.
+
+Alguns exemplos do conjunto (contadores, não BU identificados):
+
+| Código | Localidade | EA20.st | Seções BWEB |
+|---|---|---:|---:|
+| 30988 | Sarajevo | 2 | 0 |
+| 29424 | Bridgetown | 1 | 0 |
+| 29831 | Islamabade | 1 | 0 |
+| 99171 | Bagdá | 1 | 0 |
+| 99295 | Pyongyang | 1 | 0 |
+| 99376 | Yangon | 1 | 0 |
+| 99384 | Castries | 1 | 0 |
+
+Os snapshots destas localidades têm horários heterogêneos,
+principalmente na noite de 04/10/2026 BRT. A simples
+existência de uma seção no contador `st` **não estabelece
+que houve eleitor votante, votos contabilizados ou BU
+gerado**. Até esta fase, o projeto não dispõe de uma
+lista EA16 do exterior selada por SHA que identifique
+seções individuais desses 41 locais.
+
+Conclusão da Q: o saldo nacional **+42 foi localizado
+por completo em 41 localidades do exterior**, sem
+diferença no agregado ZZ vs soma dos seus municípios.
+
+### Nova opção R — Fase 5M, existência de eleitores/votos
+
+Criada a rotina `audit_zz_42_voting_status_2026.py`,
+opção **R** do painel Windows, que reutiliza
+**exclusivamente os mesmos 186 EA20 municipais arquivados**,
+verifica sua assinatura SHA contra o manifesto original
+e confronta o relatório Q sem reler BWEB ZIPs.
+Extrai para os 41 locais os campos:
+- `e.te`: eleitorado apto;
+- `e.est`: eleitorado de seções totalizadas;
+- `e.c`: comparecimento;
+- `e.a`: abstenção;
+- `v.vv`: votos válidos;
+- `v.vb`: brancos;
+- `v.tvn`: nulos.
+
+Não imputa zero quando faltam campos. Se algum local tiver
+comparecimento ou votos positivos no EA20 mas não tiver
+seção BWEB, destaca como achado a investigar. Se os
+contadores estiverem zerados, isso é **compatível** com
+nenhuma votação registrada, mas não prova por si a
+regularidade de toda a cadeia. Não abre ZIP, não consulta
+SQLite, não baixa dados e não usa 2022.
+
+Relatórios ao executar R:
+`phase5m_zz_42_voting_status_by_locality_2026.csv`;
+`phase5m_zz_42_voting_status_2026_summary.json`.
+A opção R ainda não foi executada nos arquivos reais.

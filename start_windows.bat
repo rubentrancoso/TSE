@@ -40,10 +40,12 @@ echo [H] BU RECEBIDOS 2026: extrair DT_BU_RECEBIDO e testar vales por minuto
 echo [I] ROBUSTEZ DOS VALES 2026: variar filtros sem reler BU ou ZIP
 echo [J] BU POR SEGUNDO 2026: padrao em blocos de 500-2000 urnas (cache H)
 echo [K] CONCILIAR 5246 VOTOS: BWEB vs votos oficiais por UF (cache H)
+echo [L] IDENTIFICAR 5246 VOTOS: conferir NR_VOTAVEL=28 no BWEB original
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEFGHIJK0 /N /M "Selecione: "
-if errorlevel 21 exit /b 0
+choice /C 123456789ABCDEFGHIJKL0 /N /M "Selecione: "
+if errorlevel 22 exit /b 0
+if errorlevel 21 goto audit_candidate_28_2026
 if errorlevel 20 goto audit_bweb_uf_2026
 if errorlevel 19 goto per_second_2026
 if errorlevel 18 goto sensitivity_bweb_2026
@@ -250,6 +252,17 @@ if errorlevel 1 goto validate_failed
 %PY% audit_bweb_uf_totals_2026.py
 if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] analysis\periodicidade_bweb_2026\phase5f_reconciliation_2026_summary.json
+goto done
+
+:audit_candidate_28_2026
+echo.
+echo FASE 5G: ORIGEM DOS 5246 VOTOS RESIDUAIS NO BWEB 2026.
+echo Reusa os ZIPs BWEB ja existentes; confere SHA; NAO baixa nem abre SQLite.
+%PY% -m unittest discover -s tests -p "test_audit_bweb_candidate_28_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% audit_bweb_candidate_28_2026.py
+if errorlevel 1 goto validate_failed
+echo [CONCLUIDO] analysis\periodicidade_bweb_2026\phase5g_nr28_reconciliation_2026_summary.json
 goto done
 
 :validate_failed

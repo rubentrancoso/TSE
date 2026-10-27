@@ -39,10 +39,12 @@ echo [G] BU INDIVIDUAL 2026: conferir horarios EA16 e construir matriz por secao
 echo [H] BU RECEBIDOS 2026: extrair DT_BU_RECEBIDO e testar vales por minuto
 echo [I] ROBUSTEZ DOS VALES 2026: variar filtros sem reler BU ou ZIP
 echo [J] BU POR SEGUNDO 2026: padrao em blocos de 500-2000 urnas (cache H)
+echo [K] CONCILIAR 5246 VOTOS: BWEB vs votos oficiais por UF (cache H)
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEFGHIJ0 /N /M "Selecione: "
-if errorlevel 20 exit /b 0
+choice /C 123456789ABCDEFGHIJK0 /N /M "Selecione: "
+if errorlevel 21 exit /b 0
+if errorlevel 20 goto audit_bweb_uf_2026
 if errorlevel 19 goto per_second_2026
 if errorlevel 18 goto sensitivity_bweb_2026
 if errorlevel 17 goto bweb_received_periodicity_2026
@@ -236,6 +238,18 @@ if errorlevel 1 goto validate_failed
 %PY% analyze_bweb_seconds_2026.py
 if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5e_high_resolution_2026_summary.json
+goto done
+
+:audit_bweb_uf_2026
+echo.
+echo FASE 5F: RECONCILIACAO POR UF DOS VOTOS VALIDOS BWEB 2026.
+echo Usa apenas received-XX.csv no H: e a tabela UF por candidato do repositorio.
+echo Sem ZIP, download, SQLite ou dados 2022.
+%PY% -m unittest discover -s tests -p "test_audit_bweb_uf_totals_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% audit_bweb_uf_totals_2026.py
+if errorlevel 1 goto validate_failed
+echo [CONCLUIDO] analysis\periodicidade_bweb_2026\phase5f_reconciliation_2026_summary.json
 goto done
 
 :validate_failed

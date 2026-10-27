@@ -214,8 +214,11 @@ def run(root,repo=Path(".")):
         raise RuntimeError("Somatorios EA16 + ZZ e BWEB nao conciliados")
     if any(x["UF"] in {"BA","MG"} and x["EA16_bruto_status"]!="EA16_SHA_VALIDADO" for x in rows):
         raise RuntimeError("BA/MG tinham EA16 original verificado na Fase O e nao foram encontrados")
+    state=("PARCIAL_EA16_LOCAL" if missing_sources else
+           "DIVERGENCIA_CHAVES_EA16_BWEB" if anomalies else
+           "TODOS_EA16_CONFERIDOS_CHAVES_IGUAIS")
     result={"version":VERSION,
-        "status":"TODOS_EA16_CONFERIDOS" if not missing_sources else "PARCIAL_EA16_LOCAL",
+        "status":state,
         "scope":"Presidente turno 1 2026, chaves eleitorais; ZIP/SQLite nao lidos",
         "original_files_sha256":{"phase3_summary":sha256(source3),
                                  "phase2_summary":sha256(source2),

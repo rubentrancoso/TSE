@@ -35,10 +35,12 @@ echo [C] ROBUSTEZ SENADO 2026 (bootstrap de zonas, sem SQLite)
 echo [D] ZONAS QUE INFLUENCIAM OS 13 PARES (usa checkpoints C)
 echo [E] STRESS: EXCLUIR VARIAS ZONAS (usa checkpoints C)
 echo [F] PERIODICIDADE 2026: vales e permutacoes (sem baixar BU)
+echo [G] BU INDIVIDUAL 2026: conferir horarios EA16 e construir matriz por secao
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEF0 /N /M "Selecione: "
-if errorlevel 16 exit /b 0
+choice /C 123456789ABCDEFG0 /N /M "Selecione: "
+if errorlevel 17 exit /b 0
+if errorlevel 16 goto bu_unit_timing_2026
 if errorlevel 15 goto periodicity_2026
 if errorlevel 14 goto stress_2026
 if errorlevel 13 goto drivers_2026
@@ -178,6 +180,18 @@ if errorlevel 1 goto validate_failed
 %PY% analyze_periodicity_2026.py
 if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] data\forensics\analysis\phase5a_periodicity_2026_summary.json
+goto done
+
+:bu_unit_timing_2026
+echo.
+echo FASE 5B: BU INDIVIDUAL 2026, INTEGRIDADE EA16 E ORDEM REAL.
+echo Usa 256 particoes BU existentes; SHA e checkpoints, sem downloads ou SQLite.
+echo Se EA16 nao comprovar recepcao individual, reportara limite sem simular uma ordem.
+%PY% -m unittest discover -s tests -p "test_analyze_bu_individual_timing_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% analyze_bu_individual_timing_2026.py
+if errorlevel 1 goto validate_failed
+echo [CONCLUIDO] analysis\entre_cargos\...\periodicidade_bu_individual_2026\summary.json
 goto done
 
 :validate_failed

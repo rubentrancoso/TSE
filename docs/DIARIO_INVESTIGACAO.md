@@ -5576,3 +5576,52 @@ votos BWEB. Resultado empírico K pendente.
 
 Relatório principal:
 docs/FASE5C_BU_INDIVIDUAL_PERIODICIDADE_2026.md.
+
+
+---
+
+## 2026-10-27 — E0110 — Identificada a origem da diferenca de 5.246 votos na Fase K
+
+**Dados reais de 2026 — opcao K, executada localmente.**
+BWEB 499.206 secoes (27 UFs + ZZ); nenhum arquivo de 2022.
+Validos BWEB classificados por total menos branco e nulo
+119.306.034, contra 119.300.788 no total oficial.
+Diferenca +5.246 distribuidos por TODAS as 28 UFs.
+Lula (13) 53.879.538 e Flavio (22) 56.104.503:
+somatorios BWEB iguais ao oficial, por UF e nacional.
+
+**Identificacao por fontes independentes:**
+o numero presidencial **28, Leonardo Avalanche (PRTB)**,
+obteve exatamente **5.246 votos nos boletins BWEB** que
+nao figuram entre os votos validos oficiais. A candidatura
+foi objeto de renuncia e seus votos nao sao validos.
+Nulos convencionais BWEB 3.669.003 mais 5.246 nulos tecnicos
+resultam nos 3.674.249 nulos oficiais.
+Referencias:
+https://multiversodigital.com.br/eleicoes2026/index.php
+https://politica.one/eleicoes/2026/br/presidente
+https://urna360.com.br/eleicoes/2026/1-turno/presidente
+https://www1.folha.uol.com.br/poder/2026/10/leonardo-avalanche-desiste-de-candidatura-a-presidencia.shtml
+
+**Erro no extrator H:** tratava todos os votos diferentes
+de Branco ou Nulo como validos, ignorando numero 28
+cujos votos nominais entraram como nulos tecnicos.
+Assim, a explicacao aritmetica de +5.246 e concreta,
+mas ainda precisa de conferencia de proveniencia nos
+arquivos locais, UF por UF.
+
+**Fase L publicada:** audit_bweb_candidate_28_2026.py,
+e opcao L no start_windows.bat; valida SHA dos ZIPs originais
+de 2026, soma somente NR_VOTAVEL 28 do turno 1/cargo
+Presidente, cruza cada UF com as diferencas K e relata
+todo residuo. Nao baixa, nao usa SQLite nem dados 2022.
+171 testes de codigo passaram em Linux e Windows:
+https://github.com/rubentrancoso/TSE/actions/runs/40519088095.
+**Execucao com H: da opcao L ainda pendente**.
+
+**Ponto separado:** diferenca de -42 entre contagem BU
+e secoes totalizadas nacional ainda requer conciliar
+definicoes/escopos; nao e explicada automaticamente
+pelo caso do candidato 28.
+
+Relatorio: docs/FASE5G_IDENTIFICACAO_5246_VOTOS_2026.md.

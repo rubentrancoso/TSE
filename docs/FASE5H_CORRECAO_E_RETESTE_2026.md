@@ -195,3 +195,33 @@ tambem nao foram executados.
 
 Arquivo de saida local:
 `H:/TSE/forensics/urnas/analysis/periodicidade_bweb_2026/phase5h_corrected_periodicity_2026_summary.json`.
+
+
+## Sensibilidade da serie corrigida — opcao I atualizada
+
+Em 27/10/2026, o painel foi atualizado para que a opcao
+**I** execute a analise da grade de parametros **sobre os
+denominadores corrigidos da opcao M**, por meio do argumento
+`--corrigido` de `sensitivity_bweb_periodicity_2026.py`.
+
+A entrada usada agora e o arquivo derivado
+`phase5h_minute_corrected_2026.csv`, com o SHA-256
+registrado em `phase5h_corrected_periodicity_2026_summary.json`.
+Nao reabre qualquer ZIP, nao faz downloads e nao consulta SQLite.
+A grade varia limiares de volume (1000, 5000, 10000, 20000)
+e janela central de mediana (9, 15 e 21) em seis
+configuracoes predeterminadas, comparando proeminencias de
+4, 8 e 12 pontos percentuais.
+
+O novo relatorio sera
+`phase5d_sensitivity_corrected_2026_summary.json`
+no mesmo diretorio H: das outras fases. A funcao antiga
+sem `--corrigido` continua acessivel para reproducibilidade
+dos calculos anteriores, mas o menu I passa
+**explicitamente pela serie corrigida**.
+
+**A opcao I corrigida ainda nao foi executada com os dados reais.**
+Resultados dela nao devem ser afirmados antecipadamente.
+Cuidado adicional: os diversos parametros e periodos da
+grade sao multiplas comparacoes no MESMO conjunto eleitoral;
+selecionar o menor valor-p nao e teste confirmatorio.

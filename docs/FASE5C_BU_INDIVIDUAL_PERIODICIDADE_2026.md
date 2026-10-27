@@ -1,6 +1,6 @@
 # Fase 5C — periodicidade dos BU individuais, primeiro turno de 2026
 
-**Status em 27/10/2026:** software concluido e testado; execucao empirica dos ZIPs BWEB locais do H: ainda pendente. Nao usar microdados de 2022.
+**Status em 27/10/2026:** Fase 5C executada com 499.206 BU reais de 2026. Fases 5D e 5E publicadas, ainda sem execucao empirica no H:. Nao usar microdados de 2022.
 
 ## Problema estudado
 
@@ -99,6 +99,67 @@ Codigo executado em testes sinteticos no Windows e Linux:
 155 testes em cada sistema, todos aprovados:
 https://github.com/rubentrancoso/TSE/actions/runs/40508062650
 
-**A execucao nacional real da opcao H ainda NAO foi feita
-no disco H:; nenhum resultado de periodograma por BU
-recebido deve ser anunciado antes de ver o resumo local.**
+**A opcao H foi executada no disco H: em 27/10/2026.**
+
+## Execucao empirica real H: — 27/10/2026
+
+O investigador executou **opcao H** no Windows, e disponibilizou
+a saida integral da execucao. O teste de 3 testes e o teste
+de 5 testes, que aparecem no comeco da saida com arquivos
+C:\Users\PC\AppData\Local\Temp, sao fixtures SINTETICAS.
+O periodo de aproximadamente 7,11 minutos e p=0,009901
+foi INJETADO nesse teste pequeno e NAO corresponde ao
+resultado eleitoral real.
+
+**Resultado real, 28 origens (27 UFs + ZZ):**
+- 28 ZIPs BWEB locais identificados e SHA-256 validados;
+- 499.206 secoes presidenciais individuais extraidas e associadas
+  a DT_BU_RECEBIDO; zero horarios em branco;
+- 354 minutos de recebimento, 254 deles com >=10 mil
+  votos validos e submetidos ao teste;
+- apenas um vale local ultrapassou proeminencia de 8 pp:
+  21:31 BRT em 04/10, apos 496.190 secoes,
+  com 15.312 votos validos no respectivo minuto,
+  residuo = -4,43335 pp e proeminencia = 9,24395 pp;
+- pico de periodo = 14,208199 MINUTOS;
+  melhor R-quadrado senoidal = 0,03954052;
+- controle de 1000 permutacoes individuais: p = 0,3086913;
+- controle de 1000 permutacoes em blocos de 5: p = 0,4945055.
+
+**Leitura do resultado:** nesse recorte e com esses controles,
+nao foi detectada periodicidade extraordinaria.
+Isso NAO e veredito de regularidade de cada BU; em particular,
+os BUs empatados no mesmo minuto nao foram postos numa
+ordem artificial.
+
+**Conferencia de cobertura em aberto:** 499.206 BU
+presidenciais extraidos contra 499.248 secoes
+exibidas no ultimo snapshot presidencial nacional
+da fase 5A. Sao **42 chaves de diferenca**, que
+podem ter origem em escopo ou categoria de secao.
+Nao se conclui perda de votos a partir desse numero.
+O JSON da Fase 5C inclui diferencas de votos entre
+o conjunto BWEB e os totais nacionais, que devem
+ser examinadas antes de concluir abrangencia completa.
+
+**Interpretacao do campo coverage=0.0 na saida anterior:**
+trata-se de fraction_sections_in_UF_span_under_5min,
+isto e, proporcao de secoes em UFs cujos horarios
+ficam todos concentrados em menos de 5 minutos.
+O valor zero nao significa falta de cobertura de
+horarios; o campo com_hora confirma 499.206/499.206.
+
+**Proximos testes implementados:**
+- Opcao I, Fase 5D: sensibilidade a filtros de volume
+  e janela de suavizacao, usando a serie por MINUTO
+  previamente calculada. Nao relê ZIPs, SQLite ou BU.
+- Opcao J, Fase 5E: usa o campo original
+  DT_BU_RECEBIDO com SEGUNDOS, que ja foi
+  preservado nos shards received-XX.csv.
+  Agrega primeiro BUs de mesmo segundo (nao
+  inventa a ordem desses BUs) e forma blocos
+  consecutivos de 500, 1000 e 2000 secoes.
+  Mede vales, periodo em secao e minutos e
+  contrasta com permutacoes. Esta abordagem
+  esta mais proxima da escala do video.
+Os testes empiricos I e J NAO ocorreram ainda.

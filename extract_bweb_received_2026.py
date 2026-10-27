@@ -22,10 +22,12 @@ import zipfile
 from reconcile_stream import sha256
 from urnas import root_path
 
-VERSION="bweb-reception-per-section-2026-v1"
+VERSION="bweb-reception-per-section-2026-v2"
 UFs=tuple("AC AL AM AP BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SC SE SP TO ZZ".split())
 HEAD=("UF","municipio","zona","secao","turno","DT_BU_RECEBIDO",
-      "recebimento_minuto","arquivo_sha256")
+      "recebimento_minuto","arquivo_sha256",
+      "votos_pres_validos","votos_pres_total","votos_13","votos_22",
+      "brancos","nulos")
 
 
 def atomic_json(path,obj):
@@ -84,6 +86,7 @@ def discover_archive(root,uf):
 def extract_archive(path,uf,digest):
     """Streaming dentro do zip; retorna uma linha por BU presidencial."""
     timestamps={}
+    votes={}
     observed=Counter()
     with zipfile.ZipFile(path) as z:
         members=[x for x in z.namelist() if x.lower().endswith(".csv")]
@@ -96,7 +99,8 @@ def extract_archive(path,uf,digest):
             headers={str(k).strip().replace("ï»¿","").replace("\ufeff",""):k
                      for k in reader.fieldnames or []}
             required={"NR_TURNO","SG_UF","CD_MUNICIPIO","NR_ZONA","NR_SECAO",
-                      "DS_CARGO_PERGUNTA","DT_BU_RECEBIDO"}
+                      "DS_CARGO_PERGUNTA","DT_BU_RECEBIDO",
+                      "DS_TIPO_VOTAVEL","NR_VOTAVEL","QT_VOTOS"}
             if not required.issubset(headers):
                 raise RuntimeError("Sem campos BWEB obrigatorios: "+str(sorted(required-set(headers))))
             col=lambda row,k:row[headers[k]]
@@ -119,9 +123,31 @@ def extract_archive(path,uf,digest):
                     observed["repeated_rows"]+=1
                 else:
                     timestamps[ident]=(*ident,raw,normalized,digest)
+                    votes[ident]=Counter()
                     observed["unique_sections"]+=1
                     if not normalized:
                         observed["without_time"]+=1
+                amount=int(col(r,"QT_VOTOS"))
+                if amount<0:
+                    raise RuntimeError("Contagem negativa no BWEB")
+                t=col(r,"DS_TIPO_VOTAVEL").strip().casefold()
+                if t=="branco":
+                    label="branco"
+                elif t=="nulo":
+                    label="nulo"
+                else:
+                    label="n"+norm(col(r,"NR_VOTAVEL"))
+                votes[ident][label]+=amount
+    for ident,timestamp in list(timestamps.items()):
+        v=votes[ident]
+        total=sum(v.values())
+        blank=v["branco"]
+        null=v["nulo"]
+        valid=total-blank-null
+        l,f=v["n13"],v["n22"]
+        if valid<0 or l+f>valid:
+            raise RuntimeError("Contagens BU incoerentes "+repr(ident))
+        timestamps[ident]=(*timestamp,valid,total,l,f,blank,null)
     return timestamps,dict(observed)
 
 
@@ -157,8 +183,12 @@ def run(root):
                 info=previous
                 print(f"[BWEB {uf}] cache SHA OK, secoes={info['sections']:,}",flush=True)
             else:
-                raise RuntimeError("Checkpoint BWEB incoerente: "+str(state))
+                if previous.get("version")==VERSION:
+                    raise RuntimeError("Checkpoint BWEB incoerente: "+str(state))
+                info=None
         else:
+            info=None
+        if info is None:
             sections,observed=extract_archive(path,uf,digest)
             serialize(shard,sections)
             info={"version":VERSION,"UF":uf,"archive":str(path),

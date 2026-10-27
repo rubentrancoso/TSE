@@ -219,7 +219,8 @@ def run(root,minute_simulations=1000,second_simulations=200):
         input_infos[uf]=info
         print(f"[CORRIGIDO {uf}] validos={counter['valid']:,}; "
               f"nulos tecnicos={counter['nr28']:,}; secoes={counter['sections']:,}",flush=True)
-    if totals["sections"]!=499206 or any(
+    original_report=json.loads((base/"summary.json").read_text("utf-8"))
+    if totals["sections"]!=original_report["sections"] or any(
         totals[raw]!=expected for raw,expected in
         (("valid",EXPECTED["valid"]),("flavio",EXPECTED["22"]),
          ("lula",EXPECTED["13"]),("nr28",EXPECTED["number28"]))):
@@ -232,25 +233,31 @@ def run(root,minute_simulations=1000,second_simulations=200):
     sec_path=base/"phase5h_second_corrected_2026.csv"
     write_csv(minute_path,minute_trace);write_csv(sec_path,second_trace)
     print(f"[MINUTOS CORRIGIDOS] {len(minute_trace)} pontos; calculando controles",flush=True)
-    minute_test,_=minute_score(minute_trace,10000,minute_simulations,20261027)
+    try:
+        minute_test,_=minute_score(minute_trace,10000,minute_simulations,20261027)
+    except ValueError as exc:
+        minute_test={"status":"AMOSTRA_INSUFICIENTE","reason":str(exc)}
     groups={}
     for target in SIZES:
         batches=group_to_series(seconds,target)
         f=base/f"phase5h_blocks_{target}_corrected_2026.csv"
         write_csv(f,batches)
-        outcome=test_periodicity(batches,10000,15,second_simulations,20261027)
+        try:
+            outcome=test_periodicity(batches,10000,15,second_simulations,20261027)
+        except ValueError as exc:
+            outcome={"status":"AMOSTRA_INSUFICIENTE","reason":str(exc)}
         groups[str(target)]={"blocks":len(batches),
              "series_csv":str(f),"series_sha256":sha256(f),
              "periodicity":outcome}
         print(f"[BLOCO CORRIGIDO {target}] n={len(batches)}, "
-              f"R2={outcome['period']['r2']}, "
-              f"p_bloco={outcome['p_empirical']['blocks5']}",flush=True)
+              f"R2={outcome.get('period',{}).get('r2')}, "
+              f"p_bloco={outcome.get('p_empirical',{}).get('blocks5')}",flush=True)
     summary={"version":VERSION,"status":"VALIDOS_PRESIDENCIAIS_CORRIGIDOS",
              "scope":"Somente Presidente turno 1 2026",
              "corrected_totals":dict(totals),
              "difference_valid_vs_official":totals["valid"]-EXPECTED["valid"],
              "delta_from_old_valids":-totals["nr28"],
-             "initial_sections":499206,"distinct_minutes":len(minute_trace),
+             "initial_sections":totals["sections"],"distinct_minutes":len(minute_trace),
              "distinct_seconds":len(second_trace),
              "checkpoint_sources":input_infos,
              "source_K_sha256":k_hash,

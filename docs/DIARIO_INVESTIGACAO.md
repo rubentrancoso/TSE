@@ -5426,3 +5426,54 @@ https://github.com/rubentrancoso/TSE/actions/runs/40238571980
 
 **Execucao empirica da opcao E:** pendente em H:.
 Nenhuma importacao de dados eleitorais de 2022.
+
+
+---
+
+## 2026-10-27 — E0107 — Periodicidade por BU individual de 2026
+
+Prioridade do investigador: aplicar a tecnica de deteccao
+de vales/pulsos ao primeiro turno presidencial de 2026;
+NAO estudar microdados da eleicao do video.
+
+**Descoberta empirica da auditoria existente EA16:**
+497.897 secoes principais, 100% com da/ha, mas
+475.873 secoes (95,58%) agrupadas em 25 UFs cujos
+horarios de todas as secoes cabem em menos de 5 min.
+Esses campos NAO oferecem uma ordenacao individual
+autentica para o grafico.
+
+**Implementado sem refazer download ou SQLite:**
+- Opcao G: tabela BU presidencial por secao extraida
+  das 256 particoes BU SHA-validas + diagnostico de
+  confiabilidade temporal EA16. O periodograma de
+  ordem falsa permanece bloqueado.
+- Opcao H: extrair DT_BU_RECEBIDO dos arquivos BWEB
+  originais do primeiro turno de 2026 existentes em H:,
+  validando cada ZIP com SHA do manifesto original,
+  gerar uma linha de votos/recepcao por secao e
+  checkpoint retomavel por UF. Reconstroi curva
+  do total nacional por MINUTO de recebimento, mede
+  vales, procura periodicidade em tempo e numero
+  acumulado de secoes, e faz 1000 permutacoes
+  comparativas sobre residuos do voto por minuto.
+  Nao inventa ordem entre BUs com mesmo minuto.
+
+**Arquivos publicados na main:**
+analyze_bu_individual_timing_2026.py;
+extract_bweb_received_2026.py;
+analyze_bweb_receipt_periodicity_2026.py;
+tests/test_analyze_bu_individual_timing_2026.py;
+tests/test_extract_bweb_received_2026.py;
+tests/test_analyze_bweb_receipt_periodicity_2026.py;
+docs/FASE5C_BU_INDIVIDUAL_PERIODICIDADE_2026.md.
+
+**Validação software:** 155/155 testes aprovados em
+Ubuntu e Windows, GitHub Actions:
+https://github.com/rubentrancoso/TSE/actions/runs/40508062650
+
+**Execucao empirica H: opcao H ainda NAO executada
+neste ambiente.** O relatorio esperado e:
+H:/TSE/forensics/urnas/analysis/periodicidade_bweb_2026/phase5c_summary.json.
+Sem ele, NAO se conhece o valor-p de periodicidade
+nos BUs individuais de 2026.

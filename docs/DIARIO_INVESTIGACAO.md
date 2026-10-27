@@ -5786,3 +5786,34 @@ O investigador executou P no Windows: 27 UFs tiveram arquivos EA16 originais SHA
 Nova etapa Q: audit_zz_42_sections_2026.py. Analisa exclusivamente ZZ com os EA20 municipais e seus SHA no manifesto original, mais 1.309 BWEB do cache H. Localiza se o saldo de 42 esta nos municipios do exterior ou apenas no agregado estadual, lista as localidades e as datas, sem downloads/ZIP/SQLite. Q ainda nao executada empiricamente no H.
 
 Documento: docs/FASE5J_CONCILIACAO_42_SECOES_2026.md.
+
+
+---
+
+## 2026-10-27 — E0118 — Q real: +42 secoes de ZZ identificadas em 41 localidades
+
+Executada a opcao Q sobre os 186 JSON EA20 municipais do
+exterior ZZ da coleta original. Todos 186 SHA-256 conferidos
+com o manifesto, sem downloads. EA20 UF ZZ st/ts=1.351,
+soma dos municipios ZZ st/ts=1.351; BWEB presidencial ZZ
+tem 1.309 chaves. A diferenca +42 se distribui em 41
+municipios/localidades sem qualquer secao BWEB: Sarajevo
+tem 2 no EA20 e 0 BWEB; outros 40 tem 1 EA20 e zero BWEB.
+Nao ha diferença negativa nos 186 municipios. O agregado
+estadual ZZ confere precisamente com a soma municipal;
+logo o gap esta integralmente nas contagens municipais ZZ
+versus BWEB, e nao na agregacao estadual/nacional.
+Os testes antes da execucao nacional Q com Cidade A/B e
+contadores 5/3 sao sinteticos e nao fazem parte da evidencia.
+
+Esses campos de contador ainda nao esclarecem se houve
+comparecimento ou se havia eleitores aptos nas 41 localidades.
+Foi implementada a opcao R em
+audit_zz_42_voting_status_2026.py: le campos de eleitorado
+e votos dos mesmos 41 EA20 locais com SHA do manifesto,
+classifica comparecimento/votos positivos, zerados ou
+ausentes; gera CSV/JSON, sem ZIP, download, SQLite ou 2022.
+R ainda depende de execucao local, portanto nao afirmar
+se os 41 tiveram ou nao votos.
+
+Relatorio: docs/FASE5J_CONCILIACAO_42_SECOES_2026.md.

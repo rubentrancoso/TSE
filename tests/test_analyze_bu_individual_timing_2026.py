@@ -48,13 +48,14 @@ class BU2026TimingTest(unittest.TestCase):
         self.assertEqual(data[1]["nulos"],"1")
 
     def test_ea16_burst_blocked(self):
-        doc={"abr":[{"cd":"ac","mu":[{"cd":"1104","zon":[
-          {"cd":"5","sec":[
+        sec_rows=[
             {"ns":"1","da":"04/10/2026","ha":"21:08:15"},
             {"ns":"2","da":"04/10/2026","ha":"21:08:17"},
-            {"ns":"3","nsp":"1","da":"04/10/2026","ha":"21:08:18"}
-          ]}
-        ]}]}]}]}
+            {"ns":"3","nsp":"1","da":"04/10/2026","ha":"21:08:18"},
+        ]
+        zone={"cd":"5","sec":sec_rows}
+        municipality={"cd":"1104","zon":[zone]}
+        doc={"abr":[{"cd":"ac","mu":[municipality]}]}
         file=self.base/"ac-p003220-cs.json"
         file.write_text(json.dumps(doc),encoding="utf-8")
         expected={"sources":[{"uf":"AC","sha256":sha256(file)}]}

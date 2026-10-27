@@ -41,10 +41,12 @@ echo [I] ROBUSTEZ DOS VALES 2026: variar filtros sem reler BU ou ZIP
 echo [J] BU POR SEGUNDO 2026: padrao em blocos de 500-2000 urnas (cache H)
 echo [K] CONCILIAR 5246 VOTOS: BWEB vs votos oficiais por UF (cache H)
 echo [L] IDENTIFICAR 5246 VOTOS: conferir NR_VOTAVEL=28 no BWEB original
+echo [M] CORRIGIR VALIDADE E REFAZER PERIODICIDADE 2026 (usa H/K/L)
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEFGHIJKL0 /N /M "Selecione: "
-if errorlevel 22 exit /b 0
+choice /C 123456789ABCDEFGHIJKLM0 /N /M "Selecione: "
+if errorlevel 23 exit /b 0
+if errorlevel 22 goto correct_vote28_2026
 if errorlevel 21 goto audit_candidate_28_2026
 if errorlevel 20 goto audit_bweb_uf_2026
 if errorlevel 19 goto per_second_2026
@@ -263,6 +265,18 @@ if errorlevel 1 goto validate_failed
 %PY% audit_bweb_candidate_28_2026.py
 if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] analysis\periodicidade_bweb_2026\phase5g_nr28_reconciliation_2026_summary.json
+goto done
+
+:correct_vote28_2026
+echo.
+echo FASE 5H: CLASSIFICAR NUMERO 28 COMO ANULADO, CONFERIR TOTAIS E REFAZER VALES.
+echo Reusa BU da H, conciliacao K/L e ZIP BWEB local uma vez por UF com checkpoints.
+echo Sem download, sem SQLite, sem dados 2022; preserva as saidas anteriores.
+%PY% -m unittest discover -s tests -p "test_correct_bweb_28_periodicity_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% correct_bweb_28_periodicity_2026.py
+if errorlevel 1 goto validate_failed
+echo [CONCLUIDO] analysis\periodicidade_bweb_2026\phase5h_corrected_periodicity_2026_summary.json
 goto done
 
 :validate_failed

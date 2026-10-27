@@ -43,10 +43,12 @@ echo [K] CONCILIAR 5246 VOTOS: BWEB vs votos oficiais por UF (cache H)
 echo [L] IDENTIFICAR 5246 VOTOS: conferir NR_VOTAVEL=28 no BWEB original
 echo [M] CORRIGIR VALIDADE E REFAZER PERIODICIDADE 2026 (usa H/K/L)
 echo [N] TESTE GLOBAL: periodicidade 2026 com 6 filtros e ajuste conjunto
+echo [O] RECONCILIAR 42 SECOES: EA20/EA16 vs BWEB (sem baixar ou SQLite)
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEFGHIJKLMN0 /N /M "Selecione: "
-if errorlevel 24 exit /b 0
+choice /C 123456789ABCDEFGHIJKLMNO0 /N /M "Selecione: "
+if errorlevel 25 exit /b 0
+if errorlevel 24 goto reconcile_42_2026
 if errorlevel 23 goto joint_sensitivity_2026
 if errorlevel 22 goto correct_vote28_2026
 if errorlevel 21 goto audit_candidate_28_2026
@@ -291,6 +293,18 @@ if errorlevel 1 goto validate_failed
 %PY% joint_sensitivity_periodicity_2026.py
 if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] analysis\periodicidade_bweb_2026\phase5i_joint_periodicity_2026_summary.json
+goto done
+
+:reconcile_42_2026
+echo.
+echo FASE 5J: COMPARAR 42 SECOES NOS CONTADORES EA20 E BU INDIVIDUAIS 2026.
+echo Usa BA/MG dos CSVs BWEB da H e relatórios EA16/EA20 ja preservados.
+echo Nao baixa nada, nao consulta SQLite nem reprocessa ZIP.
+%PY% -m unittest discover -s tests -p "test_reconcile_42_section_counters_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% reconcile_42_section_counters_2026.py
+if errorlevel 1 goto validate_failed
+echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5j_42_section_counter_reconciliation_2026_summary.json
 goto done
 
 :validate_failed

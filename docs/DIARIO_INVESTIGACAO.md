@@ -5518,3 +5518,61 @@ segundo NAO possuem ordem observada internamente.
 **Estado empirico:** H concluido; I/J ainda nao executados.
 Metodo e numeros:
 docs/FASE5C_BU_INDIVIDUAL_PERIODICIDADE_2026.md.
+
+
+---
+
+## 2026-10-27 — E0109 — J (segundos) executado e teste de reconciliação K
+
+**Fonte:** saída real do terminal Windows, primeiro turno de 2026.
+A fixture anterior no Temp (120 BUs, 60 segundos) é sintética
+e não integra a estatística nacional.
+
+**Execução real:** 499.206 seções presidenciais, 9.039 segundos
+distintos de DT_BU_RECEBIDO; precisão explícita de segundos
+em 100% dos BUs. As 3 escalas de reagrupamento deram:
+
+| Alvo de seções | Blocos | Melhor período (seções) | R² | p individual | p blocos de 5 |
+|---|---:|---:|---:|---:|---:|
+| 500 | 893 | 4.829,436671 | 0,01776219 | 0,039801 | 0,2089552 |
+| 1000 | 470 | 4.829,436671 | 0,01976418 | 0,6368159 | 0,8706468 |
+| 2000 | 243 | 35.103,147196 | 0,04767183 | 0,159204 | 0,6069652 |
+
+Não foram detectados vales de proeminência ≥8 pp no
+resíduo das três escalas; os p-valores vêm de apenas
+200 simulações por nulo. Há aparente pico comum em
+~4.829 seções, mas a escala 500 não confirma
+sob blocos e a escala 2.000 aponta outro período.
+Também há busca sobre 144 períodos e múltiplas escalas.
+Trata-se de observação DESCRITIVA, não evidência de fraude.
+
+**Reconciliação agregada:**
+BU presidente 13 = 53.879.538, igual ao último snapshot;
+BU presidente 22 = 56.104.503, igual ao último snapshot.
+BU válidos = 119.306.034; snapshot = 119.300.788:
+excesso BWEB +5.246, inteiramente na diferença
+matemática da categoria residual demais candidatos.
+BWEB 499.206 seções vs último snapshot 499.248:
+-42 seções de escopo ainda não esclarecido.
+Duas diferenças numericamente distintas. Não inferir
+transferência de votos nem fraude apenas desse registro.
+
+**Referência UF ↔ município já versionada:**
+data/forensics/analysis/uf_candidate_reconciliation.csv
+tem 18 linhas com diferenças entre UF e soma municipal,
+nas UFs BA (1.244 votos) e MG (7.908 votos).
+A fase 2 documenta BA 6 e MG 36 seções de diferença
+estado vs soma municipal. Ainda não há chave que
+prove serem as mesmas 42 da discrepância com a
+contagem nacional.
+
+**Implementação adicional:** audit_bweb_uf_totals_2026.py,
+opção K, cruza o cache received-UF.csv da H com as
+336 linhas por candidato/UF da fonte nacional,
+sem ZIP, SQLite, rede ou material de 2022.
+Separa diferença de votos 13, 22 e outros por UF;
+não presume que diferença UF↔município seja erro de
+votos BWEB. Resultado empírico K pendente.
+
+Relatório principal:
+docs/FASE5C_BU_INDIVIDUAL_PERIODICIDADE_2026.md.

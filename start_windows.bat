@@ -38,10 +38,12 @@ echo [F] PERIODICIDADE 2026: vales e permutacoes (sem baixar BU)
 echo [G] BU INDIVIDUAL 2026: conferir horarios EA16 e construir matriz por secao
 echo [H] BU RECEBIDOS 2026: extrair DT_BU_RECEBIDO e testar vales por minuto
 echo [I] ROBUSTEZ DOS VALES 2026: variar filtros sem reler BU ou ZIP
+echo [J] BU POR SEGUNDO 2026: padrao em blocos de 500-2000 urnas (cache H)
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEFGHI0 /N /M "Selecione: "
-if errorlevel 19 exit /b 0
+choice /C 123456789ABCDEFGHIJ0 /N /M "Selecione: "
+if errorlevel 20 exit /b 0
+if errorlevel 19 goto per_second_2026
 if errorlevel 18 goto sensitivity_bweb_2026
 if errorlevel 17 goto bweb_received_periodicity_2026
 if errorlevel 16 goto bu_unit_timing_2026
@@ -223,6 +225,17 @@ if errorlevel 1 goto validate_failed
 %PY% sensitivity_bweb_periodicity_2026.py
 if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5d_sensitivity_2026_summary.json
+goto done
+
+:per_second_2026
+echo.
+echo FASE 5E: PADROES POR SEGUNDOS REAIS E BLOCOS 500-2000 BU.
+echo REUSA SOMENTE received-XX.csv do H:, sem abrir ZIP/BU ou SQLite.
+%PY% -m unittest discover -s tests -p "test_analyze_bweb_seconds_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% analyze_bweb_seconds_2026.py
+if errorlevel 1 goto validate_failed
+echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5e_high_resolution_2026_summary.json
 goto done
 
 :validate_failed

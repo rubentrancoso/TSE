@@ -69,7 +69,8 @@ class BWEBPeriodicity2026Test(unittest.TestCase):
         self.assertIn("periodicity",result)
 
     def test_noncredible_uf_burst_blocks_claim(self):
-        dataset=list(csv.reader(self.path.open(encoding="utf-8"),delimiter=";"))
+        with self.path.open(encoding="utf-8",newline="") as f:
+            dataset=list(csv.reader(f,delimiter=";"))
         for i,row in enumerate(dataset[1:],1):
             row[6]="2026-10-04 17:01" if i<=30 else "2026-10-04 17:02"
         with self.path.open("w",encoding="utf-8",newline="") as f:

@@ -42,10 +42,12 @@ echo [J] BU POR SEGUNDO 2026: padrao em blocos de 500-2000 urnas (cache H)
 echo [K] CONCILIAR 5246 VOTOS: BWEB vs votos oficiais por UF (cache H)
 echo [L] IDENTIFICAR 5246 VOTOS: conferir NR_VOTAVEL=28 no BWEB original
 echo [M] CORRIGIR VALIDADE E REFAZER PERIODICIDADE 2026 (usa H/K/L)
+echo [N] TESTE GLOBAL: periodicidade 2026 com 6 filtros e ajuste conjunto
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEFGHIJKLM0 /N /M "Selecione: "
-if errorlevel 23 exit /b 0
+choice /C 123456789ABCDEFGHIJKLMN0 /N /M "Selecione: "
+if errorlevel 24 exit /b 0
+if errorlevel 23 goto joint_sensitivity_2026
 if errorlevel 22 goto correct_vote28_2026
 if errorlevel 21 goto audit_candidate_28_2026
 if errorlevel 20 goto audit_bweb_uf_2026
@@ -277,6 +279,18 @@ if errorlevel 1 goto validate_failed
 %PY% correct_bweb_28_periodicity_2026.py
 if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] analysis\periodicidade_bweb_2026\phase5h_corrected_periodicity_2026_summary.json
+goto done
+
+:joint_sensitivity_2026
+echo.
+echo FASE 5I: TESTE GLOBAL DA GRADE DE PERIODICIDADE NO 2026 CORRIGIDO.
+echo Usa so phase5h_minute_corrected_2026.csv; sem ZIP, download, SQLite ou 2022.
+echo Calibra estatistica maxima por 6 configuracoes e 144 frequencias cada.
+%PY% -m unittest discover -s tests -p "test_joint_sensitivity_periodicity_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% joint_sensitivity_periodicity_2026.py
+if errorlevel 1 goto validate_failed
+echo [CONCLUIDO] analysis\periodicidade_bweb_2026\phase5i_joint_periodicity_2026_summary.json
 goto done
 
 :validate_failed

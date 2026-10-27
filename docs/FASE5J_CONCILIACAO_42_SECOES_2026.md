@@ -281,3 +281,5 @@ Relatórios ao executar R:
 `phase5m_zz_42_voting_status_by_locality_2026.csv`;
 `phase5m_zz_42_voting_status_2026_summary.json`.
 A opção R ainda não foi executada nos arquivos reais.
+
+**Validação da opção R:** 199 testes em Windows e 199 em Linux, todos aprovados na GitHub Actions 40539620283 (fixtures sintéticas, não execução real sobre H:): https://github.com/rubentrancoso/TSE/actions/runs/40539620283.

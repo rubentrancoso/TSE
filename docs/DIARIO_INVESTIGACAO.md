@@ -6288,3 +6288,37 @@ portanto nao usado como igualdade de universos.
 e notebook foram publicados no GitHub; Fase Y ainda nao foi
 executada empiricamente no disco H do investigador.
 Nenhuma incompatibilidade temporal foi alegada antes da medicao.
+
+
+---
+
+## 2026-10-28 — E0127 — Corrigido bloqueio indevido da opção U/Jupyter
+
+Investigador executou U apos `git pull`; o menu interrompeu a abertura
+antes de iniciar o Jupyter porque dois testes estaticos antigos
+falharam: (1) `test_launcher_and_batch_menu` procurava a descricao
+antiga literal `[U] LABORATORIO FORENSE JUPYTER`, embora o menu
+tivesse sido atualizado para `[U] LABORATORIO JUPYTER`;
+(2) `test_notebook_json_and_cells` exigia
+`execution_count=None` e `outputs=[]`, apesar de o investigador
+ter executado e salvo o notebook normalmente no Jupyter.
+
+**Esses erros eram falhas do teste, nao inconsistencias eleitorais.**
+
+Corrigido `tests/test_forensic_notebook_2026.py`:
+- valida que o notebook pode ter contagens de execução e saidas salvas;
+- adiciona regressao sintetica de notebook previamente executado;
+- verifica o rótulo de U por expressão regular e sua posicao no
+  `choice` / `goto`, sem acoplar o teste a uma frase decorativa.
+
+Corrigidos tambem os testes dos notebooks V/W/X/Y para aceitar
+outputs de graficos e celulas executadas. Finalmente, **retirado
+o teste de preflight da rotina U no BAT**: um editor Jupyter deve
+abrir mesmo quando o usuario modifica e salva notebooks; os
+testes das rotinas V/W/X/Y continuam nas suas respectivas opcoes.
+O launcher U continua verificando a presenca dos arquivos H
+e os notebooks continuam verificando SHA-256 no momento de leitura.
+
+Nao foram alteradas fontes BWEB/EA20, dados de votos ou resultados
+estatisticos. O ajuste foi publicado no GitHub; a reexecucao de U
+no Windows ainda precisa ser confirmada pelo investigador.

@@ -53,10 +53,12 @@ echo [U] LABORATORIO JUPYTER: abre automaticamente a ultima fase executada
 echo [V] ZONAS TARDIAS: comparar municipio vs zona pre-20:04 sem vazamento
 echo [W] CORTES PLACEBO: comparar votos na mesma zona em horarios diferentes
 echo [X] PUBLICACAO EA20: curva linear vs volumes fisicos e lotes reais
+echo [Y] RECEBIMENTO x PUBLICACAO: comparar BWEB por segundo vs EA20
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEFGHIJKLMNOPQRSTUVWX0 /N /M "Selecione: "
-if errorlevel 34 exit /b 0
+choice /C 123456789ABCDEFGHIJKLMNOPQRSTUVWXY0 /N /M "Selecione: "
+if errorlevel 35 exit /b 0
+if errorlevel 34 goto receipt_publication_timing_2026
 if errorlevel 33 goto ea20_publication_mechanics_2026
 if errorlevel 32 goto temporal_placebos_2026
 if errorlevel 31 goto within_zone_holdout_2026
@@ -427,9 +429,23 @@ if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5s_ea20_publication_mechanics_2026_summary.json
 goto done
 
+:receipt_publication_timing_2026
+echo.
+echo FASE 5T: RECEBIMENTO BWEB VERSUS PUBLICACAO EA20 NO TEMPO.
+echo Condicao NECESSARIA se relogios e universo de votos coincidirem:
+echo votos publicados no EA20 nao excedem os ja recebidos BWEB ate t.
+echo Testa validos, Lula e Flavio, por segundos e offsets FIXADOS no codigo.
+echo Sem casar urna a lote; sem ZIP, download, SQLite ou segundo turno.
+%PY% -m unittest discover -s tests -p "test_receipt_publication_timing_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% audit_receipt_publication_timing_2026.py
+if errorlevel 1 goto validate_failed
+echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5t_receipt_vs_publication_2026_summary.json
+goto done
+
 :forensic_notebook_2026
 echo.
-echo LABORATORIO JUPYTER 2026 - REUSA S/T, V, W OU X, A MAIS RECENTE.
+echo LABORATORIO JUPYTER 2026 - ABRE FASE Y APOS EXECUCAO (OU ANTERIOR).
 echo Valida presenca dos CSV/JSON em H:; confere SHA no notebook.
 echo Primeiro uso instala somente dependencias Python em ambiente isolado.
 echo Nao baixa BWEB, nao abre ZIP, SQLite ou dados de outro turno.

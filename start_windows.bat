@@ -49,10 +49,12 @@ echo [Q] EXTERIOR ZZ: localizar +42 secoes por municipio EA20/BWEB
 echo [R] EXTERIOR ZZ: conferir comparecimento e votos nas 42 secoes
 echo [S] CURVA FORENSE 2026: tempo real, BU recebidos, geografia UF/municipio
 echo [T] FORA DA AMOSTRA: pre-20:04 prevendo BU recebidos apos 20:04
+echo [U] LABORATORIO FORENSE JUPYTER: curvas S/T, graficos, municipios
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEFGHIJKLMNOPQRST0 /N /M "Selecione: "
-if errorlevel 30 exit /b 0
+choice /C 123456789ABCDEFGHIJKLMNOPQRSTU0 /N /M "Selecione: "
+if errorlevel 31 exit /b 0
+if errorlevel 30 goto forensic_notebook_2026
 if errorlevel 29 goto geographic_holdout_2026
 if errorlevel 28 goto operational_curve_2026
 if errorlevel 27 goto audit_zz_42_votes_2026
@@ -377,6 +379,16 @@ if errorlevel 1 goto validate_failed
 %PY% audit_geographic_holdout_curve_2026.py
 if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5p_holdout_geographic_curve_2026_summary.json
+goto done
+
+:forensic_notebook_2026
+echo.
+echo LABORATORIO JUPYTER 2026 - REUSA RESULTADOS DAS OPCOES S E T.
+echo Valida presenca dos CSV/JSON em H:; confere SHA no notebook.
+echo Primeiro uso instala somente dependencias Python em ambiente isolado.
+echo Nao baixa BWEB, nao abre ZIP, SQLite ou dados de outro turno.
+%PY% launch_forensic_notebook.py
+if errorlevel 1 goto validate_failed
 goto done
 
 :validate_failed

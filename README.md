@@ -49,9 +49,13 @@ visualizações com legendas explicativas:
 1. curva nacional acumulada EA20 versus controle retrospectivo;
 2. composição real dos quatro grupos de lotes publicados;
 3. diferenças de BUs recebidos dentro de zonas em múltiplos horários;
-4. localização dos erros de previsão por município/zona;
-5. recebimento BWEB por segundo versus publicação EA20 (fase Y, se disponível).
+4. **mapa do Brasil por UF**: percentual de votos da própria UF recebidos depois de 20h04 (fase T);
+5. **mapa do Brasil por UF**: mudança de composição de Lula dentro das zonas comparáveis (fase W);
+6. **comparativo das cinco regiões** Norte, Nordeste, Centro-Oeste, Sudeste e Sul, ponderado pelos votos tardios (fase W);
+7. localização dos erros de previsão por município/zona;
+8. recebimento BWEB por segundo versus publicação EA20 (fase Y, se disponível).
 
+A malha territorial offline das 27 UFs vem de GeoJSON simplificado derivado do IBGE (CC0), versionado em `data/geografia/`; ZZ (exterior) fica fora do mapa. As cores indicam métricas descritivas, jamais ocorrência de fraude.
 Os CSVs usados são conferidos por SHA-256 antes de gerar imagens.
 Se a fase Y ainda não tiver sido executada, o painel identifica o
 teste como **pendente**; não cria dados ilustrativos fingindo ser reais.

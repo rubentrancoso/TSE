@@ -387,6 +387,8 @@ echo LABORATORIO JUPYTER 2026 - REUSA RESULTADOS DAS OPCOES S E T.
 echo Valida presenca dos CSV/JSON em H:; confere SHA no notebook.
 echo Primeiro uso instala somente dependencias Python em ambiente isolado.
 echo Nao baixa BWEB, nao abre ZIP, SQLite ou dados de outro turno.
+%PY% -m unittest discover -s tests -p "test_forensic_notebook_2026.py" -q
+if errorlevel 1 goto validate_failed
 %PY% launch_forensic_notebook.py
 if errorlevel 1 goto validate_failed
 goto done

@@ -5887,3 +5887,60 @@ manual zerada. A reconciliação quantitativa
 42 seções de diferença, zero comparecimentos/votos no EA20,
 e 119.300.788 votos válidos BWEB corrigidos = oficial
 permanece inteiramente fechada.
+
+
+---
+
+## 2026-10-28 — E0120 — Revisao forense da curva: erro de escala X encontrado e corrigido
+
+Por solicitacao do investigador, a analise foi
+reorientada de testes estatisticos abstratos para
+compatibilidade fisica/operacional da curva nacional,
+origem territorial e cadeia de publicação.
+
+**Falha concreta no proprio painel:** em index.html,
+modo "Eixo: horario", o script usava o INDICE do
+snapshot como abscissa (`xm==="pst"?+x.pst:i`).
+Assim, intervalos irregulares em segundos/minutos
+apareciam igualmente espacados, alterando a
+aparencia da inclinação e suavidade da curva.
+Corrigido para usar DT/HT reais, com mudanca
+de dia tratada e modo opcional por indice
+rotulado explicitamente como tal.
+Teste de regressao:
+`tests/test_chart_time_axis.js` em CI Windows/Linux,
+https://github.com/rubentrancoso/TSE/actions/runs/40746723500.
+
+Fatos existentes revisitados (nao novas simulacoes):
+Fase 4F documentou que apos 20:04:39 houve 152
+atualizacoes consecutivas sem queda na participacao
+cumulativa de Lula nem alta de Flavio; a alegacao
+de passo exato +0,01/-0,01 e 15 segundos fixos
+nao corresponde aos timestamps e deltas oficiais.
+Fase 4G reconstituiu pelas contagens inteiras
+152 altas estritas de Lula e 152 baixas estritas
+de Flavio; o mesmo sentido ocorreria em QUALQUER
+permutacao do conjunto de 152 lotes observados,
+cujo saldo foi 18.809.656 validos com 54,09%
+para Lula e 39,34% para Flavio. A causa operativa
+da composicao da cauda e sua LISURA permanece
+questao distinta de demonstrar monotonicidade.
+
+**Nao confundir monotonicidade com linearidade.**
+A proxima investigacao deve partir de curvas
+EA20 no horario real, BWEB por DT_BU_RECEBIDO
+e modelo territorial por UF/municipio/zona,
+com somas conciliadas e controles de escalas,
+lotes e tempo de publicacao. Nao comparar curvas
+dos EUA em escalas diferentes, nao admitir
+ordem arbitraria para BUs com mesmo timestamp.
+Nao presumir fraude nem regularidade.
+
+O script exploratorio de triplas do primeiro
+turno, criado prematuramente a partir de um
+comentario que se referia ao segundo turno,
+foi retirado da branch main e nao sera usado
+como nova frente de trabalho nesta fase.
+
+Documento normativo de investigacao:
+docs/PROTOCOLO_FORENSE_CURVA_TEMPORAL_2026.md.

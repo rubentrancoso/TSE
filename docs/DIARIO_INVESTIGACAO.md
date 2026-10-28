@@ -5944,3 +5944,50 @@ como nova frente de trabalho nesta fase.
 
 Documento normativo de investigacao:
 docs/PROTOCOLO_FORENSE_CURVA_TEMPORAL_2026.md.
+
+
+---
+
+## 2026-10-28 — E0121 — Nova frente S: medir linearidade física e decompor trajetória
+
+A partir do pedido do investigador para abandonar a
+abordagem de suspeitas isoladas, foi implementada a
+Fase **5O** (`analyze_operational_curve_2026.py`,
+opção S). Ela é dedicada ao comportamento operacional
+do primeiro turno: snapshots EA20 no horário real,
+versus BWEB por DT_BU_RECEBIDO (séries distintas),
+com decomposição contrafactual por UF e município.
+Usa exclusivamente os dados H/M existentes e
+a série nacional versionada; não baixa arquivos
+nem reabre ZIP/SQLite.
+
+**Medição já executada diretamente sobre os 193
+snapshots EA20 do repositório**: após
+04/10/2026 20:04:39 BRT há 153 pontos/152
+transições. O R² descritivo de uma reta para a
+participação acumulada de Lula varia muito com
+o eixo X: **0,61017 por horário real** (RMSE
+0,29103 pp); **0,84211 por índice das versões**
+(RMSE 0,18522 pp); **0,99044 por seções
+totalizadas** (RMSE 0,04556 pp). O fato de
+`R²=0,99044` no eixo de seções constitui
+achado concreto que exige teste mecanístico,
+não licença para proclamar fraude ou descartar
+o fenômeno por um p-valor genérico.
+
+O código novo reconcilia votos válidos e NR28,
+valida SHA dos BU por UF e os incrementos da
+minutagem M. Cria contrafactuais no qual cada
+lote por minuto recebe a proporção final
+(da mesma eleição) de sua UF ou município,
+preservando volume observado e localização.
+Esse é um CONTROLE in-sample, não previsão
+causal independente da totalização. Há
+também medição de linearidade BWEB em eixo
+de tempo e número de seções, para comparar
+formas sem equiparar os instantes EA20/BWEB.
+
+**Execução real sobre H ainda pendente**;
+resultados geográficos não foram inventados.
+Protocolo e métricas em
+docs/PROTOCOLO_FORENSE_CURVA_TEMPORAL_2026.md.

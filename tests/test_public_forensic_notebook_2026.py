@@ -19,7 +19,8 @@ class ForensicPublicNotebookTests(unittest.TestCase):
         self.assertIn("primeiro turno",body.lower())
         self.assertIn("alteração",body.lower())
         self.assertIn("não",body.lower())
-        for phase in ("phase5q_zone_holdout_2026_summary.json",
+        for phase in ("phase5p_holdout_geographic_curve_2026_summary.json",
+                      "phase5q_zone_holdout_2026_summary.json",
                       "phase5r_cutoff_placebos_2026_summary.json",
                       "phase5s_ea20_publication_mechanics_2026_summary.json",
                       "phase5t_receipt_vs_publication_2026_summary.json"):
@@ -29,6 +30,13 @@ class ForensicPublicNotebookTests(unittest.TestCase):
         self.assertIn("digest(actual_ea20)",body)
         self.assertIn("relatorio_publico_forense_2026.html",body)
         self.assertIn("base64.b64encode",body)
+        for graph in ("06_mapa_brasil_recebimento_tardio",
+                      "07_mapa_brasil_mudanca_intrazona",
+                      "08_regioes_brasil_mudanca_intrazona"):
+            self.assertIn(graph,body)
+        self.assertIn("GEO_PATH",body)
+        self.assertIn("REGIONS",body)
+        self.assertIn("len({uf for members in REGIONS.values()",body)
         for c in nb["cells"]:
             if c["cell_type"]=="code":
                 compile("".join(c["source"]),"<public-forensic-notebook>","exec")
@@ -38,6 +46,22 @@ class ForensicPublicNotebookTests(unittest.TestCase):
                 self.assertIsInstance(c.get("outputs",[]),list)
         for forbidden in ("requests.get(","urlopen(","subprocess.run("):
             self.assertNotIn(forbidden,body)
+
+    def test_brazil_uf_geojson_contains_all_states_and_df(self):
+        path=ROOT/"data"/"geografia"/"brasil_ufs_ibge_simplificado.geojson"
+        geo=json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(geo["type"],"FeatureCollection")
+        features=geo["features"]
+        self.assertEqual(len(features),27)
+        got={r["properties"]["sigla"] for r in features}
+        expected=set("AC AL AM AP BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SC SE SP TO".split())
+        self.assertEqual(got,expected)
+        self.assertTrue(all(r["geometry"]["type"] in ("Polygon","MultiPolygon")
+                            for r in features))
+        source=(ROOT/"data"/"geografia"/"README.md").read_text(encoding="utf-8")
+        self.assertIn("CC0",source)
+        self.assertIn("IBGE",source)
+        self.assertIn("ZZ",source)
 
     def test_public_dashboard_is_default_and_technical_remains_accessible(self):
         launcher=(ROOT/"launch_forensic_notebook.py").read_text(encoding="utf-8")

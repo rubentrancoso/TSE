@@ -64,7 +64,7 @@ class ForensicNotebook2026Tests(unittest.TestCase):
         batch = (ROOT / "start_windows.bat").read_text(encoding="utf-8")
         self.assertRegex(batch, r"(?m)^echo \[U\] LABORATORIO\b")
         self.assertIn("launch_forensic_notebook.py", batch)
-        u_command = batch.split(":forensic_notebook_2026\\n", 1)[1].split("\\n:validate_failed", 1)[0]
+        u_command = batch.split(":forensic_notebook_2026\n", 1)[1].split("\n:validate_failed", 1)[0]
         self.assertIn("%PY% launch_forensic_notebook.py", u_command)
         self.assertNotIn("unittest", u_command)
         self.assertIn("if errorlevel 30 goto forensic_notebook_2026", batch)

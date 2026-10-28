@@ -34,6 +34,24 @@ ambiente Python isolado e instala automaticamente as dependencias de
 visualizacao JupyterLab/pandas/matplotlib no primeiro uso (requer internet
 apenas nessa instalacao; nao baixa nenhum dado eleitoral).
 
+### Nova Fase 5Q — analise de zonas tardias (opcao V)
+
+Apos rodar a opcao T, execute **V** no `start_windows.bat`.
+A rotina `analyze_within_zone_holdout_2026.py` verifica SHA de H/M,
+reconstitui dados de 499.206 secoes somente do primeiro turno e testa
+se o desvio de previsao municipal de BUs recebidos apos 20:04:39
+desaparece quando e usado o perfil **pre-corte por zona**.
+Separa municipios e zonas sem treino pre-corte de zonas com
+secoes anteriores; produz CSV/JSON e documentacao em
+`docs/FASE5Q_ZONAS_TARDIAS_2026.md`.
+Nao faz downloads, nao reabre ZIP, nao usa SQLite nem segundo turno.
+
+Depois da V, escolha **U**. O mesmo lancador abre automaticamente
+`notebooks/TSE_2026_Laboratorio_Forense_Fase_V.ipynb`,
+com graficos dos erros por lote, distribuicao por UF e comparacao
+entre zonas antes/depois. Se V ainda nao existir, U continua abrindo
+o notebook anterior das fases S/T.
+
 ### Laboratorio visual forense (opcao U)
 
 O notebook versionado no repositorio e

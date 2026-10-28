@@ -34,6 +34,25 @@ ambiente Python isolado e instala automaticamente as dependencias de
 visualizacao JupyterLab/pandas/matplotlib no primeiro uso (requer internet
 apenas nessa instalacao; nao baixa nenhum dado eleitoral).
 
+### Fase 5S — mecanismo da curva nacional PUBLICADA EA20 (opcao X)
+
+Apos as fases de recebimento BWEB T/V/W, a opcao **X** faz um
+teste fisico independente sobre os 193 snapshots nacionais EA20
+versionados. Mede R² versus secoes, votos validos e tempo de
+PUBLICACAO; compara a curva real com uma hipotese de participacao
+constante dos lotes (oraculo retrospectivo identificado como
+circular), e com previsao condicionada aos volumes apos treinar
+apenas os primeiros dez incrementos publicados.
+
+Exporta todos os 152 lotes incrementais publicados em CSV, quatro
+blocos por volume de votos, relatorio JSON e hashes SHA.
+Usa somente o CSV EA20 versionado: sem rede, BU, ZIP ou SQLite.
+Documentacao: `docs/FASE5S_EA20_MECANISMO_PUBLICACAO_2026.md`.
+
+A opcao **U** abre o notebook X automaticamente quando X tiver
+sido executada. A ordem de operacao permanece `git pull origin main`,
+`start_windows.bat`, opcao `X`, opcao `U`.
+
 ### Fase 5R — placebos temporais nas mesmas zonas (opcao W)
 
 Depois de executar **V**, escolha **W** no `start_windows.bat`.

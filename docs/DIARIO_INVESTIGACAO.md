@@ -6189,10 +6189,10 @@ Construido um controle fisico retrospectivo, que preserva
 EXATAMENTE os volumes publicados de cada lote EA20 mas
 atribui a todos os votos incrementais a taxa final da cauda
 de Lula, 54,08809178% (ORACULO, com vazamento).
-O controle deu R² por secoes **0,9988478089**, ainda mais
+O controle deu R² por secoes **0,9988478072**, ainda mais
 linear que o observado. RMSE cumulativo real vs modelo
-0,1332003292 pp (desvio maximo 0,2384952495 pp).
-Isto mostra que elevada lisura acumulada e compatível
+0,1332003580 pp (desvio maximo 0,2384951882 pp).
+O contrafactual foi aprimorado para arredondar cumulativamente votos Lula e Flavio a inteiros, verificar capacidade de cada lote e fechar os totais finais. Isto mostra que elevada lisura acumulada e compatível
 com uma composicao constante condicional a volumes reais,
 NAO que o mecanismo efetivo foi o controle.
 

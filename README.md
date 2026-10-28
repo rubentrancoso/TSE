@@ -34,6 +34,49 @@ ambiente Python isolado e instala automaticamente as dependencias de
 visualizacao JupyterLab/pandas/matplotlib no primeiro uso (requer internet
 apenas nessa instalacao; nao baixa nenhum dado eleitoral).
 
+### Painel público da investigação — Jupyter opção U
+
+**Pergunta pública:** os dados permitem identificar alteração, adição,
+omissão ou contabilização indevida de votos? O painel diferencia
+**fatos observados**, **hipóteses concorrentes**, **testes de controle** e
+**perguntas ainda sem resposta**, sem confundir um R² alto com fraude.
+
+A opção **U** no `start_windows.bat` passa a abrir o notebook central
+`notebooks/TSE_2026_Painel_Publico_Forense.ipynb`.
+Com texto em português acessível e fontes verificadas, o notebook produz
+visualizações com legendas explicativas:
+
+1. curva nacional acumulada EA20 versus controle retrospectivo;
+2. composição real dos quatro grupos de lotes publicados;
+3. diferenças de BUs recebidos dentro de zonas em múltiplos horários;
+4. localização dos erros de previsão por município/zona;
+5. recebimento BWEB por segundo versus publicação EA20 (fase Y, se disponível).
+
+Os CSVs usados são conferidos por SHA-256 antes de gerar imagens.
+Se a fase Y ainda não tiver sido executada, o painel identifica o
+teste como **pendente**; não cria dados ilustrativos fingindo ser reais.
+Ao executar as células, exporta **PNG** e um **relatório HTML único com
+as imagens incorporadas**, pronto para abrir em um navegador, em
+`H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\divulgacao_publica_2026`.
+O relatório contém as advertências sobre as limitações e os critérios
+de prova. **Revise a integridade dos dados e o texto antes de divulgar.**
+
+A opção **Z** abre o **Jupyter técnico** com o notebook da última fase
+executada (equivalente ao comportamento anterior de U). Ambos compartilham
+a mesma instalação isolada do Jupyter e não baixam dados eleitorais.
+
+```powershell
+cd C:\Users\PC\Documents\git\TSE
+git pull origin main
+.\start_windows.bat
+```
+
+Escolha **U** para o painel público ou **Z** para o laboratório técnico.
+No Jupyter use *Run → Run All Cells*. A opção U não depende da
+execução de testes estáticos que rejeitem notebooks já salvos.
+
+Guia editorial: `docs/GUIA_COMUNICACAO_FORENSE_2026.md`.
+
 ### Fase 5T — testar recebimento BWEB contra publicacao EA20 (opcao Y)
 
 Depois da opcao X, execute **Y**. O programa

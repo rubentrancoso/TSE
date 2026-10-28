@@ -6037,3 +6037,54 @@ Seu resultado dira se o baixo RMSE municipal da S
 resiste a um teste sem conhecer a cauda.
 Relatorio detalhado no
 docs/PROTOCOLO_FORENSE_CURVA_TEMPORAL_2026.md.
+
+
+---
+
+## 2026-10-28 — E0123 — Execução real de T, laboratório Jupyter U e novo teste zonal V
+
+A opção T foi executada pelo investigador no disco H (log integral fornecido).
+Todos os 499.206 BWEB presidenciais SHA-verificados; total nacional
+corrigido 119.300.788 votos válidos. Corte individual por segundo:
+04/10/2026 20:04:39 BRT. Treino: 105.672.906 válidos.
+Holdout: 13.627.882 válidos, 7.524.029 Lula, 5.236.944 Flávio.
+A participação observada de Lula na cauda é 55,21055289%.
+
+Predições de Lula na cauda (somente dados pré-corte):
+BR=43,86697665%, UF=51,49913694% e município=53,15006020%,
+contra 55,21055289% reais. RMSE ponderado por minuto (137 minutos
+com >=5.000 válidos): 11,97833 pp, 4,46831 pp e 2,82262 pp,
+respectivamente. Referência circular MUNICIPIO_final_IN_SAMPLE
+usando resultados futuros: 54,10932811%, RMSE=1,46216 pp. O
+modelo municipal pré subestima Lula em 2,06049 pp, equivalente a
+280.801,5 votos de diferença em relação a essa predição, **não
+votos adicionais demonstrados/irregulares**. 266 municípios sem
+seções pré-corte contribuem 1.340.387 votos válidos à cauda (9,84%).
+
+A afirmação sobre recebimento BWEB continua distinta da publicação
+EA20: T reconfirma 18.809.656 válidos publicados EA20 após o corte
+vs 13.627.882 BWEB recebidos após o corte, sem inferir 5.181.774
+votos perdidos.
+
+Implementado e integrado diretamente ao GitHub o laboratório Jupyter
+(opção U do BAT) com instalação automática de dependências em venv
+isolada, reaproveitamento de todos os CSV/JSON S/T e conferência SHA;
+o investigador confirmou que o notebook foi aberto e todos os
+gráficos e células executados com sucesso.
+
+Fase nova **5Q — opção V**:
+`analyze_within_zone_holdout_2026.py`.
+Repassa apenas CSV H/M verificados, com corte por segundo,
+treina um modelo por zona com prior municipal pré-corte de 1.000 votos
+e exige reconciliação exata dos três modelos BR/UF/município com a T.
+Decompõe os resíduos municipais em municípios sem dados anteriores,
+zonas sem dados anteriores em municípios observados, e seções tardias
+de zonas que já tinham BUs. Exporta minutos/municípios/zonas
+com hashes e um sumário. Novo notebook
+`notebooks/TSE_2026_Laboratorio_Forense_Fase_V.ipynb`, aberto
+automaticamente pela opção U após a execução de V.
+Sem downloads, ZIP, SQLite, 2022 ou segundo turno.
+
+**Estado:** V criada e com testes sintéticos versionados, mas ainda
+não executada empiricamente no disco H. Nenhum resultado zonal real
+foi alegado. Documento: `docs/FASE5Q_ZONAS_TARDIAS_2026.md`.

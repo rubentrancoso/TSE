@@ -6322,3 +6322,66 @@ e os notebooks continuam verificando SHA-256 no momento de leitura.
 Nao foram alteradas fontes BWEB/EA20, dados de votos ou resultados
 estatisticos. O ajuste foi publicado no GitHub; a reexecucao de U
 no Windows ainda precisa ser confirmada pelo investigador.
+
+
+---
+
+## 2026-10-28 — E0128 — Mudança de foco editorial: hipótese de fraude e comunicação pública
+
+O investigador solicitou uma comunicação compreensível por leigos,
+visualizações reveladoras e retorno explícito à hipótese principal:
+**há votos adulterados, adicionados, omitidos ou não conciliáveis?**
+A investigação não deve ficar reduzida a calcular R² de linhas
+acumuladas nem descartar hipóteses apenas por serem matematicamente
+possíveis. Precisamos formular testes que diferenciem as causas e
+mostrem o que as fontes demonstram ou não demonstram.
+
+Foi criado e versionado diretamente na branch principal o
+**notebook público consolidado**
+`notebooks/TSE_2026_Painel_Publico_Forense.ipynb`:
+- texto em português popular, separando pergunta, observação,
+  explicação alternativa e evidência faltante;
+- comparação da curva EA20 observada com contrafactual
+  retrospectivo de taxa de votos constante;
+- quatro blocos de composição incremental EA20 com barras
+  de base zero e votos de Lula, Flávio e outros;
+- gradiente temporal de votos recebidos dentro das zonas,
+  com linha principal 20h04 e cobertura de zonas por corte;
+- decomposição dos erros da previsão municipal em votos
+  **relativos ao modelo**, jamais votos irregulares;
+- confronto temporal BWEB recebidos versus EA20 publicados,
+  somente se a fase Y tiver gerado arquivos locais válidos;
+- tabela editorial de achados e dúvidas sem decisão probatória.
+
+Cada CSV de fase V/W/X/Y é lido com SHA-256 comparado ao manifesto,
+e o CSV nacional EA20 é novamente validado pelo SHA registrado
+na fase X. As fases ainda não executadas são exibidas como
+pendentes; não se preenchem gráficos com valores fictícios.
+
+As imagens são exportadas em PNG em
+`H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\divulgacao_publica_2026`.
+O notebook também cria um **relatório HTML independente**
+`relatorio_publico_forense_2026.html` com as imagens incorporadas,
+para apresentação externa sem exigir Jupyter. Material exige
+revisão editorial antes de ser publicado.
+
+A opção **U** do BAT agora abre o **painel público** e a nova
+opção **Z** preserva a experiência técnica anterior: abre o
+notebook da fase mais recente. Ambas continuam na venv isolada
+Jupyter e não baixam dados eleitorais.
+Foi adicionado
+`tests/test_public_forensic_notebook_2026.py` para validar
+as fontes, notebook, exportação e contratos U/Z.
+
+O documento
+`docs/GUIA_COMUNICACAO_FORENSE_2026.md`
+formaliza a hierarquia de evidência e quatro linhas de teste
+(H1 alteração por seção, H2 inclusão/omissão de seções,
+H3 manipulação na divulgação, H4 anomalias estatísticas),
+cada uma com explicação alternativa e critério explícito
+de refutação ou avanço.
+
+**Estado:** notebook e integracoes no GitHub, sem alterar
+dados BWEB/EA20. A execução visual no ambiente Windows do
+investigador ainda precisa ser confirmada. Nenhuma fraude
+foi declarada demonstrada pelas visualizações.

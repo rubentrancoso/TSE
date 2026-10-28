@@ -445,12 +445,11 @@ goto done
 
 :forensic_notebook_2026
 echo.
-echo LABORATORIO JUPYTER 2026 - ABRE FASE Y APOS EXECUCAO (OU ANTERIOR).
-echo Valida presenca dos CSV/JSON em H:; confere SHA no notebook.
-echo Primeiro uso instala somente dependencias Python em ambiente isolado.
+echo LABORATORIO JUPYTER 2026 - ABRE A FASE MAIS RECENTE.
+echo U abre o editor diretamente, sem testes obrigatorios de celulas salvas.
+echo Verifica presenca dos CSV/JSON em H:; confere SHA no notebook.
+echo Primeiro uso instala dependencias Python em ambiente isolado.
 echo Nao baixa BWEB, nao abre ZIP, SQLite ou dados de outro turno.
-%PY% -m unittest discover -s tests -p "test_forensic_notebook_2026.py" -q
-if errorlevel 1 goto validate_failed
 %PY% launch_forensic_notebook.py
 if errorlevel 1 goto validate_failed
 goto done

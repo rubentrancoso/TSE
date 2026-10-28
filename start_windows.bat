@@ -374,7 +374,7 @@ echo Separa modelo BR, UF, municipio pre-corte e ORACLE final circular.
 echo Sem download, ZIP, SQLite, nem segundo turno.
 %PY% -m unittest discover -s tests -p "test_geographic_holdout_curve_2026.py" -q
 if errorlevel 1 goto validate_failed
-%PY% test_geographic_holdout_curve_2026.py
+%PY% audit_geographic_holdout_curve_2026.py
 if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5p_holdout_geographic_curve_2026_summary.json
 goto done

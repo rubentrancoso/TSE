@@ -125,5 +125,28 @@ class ZoneHoldout2026Tests(unittest.TestCase):
             v.evaluate({k:[0,0,0,*a[3:]] for k,a in z.items()},m)
 
 
+class ZoneNotebookTests(unittest.TestCase):
+    def test_notebook_v_is_executable_and_non_destructive(self):
+        path = Path(__file__).resolve().parents[1] / "notebooks" / "TSE_2026_Laboratorio_Forense_Fase_V.ipynb"
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(doc["nbformat"], 4)
+        self.assertGreaterEqual(len(doc["cells"]), 14)
+        sources = []
+        for cell in doc["cells"]:
+            if cell["cell_type"] != "code":
+                continue
+            src = "".join(cell["source"])
+            compile(src, "<notebook V>", "exec")
+            self.assertEqual(cell["execution_count"], None)
+            self.assertEqual(cell["outputs"], [])
+            sources.append(src)
+        source = "\n".join(sources)
+        self.assertIn("phase5q_zone_holdout_2026_summary.json",source)
+        self.assertIn("sha256",source)
+        self.assertNotIn("requests.get(", source)
+        self.assertNotIn("subprocess.run(", source)
+
+
+
 if __name__ == "__main__":
     unittest.main()

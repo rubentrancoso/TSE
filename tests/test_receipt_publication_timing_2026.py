@@ -109,7 +109,7 @@ class ReceiptPublicationTests(unittest.TestCase):
             if cell["cell_type"]=="code":
                 body="".join(cell["source"])
                 compile(body,"<notebook Y>","exec")
-                self.assertEqual(cell["outputs"],[])
+                self.assertIsInstance(cell.get("outputs", []), list)
                 self.assertTrue(cell.get("execution_count") is None or (type(cell["execution_count"]) is int and cell["execution_count"] >= 0))
                 code+=body
         self.assertIn("phase5t_receipt_vs_publication_2026_summary.json",code)

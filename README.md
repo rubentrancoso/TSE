@@ -34,6 +34,30 @@ ambiente Python isolado e instala automaticamente as dependencias de
 visualizacao JupyterLab/pandas/matplotlib no primeiro uso (requer internet
 apenas nessa instalacao; nao baixa nenhum dado eleitoral).
 
+### Fase 5T — testar recebimento BWEB contra publicacao EA20 (opcao Y)
+
+Depois da opcao X, execute **Y**. O programa
+`audit_receipt_publication_timing_2026.py` verifica os hashes de H/M
+e os votos inteiros dos 499.206 BWEB, agrega seus timestamps
+`DT_BU_RECEBIDO` por **segundo** e compara, para cada uma das
+193 capturas EA20 nacionais, as contagens acumuladas de validos,
+Lula e Flavio.
+
+Sob a **hipotese condicional** de clocks sincronizados, origem
+equivalente e recepcao necessariamente anterior a publicacao,
+os totais publicados nao podem superar os recebidos ate o mesmo
+instante. Um deficit viola esse modelo conjunto, **nao prova
+adulteracao de votos**; uma desigualdade satisfeita nao prova
+buffering nem permite identificar os BUs que compuseram o lote.
+O script relata tambem offsets de relogio fixados antes
+da execucao, sem escolher arbitrariamente um fuso que convem.
+
+Usa arquivos locais H/M SHA-validos e a serie EA20 nacional
+versionada, **sem download, ZIP, SQLite ou 2022/2T**. Arquivos
+de saida no H, notebook `notebooks/TSE_2026_Laboratorio_Forense_Fase_Y.ipynb`,
+aberto automaticamente pela opcao **U** apos concluir Y.
+Documento tecnico: `docs/FASE5T_RECEBIMENTO_PUBLICACAO_2026.md`.
+
 ### Fase 5S — mecanismo da curva nacional PUBLICADA EA20 (opcao X)
 
 Apos as fases de recebimento BWEB T/V/W, a opcao **X** faz um

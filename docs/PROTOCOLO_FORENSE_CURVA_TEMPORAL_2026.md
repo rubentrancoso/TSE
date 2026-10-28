@@ -246,3 +246,96 @@ individual e avaliação do resultado contrafactual.
 Até lá não foi verificado se a geografia
 por município responde pela linearidade
 EA20 de R²=0,9904.
+
+
+## 8. Resultado real da S e avanço para T — 28/10/2026
+
+**A Fase 5O (opção S) foi executada com sucesso no Windows**
+sobre o acervo local SHA-validado de 2026, com 499.206
+BWEB e correção técnica de `NR_VOTAVEL=28` herdada da M.
+
+A reconstrução confirma os resultados do EA20 de
+153 pontos após 20:04:39 BRT:
+- reta por **tempo real**: R² = **0,61016581**;
+  RMSE = 0,29103431 pp;
+- reta por **número de atualizações**: R² = **0,84210892**;
+  RMSE = 0,18521793 pp;
+- reta por **número de seções**: R² = **0,99044479**;
+  RMSE = 0,04556427 pp (medido diretamente da série
+  EA20 versionada, não do mesmo modelo geográfico).
+
+Na série cumulativa reconstruída a partir do
+`DT_BU_RECEBIDO` por minuto, para o trecho posterior
+ao corte, a diferença entre a composição municipal
+FINAL e o perfil de votação realmente recebido foi
+de **RMSE 0,06164460 pp** para Lula
+(Flávio: 0,05065081 pp).
+O modelo com proporções FINAIS por UF teve erro
+maior: Lula **0,17470034 pp**
+(Flávio 0,14542577 pp).
+Isso confirma que a mistura de municípios explica
+uma parte grande das variações acumuladas
+quando empregamos as proporções eleitorais
+**finais da mesma eleição**.
+
+**A ressalva fundamental é vazamento de informação:**
+as taxas finais por município são extraídas dos
+mesmos votos cujo comportamento pretendemos
+explicar. Um RMSE baixo nesse contrafactual
+*in-sample* não é prova de previsibilidade
+anterior à apuração nem demonstra por si
+que a cadeia de publicação EA20 é explicada.
+Além disso, a agregação cumulativa suaviza
+flutuações locais, e erro pequeno da curva
+cumulativa pode esconder erros grandes por lote.
+
+**Divergência temporal a não confundir com votos perdidos:**
+a Fase 4G registra 18.809.656 válidos publicados
+após o último snapshot nacional 20:04:39,
+enquanto a S registra 13.627.882 válidos
+nos BU com `DT_BU_RECEBIDO` posterior ao corte.
+A diferença aritmética de **5.181.774** não prova
+falta de votos: recebimento e publicação são
+eventos distintos, e um BU recebido antes
+pode integrar uma versão publicada depois.
+O corte por minuto na S pode incluir o minuto
+20:04 inteiro; a próxima opção T separa
+rigorosamente antes/depois **por segundo**.
+
+### Fase 5P / opção T: teste sem conhecimento do resultado final
+
+Nova rotina: `test_geographic_holdout_curve_2026.py`.
+Usando os mesmos BWEB de H e a correção NR28 de M,
+divide cada seção segundo a data/hora de recebimento
+exata em segundos, no corte **20:04:39 BRT**.
+
+Treina somente com dados de antes do corte:
+- proporção anterior do Brasil;
+- proporção anterior de cada UF;
+- proporção anterior de cada município, suavizada
+  pelo perfil UF anterior com peso fixo de 1.000
+  votos para evitar estimativas extremas de
+  municípios com pouca cobertura;
+- municípios sem amostra prévia usam apenas a
+  proporção anterior de sua UF (ou do BR se
+  também faltar cobertura estadual).
+
+Avalia os BU de depois do corte, separando erro
+de lote por minuto, ponderado pelo número de
+votos válidos, e erro na proporção final da cauda.
+O modelo municipal com proporções finais da
+mesma eleição reaparece exclusivamente como
+**referência circular rotulada de vazamento**,
+para mostrar quanto o ajuste in-sample pode
+superestimar poder explicativo.
+
+Gera:
+- `phase5p_holdout_geographic_curve_2026_summary.json`;
+- `phase5p_holdout_receipt_curve_2026.csv`;
+- `phase5p_holdout_by_uf_2026.csv`;
+- `phase5p_holdout_by_municipality_2026.csv`.
+
+A opção T não baixa arquivos, não abre ZIP, não
+consulta SQLite e não analisa segundo turno.
+O T ainda não foi executado com os dados reais
+do disco H: do operador.

@@ -6228,3 +6228,63 @@ mas execucao pelo menu X no H ainda pendente.
 Os valores anteriores foram calculados diretamente
 da serie EA20 versionada, nao inventados ou atribuídos
 a uma execucao local X que ainda nao ocorreu.
+
+
+---
+
+## 2026-10-28 — E0126 — Resultado real X e investigacao operacional Y
+
+**Fase 5S/X executada pelo investigador**, incluindo 4 testes
+bem-sucedidos no Windows. Dos 193 snapshots EA20 nacionais
+versionados, 153 pontos desde o corte de 20:04:39 BRT e
+152 incrementos positivos validos. R² observado da
+participacao Lula vs secoes acumuladas: 0,9904447872;
+R² vs votos validos acumulados: 0,9897050825.
+Modelo IN_SAMPLE com percentual constante da cauda,
+preservando volume EA20 por lote e os votos inteiros,
+R² vs secoes: 0,9988478072, RMSE real-modelo:
+0,13320035795 pp.
+
+Nos 18.809.656 votos validos publicados depois do corte,
+os blocos cronologicos nao apresentam participacao constante:
+4.891.708 validos publicados em 3 updates, Lula 50,81473%;
+4.746.818 em 32, Lula 52,53856%;
+4.778.781 em 14, Lula 53,39887%;
+4.392.349 em 103, Lula 60,15804%.
+Os primeiros 10 updates (6.546.962 validos, Lula 51,224629%)
+resultaram em previsao condicionada aos volumes publicados
+posteriormente de 44,711298% Lula acumulado ao final, versus
+45,162768% observado (erro -0,45147 pp, RMSE 0,326313 pp).
+A curva acumulada extremamente regular nao significa
+votos incrementais uniformes ou lotes iguais.
+
+Dado que W mede recebimento BWEB e X mede publicacao EA20,
+a investigacao NAO deve simplesmente associar os votos
+dos mesmos minutos a processos que nao sabemos ser identicos.
+Foi implementada a **Fase 5T/Y**, confrontando cada uma
+das 193 capturas nacionais EA20 com os votos BWEB com
+DT_BU_RECEBIDO por segundo anterior ou igual a t, para
+validos, Lula e Flavio SEPARADAMENTE. Essa comparacao
+testa somente a condicao NECESSARIA de cronologia
+`publicacao <= recebimento acumulado` sob premissas de
+relogios sincronizados e universos correspondentes.
+Quantifica faltas, calcula folga minima por rank
+de votos (NAO atraso de BU individual) e testa offsets
+predefinidos 0, ±5 min, ±3 horas para revelar
+possiveis diferencas de timestamp sem escolher
+posteriormente parametros que favorecam uma hipotese.
+
+Arquivos criados: `audit_receipt_publication_timing_2026.py`,
+`tests/test_receipt_publication_timing_2026.py`,
+`notebooks/TSE_2026_Laboratorio_Forense_Fase_Y.ipynb`,
+`docs/FASE5T_RECEBIMENTO_PUBLICACAO_2026.md`.
+Nova opcao Y no BAT; U abre notebook Y apos a sua execucao.
+Tudo reusa H/M e EA20 versionados, com SHA, sem downloads/ZIP,
+SQLite, 2022 ou segundo turno. O numero de seções EA20
+difere do BWEB nas 42 seções ZZ sem votos, fato ja explicado,
+portanto nao usado como igualdade de universos.
+
+**Estado:** o codigo, seis testes sinteticos, documentação
+e notebook foram publicados no GitHub; Fase Y ainda nao foi
+executada empiricamente no disco H do investigador.
+Nenhuma incompatibilidade temporal foi alegada antes da medicao.

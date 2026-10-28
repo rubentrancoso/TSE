@@ -72,6 +72,39 @@ Para cada visualização, use o seguinte roteiro:
 
 **Critério de avanço:** anomalia localizada e reproduzível que motive auditoria H1/H2/H3, **não prova isolada de fraude**.
 
+## Contexto separado: pesquisas e simulações do segundo turno
+
+Uma alegação sobre previsões de baixa chance de vitória **pode ser
+documentada e comunicada** sem contaminar o núcleo da auditoria de BUs
+do primeiro turno.
+
+Encontramos um modelo estrutural M1 **anterior ao segundo turno**
+(commit público criado em 04/10/2026 23h44 BRT) que atribuía **0,3%**
+de vitória a Lula. Esse número é real para o **M1**, mas o mesmo
+autor publicou M2 com **31,7%**, M3 com **41,1%** e uma combinação
+com **17,9%**. Agregadores com atualizações de 24/10 indicavam
+16% e 17% de chances. O resultado oficial de 25/10 foi
+Lula 51,79% e Flávio 48,21%.
+
+Outro percentual de **2%**, no Plano Político, representava o
+cenário Lula **com mais de 52% dos votos**, e não vitória em geral.
+Esse cenário não ocorreu (Lula teve 51,79%).
+
+No Jupyter público, esse contexto é um bloco **expressamente
+rotulado como 2º turno**. Os gráficos comparam probabilidades
+de cada modelo e seus intervalos de votos previstos com o
+resultado oficial; não se somam cenários, nem se apresentam
+probabilidades como evidência de adulteração de votos.
+
+**Nunca declarar que "99,7% de chance de fraude" decorre de
+uma chance prevista de 0,3% para vitória.** Essa inversão não
+tem fundamento estatístico: erro de previsão não mede
+integridade do registro individual.
+
+Documentação e cópias de URLs/data de origem em
+`docs/CONTEXTO_SIMULACOES_SEGUNDO_TURNO_2026.md` e
+`data/forensics/external/segundo_turno_previsoes_2026_proveniencia.json`.
+
 ## A narrativa deve mostrar o Brasil, do nacional ao território
 
 O **mapa do Brasil é parte essencial da história visual** sempre

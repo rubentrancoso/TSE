@@ -76,12 +76,12 @@ class OperationalCurveTests(unittest.TestCase):
             with shard.open("w",encoding="utf-8",newline="") as f:
                 w=csv.writer(f,delimiter=";")
                 w.writerow(("UF","municipio","zona","secao","turno",
-                            "recebimento_minuto","votos_pres_validos",
+                            "recebimento_minuto","DT_BU_RECEBIDO","votos_pres_validos",
                             "votos_13","votos_22"))
                 w.writerow(("AC","101","1","1","1","2026-10-04 18:00",
-                            "102","50","50"))
+                            "04/10/2026 18:00:12","102","50","50"))
                 w.writerow(("AC","101","1","2","1","2026-10-04 18:01",
-                            "100","60","40"))
+                            "04/10/2026 18:01:20","100","60","40"))
             nr=folder/"phase5h_nr28_sections_AC.csv"
             nr.write_text("UF;municipio;zona;secao;votos_28\nAC;101;1;1;2\n",
                           encoding="utf-8")

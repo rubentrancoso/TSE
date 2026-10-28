@@ -30,7 +30,9 @@ class ForensicPublicNotebookTests(unittest.TestCase):
         self.assertIn("digest(actual_ea20)",body)
         self.assertIn("relatorio_publico_forense_2026.html",body)
         self.assertIn("base64.b64encode",body)
-        for graph in ("06_mapa_brasil_recebimento_tardio",
+        for graph in ("09_probabilidades_modelos_2turno",
+                      "10_projecoes_versus_resultado_2turno",
+                      "06_mapa_brasil_recebimento_tardio",
                       "07_mapa_brasil_mudanca_intrazona",
                       "08_regioes_brasil_mudanca_intrazona"):
             self.assertIn(graph,body)
@@ -62,6 +64,25 @@ class ForensicPublicNotebookTests(unittest.TestCase):
         self.assertIn("CC0",source)
         self.assertIn("IBGE",source)
         self.assertIn("ZZ",source)
+
+    def test_forecast_context_has_identifiable_pre_runoff_sources(self):
+        path=ROOT/"data/forensics/external/segundo_turno_previsoes_2026_proveniencia.json"
+        doc=json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(doc["version"],"contexto-previsoes-segundo-turno-2026-v1")
+        archive=doc["first_pre_runoff_archive"]
+        self.assertLess(archive["commit_created_utc"],"2026-10-25")
+        self.assertEqual(archive["model_variants"][0]["lula_win_probability_pct"],0.3)
+        self.assertEqual(archive["model_variants"][3]["lula_win_probability_pct"],17.9)
+        self.assertEqual({x["id"] for x in archive["model_variants"]},
+                         {"M1","M2","M3","ensemble"})
+        official=doc["official_runoff_result"]
+        self.assertEqual(official["date"],"2026-10-25")
+        self.assertEqual(official["lula_votes"]+official["flavio_votes"],
+                         official["valid_votes"])
+        self.assertAlmostEqual(100*official["lula_votes"]/official["valid_votes"],
+                               official["lula_valid_pct"],places=2)
+        self.assertNotEqual(doc["scope"],"Auditoria BWEB presidencial primeiro turno")
+        self.assertIn("não é",doc["distinctions"][2].lower() if len(doc["distinctions"])>2 else "")
 
     def test_public_dashboard_is_default_and_technical_remains_accessible(self):
         launcher=(ROOT/"launch_forensic_notebook.py").read_text(encoding="utf-8")

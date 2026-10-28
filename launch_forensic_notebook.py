@@ -12,6 +12,7 @@ REPO = Path(__file__).resolve().parent
 NOTEBOOK = REPO / "notebooks" / "TSE_2026_Laboratorio_Forense_Fases_S_T.ipynb"
 NOTEBOOK_ZONE = REPO / "notebooks" / "TSE_2026_Laboratorio_Forense_Fase_V.ipynb"
 NOTEBOOK_PLACEBOS = REPO / "notebooks" / "TSE_2026_Laboratorio_Forense_Fase_W.ipynb"
+NOTEBOOK_EA20 = REPO / "notebooks" / "TSE_2026_Laboratorio_Forense_Fase_X.ipynb"
 VENV = REPO / ".venv_tse_notebook"
 DATA_FILES = (
     "phase5o_operational_curve_2026_summary.json",
@@ -33,6 +34,11 @@ PLACEBO_FILES = (
     "phase5r_cutoff_placebos_2026.csv",
     "phase5r_uf_paired_zones_2026.csv",
     "phase5r_paired_zones_2026.csv",
+)
+EA20_FILES = (
+    "phase5s_ea20_publication_mechanics_2026_summary.json",
+    "phase5s_ea20_batch_mechanics_2026.csv",
+    "phase5s_ea20_equal_volume_blocks_2026.csv",
 )
 
 
@@ -82,6 +88,19 @@ def launch(root: Path, check_only: bool = False) -> int:
             print("[ERRO] Notebook W nao encontrado: " + str(NOTEBOOK_PLACEBOS))
             return 1
         notebook = NOTEBOOK_PLACEBOS
+    phase_x_present = (folder / EA20_FILES[0]).is_file()
+    if phase_x_present:
+        missing_x = [str(folder / name) for name in EA20_FILES
+                     if not (folder / name).is_file()]
+        if missing_x:
+            print("[ERRO] A Fase X esta incompleta; reexecute X.")
+            for item in missing_x:
+                print("  - " + item)
+            return 1
+        if not NOTEBOOK_EA20.is_file():
+            print("[ERRO] Notebook X nao encontrado: " + str(NOTEBOOK_EA20))
+            return 1
+        notebook = NOTEBOOK_EA20
     if check_only:
         print("[OK] Notebook selecionado: " + str(notebook))
         print("[OK] CSVs/JSONs encontrados. Integridade SHA sera conferida no notebook.")

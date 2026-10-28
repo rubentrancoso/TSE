@@ -71,7 +71,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
 </style></head><body><div class="app-shell"><div class="countdown-strip"><div class="countdown-row"><span class="brasilia-label">Brasília</span><span class="countdown-right"><span class="countdown-now" id="clockNow">--:--:--</span><button class="sound-btn" id="soundToggle" type="button" aria-label="Ativar ou desativar aviso sonoro">🔈</button><button class="sound-btn" id="pollToggle" type="button" aria-label="Pausar consultas automáticas ao TSE">⏸</button></span></div><div class="width-control"><span id="stageModeLabel">Largura</span><input id="stageWidth" type="range" min="360" max="1400" step="10" value="520"><span class="width-value" id="stageWidthValue">520 px</span></div><div class="countdown-track"><div class="countdown-fill" id="countdownFill"></div></div></div><div class="wrap">
 <header><div><div class="live">DADOS DO TSE</div><h1>Apuração presidencial · 2026</h1><div class="dev-live">Programa sendo desenvolvido ao vivo</div><div class="sub" id="status">Carregando…</div>
 <div class="pulsebar"><span class="pulse-dot" id="pulseDot"></span><span id="pulseText">Aguardando leitura…</span><span class="pulse-extra" id="changeText"></span></div></div>
-<div class="toolbar"><select id="xmode"><option value="time">Eixo: horário</option><option value="pst">Eixo: % seções</option></select>
+<div class="toolbar"><select id="xmode"><option value="time">Eixo: horário real (BRT)</option><option value="pst">Eixo: % seções</option><option value="updates">Eixo: atualização (espaçamento igual)</option></select>
 <select id="ymode"><option value="top2" selected>2 líderes (zoom)</option><option value="pct">Y: % votos válidos</option><option value="votes">Y: votos</option><option value="difference">Y: diferença acumulada</option><option value="batch">Y: saldo por lote</option></select>
 <button class="refresh-btn" onclick="refreshNow()" title="Atualizar agora" aria-label="Atualizar agora">↻</button><button onclick="backfill()">Recuperar início</button><button onclick="location.href='/api/export.csv'">CSV</button><button onclick="location.href='/api/export.json'">Backup JSON</button></div></header>
 <div class="grid">
@@ -216,7 +216,12 @@ function draw(){
 
  if(ym==="top2" || gapMode)nums=top2nums;
 
- const xs=viewH.map((x,i)=>xm==="pst"?+x.pst:i);
+ const clockValues=viewH.map(snapshotClockMs);
+ const clockReady=clockValues.every(Number.isFinite);
+ // No eixo horario, a distancia entre pontos representa os minutos/segundos
+ // efetivos do snapshot. Se faltar horario, nao rotular indice como relogio.
+ const effectiveXm=xm==="time"&&!clockReady?"updates":xm;
+ const xs=viewH.map((x,i)=>effectiveXm==="pst"?+x.pst:effectiveXm==="time"?clockValues[i]:i);
  let xmin=Math.min(...xs),xmax=Math.max(...xs);if(xmax===xmin)xmax=xmin+1;
 
  let series=[];
@@ -293,7 +298,7 @@ function draw(){
  g.textAlign="center";
  for(let j=0;j<=5;j++){
    const x=xmin+(xmax-xmin)*j/5,px=X(x);
-   const lab=xm==="pst"?x.toFixed(1)+"%":labelTimeFrom(viewH,Math.round(x));
+   const lab=effectiveXm==="pst"?x.toFixed(1)+"%":effectiveXm==="time"?clockAxisLabel(x):String(Math.round(x+1));
    g.fillText(lab,px,h-15);
  }
 
@@ -322,7 +327,7 @@ function draw(){
  if(ym==="difference")modeNote="Diferença acumulada: vantagem do líder atual sobre o segundo colocado; a linha zero representa empate. ";
  if(ym==="batch")modeNote="Saldo por lote: mudança da vantagem desde o snapshot anterior; positivo favorece o líder atual e negativo favorece o segundo. ";
  document.querySelector("#chartNote").textContent=
-   modeNote+(xm==="pst"?"Eixo X = percentual de seções totalizadas.":"Eixo X = evolução cronológica da apuração.")+
+   modeNote+(effectiveXm==="pst"?"Eixo X = percentual de seções totalizadas.":effectiveXm==="time"?"Eixo X = horário real transcorrido entre snapshots, pelos campos DT/HT do TSE (BRT).":"Eixo X = índice das atualizações, equidistantes; NÃO representa tempo transcorrido.")+
    " Fonte de cada ponto preservada no histórico.";
 }
 function drawChartCursor(g){
@@ -376,6 +381,34 @@ function moveChartCursor(e){
  let best=0,dist=Infinity;
  chartState.xs.forEach((x,i)=>{const d=Math.abs(chartState.X(x)-mx);if(d<dist){dist=d;best=i}});
  chartHoverIndex=best;draw();
+}
+
+function snapshotClockMs(row){
+ const date=String(row?.dt||"").trim(),time=String(row?.ht||"").trim();
+ let day,month,year;
+ let match=date.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+ if(match){day=+match[1];month=+match[2];year=+match[3]}
+ else {
+  match=date.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(!match)return NaN;
+  year=+match[1];month=+match[2];day=+match[3];
+ }
+ const hm=time.match(/^(\d{2}):(\d{2})(?::(\d{2}))?$/);
+ if(!hm)return NaN;
+ const hour=+hm[1],minute=+hm[2],second=+(hm[3]||0);
+ if(hour>23||minute>59||second>59||month<1||month>12||day<1||day>31)return NaN;
+ // Interpreta DT/HT como hora civil BRT, codificada em UTC apenas para
+ // calcular distancias; nao converte fusos horarios no navegador do usuario.
+ const stamp=Date.UTC(year,month-1,day,hour,minute,second);
+ const back=new Date(stamp);
+ if(back.getUTCFullYear()!==year||back.getUTCMonth()!==month-1||back.getUTCDate()!==day)return NaN;
+ return stamp;
+}
+function clockAxisLabel(stamp){
+ const d=new Date(stamp);
+ const pad=n=>String(n).padStart(2,"0");
+ return pad(d.getUTCDate())+"/"+pad(d.getUTCMonth()+1)+" "+
+        pad(d.getUTCHours())+":"+pad(d.getUTCMinutes());
 }
 function labelTimeFrom(arr,i){let x=arr[Math.max(0,Math.min(arr.length-1,i))];return x?.ht?.slice(0,5)||""}
 function compact(n){return Intl.NumberFormat("pt-BR",{notation:"compact",maximumFractionDigits:1}).format(n)}

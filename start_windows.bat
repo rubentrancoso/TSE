@@ -49,11 +49,13 @@ echo [Q] EXTERIOR ZZ: localizar +42 secoes por municipio EA20/BWEB
 echo [R] EXTERIOR ZZ: conferir comparecimento e votos nas 42 secoes
 echo [S] CURVA FORENSE 2026: tempo real, BU recebidos, geografia UF/municipio
 echo [T] FORA DA AMOSTRA: pre-20:04 prevendo BU recebidos apos 20:04
-echo [U] LABORATORIO FORENSE JUPYTER: curvas S/T, graficos, municipios
+echo [U] LABORATORIO FORENSE JUPYTER: S/T ou V se ja executada
+echo [V] ZONAS TARDIAS: comparar municipio vs zona pre-20:04 sem vazamento
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEFGHIJKLMNOPQRSTU0 /N /M "Selecione: "
-if errorlevel 31 exit /b 0
+choice /C 123456789ABCDEFGHIJKLMNOPQRSTUV0 /N /M "Selecione: "
+if errorlevel 32 exit /b 0
+if errorlevel 31 goto within_zone_holdout_2026
 if errorlevel 30 goto forensic_notebook_2026
 if errorlevel 29 goto geographic_holdout_2026
 if errorlevel 28 goto operational_curve_2026
@@ -381,9 +383,22 @@ if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5p_holdout_geographic_curve_2026_summary.json
 goto done
 
+:within_zone_holdout_2026
+echo.
+echo FASE 5Q: DESVIOS DE BUs TARDIOS DENTRO DOS MUNICIPIOS E ZONAS.
+echo Usa CSV H/M no H: com SHA, corte por SEGUNDO e 4 modelos sem vazamento.
+echo Confronta taxas por municipio e zona, controles, desvios e contagem.
+echo Nenhum download, ZIP, SQLite, 2022 ou segundo turno.
+%PY% -m unittest discover -s tests -p "test_within_zone_holdout_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% analyze_within_zone_holdout_2026.py
+if errorlevel 1 goto validate_failed
+echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5q_zone_holdout_2026_summary.json
+goto done
+
 :forensic_notebook_2026
 echo.
-echo LABORATORIO JUPYTER 2026 - REUSA RESULTADOS DAS OPCOES S E T.
+echo LABORATORIO JUPYTER 2026 - REUSA S/T OU A NOVA FASE V.
 echo Valida presenca dos CSV/JSON em H:; confere SHA no notebook.
 echo Primeiro uso instala somente dependencias Python em ambiente isolado.
 echo Nao baixa BWEB, nao abre ZIP, SQLite ou dados de outro turno.

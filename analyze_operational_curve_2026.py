@@ -25,6 +25,7 @@ from extract_bweb_received_2026 import UFs, VERSION as H_VERSION, norm
 from correct_bweb_28_periodicity_2026 import VERSION as M_VERSION
 from reconcile_stream import sha256
 from urnas import root_path
+from analyze_bweb_seconds_2026 import parse_original_second
 
 VERSION="phase5o-operational-curve-2026-v1"
 BASE=Path("analysis/periodicidade_bweb_2026")
@@ -204,14 +205,16 @@ def read_receipt_data(folder,manifest,corrected):
                 if not when or len(when)!=16:
                     raise RuntimeError("BU sem minuto de recebimento")
                 minute(when)
-                mt=(*[uf,key[0]],)
+                second_stamp,precise=parse_original_second(r["DT_BU_RECEBIDO"])
+                if not precise or second_stamp[:16]!=when:
+                    raise RuntimeError("Timestamp BU H nao confere com minuto/segundo")
                 # municipality key is explicit; do not mix municipalities across UFs
                 district=(uf,key[0])
                 increment=batches[when][district]
                 for k,qty in enumerate((1,v,l,f22)):increment[k]+=qty
                 for dest in (uf_all[uf],mu_all[district]):
                     dest[0]+=v;dest[1]+=l;dest[2]+=f22
-                before=when < CUT[:16]
+                before=second_stamp < CUT
                 tim=timing[uf]
                 start=0 if before else 3
                 tim[start]+=v;tim[start+1]+=l;tim[start+2]+=f22
@@ -312,6 +315,10 @@ def build(root,repo):
     line_bweb={name:receipt_fit(r_after,name)
                for name in ("share_lula_pct","share_flavio_pct",
                             "model_uf_lula_pct","model_mun_lula_pct")}
+    line_bweb_by_sections={name:line_fit([r["cum_sections"] for r in r_after],
+                                        [r[name] for r in r_after])
+               for name in ("share_lula_pct","share_flavio_pct",
+                            "model_uf_lula_pct","model_mun_lula_pct")}
     geography={
         "UF_only_rmse_lula_pp":rmse_gap(r_after,"share_lula_pct","model_uf_lula_pct"),
         "Municipality_rmse_lula_pp":rmse_gap(r_after,"share_lula_pct","model_mun_lula_pct"),
@@ -340,7 +347,8 @@ def build(root,repo):
             "ea20_post_resume_trajectory":line_ea,
             "bweb_receipt_minute_count":len(received),
             "bweb_post_resume_minutes":len(r_after),
-            "bweb_trajectory":line_bweb,
+            "bweb_trajectory_by_clock":line_bweb,
+            "bweb_trajectory_by_sections":line_bweb_by_sections,
             "bweb_geo_composition":geography,
             "all_votes_reconciled":{"sections":tot[0],"valid":tot[1],
                                     "lula":tot[2],"flavio":tot[3]},
@@ -353,6 +361,7 @@ def build(root,repo):
                "As capturas EA20 medem PUBLICACAO e o BWEB mede campo RECEBIMENTO: tempos nao equivalem",
                "O modelo geografico usa participacoes finais da propria eleicao e volumes observados; nao comprova causalidade",
                "Mistura de municipios nao preserva efeito intra-municipio nem fluxo operacional de buffering",
+               "Classificacao antes/depois do corte usa SEGUNDOS exatos do BU, mas curva exportada tem resolucao de MINUTO",
                "Eixo 'updates' equidistante nao e o mesmo que tempo real",
                "Nenhum registro de segundo turno utilizado"
             ]

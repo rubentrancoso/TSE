@@ -160,9 +160,11 @@ def load_sources(folder):
         raise RuntimeError("Os manifestos H/M nao correspondem ao 1T 2026")
     return a,b,sha256(h),sha256(m)
 
-def read_receipt_data(folder,manifest,corrected):
+def read_receipt_data(folder,manifest,corrected,include_holdout=False):
     """Only already SHA-verified, per-section CSVs; also verify each NR28 cache."""
     batches=defaultdict(lambda:defaultdict(lambda:[0,0,0,0]))
+    holdout_mun=defaultdict(lambda:[0,0,0,0,0,0])
+    holdout_minutes=defaultdict(lambda:defaultdict(lambda:[0,0,0]))
     uf_all=defaultdict(lambda:[0,0,0])
     mu_all=defaultdict(lambda:[0,0,0])
     timing=defaultdict(lambda:[0,0,0,0,0,0])
@@ -218,6 +220,12 @@ def read_receipt_data(folder,manifest,corrected):
                 tim=timing[uf]
                 start=0 if before else 3
                 tim[start]+=v;tim[start+1]+=l;tim[start+2]+=f22
+                if include_holdout:
+                    item=holdout_mun[district]
+                    item[start]+=v;item[start+1]+=l;item[start+2]+=f22
+                    if not before:
+                        post=holdout_minutes[when][district]
+                        post[0]+=v;post[1]+=l;post[2]+=f22
                 count+=1
         if nr:raise RuntimeError("NR28 nao encontrou secao em H "+uf)
         if count!=manifest["ufs"][uf]["sections"]:
@@ -225,6 +233,8 @@ def read_receipt_data(folder,manifest,corrected):
         hashes[uf]={"BWEB_SHA256":manifest["ufs"][uf]["shard_sha256"],
                     "NR28_SHA256":state["csv_sha256"]}
         print(f"[UF {uf}] {count:,} secoes; BWEB + NR28 hashes validados",flush=True)
+    if include_holdout:
+        return batches,uf_all,mu_all,timing,hashes,holdout_mun,holdout_minutes
     return batches,uf_all,mu_all,timing,hashes
 
 def make_reception_curve(batches,uf_all,mu_all):

@@ -304,7 +304,7 @@ rigorosamente antes/depois **por segundo**.
 
 ### Fase 5P / opção T: teste sem conhecimento do resultado final
 
-Nova rotina: `test_geographic_holdout_curve_2026.py`.
+Nova rotina: `audit_geographic_holdout_curve_2026.py`.
 Usando os mesmos BWEB de H e a correção NR28 de M,
 divide cada seção segundo a data/hora de recebimento
 exata em segundos, no corte **20:04:39 BRT**.

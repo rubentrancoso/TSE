@@ -114,7 +114,7 @@ def read_multicut(folder, manifest, corrected, cutoffs=CUTOFFS, ufs=UFs):
                     v[i]+=x
                 for j,cut in enumerate(cutoffs):
                     if seconds>=cut:
-                        break
+                        continue
                     offset=3+3*j
                     for i,x in enumerate(values):
                         v[offset+i]+=x

@@ -34,6 +34,30 @@ ambiente Python isolado e instala automaticamente as dependencias de
 visualizacao JupyterLab/pandas/matplotlib no primeiro uso (requer internet
 apenas nessa instalacao; nao baixa nenhum dado eleitoral).
 
+### Complemento de contexto — previsões e simulações do 2º turno (2026)
+
+Alegações de que Lula teria "menos de 2% de chance" na eleição
+foram rastreadas a fontes datadas. O projeto externo
+[berndof/eleicao-2026](https://github.com/berndof/eleicao-2026)
+efetivamente publicou **0,3%** de chance de vitória de Lula em seu
+**modelo M1 estrutural** em documentação versionada antes do 2º turno,
+mas os métodos M2, M3 e a combinação do mesmo autor atribuíam
+**31,7%, 41,1% e 17,9%**, respectivamente. Outras estimativas
+de 24/10 davam 16–17%. O resultado oficial do segundo turno
+foi Lula 51,79% versus Flávio 48,21%.
+
+A probabilidade baixa era **de um modelo**, não das eleições
+como um todo, nem um indicador da probabilidade de fraude.
+Outro número de 2% em uma fonte significava Lula terminar
+com **mais de 52%**, diferente de simplesmente vencer.
+
+O painel Jupyter público mostra dois gráficos próprios sobre
+essas previsões **em apêndice separado dos dados BWEB/EA20 de 1T**.
+Fontes, versão anterior ao pleito e metodologia:
+`docs/CONTEXTO_SIMULACOES_SEGUNDO_TURNO_2026.md`.
+Valores congelados com URLs e datas em
+`data/forensics/external/segundo_turno_previsoes_2026_proveniencia.json`.
+
 ### Painel público da investigação — Jupyter opção U
 
 **Pergunta pública:** os dados permitem identificar alteração, adição,

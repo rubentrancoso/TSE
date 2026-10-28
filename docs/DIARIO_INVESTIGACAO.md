@@ -5865,3 +5865,25 @@ zero votos e zero BWEB) ainda merece confirmacao, mas nao
 ha diferenca na soma nacional dos 119.300.788 validos.
 
 Relatorio: docs/FASE5J_CONCILIACAO_42_SECOES_2026.md.
+
+
+### Complemento E0119 — Ciudad Guayana e apuração manual
+
+Consulta pública adicional em 28/10/2026 encontrou a
+seção ZZ / município 29564 / zona 1 / seção 0091
+de Ciudad Guayana descrita como apuração manual de
+cédulas com zero votos em
+https://governo.votopedia.com.br/eleicoes/2026/urnas/zz .
+Outra base registra arquivos `sa,busa,rdv,imgbusa`
+para a mesma seção:
+https://www.auditoriacidada2026.com/eleicoes-2026 .
+
+A comprovação primária do arquivo oficial BUSA permanece
+pendente; trata-se de corroboração por bases secundárias.
+O conjunto de 42 diferenças ZZ fica caracterizado como
+40 localidades oficialmente dispensadas pelo TRE-DF
+e uma seção de Ciudad Guayana atribuída a apuração
+manual zerada. A reconciliação quantitativa
+42 seções de diferença, zero comparecimentos/votos no EA20,
+e 119.300.788 votos válidos BWEB corrigidos = oficial
+permanece inteiramente fechada.

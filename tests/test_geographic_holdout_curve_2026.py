@@ -6,7 +6,7 @@ import json
 import tempfile
 import unittest
 
-import test_geographic_holdout_curve_2026 as mod
+import audit_geographic_holdout_curve_2026 as mod
 import analyze_operational_curve_2026 as s
 from correct_bweb_28_periodicity_2026 import VERSION as M_VERSION
 from reconcile_stream import sha256

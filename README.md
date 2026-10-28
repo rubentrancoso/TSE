@@ -29,7 +29,32 @@ Consultar a diretriz ativa em
 
 Arquivos novos e volumosos ficam no drive H:. Um arquivo já baixado e válido é reutilizado. Um download interrompido pode continuar de onde parou, quando o servidor permite. O banco SQLite e os relatórios ficam em `H:\\TSE\\forensics\\urnas\\analysis`. Há registro persistente de erros e arquivos ainda pendentes.
 
-Requer apenas Python 3. Não há `pip install`.
+Requer apenas Python 3 para as opcoes existentes. A opcao **U** cria um
+ambiente Python isolado e instala automaticamente as dependencias de
+visualizacao JupyterLab/pandas/matplotlib no primeiro uso (requer internet
+apenas nessa instalacao; nao baixa nenhum dado eleitoral).
+
+### Laboratorio visual forense (opcao U)
+
+O notebook versionado no repositorio e
+`notebooks/TSE_2026_Laboratorio_Forense_Fases_S_T.ipynb`.
+No Windows, o fluxo e sempre o mesmo:
+`git pull origin main` -> `start_windows.bat` -> `U`.
+O menu executa `launch_forensic_notebook.py` e abre o laboratorio
+no navegador; nao e preciso baixar/copiar o notebook separadamente.
+
+A rotina reutiliza os CSV/JSON de **S** e **T** presentes em
+`H:\\TSE\\forensics\\urnas\\analysis\\periodicidade_bweb_2026`.
+Se ainda nao existirem, o menu informa que e preciso executar S e T.
+O notebook confere SHA-256 dos cinco CSV de visualizacao e
+reconciliacao basica de votos, exibe graficos EA20 por tres eixos,
+cronologia de recebimento BWEB, previsao geografia pre-corte,
+residuos por minuto, UFs e municipios. Nao refaz coleta,
+nao acessa SQLite/ZIP, nao mistura primeiro e segundo turnos.
+O modelo municipal com dados finais e sempre rotulado como
+**oraculo retrospectivo**; nao e interpretado como previsao
+ou como prova causal da curva publicada.
+
 
 ## O que ele faz
 

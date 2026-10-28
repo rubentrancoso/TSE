@@ -368,3 +368,49 @@ válidos corrigidos já tinham sido conciliados na M.
 `phase5m_zz_42_voting_status_by_locality_2026.csv`
 e `phase5m_zz_42_voting_status_2026_summary.json`
 sob `H:/TSE/forensics/urnas/analysis/periodicidade_bweb_2026/`.
+
+
+### Evidência pública adicional sobre Ciudad Guayana, ZZ / zona 1 / seção 0091
+
+Em 28/10/2026, uma busca pública encontrou duas bases
+independentes que reproduzem informação atribuída a arquivos TSE:
+
+- Votopédia Governo, em
+  https://governo.votopedia.com.br/eleicoes/2026/urnas/zz ,
+  identifica a seção **ZZ 29564 / zona 1 / seção 0091,
+  CIUDAD GUAYANA** como **apuração manual de cédulas com
+  zero votos**;
+- Auditoria Cidadã 2026, em
+  https://www.auditoriacidada2026.com/eleicoes-2026 ,
+  informa arquivos de Sistema de Apuração
+  `sa,busa,rdv,imgbusa` associados à mesma
+  localidade/zona/seção.
+
+Esses relatos são **fontes externas de terceiros**, não
+foram ainda confrontados no projeto diretamente com a
+proveniência oficial dos arquivos BUSA dessa seção.
+São consistentes com os 72 aptos, comparecimento zero,
+zero votos e ausência de registro BWEB convencional
+apontados pela execução R.
+
+**Interpretação documental:** as 40 outras localidades
+(com menos de 30 aptos) estão nominalmente documentadas
+como dispensadas pelo TRE-DF; a localidade remanescente,
+Ciudad Guayana (72 aptos), tem indicação secundária
+específica de apuração manual sem votos. Assim,
+a diferença 42 de `EA20.st - BWEB` tem agora
+explicação administrativa/técnica plausível para os
+41 locais, sem diferença de votos registrada.
+Para converter o caso Ciudad Guayana em prova primária,
+consultar o `busa` oficial ou a lista nominal de
+votação manual publicada pelo TRE-DF.
+
+**Encerramento da investigação desta discrepância
+como problema numérico:** com a opção R, foram
+conciliados todos os locais, contadores e votos
+observados. As respostas administrativas e técnicas
+continuam condicionadas à documentação original
+em casos individuais, mas não há neste recorte
+evidência de votos presidenciais faltando no BWEB.
+A série de 119.300.788 votos válidos oficiais continua
+fechada exatamente contra BWEB corrigido.

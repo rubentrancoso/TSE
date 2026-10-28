@@ -66,6 +66,18 @@ def describe(ea, training_updates=EARLY_TRAIN_UPDATES, expected_post=None):
     if total_valid<=0:
         raise ValueError("Nenhum voto adicionado")
     oracle=total_lula/total_valid
+    oracle_flavio=total_flavio/total_valid
+
+    def oracle_integer_votes(cumulative_valid):
+        # Cada candidato recebe uma quantidade INTEIRA de votos no contrafactual.
+        # Arredondamento acumulado preserva o total FINAL e lotes fisicamente possiveis.
+        valid=cumulative_valid-first["valid"]
+        l=round(oracle*valid)
+        f=round(oracle_flavio*valid)
+        if l<0 or f<0 or l+f>valid:
+            raise RuntimeError("Modelo oraculo gerou contagens nao fisicas")
+        return l,f
+
     anchor=rows[training_updates]
     train_v=anchor["valid"]-first["valid"]
     train_l=anchor["lula"]-first["lula"]
@@ -75,7 +87,7 @@ def describe(ea, training_updates=EARLY_TRAIN_UPDATES, expected_post=None):
     pre_rate=train_l/train_v
 
     actual=[100*r["lula"]/r["valid"] for r in rows]
-    fixed=[safe_share(first["lula"]+oracle*(r["valid"]-first["valid"]), r["valid"])
+    fixed=[safe_share(first["lula"]+oracle_integer_votes(r["valid"])[0], r["valid"])
            for r in rows]
     section_x=[r["st"] for r in rows]
     valid_x=[r["valid"] for r in rows]
@@ -106,7 +118,15 @@ def describe(ea, training_updates=EARLY_TRAIN_UPDATES, expected_post=None):
         if seconds<=0:
             raise RuntimeError("Cronologia EA20 nao monotona")
         expected_from_line=ideal(current)*current["valid"]-ideal(previous)*previous["valid"]
-        predicted_lula=first["lula"]+oracle*(current["valid"]-first["valid"])
+        predicted_lula=first["lula"]+oracle_integer_votes(current["valid"])[0]
+        predicted_flavio=first["flavio"]+oracle_integer_votes(current["valid"])[1]
+        previous_lula=first["lula"]+oracle_integer_votes(previous["valid"])[0]
+        previous_flavio=first["flavio"]+oracle_integer_votes(previous["valid"])[1]
+        if (not 0<=predicted_lula-previous_lula<=dv
+            or not 0<=predicted_flavio-previous_flavio<=dv
+            or predicted_lula-previous_lula+
+               predicted_flavio-previous_flavio>dv):
+            raise RuntimeError("Lote do oraculo nao e realizavel com votos inteiros")
         early_pred=(anchor["lula"]+pre_rate*(current["valid"]-anchor["valid"])
                     if i>=training_updates else None)
         batches.append(dict(
@@ -175,6 +195,9 @@ def describe(ea, training_updates=EARLY_TRAIN_UPDATES, expected_post=None):
         "constant_tail_oracle":{
             "name":"ORACULO_COM_TAXA_FINAL_DA_CAUDA_IN_SAMPLE",
             "vote_rate_lula_pct":100*oracle,
+            "vote_rate_flavio_pct":100*oracle_flavio,
+            "integer_ballots_physical_feasibility":True,
+            "rounding_method":"arredondamento cumulativo de cada candidato; total final e lotes conferidos",
             "rmse_actual_minus_oracle_cumulative_pp":rmse(actual,fixed),
             "max_abs_actual_minus_oracle_cumulative_pp":max(abs(a-b) for a,b in zip(actual,fixed)),
             "warning":"Usa taxa de votos final FUTURA, nao explica causalidade ou recepcao BWEB.",

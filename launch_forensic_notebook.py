@@ -13,6 +13,7 @@ NOTEBOOK = REPO / "notebooks" / "TSE_2026_Laboratorio_Forense_Fases_S_T.ipynb"
 NOTEBOOK_ZONE = REPO / "notebooks" / "TSE_2026_Laboratorio_Forense_Fase_V.ipynb"
 NOTEBOOK_PLACEBOS = REPO / "notebooks" / "TSE_2026_Laboratorio_Forense_Fase_W.ipynb"
 NOTEBOOK_EA20 = REPO / "notebooks" / "TSE_2026_Laboratorio_Forense_Fase_X.ipynb"
+NOTEBOOK_TIMING = REPO / "notebooks" / "TSE_2026_Laboratorio_Forense_Fase_Y.ipynb"
 VENV = REPO / ".venv_tse_notebook"
 DATA_FILES = (
     "phase5o_operational_curve_2026_summary.json",
@@ -39,6 +40,11 @@ EA20_FILES = (
     "phase5s_ea20_publication_mechanics_2026_summary.json",
     "phase5s_ea20_batch_mechanics_2026.csv",
     "phase5s_ea20_equal_volume_blocks_2026.csv",
+)
+TIMING_FILES = (
+    "phase5t_receipt_vs_publication_2026_summary.json",
+    "phase5t_receipt_vs_publication_timeline_2026.csv",
+    "phase5t_receipt_vs_publication_offsets_2026.csv",
 )
 
 
@@ -101,6 +107,19 @@ def launch(root: Path, check_only: bool = False) -> int:
             print("[ERRO] Notebook X nao encontrado: " + str(NOTEBOOK_EA20))
             return 1
         notebook = NOTEBOOK_EA20
+    phase_y_present = (folder / TIMING_FILES[0]).is_file()
+    if phase_y_present:
+        missing_y = [str(folder / name) for name in TIMING_FILES
+                     if not (folder / name).is_file()]
+        if missing_y:
+            print("[ERRO] Fase Y incompleta; reexecute Y.")
+            for item in missing_y:
+                print("  - " + item)
+            return 1
+        if not NOTEBOOK_TIMING.is_file():
+            print("[ERRO] Notebook Y nao encontrado: " + str(NOTEBOOK_TIMING))
+            return 1
+        notebook = NOTEBOOK_TIMING
     if check_only:
         print("[OK] Notebook selecionado: " + str(notebook))
         print("[OK] CSVs/JSONs encontrados. Integridade SHA sera conferida no notebook.")

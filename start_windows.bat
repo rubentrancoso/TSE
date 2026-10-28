@@ -49,15 +49,17 @@ echo [Q] EXTERIOR ZZ: localizar +42 secoes por municipio EA20/BWEB
 echo [R] EXTERIOR ZZ: conferir comparecimento e votos nas 42 secoes
 echo [S] CURVA FORENSE 2026: tempo real, BU recebidos, geografia UF/municipio
 echo [T] FORA DA AMOSTRA: pre-20:04 prevendo BU recebidos apos 20:04
-echo [U] LABORATORIO JUPYTER: abre automaticamente a ultima fase executada
+echo [U] LABORATORIO JUPYTER: painel publico consolidado e graficos
 echo [V] ZONAS TARDIAS: comparar municipio vs zona pre-20:04 sem vazamento
 echo [W] CORTES PLACEBO: comparar votos na mesma zona em horarios diferentes
 echo [X] PUBLICACAO EA20: curva linear vs volumes fisicos e lotes reais
 echo [Y] RECEBIMENTO x PUBLICACAO: comparar BWEB por segundo vs EA20
+echo [Z] JUPYTER TECNICO: abre notebook da ultima fase executada
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEFGHIJKLMNOPQRSTUVWXY0 /N /M "Selecione: "
-if errorlevel 35 exit /b 0
+choice /C 123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0 /N /M "Selecione: "
+if errorlevel 36 exit /b 0
+if errorlevel 35 goto forensic_notebook_technical_2026
 if errorlevel 34 goto receipt_publication_timing_2026
 if errorlevel 33 goto ea20_publication_mechanics_2026
 if errorlevel 32 goto temporal_placebos_2026
@@ -443,9 +445,17 @@ if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5t_receipt_vs_publication_2026_summary.json
 goto done
 
+:forensic_notebook_technical_2026
+echo.
+echo LABORATORIO JUPYTER TECNICO - ABRE A ULTIMA FASE EXECUTADA.
+echo Para o painel explicativo destinado ao publico, escolha U.
+%PY% launch_forensic_notebook.py --tecnico
+if errorlevel 1 goto validate_failed
+goto done
+
 :forensic_notebook_2026
 echo.
-echo LABORATORIO JUPYTER 2026 - ABRE A FASE MAIS RECENTE.
+echo LABORATORIO JUPYTER 2026 - PAINEL PUBLICO FORENSE CONSOLIDADO.
 echo U abre o editor diretamente, sem testes obrigatorios de celulas salvas.
 echo Verifica presenca dos CSV/JSON em H:; confere SHA no notebook.
 echo Primeiro uso instala dependencias Python em ambiente isolado.

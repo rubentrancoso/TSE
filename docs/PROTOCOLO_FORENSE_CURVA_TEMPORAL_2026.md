@@ -188,3 +188,61 @@ que "nunca ocorre" ou que "pode ocorrer" sem dados.
 Nenhum resultado de teste da futura etapa A/B/C
 foi executado aqui. Os resultados disponíveis
 são das fases previamente concluídas.
+
+
+## 7. 28/10/2026 — Fase 5O, análise operacional implementada (opção S)
+
+**Resultado já calculado sobre a fonte EA20 versionada (193 snapshots):**
+o corte de 20:04:39 BRT produz 153 pontos (152 intervalos).
+Ajustando a reta diretamente aos percentuais de votos inteiros
+acumulados para Lula, o ajuste descritivo varia fortemente
+segundo o eixo horizontal:
+
+| Eixo X | R² da reta | RMSE em ponto percentual | Desvio máximo em pp |
+|---|---:|---:|---:|
+| Horário real transcrito dos campos gerado_brt | 0,61017 | 0,29103 | 1,25438 |
+| Índice da atualização | 0,84211 | 0,18522 | 0,51801 |
+| Número de seções EA20 st | **0,99044** | **0,04556** | 0,17478 |
+
+O intervalo observado entre versões vai de 21 a 5.224
+segundos, duração total de 414,87 minutos no trecho.
+Isso comprova alta linearidade descritiva no eixo
+`st`; não equivale a uma sequência proporcional
+a minutos de relógio. O diagnóstico usa
+`data/forensics/analysis/phase5a_presidential_national_2026.csv`,
+não capturas hipotéticas de outros países.
+R² não é uma probabilidade de fraude.
+
+**Código implementado:** `analyze_operational_curve_2026.py`,
+disponível na opção **S** do painel Windows:
+- valida o SHA de cada BWEB/UF já derivado pela H
+  e dos caches por seção da correção NR28 da M;
+- reconcilia exatamente 499.206 seções, 119.300.788
+  votos válidos, 53.879.538 Lula e 56.104.503 Flávio;
+- reproduz por minuto a série corrigida da M com
+  checagem de SHA e dos incrementos inteiros;
+- calcula separadamente a curva de versões EA20
+  (horário real, índice de atualizações e seções);
+- monta a curva dos BU por hora real de
+  `DT_BU_RECEBIDO`, sem presumir que BU recebido
+  foi imediatamente publicado pelo EA20;
+- constrói dois **contrafactuais geográficos**
+  que mantêm as quantidades reais recebidas por
+  minuto, mas atribuem a cada lote sua taxa final
+  observada na própria UF ou município;
+- compara desvios dos modelos geográficos com a
+  série de recebimento real, sem confundir
+  ajuste in-sample com previsão causal independente.
+
+A opção S não baixa dados, não abre ZIP e não
+consulta SQLite. Saídas no H:
+`phase5o_operational_curve_2026_summary.json`,
+`phase5o_ea20_time_axes_2026.csv`,
+`phase5o_bweb_receipt_geo_2026.csv`,
+`phase5o_uf_receipt_breakdown_2026.csv`.
+
+**Pendente:** a execução S sobre H com BWEB
+individual e avaliação do resultado contrafactual.
+Até lá não foi verificado se a geografia
+por município responde pela linearidade
+EA20 de R²=0,9904.

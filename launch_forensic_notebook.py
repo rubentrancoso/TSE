@@ -14,6 +14,7 @@ NOTEBOOK_ZONE = REPO / "notebooks" / "TSE_2026_Laboratorio_Forense_Fase_V.ipynb"
 NOTEBOOK_PLACEBOS = REPO / "notebooks" / "TSE_2026_Laboratorio_Forense_Fase_W.ipynb"
 NOTEBOOK_EA20 = REPO / "notebooks" / "TSE_2026_Laboratorio_Forense_Fase_X.ipynb"
 NOTEBOOK_TIMING = REPO / "notebooks" / "TSE_2026_Laboratorio_Forense_Fase_Y.ipynb"
+NOTEBOOK_PUBLIC = REPO / "notebooks" / "TSE_2026_Painel_Publico_Forense.ipynb"
 VENV = REPO / ".venv_tse_notebook"
 DATA_FILES = (
     "phase5o_operational_curve_2026_summary.json",
@@ -57,7 +58,7 @@ def env_python(directory: Path) -> Path:
     return directory / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
 
 
-def launch(root: Path, check_only: bool = False) -> int:
+def launch(root: Path, check_only: bool = False, tecnico: bool = False) -> int:
     if not NOTEBOOK.is_file():
         print("[ERRO] Notebook nao encontrado no repositorio: " + str(NOTEBOOK))
         return 1
@@ -120,6 +121,11 @@ def launch(root: Path, check_only: bool = False) -> int:
             print("[ERRO] Notebook Y nao encontrado: " + str(NOTEBOOK_TIMING))
             return 1
         notebook = NOTEBOOK_TIMING
+    if not tecnico:
+        if not NOTEBOOK_PUBLIC.is_file():
+            print("[ERRO] Notebook publico nao encontrado: " + str(NOTEBOOK_PUBLIC))
+            return 1
+        notebook = NOTEBOOK_PUBLIC
     if check_only:
         print("[OK] Notebook selecionado: " + str(notebook))
         print("[OK] CSVs/JSONs encontrados. Integridade SHA sera conferida no notebook.")
@@ -161,9 +167,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", help="Diretorio local de urnas, por padrao H:/TSE/forensics/urnas")
     parser.add_argument("--check", action="store_true", help="Verifica entradas sem instalar/abrir Jupyter")
+    parser.add_argument("--tecnico", action="store_true", help="Abre a fase tecnica mais recente em vez do painel publico consolidado")
     args = parser.parse_args()
     from urnas import root_path
-    return launch(root_path(args.root), check_only=args.check)
+    return launch(root_path(args.root), check_only=args.check, tecnico=args.tecnico)
 
 
 if __name__ == "__main__":

@@ -40,14 +40,14 @@ de Lula dos novos votos em **54,08809178%**, isto e, a
 taxa de todo o conjunto publicado apos o corte.
 O modelo cumulativo e
 
-    L_model_i = L_corte + p_tail * (VV_i - VV_corte)
+    L_model_i = L_corte + round(p_tail * (VV_i - VV_corte))
     share_model_i = 100 * L_model_i / VV_i
 
-Este controle deu R² **0,9988478089** por secoes e
+Cada candidato (Lula e Flavio) recebe votos INTEIROS por arredondamento cumulativo. Verificamos que todos os incrementos sao possiveis entre zero e os validos de cada lote, que ambos somados cabem nos votos validos e que o final inteiro fecha exatamente. Este controle deu R² **0,9988478072** por secoes e
 **0,9989823110** por validos, mais linear que o real.
 O erro RMSE da curva real perante o controle foi
-**0,1332003292 ponto percentual**, com desvio maximo
-**0,2384952495 pp**.
+**0,1332003580 ponto percentual**, com desvio maximo
+**0,2384951882 pp**.
 
 **AVISO:** p_tail foi estimada com os votos FINAIS da
 propria cauda; o controle e **IN_SAMPLE e circular**.

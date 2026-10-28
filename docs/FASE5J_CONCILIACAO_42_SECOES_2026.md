@@ -280,6 +280,91 @@ SQLite, não baixa dados e não usa 2022.
 Relatórios ao executar R:
 `phase5m_zz_42_voting_status_by_locality_2026.csv`;
 `phase5m_zz_42_voting_status_2026_summary.json`.
-A opção R ainda não foi executada nos arquivos reais.
+A opção R foi executada com os arquivos reais em 28/10/2026; resultados e confirmação externa adiante.
 
 **Validação da opção R:** 199 testes em Windows e 199 em Linux, todos aprovados na GitHub Actions 40539620283 (fixtures sintéticas, não execução real sobre H:): https://github.com/rubentrancoso/TSE/actions/runs/40539620283.
+
+
+## 28/10/2026 — R executada: zero votos nas 42 seções e comprovação administrativa externa
+
+A opção **R (Fase 5M)** foi executada em Windows com os JSONs
+EA20 das mesmas 41 localidades de ZZ, conferidos por SHA-256
+pelo manifesto original Q. Os 5 testes do início do log
+`AppData/Local/Temp`, incluindo "Local 1" com dois votos,
+são fixtures sintéticas. **A execução real começa depois
+de `Ran 5 tests ... OK`**.
+
+**Resultado REAL:**
+- 41/41 localidades classificadas `EA20_COMPARECIMENTO_E_VOTOS_ZERO`;
+- diferença total EA20 versus BWEB: **42 seções**, incluindo
+  2 em Sarajevo e 1 em cada uma das demais 40 localidades;
+- **zero** comparecimentos, votos válidos, brancos e nulos,
+  em **todas** as 41 localidades segundo os EA20;
+- soma dos eleitores aptos (`e.te`) nas 41 localidades:
+  **495**; 40 localidades com menos de 30 aptos,
+  e 1 localidade com 72 aptos (CIUDAD GUAYANA);
+- nenhuma localidade com 100 ou mais eleitores aptos.
+
+**Corroboração independente do TRE-DF:**
+Em 24/09/2026 o TRE-DF publicou a dispensa de 46
+localidades do exterior (40 com eleitorado positivo abaixo
+de 30 + seis sem eleitores aptos), que não teriam seção de
+votação nem de justificativa porque não foi possível
+agregá-las dentro do país. **Os NOMES das 40 localidades
+com menos de 30 aptos no EA20 coincidem integralmente
+com as 40 localidades com eleitorado positivo na lista
+oficial de 46 cidades dispensadas.** São documentos de
+natureza diferente, produzidos em épocas distintas:
+- comunicado:
+  https://www.tre-df.jus.br/comunicacao/noticias/2026/Setembro/tre-df-dispensa-46-locais-de-votacao-no-exterior-nas-eleicoes-2026
+- cronograma, agregação e votação manual do TRE-DF:
+  https://www.tre-df.jus.br/comunicacao/noticias/2026/Setembro/eleicoes-2026-consulte-os-locais-e-as-secoes-eleitorais-para-votacao-no-exterior
+- base legal:
+  https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-751-de-26-de-fevereiro-de-2026
+  (artigo 78 e seus parágrafos 1–6).
+
+**Diferenças de cadastro a preservar**: na lista do
+TRE-DF de setembro, Sarajevo tem 12 aptos (EA20=11)
+e Lusaca tem 27 (EA20=25). As demais 38 localidades
+com menos de 30 aptos têm contagens idênticas.
+Assim, 40 localidades do conjunto oficial positivo
+somam **426** aptos no comunicado; nos EA20 somam
+**423** (diferença 3). Ciudad Guayana, com 72,
+não está entre as 46 cidades dispensadas e traz
+`e.c=0`, `v.vv=v.vb=v.tvn=0`. Seu enquadramento
+como votação manual, não instalação ou outro status
+administrativo ainda **NÃO FOI VERIFICADO** pelo
+edital/planilha nominal correspondente.
+
+A Resolução TSE 23.751/2026 prevê mínimo de 30
+eleitores para instalação de seção, agregação no
+mesmo município/país e regra de não instalar urna
+eletrônica quando, mesmo após agregação, houver
+menos de 100 eleitores, possibilitando votação por
+cédula. O TRE-DF registrou 1.310 seções planejadas
+após agregação, com 1.282 eletrônicas e 28 manuais
+em notícia de 02/09/2026, **não** necessariamente
+o mesmo escopo temporal do contador final EA20.
+Não confundir boletim eletrônico BWEB com
+BUEx, resultados manuais ou seção dispensada.
+
+**Conclusão técnica:** para as 40 localidades
+dispensadas, existe agora prova administrativa
+externa, além de empate dos votos zero nos EA20
+e da inexistência de BWEB. Para Ciudad Guayana,
+há zero votos e zero comparecimento no EA20, mas
+falta verificar o seu status administrativo
+específico. A diferença nacional BR.st-BWEB de
+42 foi reconciliada como diferença de contagem
+entre seções incluídas nos contadores EA20 e
+seções que possuem linha BWEB presidencial, com
+zero votos registrados nas 42 na fonte EA20.
+Isso **não demonstra** que cada uma deva ter BU
+eletrônico, nem comprova cadeia física de
+custódia independente. Os 119.300.788 votos
+válidos corrigidos já tinham sido conciliados na M.
+
+**Arquivos locais gerados por R, sem novos downloads:**
+`phase5m_zz_42_voting_status_by_locality_2026.csv`
+e `phase5m_zz_42_voting_status_2026_summary.json`
+sob `H:/TSE/forensics/urnas/analysis/periodicidade_bweb_2026/`.

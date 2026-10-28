@@ -5817,3 +5817,51 @@ R ainda depende de execucao local, portanto nao afirmar
 se os 41 tiveram ou nao votos.
 
 Relatorio: docs/FASE5J_CONCILIACAO_42_SECOES_2026.md.
+
+
+---
+
+## 2026-10-28 — E0119 — Resultado real da R: 42 secoes ZZ sem comparecimento ou votos, e fonte TRE-DF
+
+A opcao R (Fase 5M) foi executada pelo investigador em Windows
+sobre 41 localidades do exterior ZZ: **42 secoes de diferenca**
+entre EA20 e BWEB, todas com `e.c=0`, `v.vv=0`,
+`v.vb=0` e `v.tvn=0` em arquivos EA20 locais certificados
+pelo manifesto SHA original. Sarajevo possui duas secoes de
+diferenca, os outros 40 locais uma cada. As linhas "Local 0"
+e "Local 1" com votos pertencem exclusivamente aos testes
+sinteticos em Temp, nao aos EA20 reais. Nenhuma das 41
+localidades reais apresentou comparecimento ou voto positivo.
+
+Os 41 locais somam **495 aptos**, 40 localidades com menos de
+30 aptos e a unica com mais de 30 **Ciudad Guayana (72)**,
+todas inferiores a 100 aptos. Encontrada confirmacao
+administrativa independente: comunicado TRE-DF de
+24/09/2026 dispensou 46 localidades, entre elas exatamente
+as **40 localidades reais de R que possuem menos de 30 aptos**.
+As outras seis cidades do comunicado tinham zero aptos.
+Duas diferencas menores no numero de eleitores entre
+setembro e EA20 de outubro: Sarajevo 12 vs 11, Lusaca
+27 vs 25. Total TRE-DF comunicado 426 aptos nas 40
+cidades positivas, EA20 423: diferenca tres. Ciudad Guayana
+nao figura na dispensa por menos de 30, sua eventual
+modalidade manual/administrativa segue sem prova nominal.
+O art. 78 da Resolucao TSE 23.751/2026 exige minimo de 30
+aptos para instalar secao e sem 100 aptos apos agregacao
+nao instala urna eletronica. TRE-DF havia planejado
+1.282 mesas eletronicas e 28 manuais no exterior.
+
+Fontes:
+https://www.tre-df.jus.br/comunicacao/noticias/2026/Setembro/tre-df-dispensa-46-locais-de-votacao-no-exterior-nas-eleicoes-2026
+https://www.tre-df.jus.br/comunicacao/noticias/2026/Setembro/eleicoes-2026-consulte-os-locais-e-as-secoes-eleitorais-para-votacao-no-exterior
+https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-751-de-26-de-fevereiro-de-2026
+
+Concluido: a diferenca de 42 entre EA20.st e BWEB foi
+localizada em 41 localidades ZZ, caracterizada com
+ZERO votos oficiais registrados nas 42, e 40 localidades
+identificadas nominalmente como dispensadas pelo TRE-DF.
+A razao administrativa exata de Ciudad Guayana (72 aptos,
+zero votos e zero BWEB) ainda merece confirmacao, mas nao
+ha diferenca na soma nacional dos 119.300.788 validos.
+
+Relatorio: docs/FASE5J_CONCILIACAO_42_SECOES_2026.md.

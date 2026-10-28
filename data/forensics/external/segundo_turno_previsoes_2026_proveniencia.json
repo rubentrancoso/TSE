@@ -1,0 +1,104 @@
+{
+  "version": "contexto-previsoes-segundo-turno-2026-v1",
+  "scope": "Contexto eleitoral: segundo turno presidencial 2026; NAO integra a auditoria individual BWEB do primeiro turno",
+  "status": "FONTES_EXTERIORES_COM_METODOLOGIA_DECLARADA",
+  "first_pre_runoff_archive": {
+    "provider": "berndof/eleicao-2026",
+    "description": "Três métodos e composição ponderada; projeção condicionada aos dados do primeiro turno em 04/10, 23h BRT",
+    "document_commit": "528b1d8b6bf8c46c71e2d0d9159cb47b5f847e6a",
+    "commit_created_utc": "2026-10-05T03:44:10Z",
+    "initial_commit": "f976e78b04c999e3c7833c181c564fd1e5e299c3",
+    "initial_commit_created_utc": "2026-10-05T02:44:29Z",
+    "archived_tag": "previsao-2t-2026-10-04-v2",
+    "source_url": "https://github.com/berndof/eleicao-2026/blob/528b1d8b04c999e3c7833c181c564fd1e5e299c3/docs/artigo.pt.md",
+    "model_variants": [
+      {
+        "id": "M1",
+        "name": "Transferência de votos (M1)",
+        "lula_win_probability_pct": 0.3,
+        "lula_valid_share_mean_pct": 47.19,
+        "interval_90_pct": [
+          45.44,
+          48.91
+        ]
+      },
+      {
+        "id": "M2",
+        "name": "Pesquisas corrigidas (M2)",
+        "lula_win_probability_pct": 31.7,
+        "lula_valid_share_mean_pct": 48.86,
+        "interval_90_pct": [
+          44.91,
+          52.83
+        ]
+      },
+      {
+        "id": "M3",
+        "name": "Histórico (M3)",
+        "lula_win_probability_pct": 41.1,
+        "lula_valid_share_mean_pct": 49.35,
+        "interval_90_pct": [
+          43.41,
+          55.29
+        ]
+      },
+      {
+        "id": "ensemble",
+        "name": "Combinação M1+M2+M3",
+        "lula_win_probability_pct": 17.9,
+        "lula_valid_share_mean_pct": 48.12,
+        "interval_90_pct": [
+          45.12,
+          52.58
+        ]
+      }
+    ],
+    "ensemble_weights": {
+      "M1": 0.5,
+      "M2": 0.3,
+      "M3": 0.2
+    },
+    "warning": "As três metodologias não são independentes no sentido de fontes totalmente disjuntas; a combinação 50/30/20 foi escolhida pelo autor; intervalo M1 possivelmente subestimado; 0,3% não é chance universal de fraude."
+  },
+  "other_pre_runoff_models": [
+    {
+      "provider": "Plano Político",
+      "date": "2026-10-24",
+      "lula_win_probability_pct": 16,
+      "source_url": "https://www.planopolitico.com.br/modelos-eleitorais/presidencial/",
+      "note": "Na mesma página, 2% significava Lula terminar com MAIS DE 52% dos votos válidos, não Lula simplesmente vencer."
+    },
+    {
+      "provider": "Opinião Inteligência Política",
+      "date": "2026-10-24",
+      "lula_win_probability_pct": 17,
+      "source_url": "https://eleicoes2026.opiniao.inf.br/analises/segundo-turno/",
+      "note": "49 pesquisas de 18 institutos; probabilidade é dependente das premissas."
+    },
+    {
+      "provider": "Scoras Digital",
+      "date": "2026-10-25",
+      "lula_win_probability_pct": 19,
+      "source_url": "https://eleicoes.scoras.com.br/",
+      "note": "200.000 cenários simulados; dado refere-se ao segundo turno e não aos BUs."
+    }
+  ],
+  "official_runoff_result": {
+    "date": "2026-10-25",
+    "lula_votes": 64256232,
+    "flavio_votes": 59826041,
+    "valid_votes": 124082273,
+    "lula_valid_pct": 51.79,
+    "flavio_valid_pct": 48.21,
+    "winner": "Lula",
+    "source_url": "https://www.tse.jus.br/comunicacao/noticias/2026/Outubro/presidente-do-tse-anuncia-reeleicao-de-lula-e-faz-balanco-do-2o-turno-das-eleicoes-2026"
+  },
+  "distinctions": [
+    "O <2% identificado é específico do método M1 (0,3%). Os demais métodos do mesmo projeto atribuíram chances bem maiores.",
+    "Os 2% de outra fonte eram a chance de Lula obter mais de 52% dos votos, e não sua chance total de vencer. O resultado oficial foi de 51,79%, inferior a 52%.",
+    "As probabilidades expressam hipóteses e incerteza de cada modelo. Não medem a probabilidade de fraude.",
+    "Uma única eleição realizada não calibra probabilidades de um modelo de previsão; a discrepância exige investigar premissas, não alterar a interpretação dos BUs.",
+    "Dados de previsão e resultado do 2T são contexto histórico comparativo, não podem ser somados, combinados ou alinhados aos registros 1T da investigação BWEB/EA20.",
+    "O código do M1 é datado antes da votação no segundo turno; a autenticidade de datas/versões deve ser preservada por commits e tags imutáveis."
+  ]
+}

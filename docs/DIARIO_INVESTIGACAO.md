@@ -6431,3 +6431,67 @@ de Comunicação Forense. Continua **pendente a execução
 do novo notebook no Windows** para geração empírica das
 imagens e HTML; resultados numéricos dos mapas não foram
 inventados e devem ser observados nos dados locais.
+
+
+---
+
+## 2026-10-28 — E0130 — Verificação: probabilidades preditivas de vitória inferiores a 2%
+
+O investigador trouxe uma hipótese externa: "simulações das
+pesquisas davam menos de 2% de chances de Lula vencer Flávio".
+Esta afirmação exigia rastrear autor, metodologia, turno, data,
+fonte independente e resultado observado antes de ser
+apresentada como fato no relatório público.
+
+**Fonte encontrada e datada ANTES do segundo turno:** o
+repositório externo `berndof/eleicao-2026`, com primeiro
+commit `f976e78b04c999e3c7833c181c564fd1e5e299c3`
+registrado em `2026-10-05T02:44:29Z`
+(04/10 23:44:29 BRT), continha modelo **M1**
+com **0,3%** de vitória de Lula no 2º turno.
+No commit datado `2026-10-05T03:44:10Z`/
+`528b1d8b6bf8c46c71e2d0d9159cb47b5f847e6a`,
+as probabilidades documentadas foram:
+- M1 transferência estrutural: 0,3%;
+- M2 pesquisas corrigidas: 31,7%;
+- M3 histórico: 41,1%;
+- combinação ponderada 50/30/20: 17,9%.
+
+O próprio modelo M1 assinalava limitação por intervalos
+estreitos e condicionamento aos dados de 04/10.
+A afirmação de que **todas** as simulações
+atribuiram menos de 2% à vitória é falsa para essa fonte.
+
+Outros modelos datados em 24/10: Plano Político
+16% de vitória Lula e Opinião 17%.
+No Plano Político, *2%* era chance de Lula terminar
+com MAIS DE 52% dos válidos, não simplesmente vencer.
+O resultado oficial de 25/10 foi
+64.256.232 Lula (51,79%) vs
+59.826.041 Flávio (48,21%) em 124.082.273 válidos.
+Lula superou a média do M1 (47,19%) em 4,60 pp e
+o teto central de 90% (48,91%) em 2,88 pp.
+O resultado ficou dentro dos intervalos de M2/M3/combinação.
+
+**Conclusão operacional:** investigar por que o modelo M1
+subestimou fortemente Lula, sem cometer a falácia de
+interpretar 0,3% como probabilidade de eleição fraudulenta.
+O resultado do 2T e as previsões são **um contexto separado**
+da auditoria BWEB/EA20 do **1T**; não importar seus votos
+para as séries do primeiro turno. Eventuais comparações
+interturnos devem utilizar seus próprios BUs/arquivos oficiais.
+
+Foi criado o JSON de procedência
+`data/forensics/external/segundo_turno_previsoes_2026_proveniencia.json`,
+a nota técnica
+`docs/CONTEXTO_SIMULACOES_SEGUNDO_TURNO_2026.md` e
+o Jupyter público ganhou dois gráficos narrativos sobre
+probabilidades divergentes dos modelos e faixa predita
+versus o resultado oficial. O HTML público incorpora as
+figuras e links para versões arquivadas. README,
+Guia editorial e testes de integridade foram atualizados.
+
+**Estado:** fontes externas e histórico de commits conferidos
+via GitHub; código de visualização publicado no TSE/main.
+O notebook ainda precisa ser executado no Windows para
+geração real das figuras.

@@ -34,6 +34,21 @@ ambiente Python isolado e instala automaticamente as dependencias de
 visualizacao JupyterLab/pandas/matplotlib no primeiro uso (requer internet
 apenas nessa instalacao; nao baixa nenhum dado eleitoral).
 
+### Fase 5R — placebos temporais nas mesmas zonas (opcao W)
+
+Depois de executar **V**, escolha **W** no `start_windows.bat`.
+O programa `analyze_cutoff_placebos_2026.py` rele os CSV H/M uma unica
+vez, com SHA, e calcula a diferenca Lula/Flavio pos menos pre em
+zonas com pelo menos mil validos de cada lado, para dez cortes
+fixos entre 18h e 21h (inclui 20:04:39). Confere o resultado do
+corte original da V, testa cobertura e a influencia de cada UF.
+Nao baixa votos/ZIP nem reabre SQLite. Detalhes em
+`docs/FASE5R_PLACEBOS_TEMPO_2026.md`.
+
+A opcao **U** abre automaticamente o notebook W quando essa fase
+estiver concluida, senao abre V ou S/T conforme os resultados
+existentes.
+
 ### Nova Fase 5Q — analise de zonas tardias (opcao V)
 
 Apos rodar a opcao T, execute **V** no `start_windows.bat`.

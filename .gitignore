@@ -10,3 +10,8 @@ data/forensics/**
 __pycache__/
 *.pyc
 .DS_Store
+
+# Ambiente local de Jupyter; nao versionar outputs temporarios.
+.venv_tse_notebook/
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/

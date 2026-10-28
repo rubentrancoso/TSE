@@ -6088,3 +6088,55 @@ Sem downloads, ZIP, SQLite, 2022 ou segundo turno.
 **Estado:** V criada e com testes sintéticos versionados, mas ainda
 não executada empiricamente no disco H. Nenhum resultado zonal real
 foi alegado. Documento: `docs/FASE5Q_ZONAS_TARDIAS_2026.md`.
+
+
+---
+
+## 2026-10-28 — E0124 — Resultado real V: diferenca dentro das mesmas zonas; opcao W criada
+
+Investigador executou V (Fase 5Q) em disco H: os 499.206 BWEB
+do primeiro turno de 2026 com SHA H/M verificados. Os 6 testes
+sinteticos passaram; os tres modelos BR/UF/municipio reproduziram
+numericamente a Fase T. O novo modelo ZONA_pre subestimou Lula
+na cauda em **2,02346433 pp** (RMSE de minuto 2,70830734 pp),
+contra MUNICIPIO_pre **2,06049270 pp** (RMSE 2,82262265 pp).
+A resolucao zonal portanto reduziu apenas **0,03702837 pp**
+da diferenca nacional de Lula e aproximadamente 4,05% do RMSE.
+
+Decomposicao do erro municipal em **votos de Lula observados
+menos previstos** na cauda:
+- **MESMA_ZONA_COM_PRE:** 2.127 zonas; 11.982.944 validos tardios
+  (87,9296% da cauda); +257.869,23 votos em relacao ao modelo
+  municipal. Isso representa **91,83%** do desvio liquido total;
+- **MUNICIPIO_SEM_PRE:** 266 zonas de municipios sem votos
+  pre-corte; 1.340.387 validos (9,8356%); +30.622,80 votos;
+- **ZONA_SEM_PRE:** 4 zonas novas em municipios ja conhecidos,
+  304.551 validos (2,2348%); -7.690,51 votos;
+- total de residuos municipais: cerca de +280.801,51 votos
+  **relativos ao modelo**, nao identificacao de fraude.
+
+Nas **1.380 zonas** com >=1.000 validos em ambos lados do corte,
+a media ponderada pelo total de validos tardios da diferenca
+Lula pos menos pre foi **+1,99279848 ponto percentual**.
+Isso refuta que todo o desvio tardio esteja concentrado apenas
+em municipios e zonas que apareceram depois das 20:04:39,
+mas nao determina porque as secoes das mesmas zonas tem
+composicao diferente nem conecta automaticamente esses BWEB
+aos lotes publicados EA20.
+
+Foi implementada nova **Fase 5R / opcao W**:
+`analyze_cutoff_placebos_2026.py` e
+`notebooks/TSE_2026_Laboratorio_Forense_Fase_W.ipynb`.
+A W analisa dez cortes temporais fixados antes do teste real:
+18:00, 18:30, 19:00, 19:30, 19:45, 20:00, 20:04:39,
+20:15, 20:30 e 21:00. Para cada, mede deslocamento
+dentro de zonas com >=1.000 validos pre/pos, cobertura
+de votos, distribuicao de sinais e robustez leave-one-UF-out
+no corte principal. Reusa H/M em uma unica varredura SHA,
+exige identidade com V no corte de 20:04:39 e escreve
+CSV/JSON certificados no H. Opcao U do BAT passa a abrir
+o notebook W automaticamente depois da execucao.
+
+**Estado:** programa, menu, testes sintéticos e notebook
+versionados; W **nao executada empiricamente** no H.
+Documento: `docs/FASE5R_PLACEBOS_TEMPO_2026.md`.

@@ -82,7 +82,7 @@ class ForensicPublicNotebookTests(unittest.TestCase):
         self.assertAlmostEqual(100*official["lula_votes"]/official["valid_votes"],
                                official["lula_valid_pct"],places=2)
         self.assertNotEqual(doc["scope"],"Auditoria BWEB presidencial primeiro turno")
-        self.assertIn("não é",doc["distinctions"][2].lower() if len(doc["distinctions"])>2 else "")
+        self.assertIn("não medem",doc["distinctions"][2].lower())
 
     def test_public_dashboard_is_default_and_technical_remains_accessible(self):
         launcher=(ROOT/"launch_forensic_notebook.py").read_text(encoding="utf-8")

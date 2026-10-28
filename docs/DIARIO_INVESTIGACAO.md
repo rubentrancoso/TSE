@@ -5991,3 +5991,49 @@ formas sem equiparar os instantes EA20/BWEB.
 resultados geográficos não foram inventados.
 Protocolo e métricas em
 docs/PROTOCOLO_FORENSE_CURVA_TEMPORAL_2026.md.
+
+
+---
+
+## 2026-10-28 — E0122 — Resultado real S: geografia municipal reduz erro, teste T sem vazamento
+
+A opcao S foi executada sobre H com todos os 499.206 BWEB do
+primeiro turno, SHA conferidos e NR28 corrigido. A curva EA20
+por horario real tem R2 0,61016581; por indice de atualizacoes
+0,84210892; por numero de secoes 0,99044479 (calculada da
+serie EA20 versionada, 153 pontos pos-20:04:39).
+
+Na curva BWEB reconstruida por data de recebimento,
+usando proporcoes FINAIS por UF versus municipio como
+contrafactual geograficos, erros da participacao
+cumulativa:
+- Lula UF 0,17470034 pp RMSE vs municipio 0,06164460 pp;
+- Flavio UF 0,14542577 pp vs municipio 0,05065081 pp.
+Isto e ajuste retrospectivo com os proprios resultados
+finais, NAO previsao fora-da-amostra nem causalidade.
+
+Recebimentos BWEB apos o corte sao 13.627.882 validos,
+contra 18.809.656 votos adicionados a PUBLICACAO EA20
+apos o mesmo instante; 5.181.774 aritmeticamente distintos,
+nao votos desaparecidos. Horarios de recebimento e
+publicacao representam eventos diferentes. A S agrega
+por minuto e nao alinha essas cronologias artificialmente.
+
+Criada Fase **5P / opcao T** em
+audit_geographic_holdout_curve_2026.py: fixa as taxas
+dos municipios, estados e BR somente com as seções
+recebidas ANTES de 20:04:39 (segundos exatos), prediz
+todos os BU recebidos depois do corte, trata municipios
+sem observacoes pre-corte por fallback estadual,
+e separa o modelo municipal FINAL explicitamente
+como oraculo com vazamento. Mede erro final e
+erros ponderados por volume para lotes por minuto,
+com ranking UF/municipio para verificacao.
+Dados H/M locais, sem downloads, ZIP, SQLite ou 2022/2T.
+
+A T nao foi executada nos BWEB reais do operador,
+pois as bases originais estao no disco H local.
+Seu resultado dira se o baixo RMSE municipal da S
+resiste a um teste sem conhecer a cauda.
+Relatorio detalhado no
+docs/PROTOCOLO_FORENSE_CURVA_TEMPORAL_2026.md.

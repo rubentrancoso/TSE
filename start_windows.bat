@@ -52,10 +52,12 @@ echo [T] FORA DA AMOSTRA: pre-20:04 prevendo BU recebidos apos 20:04
 echo [U] LABORATORIO JUPYTER: abre automaticamente a ultima fase executada
 echo [V] ZONAS TARDIAS: comparar municipio vs zona pre-20:04 sem vazamento
 echo [W] CORTES PLACEBO: comparar votos na mesma zona em horarios diferentes
+echo [X] PUBLICACAO EA20: curva linear vs volumes fisicos e lotes reais
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEFGHIJKLMNOPQRSTUVW0 /N /M "Selecione: "
-if errorlevel 33 exit /b 0
+choice /C 123456789ABCDEFGHIJKLMNOPQRSTUVWX0 /N /M "Selecione: "
+if errorlevel 34 exit /b 0
+if errorlevel 33 goto ea20_publication_mechanics_2026
 if errorlevel 32 goto temporal_placebos_2026
 if errorlevel 31 goto within_zone_holdout_2026
 if errorlevel 30 goto forensic_notebook_2026
@@ -411,9 +413,23 @@ if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5r_cutoff_placebos_2026_summary.json
 goto done
 
+:ea20_publication_mechanics_2026
+echo.
+echo FASE 5S: TESTE FISICO DA CURVA NACIONAL PUBLICADA EA20.
+echo Compara curva real com modelo de proporcao CONSTANTE nos volumes observados.
+echo Separa ORACULO final circular de previsao calibrada nos 10 primeiros lotes.
+echo Decompoe 152 incrementos publicados e 4 blocos por votos validos.
+echo Usa APENAS EA20 nacional versionado, sem ZIP, BWEB, SQLite ou downloads.
+%PY% -m unittest discover -s tests -p "test_ea20_publication_mechanics_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% audit_ea20_publication_mechanics_2026.py
+if errorlevel 1 goto validate_failed
+echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5s_ea20_publication_mechanics_2026_summary.json
+goto done
+
 :forensic_notebook_2026
 echo.
-echo LABORATORIO JUPYTER 2026 - REUSA S/T, V OU W, A MAIS RECENTE.
+echo LABORATORIO JUPYTER 2026 - REUSA S/T, V, W OU X, A MAIS RECENTE.
 echo Valida presenca dos CSV/JSON em H:; confere SHA no notebook.
 echo Primeiro uso instala somente dependencias Python em ambiente isolado.
 echo Nao baixa BWEB, nao abre ZIP, SQLite ou dados de outro turno.

@@ -6140,3 +6140,91 @@ o notebook W automaticamente depois da execucao.
 **Estado:** programa, menu, testes sintéticos e notebook
 versionados; W **nao executada empiricamente** no H.
 Documento: `docs/FASE5R_PLACEBOS_TEMPO_2026.md`.
+
+
+---
+
+## 2026-10-28 — E0125 — Resultado real W: gradiente temporal intra-zona; nova analise direta EA20/X
+
+A opcao W (Fase 5R) foi executada com sucesso pelo investigador
+sobre H: para os BWEB de primeiro turno 2026. Todos os 499.206
+shards de secoes SHA-validados e os 4 testes sinteticos passaram.
+A media ponderada Lula pós menos pré **dentro de zonas com pelo
+menos 1.000 votos validos de ambos os lados** foi:
+
+- 18:00 +0,869977 pp (1.922 zonas; cobertura pos 39,98%);
+- 18:30 +1,150917 pp (2.733 zonas; 65,64%);
+- 19:00 +1,289133 pp (2.613 zonas; 79,28%);
+- 19:30 +1,730292 pp (1.684 zonas; 84,39%);
+- 19:45 +1,752052 pp (1.651 zonas; 84,22%);
+- 20:00 +1,787570 pp (1.597 zonas; 84,32%);
+- **20:04:39 +1,992798 pp** (1.380 zonas; 83,53%);
+- 20:15 +2,046891 pp (1.286 zonas; 82,69%);
+- 20:30 +2,154749 pp (1.140 zonas; 82,03%);
+- 21:00 +4,080576 pp (391 zonas; 74,34%).
+
+No corte principal a W reproduziu a V: 105.672.906 validos
+antes, 13.627.882 depois; 11.383.216 válidos tardios nas
+1.380 zonas com >=1.000 de cada lado; Lula +1,9927984848 pp,
+Flavio -1,6667451366 pp; 965 zonas favoraveis ao aumento
+(69,9275%) vs 415 com queda, mediana +2,30248 pp. Ao remover
+cada UF isoladamente, a media ponderada ficou de
++1,69202 a +2,27602 pp. Os tamanhos das coortes
+mudam com cada corte, especialmente apos 21h; os placebos
+nao constituem serie em painel balanceado ou desenho
+randomizado. O gradiente de votos nao surge apenas as
+20:04:39, mas isso NAO prova ausencia de evento operacional
+naquela hora nem estabelece mecanismo de totalizacao EA20.
+
+**Avanco direto nas capturas EA20 nacionais**, a partir do
+CSV oficial preservado e versionado no GitHub:
+193 snapshots ao todo, 153 desde 20:04:39 (152 incrementos).
+Apos o corte, 18.809.656 validos foram publicados.
+O R² descritivo da serie cumulativa Lula e **0,9904447872**
+contra secoes, mas e quase igual (**0,9897050825**) contra
+votos validos cumulativos, esclarecendo que a forma nao
+depende exclusivamente da contagem de secoes.
+
+Construido um controle fisico retrospectivo, que preserva
+EXATAMENTE os volumes publicados de cada lote EA20 mas
+atribui a todos os votos incrementais a taxa final da cauda
+de Lula, 54,08809178% (ORACULO, com vazamento).
+O controle deu R² por secoes **0,9988478089**, ainda mais
+linear que o observado. RMSE cumulativo real vs modelo
+0,1332003292 pp (desvio maximo 0,2384952495 pp).
+Isto mostra que elevada lisura acumulada e compatível
+com uma composicao constante condicional a volumes reais,
+NAO que o mecanismo efetivo foi o controle.
+
+A composicao observada dos lotes PUBLICADOS nao foi
+constante: agrupando a cauda em quatro blocos
+cronologicos de cerca de 4,4-4,9 milhoes de validos,
+as participacoes Lula foram respectivamente:
+**50,81473%, 52,53856%, 53,39887%, 60,15804%**.
+Os ultimos 20 incrementos somam somente 40.270 votos
+(0,214% da cauda), Lula 81,6985%. Uma estimativa
+apenas nos dez primeiros incrementos (6.546.962
+validos, 34,81% da cauda; Lula 51,22463%)
+preveria a participacao acumulada final de Lula em
+44,71130% vs 45,16277% real, sob os volumes
+futuros de votos dados. RMSE acumulado de validacao
+0,32631 pp.
+
+Criada **Fase 5S / menu X**:
+`audit_ea20_publication_mechanics_2026.py` com
+`tests/test_ea20_publication_mechanics_2026.py`
+e notebook
+`notebooks/TSE_2026_Laboratorio_Forense_Fase_X.ipynb`.
+A X testa os lotes reais versus taxa constante final,
+previsao precoce sem lookahead e diagnostico fisico
+de reta exata; exporta CSV/JSON certificados no H e
+abre o novo notebook pela opcao U. O programa nao
+baixa, nao abre BWEB/ZIP nem consulta SQLite.
+Documentacao:
+`docs/FASE5S_EA20_MECANISMO_PUBLICACAO_2026.md`.
+
+**Estado:** codigo/testes/notebook X publicados no main,
+mas execucao pelo menu X no H ainda pendente.
+Os valores anteriores foram calculados diretamente
+da serie EA20 versionada, nao inventados ou atribuídos
+a uma execucao local X que ainda nao ocorreu.

@@ -10,6 +10,7 @@ import sys
 
 REPO = Path(__file__).resolve().parent
 NOTEBOOK = REPO / "notebooks" / "TSE_2026_Laboratorio_Forense_Fases_S_T.ipynb"
+NOTEBOOK_ZONE = REPO / "notebooks" / "TSE_2026_Laboratorio_Forense_Fase_V.ipynb"
 VENV = REPO / ".venv_tse_notebook"
 DATA_FILES = (
     "phase5o_operational_curve_2026_summary.json",
@@ -19,6 +20,12 @@ DATA_FILES = (
     "phase5p_holdout_receipt_curve_2026.csv",
     "phase5p_holdout_by_uf_2026.csv",
     "phase5p_holdout_by_municipality_2026.csv",
+)
+ZONE_FILES = (
+    "phase5q_zone_holdout_2026_summary.json",
+    "phase5q_zone_holdout_minutes_2026.csv",
+    "phase5q_zone_holdout_municipalities_2026.csv",
+    "phase5q_zone_holdout_zones_2026.csv",
 )
 
 
@@ -42,8 +49,22 @@ def launch(root: Path, check_only: bool = False) -> int:
             print("  - " + name)
         print("Execute primeiro S e T no start_windows.bat. Nenhum dado foi baixado.")
         return 1
+    folder = root / "analysis" / "periodicidade_bweb_2026"
+    phase_v_present = (folder / ZONE_FILES[0]).is_file()
+    notebook = NOTEBOOK_ZONE if phase_v_present else NOTEBOOK
+    if phase_v_present:
+        pending = [str(folder / name) for name in ZONE_FILES if not (folder / name).is_file()]
+        if pending:
+            print("[ERRO] A Fase V esta incompleta. Reexecute V no menu antes de U:")
+            for item in pending:
+                print("  - " + item)
+            return 1
+        if not notebook.is_file():
+            print("[ERRO] Notebook V nao encontrado: " + str(notebook))
+            return 1
     if check_only:
-        print("[OK] Notebook e relatorios S/T presentes. Integridade SHA sera conferida no notebook.")
+        print("[OK] Notebook selecionado: " + str(notebook))
+        print("[OK] CSVs/JSONs encontrados. Integridade SHA sera conferida no notebook.")
         return 0
     python = env_python(VENV)
     if not python.is_file():
@@ -69,7 +90,7 @@ def launch(root: Path, check_only: bool = False) -> int:
         print("[JUPYTER] Abrindo laboratorio no navegador. Ctrl+C encerra o servidor.", flush=True)
         return subprocess.run(
             [str(python), "-m", "jupyterlab",
-             str(NOTEBOOK.relative_to(REPO)),
+             str(notebook.relative_to(REPO)),
              "--notebook-dir=" + str(REPO)],
             cwd=str(REPO),
         ).returncode

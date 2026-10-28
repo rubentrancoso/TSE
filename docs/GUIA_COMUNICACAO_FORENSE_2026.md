@@ -72,6 +72,45 @@ Para cada visualização, use o seguinte roteiro:
 
 **Critério de avanço:** anomalia localizada e reproduzível que motive auditoria H1/H2/H3, **não prova isolada de fraude**.
 
+## A narrativa deve mostrar o Brasil, do nacional ao território
+
+O **mapa do Brasil é parte essencial da história visual** sempre
+que a hipótese envolver diferenças geográficas. Mas cada mapa
+deve responder a UMA pergunta específica, não servir como
+ilustração ou imagem insinuando fraude.
+
+O painel Jupyter público contém agora:
+
+1. **Recepção tardia por UF (mapa 1):** porcentagem dos votos
+   válidos da própria UF cujos BUs foram recebidos pelo BWEB
+   desde 20:04:39. Denominador é o total da UF (não área e não
+   número de UFs). O exterior (ZZ) é excluído.
+2. **Mudança dentro das zonas por UF (mapa 2):** diferença média
+   em pontos percentuais da participação de Lula entre BUs
+   recebidos depois e antes do corte, apenas em zonas com
+   >=1.000 votos válidos de ambos os lados. Ponderar cada
+   zona pelos votos tardios e distinguir cobertura limitada.
+3. **Cinco grandes regiões (gráfico 3):** Norte, Nordeste,
+   Centro-Oeste, Sudeste e Sul, com contraste ponderado pela
+   quantidade de votos tardios das zonas elegíveis. Exibir
+   também número de votos e zonas por região na tabela.
+4. **Progresso do Brasil para a seção:** agregar em nível
+   nacional e regional para entender o panorama; aprofundar
+   UFs/zonas com evidências concretas; por fim confrontar
+   registros **individualizados** de BU e publicação antes
+   de fazer afirmações sobre adulteração.
+
+A malha vetorial é GeoJSON das 27 UFs, derivada de dados IBGE,
+licença CC0; está incorporada offline em
+`data/geografia/brasil_ufs_ibge_simplificado.geojson` com
+proveniência em `data/geografia/README.md`. Não requer rede.
+
+**Regras gráficas:** usar escala contínua, cor neutra e
+legenda com unidade; barra comparativa começando em zero
+quando mostrar composição de votos; deixar estados sem amostra
+em cinza; indicar amostra mínima e ausência de ZZ. Não usar
+cores como se fossem selo de crime ou como previsão eleitoral.
+
 ## Visualizações e relatório para o público
 
 Abra a opção **U** do `start_windows.bat`: notebook central
@@ -79,7 +118,7 @@ Abra a opção **U** do `start_windows.bat`: notebook central
 
 A opção U usa os resultados locais SHA-verificados e produz:
 
-- 5 figuras PNG com legendas autoexplicativas (a quinta só tem dados reais se Y foi executada);
+- até 8 figuras PNG com legendas autoexplicativas, incluindo 2 mapas por UF e 1 gráfico regional (o confronto com EA20 tem dados reais apenas se Y foi executada);
 - tabela de hipóteses e conclusões provisórias;
 - página `relatorio_publico_forense_2026.html` com imagens incorporadas, para abrir e ler sem Jupyter.
 

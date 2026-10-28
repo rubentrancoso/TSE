@@ -6385,3 +6385,49 @@ de refutação ou avanço.
 dados BWEB/EA20. A execução visual no ambiente Windows do
 investigador ainda precisa ser confirmada. Nenhuma fraude
 foi declarada demonstrada pelas visualizações.
+
+
+---
+
+## 2026-10-28 — E0129 — História visual: mapa do Brasil, UFs e cinco grandes regiões
+
+O investigador solicitou que a apresentação pública seja uma **história visual**,
+com **mapa do Brasil** e recortes por regiões sempre que relevantes,
+não apenas curvas técnicas ou tabelas isoladas.
+
+Incorporada e versionada no projeto uma malha GeoJSON offline
+`data/geografia/brasil_ufs_ibge_simplificado.geojson`, com
+**27 UFs** conferidas por sigla (incluindo DF), de
+`henriquemalvar/br-geojson/dist/estados.geojson` (derivada IBGE,
+CC0 1.0, origem blob
+`d06e54a3a03519ae3fa48fe3d85da6c3558cd47d`).
+Proveniência e limitações cartográficas documentadas em
+`data/geografia/README.md`. ZZ é exterior: não projetar artificialmente
+seus votos em nenhuma UF.
+
+O notebook público consolidado ganhou 2 mapas coropléticos e
+um gráfico das **cinco regiões IBGE**:
+
+- Mapa 1: fração dos votos válidos *da própria UF* recebidos
+  no BWEB desde 20:04:39 (fase T, CSV `per_UF`, SHA no manifesto),
+  sem confundir recebimento com publicação EA20;
+- Mapa 2: contraste médio Lula pós−pré dentro das zonas elegíveis
+  (>=1.000 votos válidos de cada lado) por UF, ponderado pelos
+  votos posteriores (fase W, CSV `ufs` conferido por SHA);
+- Comparativo Norte/Nordeste/Centro-Oeste/Sudeste/Sul, ponderado
+  por votos posteriores em zonas elegíveis, com tabela exibindo
+  volumes, quantidade de zonas e sinais positivos.
+
+O GeoJSON é só a base de desenho, não contém dados eleitorais.
+As cores são valores descritivos, **não um mapa de fraude**.
+Há validação explícita das 27 siglas; estados sem dado ficam
+cinza no mapa de contraste. No HTML público as novas
+figuras são incorporadas ao lado das explicações e ressalvas.
+
+Adicionados testes de integridade da malha geográfica, do
+conjunto completo de UFs, dos arquivos de mapas no notebook
+e do modo público/ técnico U/Z. Atualizados README e Guia
+de Comunicação Forense. Continua **pendente a execução
+do novo notebook no Windows** para geração empírica das
+imagens e HTML; resultados numéricos dos mapas não foram
+inventados e devem ser observados nos dados locais.

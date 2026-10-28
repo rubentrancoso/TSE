@@ -49,12 +49,14 @@ echo [Q] EXTERIOR ZZ: localizar +42 secoes por municipio EA20/BWEB
 echo [R] EXTERIOR ZZ: conferir comparecimento e votos nas 42 secoes
 echo [S] CURVA FORENSE 2026: tempo real, BU recebidos, geografia UF/municipio
 echo [T] FORA DA AMOSTRA: pre-20:04 prevendo BU recebidos apos 20:04
-echo [U] LABORATORIO FORENSE JUPYTER: S/T ou V se ja executada
+echo [U] LABORATORIO JUPYTER: abre automaticamente a ultima fase executada
 echo [V] ZONAS TARDIAS: comparar municipio vs zona pre-20:04 sem vazamento
+echo [W] CORTES PLACEBO: comparar votos na mesma zona em horarios diferentes
 echo [0] Sair
 echo.
-choice /C 123456789ABCDEFGHIJKLMNOPQRSTUV0 /N /M "Selecione: "
-if errorlevel 32 exit /b 0
+choice /C 123456789ABCDEFGHIJKLMNOPQRSTUVW0 /N /M "Selecione: "
+if errorlevel 33 exit /b 0
+if errorlevel 32 goto temporal_placebos_2026
 if errorlevel 31 goto within_zone_holdout_2026
 if errorlevel 30 goto forensic_notebook_2026
 if errorlevel 29 goto geographic_holdout_2026
@@ -396,9 +398,22 @@ if errorlevel 1 goto validate_failed
 echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5q_zone_holdout_2026_summary.json
 goto done
 
+:temporal_placebos_2026
+echo.
+echo FASE 5R: CORTES PLACEBO NOS BU RECEBIDOS DENTRO DA MESMA ZONA.
+echo Compara antes/depois em dez cortes fixos e verifica concordancia com a V.
+echo Mede deslocamento Lula/Flavio, cobertura e robustez ao retirar cada UF.
+echo Reusa H/M com SHA em uma passagem, sem download, ZIP ou SQLite.
+%PY% -m unittest discover -s tests -p "test_cutoff_placebos_2026.py" -q
+if errorlevel 1 goto validate_failed
+%PY% analyze_cutoff_placebos_2026.py
+if errorlevel 1 goto validate_failed
+echo [CONCLUIDO] H:\TSE\forensics\urnas\analysis\periodicidade_bweb_2026\phase5r_cutoff_placebos_2026_summary.json
+goto done
+
 :forensic_notebook_2026
 echo.
-echo LABORATORIO JUPYTER 2026 - REUSA S/T OU A NOVA FASE V.
+echo LABORATORIO JUPYTER 2026 - REUSA S/T, V OU W, A MAIS RECENTE.
 echo Valida presenca dos CSV/JSON em H:; confere SHA no notebook.
 echo Primeiro uso instala somente dependencias Python em ambiente isolado.
 echo Nao baixa BWEB, nao abre ZIP, SQLite ou dados de outro turno.

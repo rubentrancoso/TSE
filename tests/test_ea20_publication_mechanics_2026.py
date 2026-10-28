@@ -43,8 +43,8 @@ class PublicationMechanicsTests(unittest.TestCase):
         for r in original:
             r=r.copy()
             if r["brt"]=="2026-10-05 02:59:31":
-                r["lula"]+=100
-                r["d_lula"]+=100
+                r["lula"]+=2
+                r["d_lula"]+=2
             modified.append(r)
         _,_,changed=mod.describe(modified,expected_post=153)
         training="early_ten_update_training"
